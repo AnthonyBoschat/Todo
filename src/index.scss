@@ -3,5 +3,9 @@
 @use "Sass/Function.scss";
 
 
+@use "Sass/App.scss";
+
 @use "Components/Scenes/Nav/Nav.scss";
-@use "Components/Scenes/Render/Render.scss"
+@use "Components/Scenes/Render/Render.scss";
+@use "Components/Scenes/Add_Button/Folder/Folder.scss" as AddButton_Folder;
+@use "Components/Scenes/List/Folder/Folder.scss" as List_Folder;

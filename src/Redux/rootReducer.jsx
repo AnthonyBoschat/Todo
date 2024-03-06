@@ -1,8 +1,9 @@
 import { combineReducers } from "@reduxjs/toolkit"
 import { defaultSliceReducer } from "./Slices/SlicesDefault"
+import { FolderSliceReducer } from "../Components/Scenes/List/Folder/FolderSlice"
 
 const rootReducer = combineReducers({
-    defaultName:defaultSliceReducer // Ajouter les sliceReducer voulu
+    folder:FolderSliceReducer // Ajouter les sliceReducer voulu
 })
 
 export default rootReducer
