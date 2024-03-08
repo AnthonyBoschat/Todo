@@ -1,7 +1,7 @@
 import React from "react";
 import useAddFolder from "./useFolder";
 
-export default function AddButton_Folder(){
+export default function Add_Folder(){
 
     const {addNewFolder} = useAddFolder()
 
@@ -10,7 +10,7 @@ export default function AddButton_Folder(){
             <div className="addButtonFolder_Box">
                 <button onClick={addNewFolder} className="addButtonFolder">
                     <i className="fa-solid fa-folder-plus"></i>
-                    <span>Créer un nouveau dossier</span>
+                    <span>New folder</span>
                 </button>
             </div>
         </div>

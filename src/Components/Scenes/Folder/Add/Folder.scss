@@ -1,3 +1,5 @@
+@use "../../../../Sass/Variable.scss" as v;
+
 div.addButtonFolder_Display{
     // background-color: rgba(255, 255, 0, 0.654); //
     display: flex;
@@ -19,26 +21,17 @@ div.addButtonFolder_Display{
             background-color: transparent;
             display: flex;
             gap: 0.5rem;
-            font-size: 1.2rem;
+            font-size: 1.8rem;
+            opacity: 0.7;
+            transition: opacity 0.15s linear;
 
-            i{
-                opacity: 0.7;
-                color: rgb(0, 182, 227);
-                transition: opacity 0.15s linear;
-            }
-
-            &:hover i{
+            &:hover{
                 opacity: 1;
+                        cursor: pointer;
             }
 
-            span{
-                color: white;
-            }
-
-            &:hover span{
-                cursor: pointer;
-                text-decoration: underline;
-            }
+            i{color: v.$blue;}
+            span{color: white;}
 
             
         }

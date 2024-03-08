@@ -1,0 +1,45 @@
+@use "../../../../Sass/Variable.scss" as v;
+
+div.addTask_Display{
+    // background-color: rgba(0, 128, 0, 0.169); //
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    
+    div.addTask_Box{
+        display: flex;
+        align-items: center;
+        // outline: 1px solid white; //
+        opacity: 0.7;
+        gap: 0.7rem;
+        transition: opacity 0.15s linear;
+
+        &:hover{
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        i{
+            font-size: 2rem;
+            color: v.$blue;
+        }
+    
+        span{
+            font-size: 1.3rem;
+            color: white;
+        }
+    }
+
+    div.folderIndicator_Box{
+        position: absolute;
+        left: 0;
+        // outline: 1px solid white; //
+        color: white;
+        font-size: 2rem;
+        margin-left: 2vw;
+    }
+    
+}

@@ -1,11 +1,29 @@
 @use "Sass/Main.scss";
 @use "Sass/AnimationClass.scss";
+@use "Sass/InjectionClass.scss";
 @use "Sass/Function.scss";
-
-
 @use "Sass/App.scss";
 
-@use "Components/Scenes/Nav/Nav.scss";
+
+
+
+
+
 @use "Components/Scenes/Render/Render.scss";
-@use "Components/Scenes/Add_Button/Folder/Folder.scss" as AddButton_Folder;
-@use "Components/Scenes/List/Folder/Folder.scss" as List_Folder;
+
+@use "Components/Scenes/Folder/FolderRender.scss";
+@use "Components/Scenes/Folder/Add/Folder.scss" as Add_Folder;
+@use "Components/Scenes/Folder/List/Folder.scss" as List_Folder;
+
+@use "Components/Scenes/Task/TaskRender.scss";
+@use "Components/Scenes/Task/Add/Task.scss" as Add_Task;
+@use "Components/Scenes/Task/List/Task.scss" as List_Task;
+
+
+@use "Components/Scenes/DevTools/DevTools.scss";
+
+
+
+
+
+
