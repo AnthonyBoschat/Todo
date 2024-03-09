@@ -1,10 +1,15 @@
 import React, { useRef, useState } from "react";
+import useLocalStorage from "../../../../Utils/useLocalStorage";
+import { useDispatch } from "react-redux";
+import { update_taskOnCreation } from "../TaskSlice";
 
 export default function Creation_Task(){
 
     const [texteareDisabled, setTexteareDisabled] = useState(true)
+    const dispatch = useDispatch()
     const textareaRef = useRef()
     const titleRef = useRef()
+    const {localStorage_saveNewTask} = useLocalStorage()
 
     const handleRadioChange = (event) => {
         const isDisabled = event.target.value === "true"
@@ -14,11 +19,13 @@ export default function Creation_Task(){
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        if(titleRef.current.value != ""){
-            console.log(titleRef.current.value)
-        }else{
-            console.log("nothing")
-        }
+        
+        const taskTitle = titleRef.current.value // On récupère le titre de la tâche
+        const taskDescription = textareaRef.current.value
+        const newTask = {title:taskTitle, description:taskDescription}
+        localStorage_saveNewTask(newTask)
+        dispatch(update_taskOnCreation(false))
+        
     }
 
     return(
@@ -28,7 +35,7 @@ export default function Creation_Task(){
 
                     <div className="section">
                         <label htmlFor="title">Title :</label>
-                        <input ref={titleRef} type="text" id="title" />
+                        <input required ref={titleRef} type="text" id="title" />
                     </div>
 
                     <div className="section">
@@ -47,7 +54,7 @@ export default function Creation_Task(){
 
                     <div className="section">
                         <label htmlFor="content">Description :</label>
-                        <textarea ref={textareaRef} disabled={texteareDisabled} id="content" cols="30" rows="10"></textarea>
+                        <textarea required={!texteareDisabled} ref={textareaRef} disabled={texteareDisabled} id="content" cols="30" rows="10"></textarea>
                     </div>
 
                     <div className="section">

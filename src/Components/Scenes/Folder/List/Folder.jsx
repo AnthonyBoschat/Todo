@@ -5,7 +5,7 @@ import Button_Folder from "../Buttons/Folder";
 
 export default function List_Folder(){
 
-    const folders = useSelector(store => store.folder.list)
+    const foldersList = useSelector(store => store.localStorage.todoStorage.foldersList)
     const inputRef = useRef()
 
     const {folderOnCreation} = useListFolder(inputRef)
@@ -17,7 +17,7 @@ export default function List_Folder(){
     return(
         <div className="listFolder_Display">
             <ul className="listFolder_Box">
-                {folders.map((folder, index) => (
+                {foldersList.map((folder, index) => (
                     <Button_Folder folder={folder} key={index}/>
                 ))}
                 {folderOnCreation && (

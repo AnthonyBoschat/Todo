@@ -84,5 +84,23 @@ div.listTask_Display{
 
             
         }
+
+
+
+
+
+        div.noTask_Box{
+            // background-color: red; //
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            span{
+                color: rgba(255, 255, 255, 0.312);
+                font-size: 2.5rem;
+            }
+        }
     }
 }

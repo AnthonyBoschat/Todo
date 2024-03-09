@@ -3,44 +3,38 @@ import { useSelector } from "react-redux";
 
 export default function List_Task(){
 
-    
+    const foldersList = useSelector(store => store.localStorage.todoStorage.foldersList)
+    const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
+    const folderIndex = foldersList.findIndex(folder => folder.name === folderSelectedName)
+    const taskList = foldersList[folderIndex]?.taskList
 
     return(
         <div className="listTask_Display">
                 <div className="listTask_Box">
-                
-                    <div className="task_Box">
-                        <div className="leftSideTask">
-                            <i className="deploy fa-solid fa-caret-down"></i>
-                            <span className="taskName">Faire les courses</span>
-                        </div>
-                        <div className="rightSideTask">
-                            <i className="valideTask fa-solid fa-check"></i>
-                            <i className="deleteTask fa-solid fa-trash"></i>
-                        </div>
-                    </div>
 
-                    <div className="task_Box">
-                        <div className="leftSideTask">
-                            <i className="deploy fa-solid fa-caret-down"></i>
-                            <span className="taskName">Ranger la vaisselle</span>
-                        </div>
-                        <div className="rightSideTask">
-                            <i className="valideTask fa-solid fa-check"></i>
-                            <i className="deleteTask fa-solid fa-trash"></i>
-                        </div>
-                    </div>
 
-                    <div className="task_Box">
-                        <div className="leftSideTask">
-                            <i className="deploy fa-solid fa-caret-down"></i>
-                            <span className="taskName">Passer l'aspirateur dans le salon</span>
+
+                    {taskList.length > 0 && (taskList.map((task, index) => (
+
+                        <div key={`task_${index}`} className="task_Box">
+                            <div className="leftSideTask">
+                                <i className="deploy fa-solid fa-caret-down"></i>
+                                <span className="taskName">{task.title}</span>
+                            </div>
+                            <div className="rightSideTask">
+                                <i className="valideTask fa-solid fa-check"></i>
+                                <i className="deleteTask fa-solid fa-trash"></i>
+                            </div>
                         </div>
-                        <div className="rightSideTask">
-                            <i className="valideTask fa-solid fa-check"></i>
-                            <i className="deleteTask fa-solid fa-trash"></i>
+
+                    )))}
+
+
+                    {taskList.length === 0 && (
+                        <div className="noTask_Box">
+                            <span>( No Task )</span>
                         </div>
-                    </div>
+                    )}
                 </div>
         </div>
     )
