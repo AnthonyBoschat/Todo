@@ -1,18 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import Add_Task from "../Add/Task";
+import useTask_List from "./useTask";
 
 export default function List_Task(){
 
-    const foldersList = useSelector(store => store.localStorage.todoStorage.foldersList)
-    const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
-    const folderIndex = foldersList.findIndex(folder => folder.name === folderSelectedName)
-    const taskList = foldersList[folderIndex]?.taskList
+    const {taskList, deleteTask} = useTask_List()
+
+
 
     return(
         <div className="listTask_Display">
                 <div className="listTask_Box">
-
-
 
                     {taskList.length > 0 && (taskList.map((task, index) => (
 
@@ -22,8 +21,8 @@ export default function List_Task(){
                                 <span className="taskName">{task.title}</span>
                             </div>
                             <div className="rightSideTask">
-                                <i className="valideTask fa-solid fa-check"></i>
-                                <i className="deleteTask fa-solid fa-trash"></i>
+                                {/* <i className="valideTask fa-solid fa-check"></i> */}
+                                <i onClick={() => deleteTask(task.id)} className="deleteTask fa-solid fa-trash"></i>
                             </div>
                         </div>
 

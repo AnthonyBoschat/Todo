@@ -1,9 +1,10 @@
-import React, {} from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_todoStorage } from "./LocalStorageSlice";
 
 export default function useLocalStorage(){
 
+    const todoStorage = useSelector(store => store.localStorage.todoStorage)
     const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
     const dispatch = useDispatch()
 
@@ -12,9 +13,7 @@ export default function useLocalStorage(){
 
 
     const localStorage_saveNewFolder = (newFolder) => {
-
         const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        
         if(todoStorage){
             todoStorage.foldersList.push(newFolder)
             localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
@@ -42,8 +41,18 @@ export default function useLocalStorage(){
         dispatch(update_todoStorage(todoStorage))
     }
 
+
+    useEffect(() => {
+        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
+    }, [todoStorage])
+
+
+
+
+    
+
     return{
         localStorage_saveNewFolder,
-        localStorage_saveNewTask
+        localStorage_saveNewTask,
     }
 }

@@ -1,32 +1,18 @@
 import React, { useRef, useState } from "react";
-import useLocalStorage from "../../../../Utils/useLocalStorage";
-import { useDispatch } from "react-redux";
-import { update_taskOnCreation } from "../TaskSlice";
+import useTask_Creation from "./useTask";
 
 export default function Creation_Task(){
 
-    const [texteareDisabled, setTexteareDisabled] = useState(true)
-    const dispatch = useDispatch()
-    const textareaRef = useRef()
-    const titleRef = useRef()
-    const {localStorage_saveNewTask} = useLocalStorage()
+    
+    const {
+        textareaRef,
+        titleRef,
+        handleSubmit,
+        handleRadioChange,
+        texteareDisabled
+    } = useTask_Creation()
 
-    const handleRadioChange = (event) => {
-        const isDisabled = event.target.value === "true"
-        setTexteareDisabled(isDisabled)
-        // if(isDisabled){textareaRef.current.value = ""}
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        
-        const taskTitle = titleRef.current.value // On récupère le titre de la tâche
-        const taskDescription = textareaRef.current.value
-        const newTask = {title:taskTitle, description:taskDescription}
-        localStorage_saveNewTask(newTask)
-        dispatch(update_taskOnCreation(false))
-        
-    }
+    
 
     return(
         <div className="creationTask_Display">
@@ -35,7 +21,7 @@ export default function Creation_Task(){
 
                     <div className="section">
                         <label htmlFor="title">Title :</label>
-                        <input required ref={titleRef} type="text" id="title" />
+                        <input autoFocus ref={titleRef} type="text" id="title" />
                     </div>
 
                     <div className="section">
