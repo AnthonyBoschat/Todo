@@ -5,7 +5,7 @@ import { update_todoStorage } from "./LocalStorageSlice";
 export default function useLocalStorage(){
 
     const todoStorage = useSelector(store => store.localStorage.todoStorage)
-    const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
+    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const dispatch = useDispatch()
 
 
@@ -35,7 +35,7 @@ export default function useLocalStorage(){
 
     const localStorage_saveNewTask = (newTask) => {
         const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        const folderIndex = todoStorage.foldersList.findIndex(folder => folder.name === folderSelectedName)
+        const folderIndex = todoStorage.foldersList.findIndex(folder => folder.name === folderSelectedID)
         todoStorage.foldersList[folderIndex].taskList.push(newTask)
         localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
         dispatch(update_todoStorage(todoStorage))

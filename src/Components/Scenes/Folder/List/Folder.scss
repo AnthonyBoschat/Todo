@@ -38,19 +38,19 @@ div.listFolder_Display{
             
         }
 
-        li.folderOnCreation_Box{
-            // outline: 1px solid white; //
-            width: fit-content;
 
-            input{
-                background-color: transparent;
-                border: none;
-                color: rgb(0, 191, 255);
-                outline: none;
-                font-size: 1.3rem;
-                // outline: 1px solid red; // 
-                text-align: center;
-                
+        div.noFolders_Box{
+            // background-color: red; //
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            span{
+                margin-top: -30%;
+                font-size: 1.5rem;
+                color: rgba(255, 255, 255, 0.547);
             }
         }
     }

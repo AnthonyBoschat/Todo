@@ -15,11 +15,6 @@ div.listTask_Display{
         flex-direction: column;
         gap: 1rem;
 
-
-
-
-
-
         div.task_Box{
             // outline: 1px solid rgba(255, 0, 0, 0.894); //
             background-color: rgb(32, 32, 32);
@@ -39,6 +34,7 @@ div.listTask_Display{
                 outline: 1px solid rgb(151, 151, 151);
                 transform: translateX(5%);
             }
+            
 
             &:hover div.leftSideTask>i.deploy{
                 opacity: 1;
@@ -62,6 +58,11 @@ div.listTask_Display{
                     font-size: 1.3rem;
                     color: white;
                     padding-right: 2rem;
+
+                    &:focus{
+                        outline: none;
+                        cursor:text;
+                    }
                 }
             }
 
@@ -91,9 +92,6 @@ div.listTask_Display{
 
             
         }
-
-
-
 
 
         div.noTask_Box{

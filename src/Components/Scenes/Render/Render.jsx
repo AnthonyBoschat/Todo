@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import TaskRender from "../Task/TaskRender"
+import useFolder_Render from "../Folder/useFolderRender";
 export default function Render(){
 
-    const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
-
+    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
+    
+    useFolder_Render()
+    
     return(
         <div className="renderDisplay">
-            {!folderSelectedName && (<i className="fa-solid fa-layer-group"></i>)}
-            {folderSelectedName && (<TaskRender />)}
+            {!folderSelectedID && (<i className="fa-solid fa-layer-group"></i>)}
+            {folderSelectedID && (<TaskRender />)}
         </div>
     )
 }

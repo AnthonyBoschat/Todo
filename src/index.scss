@@ -14,9 +14,10 @@
 @use "Components/Scenes/Folder/FolderRender.scss";
 @use "Components/Scenes/Folder/Add/Folder.scss" as Add_Folder;
 @use "Components/Scenes/Folder/List/Folder.scss" as List_Folder;
+@use "Components/Scenes/Folder/Creation/Folder.scss" as Creation_Folder;
 
 @use "Components/Scenes/Task/TaskRender.scss";
-@use "Components/Scenes/Task/Add/Task.scss" as Add_Task;
+@use "Components/Scenes/Task/Header/Task.scss" as Header_Task;
 @use "Components/Scenes/Task/List/Task.scss" as List_Task;
 @use "Components/Scenes/Task/Creation/Task.scss" as Creation_Task;
 
