@@ -1,11 +1,16 @@
+@use "../../../../Sass/Variable.scss" as v;
+
 div.taskCreation{
-    background-color: rgba(229, 10, 10, 0.994);
-    box-shadow: 0px 0px 10px black inset;
+    
     padding-left: 1rem;
     padding-right: 1rem;
     animation: taskCreation_SlideRight 0.1s linear forwards;
     max-width: 50%;
     width: fit-content;
+    outline: 1px solid v.$blue;
+    box-shadow: 0px 0px 10px black inset,
+                0px 0px 10px v.$blue !important;
+
     div.taskName{
         // outline: 1px solid green; //
         padding: 0.5rem;

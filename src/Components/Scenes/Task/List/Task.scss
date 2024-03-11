@@ -61,7 +61,6 @@ div.listTask_Display{
 
                     &:focus{
                         outline: none;
-                        cursor:text;
                     }
                 }
             }
@@ -84,7 +83,7 @@ div.listTask_Display{
                     }
                 }
 
-                i.valideTask{color: rgb(4, 189, 4);}
+                i.valideTask{color: v.$blue;}
                 i.deleteTask{color: rgb(215, 37, 37);}
             }
 

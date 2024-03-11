@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_folderSelectedID, update_folderSelectedName } from "../FolderSlice";
+import { update_taskOnEdition } from "../../Task/TaskSlice";
 
 export default function Button_Folder({folder}){
     
@@ -17,6 +18,7 @@ export default function Button_Folder({folder}){
         else{
             dispatch(update_folderSelectedID(null))
         }
+        dispatch(update_taskOnEdition(false))
     }
 
     return(
