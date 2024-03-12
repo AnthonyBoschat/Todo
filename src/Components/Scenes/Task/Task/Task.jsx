@@ -11,7 +11,6 @@ export default function One_Task({task, folderIndex}){
         taskNameRef,
         valideRenameTask,
         taskOnEdition,
-        returnLineFilter,
         taskTitle
     } = useTask_One(folderIndex, task)
 
@@ -20,8 +19,6 @@ export default function One_Task({task, folderIndex}){
     return(
         <div style={(taskEditable && taskOnEdition) ? {outline:"1px solid rgb(0, 182, 227)", boxShadow:"0px 0px 10px rgb(0, 182, 227)"} : null} ref={taskRef} className="task_Box">
             <div style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
-                {/* <i className="deploy fa-solid fa-caret-down"></i> */}
-                {/* <span ref={taskNameRef} dangerouslySetInnerHTML={{__html:task.title}} contentEditable={taskEditable} className="taskName"></span> */}
                 <span ref={taskNameRef} contentEditable={taskEditable} className="taskName">{taskTitle}</span>
             </div>
             <div className="rightSideTask">

@@ -12,10 +12,10 @@ export default function useTask_One(folderIndex, task){
     const taskNameRef = useRef()
     const dispatch = useDispatch()
 
+    // Filtrage du contenu de la task pour permettre les saut à la ligne
     const returnLineFilter = (taskTitle) => {
         const splitSentence = taskTitle.split('<br>')
-        return splitSentence.flatMap((text, index) => index !== splitSentence.length - 1 ? [text, <br key={index} />] : text
-  );
+        return splitSentence.flatMap((text, index) => index !== splitSentence.length - 1 ? [text, <br key={index} />] : text);
     }
 
     const [taskTitle, setTaskTitle] = useState(returnLineFilter(task.title))
@@ -95,7 +95,6 @@ export default function useTask_One(folderIndex, task){
         taskNameRef,
         valideRenameTask,
         taskOnEdition,
-        returnLineFilter,
         taskTitle
     }
 }
