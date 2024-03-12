@@ -1,0 +1,78 @@
+@use "../../../../Sass/Variable.scss" as v;
+
+div.task_Box{
+    // outline: 1px solid rgba(255, 0, 0, 0.894); //
+    background-color: rgb(32, 32, 32);
+    box-shadow: 0px 0px 10px black inset;
+    width: fit-content;
+    max-width: 50%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-left: 1rem;
+    transition: transform 0.1s linear;
+
+    &:hover{
+        cursor: pointer;
+        outline: 1px solid rgb(151, 151, 151);
+        transform: translateX(5%);
+    }
+    
+
+    &:hover div.leftSideTask>i.deploy{
+        opacity: 1;
+    }
+
+
+    div.leftSideTask{
+        // background-color: red; //
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        padding: 0.5rem;
+
+        i.deploy{
+            opacity: 0.7;
+            color: v.$blue;
+            font-size: 1.5rem;
+        }
+
+        span.taskName{
+            font-size: 1.3rem;
+            color: white;
+            padding-right: 2rem;
+
+            &:focus{
+                outline: none;
+            }
+        }
+    }
+
+    div.rightSideTask{
+        padding-right: 1rem;
+        display: flex;
+        gap: 1rem;
+
+        i{
+            display: flex;
+            align-items: center;
+            // outline: 1px solid white;
+            height: 2.5rem;
+            font-size: 1.1rem;
+            opacity: 0.7;
+
+            &:hover{
+                opacity: 1;
+            }
+        }
+
+        i.valideTask{color: v.$blue;}
+        i.deleteTask{color: rgb(215, 37, 37);}
+    }
+
+
+
+    
+}

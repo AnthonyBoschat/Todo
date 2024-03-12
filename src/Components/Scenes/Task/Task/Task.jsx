@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useTask_One from "./useTask";
 
 export default function One_Task({task, folderIndex}){
@@ -10,14 +10,19 @@ export default function One_Task({task, folderIndex}){
         toggleRenameTask,
         taskNameRef,
         valideRenameTask,
-        taskOnEdition
-    } = useTask_One(folderIndex)
+        taskOnEdition,
+        returnLineFilter,
+        taskTitle
+    } = useTask_One(folderIndex, task)
+
+
 
     return(
         <div style={(taskEditable && taskOnEdition) ? {outline:"1px solid rgb(0, 182, 227)", boxShadow:"0px 0px 10px rgb(0, 182, 227)"} : null} ref={taskRef} className="task_Box">
             <div style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
                 {/* <i className="deploy fa-solid fa-caret-down"></i> */}
-                <span ref={taskNameRef} contentEditable={taskEditable} className="taskName">{task.title}</span>
+                {/* <span ref={taskNameRef} dangerouslySetInnerHTML={{__html:task.title}} contentEditable={taskEditable} className="taskName"></span> */}
+                <span ref={taskNameRef} contentEditable={taskEditable} className="taskName">{taskTitle}</span>
             </div>
             <div className="rightSideTask">
                 {!taskEditable && (<i onClick={toggleRenameTask} className="fa-solid fa-pen"></i>)}
