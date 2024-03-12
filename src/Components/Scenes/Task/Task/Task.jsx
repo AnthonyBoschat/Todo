@@ -23,7 +23,7 @@ export default function One_Task({task, folderIndex}){
             </div>
             <div className="rightSideTask">
                 {!taskEditable && (<i onClick={toggleRenameTask} className="fa-solid fa-pen"></i>)}
-                {(taskEditable && taskOnEdition) && (<i onClick={() => valideRenameTask(task.id)} className="valideTask fa-solid fa-check"></i>)}
+                {(taskEditable && taskOnEdition) && (<i onClick={() => valideRenameTask(task.id)} className="valideTask fa-solid fa-pen"></i>)}
                 
                 <i onClick={() => deleteTask(task.id)} className="deleteTask fa-solid fa-trash"></i>
             </div>
