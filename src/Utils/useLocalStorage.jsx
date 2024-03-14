@@ -10,30 +10,31 @@ export default function useLocalStorage(){
     
     const dispatch = useDispatch()
 
+    
 
 
 
+    // const localStorage_saveNewFolder = (newFolder) => {
+    //     const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
+    //     if(todoStorage){
+    //         todoStorage.foldersList.push(newFolder)
+    //         localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
+    //         dispatch(update_todoStorage(todoStorage))
+    //     }else{
+    //         const newTodoStorage = {
+    //             foldersList:[]
+    //         }
+    //         newTodoStorage.foldersList.push(newFolder)
+    //         localStorage.setItem("todoStorage", JSON.stringify(newTodoStorage))
+    //         dispatch(update_todoStorage(newTodoStorage))
+    //     }
+    // }
 
     const localStorage_saveNewFolder = (newFolder) => {
         const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        if(todoStorage){
-            todoStorage.foldersList.push(newFolder)
-            localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
-            dispatch(update_todoStorage(todoStorage))
-        }else{
-            const newTodoStorage = {
-                foldersList:[]
-            }
-            newTodoStorage.foldersList.push(newFolder)
-            localStorage.setItem("todoStorage", JSON.stringify(newTodoStorage))
-            dispatch(update_todoStorage(newTodoStorage))
-        }
+        todoStorage.foldersList.push(newFolder)
+        dispatch(update_todoStorage(todoStorage))
     }
-
-
-
-
-
 
     const localStorage_saveNewTask = (newTask) => {
         const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
@@ -42,6 +43,11 @@ export default function useLocalStorage(){
         localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
         dispatch(update_todoStorage(todoStorage))
     }
+
+    // Synchronise en permanence la sauvegarde dans le localStorage quand l'état rédux change
+    useEffect(() => {
+        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
+    }, [todoStorage])
 
 
     
