@@ -32,11 +32,18 @@ export default function useTask_Creation(){
 
     // Annule la création de la task
     const handleClickOutside = useCallback((event) => {
-        if(event.target !== taskCreationDisplayRef.current){
-            if(event.target !== taskCreationRef.current){
-                dispatch(update_taskOnCreation(false))
-            }
-        }
+        // if(event.target !== taskCreationDisplayRef.current){
+        //     if(event.target !== taskCreationRef.current){
+        //         dispatch(update_taskOnCreation(false))
+        //     }
+        // }
+        const taskTitle = taskCreationRef.current.innerHTML
+        const taskID = generateTaskID()
+        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
+        todoStorage.foldersList[folderIndex].taskList.push({title:taskTitle, id:taskID})
+        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
+        dispatch(update_todoStorage(todoStorage))
+        dispatch(update_taskOnCreation(false))
     }, [taskOnCreation])
 
 
@@ -44,13 +51,17 @@ export default function useTask_Creation(){
     // Valide la création de la task
     const handleValidTask = useCallback((event) => {
         if(event.key === "Enter"){
-            const taskTitle = taskCreationRef.current.innerText
-            const taskID = generateTaskID()
-            const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-            todoStorage.foldersList[folderIndex].taskList.push({title:taskTitle, id:taskID})
-            localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
-            dispatch(update_todoStorage(todoStorage))
-            dispatch(update_taskOnCreation(false))
+            if(event.shiftKey){
+                return
+            }else{
+                const taskTitle = taskCreationRef.current.innerHTML
+                const taskID = generateTaskID()
+                const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
+                todoStorage.foldersList[folderIndex].taskList.push({title:taskTitle, id:taskID})
+                localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
+                dispatch(update_todoStorage(todoStorage))
+                dispatch(update_taskOnCreation(false))
+            }
         }
     }, [taskOnCreation])
 

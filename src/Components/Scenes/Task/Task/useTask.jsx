@@ -18,10 +18,11 @@ export default function useTask_One(folderIndex, task){
         return splitSentence.flatMap((text, index) => index !== splitSentence.length - 1 ? [text, <br key={index} />] : text);
     }
 
-    const [taskTitle, setTaskTitle] = useState(returnLineFilter(task.title))
+    const [taskTitle, setTaskTitle] = useState(returnLineFilter(task.title.split("&nbsp;").join("")))
 
     // Pour supprimer cette task
     const deleteTask = (taskID) => {
+        console.log(taskID)
         const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
         const newTaskList = todoStorage.foldersList[folderIndex].taskList.filter(task => task.id !== taskID)
         todoStorage.foldersList[folderIndex].taskList = newTaskList

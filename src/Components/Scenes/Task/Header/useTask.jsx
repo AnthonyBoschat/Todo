@@ -2,13 +2,14 @@ import React, {} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_taskOnCreation } from "../TaskSlice";
 import { update_todoStorage } from "../../../../Utils/LocalStorageSlice";
-import { update_folderSelectedID} from "../../Folder/FolderSlice";
+import { update_folderSelectedID, update_folderSelectedName} from "../../Folder/FolderSlice";
 
 export default function useHeaderTask(){
 
     const foldersList = useSelector(store => store.localStorage.todoStorage.foldersList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
+    const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
 
     const dispatch = useDispatch()
 
@@ -29,8 +30,19 @@ export default function useHeaderTask(){
         }
     }
 
+    const handleChange = (e) => {
+        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
+        const folderIndex = todoStorage.foldersList.findIndex(folder => folder.id === folderSelectedID)
+        todoStorage.foldersList[folderIndex].name = e.target.value
+        dispatch(update_folderSelectedName(e.target.value))
+        dispatch(update_todoStorage(todoStorage))
+        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
+    }
+
     return{
         addTask,
-        deleteFolder
+        deleteFolder,
+        folderSelectedName,
+        handleChange
     }
 }

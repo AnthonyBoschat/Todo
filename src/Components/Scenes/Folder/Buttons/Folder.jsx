@@ -2,27 +2,20 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_folderSelectedID, update_folderSelectedName } from "../FolderSlice";
 import { update_taskOnEdition } from "../../Task/TaskSlice";
+import useFolder_Button from "./useFolder";
 
 export default function Button_Folder({folder}){
     
-    const buttonFolderRef = useRef()
-    const dispatch = useDispatch()
-    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
+    const {
+        folderSelectedID,
+        handleClickFolder,
+        buttonFolderRef
+    } = useFolder_Button(folder)
 
-    const handleClickFolder = () => {
-        // Si l'utilisateur clique sur un dossier qui n'est pas encore selectionner
-        if(folder?.id != folderSelectedID){
-            dispatch(update_folderSelectedID(folder?.id))
-        }
-        // Si l'utilisateur clique un dossier qui est déjà présenter
-        else{
-            dispatch(update_folderSelectedID(null))
-        }
-        dispatch(update_taskOnEdition(false))
-    }
+    
 
     return(
-        <li>
+        <li className="folderButton_Box">
             <button 
             className={folderSelectedID === folder?.id ? "folderSelected" : null} 
             onClick={handleClickFolder} 
@@ -30,6 +23,7 @@ export default function Button_Folder({folder}){
             >
                 {folder?.name}
             </button>
+            
         </li>
     )
 }

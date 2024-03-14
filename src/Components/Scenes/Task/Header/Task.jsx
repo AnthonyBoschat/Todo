@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import useAddTask from "./useTask";
 
 export default function Header_Task(){
 
-    const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
-    const {addTask, deleteFolder} = useAddTask()
+    
 
+    const {addTask, deleteFolder, folderSelectedName, handleChange} = useAddTask()
+
+
+    
     return(
         <div className="addTask_Display">
 
@@ -17,7 +20,9 @@ export default function Header_Task(){
 
             <div className="folderIndicator_Box">
                 <i onClick={deleteFolder} className="fa-solid fa-trash"></i>
-                {`/ ${folderSelectedName}`}
+                <span>/ </span>
+                <input onChange={handleChange} type="text" value={folderSelectedName} />
+                {/* {`/ ${folderSelectedName}`} */}
             </div>
         </div>
     )

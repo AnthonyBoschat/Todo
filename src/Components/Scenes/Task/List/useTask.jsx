@@ -12,8 +12,6 @@ export default function useTask_List(){
     const taskList = foldersList[folderIndex]?.taskList // Le dossier correspondant dans la liste des dossier au dossier selectionner
     
 
-    
-
 
     return{
         taskList,

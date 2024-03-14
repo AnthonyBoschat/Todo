@@ -1,0 +1,39 @@
+@use "../../../../Sass/Variable.scss" as v;
+
+li.folderButton_Box{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    // background-color: red;
+
+    button{
+        // outline: 1px solid red; //
+        width: max-content;
+        font-size: 1.3rem;
+        color: v.$blue;
+        border: none;
+        background-color: transparent;
+        padding: 2%;
+        opacity: 0.7;
+        transition: opacity 0.05s linear;
+
+        &:hover{
+            // text-decoration: underline;
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+
+    // i{
+    //     color: white;
+    //     font-size: 0.8rem;
+    //     transition: opacity 0.05s linear;
+    //     opacity: 0.7;
+    //     &:hover{
+    //         cursor: pointer;
+    //         opacity: 1;
+    //     }
+    // }
+    
+}

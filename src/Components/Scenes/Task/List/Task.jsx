@@ -13,15 +13,13 @@ export default function List_Task(){
     } = useTask_List()
     
 
-    
-
     return(
         <div ref={displayTaskListRef} className="listTask_Display">
                 <div className="listTask_Box">
 
                     {/* Si au moin une task d'enregistrer pour ce dossier, la liste de toutes les task */}
                     {taskList.length > 0 && (taskList.map((task, index) => (
-                        <One_Task folderIndex={folderIndex} key={`task_${index}`} task={task}/>
+                        <One_Task folderIndex={folderIndex} key={`task_${task.id}`} task={task}/>
                     )))}
 
                     {/* Si aucune Task d'enregistrer pour ce dossier */}

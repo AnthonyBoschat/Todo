@@ -6,6 +6,8 @@ export default function useLocalStorage(){
 
     const todoStorage = useSelector(store => store.localStorage.todoStorage)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
+    const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
+    
     const dispatch = useDispatch()
 
 
@@ -42,9 +44,7 @@ export default function useLocalStorage(){
     }
 
 
-    useEffect(() => {
-        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
-    }, [todoStorage])
+    
 
 
 
