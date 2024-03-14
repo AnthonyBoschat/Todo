@@ -10,7 +10,6 @@ export default function useTask_List(){
     const displayTaskListRef = useRef()
     const folderIndex = foldersList.findIndex(folder => folder.id === folderSelectedID) // L'index du dossier selectionner dans la liste des dossiers 
     const taskList = foldersList[folderIndex]?.taskList // Le dossier correspondant dans la liste des dossier au dossier selectionner
-    
 
 
     return{

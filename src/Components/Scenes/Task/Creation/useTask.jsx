@@ -40,7 +40,7 @@ export default function useTask_Creation(){
         const taskTitle = taskCreationRef.current.innerHTML
         const taskID = generateTaskID()
         const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        todoStorage.foldersList[folderIndex].taskList.push({title:taskTitle, id:taskID})
+        todoStorage.foldersList[folderIndex].taskList.push({title:taskTitle, id:taskID, finish:false})
         localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
         dispatch(update_todoStorage(todoStorage))
         dispatch(update_taskOnCreation(false))
@@ -57,7 +57,7 @@ export default function useTask_Creation(){
                 const taskTitle = taskCreationRef.current.innerHTML
                 const taskID = generateTaskID()
                 const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-                todoStorage.foldersList[folderIndex].taskList.push({title:taskTitle, id:taskID})
+                todoStorage.foldersList[folderIndex].taskList.push({title:taskTitle, id:taskID, finish:false})
                 localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
                 dispatch(update_todoStorage(todoStorage))
                 dispatch(update_taskOnCreation(false))

@@ -21,8 +21,7 @@ export default function Header_Task(){
             <div className="folderIndicator_Box">
                 <i onClick={deleteFolder} className="fa-solid fa-trash"></i>
                 <span>/ </span>
-                <input onChange={handleChange} type="text" value={folderSelectedName} />
-                {/* {`/ ${folderSelectedName}`} */}
+                <input onChange={handleChange} type="text" value={folderSelectedName ? folderSelectedName : "Default"} />
             </div>
         </div>
     )

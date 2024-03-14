@@ -2,3 +2,13 @@
     from{transform: translateX(0);}
     to{transform: translateX(1rem);}
 }
+
+@keyframes taskToggleFinish{
+    from{width: 0%;}
+    to{width: 100%;}
+}
+
+@keyframes taskToggleUnfinish{
+    from{width: 100%;}
+    to{width: 0%;}
+}

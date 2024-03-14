@@ -19,7 +19,7 @@ export default function useHeaderTask(){
 
     const deleteFolder = () => {
         
-        const folderSelectedName = foldersList.findIndex(folder => folder.id === folderSelectedID)
+        // const folderSelectedName = foldersList.findIndex(folder => folder.id === folderSelectedID)
         const userValidDelete = window.confirm(`Are you sure, delete ${folderSelectedName} ?`)
         if(userValidDelete){
             const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))

@@ -6,7 +6,9 @@ import { update_taskOnEdition } from "../TaskSlice";
 export default function useTask_One(folderIndex, task){
 
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
+    const todoStorage = useSelector(store => store.localStorage.todoStorage)
     const [taskEditable, setTaskEditable] = useState(false)
+    const [taskFinish, setTaskFinish] = useState(task.finish)
     
     const taskRef = useRef()
     const taskNameRef = useRef()
@@ -18,11 +20,8 @@ export default function useTask_One(folderIndex, task){
         return splitSentence.flatMap((text, index) => index !== splitSentence.length - 1 ? [text, <br key={index} />] : text);
     }
 
-    const [taskTitle, setTaskTitle] = useState(returnLineFilter(task.title.split("&nbsp;").join("")))
-
     // Pour supprimer cette task
     const deleteTask = (taskID) => {
-        console.log(taskID)
         const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
         const newTaskList = todoStorage.foldersList[folderIndex].taskList.filter(task => task.id !== taskID)
         todoStorage.foldersList[folderIndex].taskList = newTaskList
@@ -46,6 +45,33 @@ export default function useTask_One(folderIndex, task){
         setTaskEditable(false)
     }
 
+    // Pour signaler qu'une task est terminer
+    const validTask = () => {
+        setTaskFinish(!taskFinish)
+    }
+
+    useEffect(() => {
+        if(taskFinish){
+            const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
+            todoStorage.foldersList[folderIndex].taskList.map(object => {
+                if(object.id === task.id){
+                    object.finish = true
+                }
+            })
+            dispatch(update_todoStorage(todoStorage))
+            localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
+        }
+        else if(!taskFinish){
+            const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
+            todoStorage.foldersList[folderIndex].taskList.map(object => {
+                if(object.id === task.id){
+                    object.finish = false
+                }
+            })
+            dispatch(update_todoStorage(todoStorage))
+            localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
+        }
+    }, [taskFinish])
 
     // Afin de placer le focus et le curseur sur la task qu'on souhaite modifier
     useEffect(() => {
@@ -96,6 +122,7 @@ export default function useTask_One(folderIndex, task){
         taskNameRef,
         valideRenameTask,
         taskOnEdition,
-        taskTitle
+        returnLineFilter,
+        validTask
     }
 }
