@@ -1,24 +1,25 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_taskOnCreation } from "../TaskSlice";
-import { update_todoStorage } from "../../../../Utils/LocalStorageSlice";
+import useLocalStorage from "../../../../Utils/useLocalStorage";
 
 export default function useTask_Creation(){
 
-    const foldersList = useSelector(store => store.localStorage.todoStorage.foldersList) // La liste des dossiers
+    const todoStorage = useSelector(store => store.localStorage.todoStorage) // La liste des dossiers
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const folderIndex = foldersList.findIndex(folder => folder.id === folderSelectedID) // L'index du dossier selectionner dans la liste des dossiers 
+    const folderIndex = todoStorage.foldersList.findIndex(folder => folder.id === folderSelectedID) // L'index du dossier selectionner dans la liste des dossiers 
     
-    
+    const {localStorage_saveNewTask} = useLocalStorage()
     const dispatch = useDispatch()
-
-    const taskCreationDisplayRef = useRef()
     const taskCreationRef = useRef()
 
 
+
+
+
+    // Génère l'id d'une tâche
     const generateTaskID = () => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
         let newID
         if(todoStorage.foldersList[folderIndex].taskList.length === 0){
             newID = 0
@@ -30,41 +31,37 @@ export default function useTask_Creation(){
         return newID
     }
 
-    // Annule la création de la task
-    const handleClickOutside = useCallback((event) => {
-        // if(event.target !== taskCreationDisplayRef.current){
-        //     if(event.target !== taskCreationRef.current){
-        //         dispatch(update_taskOnCreation(false))
-        //     }
-        // }
+
+    
+
+    // Prépare la sauvegarde dans le localStorage de la nouvelle tâche
+    const saveNewTask = () => {
         const taskTitle = taskCreationRef.current.innerHTML
         const taskID = generateTaskID()
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        todoStorage.foldersList[folderIndex].taskList.push({title:taskTitle, id:taskID, finish:false})
-        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
-        dispatch(update_todoStorage(todoStorage))
+        const newTask = {title:taskTitle, id:taskID, finish:false}
+        localStorage_saveNewTask(newTask)
+    }
+
+    // Validation de la task par le click en dehors, si le nom est rempli au moin
+    const handleValidTaskKeydownClick = useCallback(() => {
+        if(taskCreationRef.current.innerHTML !== ""){
+            saveNewTask()
+        }
         dispatch(update_taskOnCreation(false))
     }, [taskOnCreation])
 
 
-
-    // Valide la création de la task
-    const handleValidTask = useCallback((event) => {
+    // Validation de la task par le click en dehors, si le nom est rempli au moin
+    const handleValidTaskKeydown = useCallback((event) => {
         if(event.key === "Enter"){
-            if(event.shiftKey){
-                return
-            }else{
-                const taskTitle = taskCreationRef.current.innerHTML
-                const taskID = generateTaskID()
-                const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-                todoStorage.foldersList[folderIndex].taskList.push({title:taskTitle, id:taskID, finish:false})
-                localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
-                dispatch(update_todoStorage(todoStorage))
+            if(!event.shiftKey){
+                saveNewTask()
                 dispatch(update_taskOnCreation(false))
             }
         }
     }, [taskOnCreation])
 
+    
     // Quand une nouvelle task souhaite etre créé, on met le focus dessus
     useEffect(() => { 
         if(taskOnCreation && taskCreationRef.current){
@@ -76,20 +73,19 @@ export default function useTask_Creation(){
     useEffect(() => { 
         if(taskCreationRef.current && taskOnCreation){
 
-            taskCreationRef.current.addEventListener("keydown", handleValidTask)
-            setTimeout(() => {window.addEventListener("click", handleClickOutside)}, 1);
+            taskCreationRef.current.addEventListener("keydown", handleValidTaskKeydown)
+            setTimeout(() => {window.addEventListener("click", handleValidTaskKeydownClick)}, 1);
 
             return () => {
-                window.removeEventListener("click", handleClickOutside)
+                window.removeEventListener("click", handleValidTaskKeydownClick)
                 if(taskCreationRef.current){
-                    taskCreationRef.current.removeEventListener("keydown", handleValidTask)
+                    taskCreationRef.current.removeEventListener("keydown", handleValidTaskKeydown)
                 }
             }
         }
     }, [taskOnCreation])
 
     return{
-        taskCreationDisplayRef,
         taskCreationRef,
         generateTaskID
     }
