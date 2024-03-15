@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_todoStorage } from "./LocalStorageSlice";
+import { update_folderSelectedID } from "../Components/Scenes/Folder/FolderSlice";
 
 export default function useLocalStorage(){
 
@@ -10,41 +11,28 @@ export default function useLocalStorage(){
     
     const dispatch = useDispatch()
 
-    
 
-
-
-    // const localStorage_saveNewFolder = (newFolder) => {
-    //     const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-    //     if(todoStorage){
-    //         todoStorage.foldersList.push(newFolder)
-    //         localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
-    //         dispatch(update_todoStorage(todoStorage))
-    //     }else{
-    //         const newTodoStorage = {
-    //             foldersList:[]
-    //         }
-    //         newTodoStorage.foldersList.push(newFolder)
-    //         localStorage.setItem("todoStorage", JSON.stringify(newTodoStorage))
-    //         dispatch(update_todoStorage(newTodoStorage))
-    //     }
-    // }
-
+    // Enregistrer un nouveau dossier
     const localStorage_saveNewFolder = (newFolder) => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        todoStorage.foldersList.push(newFolder)
-        dispatch(update_todoStorage(todoStorage))
+        const todoStorage = JSON.parse(localStorage.getItem("todoStorage")) // On récupère le localStorage
+        todoStorage.foldersList.push(newFolder) // On push le nouveau dossier
+        dispatch(update_todoStorage(todoStorage)) // On met à jour l'état redux todoStorage
+        dispatch(update_folderSelectedID(newFolder.id)) // On met le focus sur le dossier créé
     }
 
+    // Enregistrer une nouvelle tâche
     const localStorage_saveNewTask = (newTask) => {
         const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        const folderIndex = todoStorage.foldersList.findIndex(folder => folder.name === folderSelectedID)
+        const folderIndex = todoStorage.foldersList.findIndex(folder => folder.id === folderSelectedID)
         todoStorage.foldersList[folderIndex].taskList.push(newTask)
-        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
         dispatch(update_todoStorage(todoStorage))
     }
 
-    // Synchronise en permanence la sauvegarde dans le localStorage quand l'état rédux change
+    const localStorage_renameFolder = () => {
+
+    }
+
+    // Synchronise en permanence la sauvegarde dans le localStorage quand l'état rédux todoStorage change
     useEffect(() => {
         localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
     }, [todoStorage])

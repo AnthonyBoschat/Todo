@@ -8,53 +8,38 @@ export default function useFolder_Creation(){
     const inputRef = useRef()
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
     const todoStorage = useSelector(store => store.localStorage.todoStorage)
-    const foldersList = todoStorage.foldersList // La liste des dossiers
     const {localStorage_saveNewFolder} = useLocalStorage()
     const dispatch = useDispatch()
 
 
+    // Génère un ID pour le dossier
     const generateFolderID = () => {
         let newID
-        if(foldersList.length === 0){
+        if(todoStorage.foldersList.length === 0){
             newID = 1
         }else{
-            const maximumID = foldersList.reduce((max, folder) => folder.id > max ? folder.id : max, foldersList[0].id)
+            const maximumID = todoStorage.foldersList.reduce((max, folder) => folder.id > max ? folder.id : max, todoStorage.foldersList[0].id)
             newID = maximumID + 1
         }
         return newID
     }
 
+    // Pour préparer la sauvegarde du nouveau dossier
+    const saveNewFolder = () => {
+        if(inputRef.current.value !== ""){
+            const newFolderName = inputRef.current.value
+            const newFolderID = generateFolderID()
+            localStorage_saveNewFolder({name:newFolderName, taskList:[], id:newFolderID})
+        }
+        dispatch(update_folderOnCreation(false))
+    }
 
     // Quand le dossier veut etre valider
-    const handleValidFolder = useCallback((event) => {
-        if(event.key === "Enter" && inputRef.current){ // Si la touche Entrer
-            if(inputRef.current.value != ""){ // Si un début de nom a été renseigner
-                const newFolderName = event.srcElement.value
-                const newFolderID = generateFolderID()
-                localStorage_saveNewFolder({name:newFolderName, taskList:[], id:newFolderID}) // On sauvegarde dans le localStorage le dossier créé
-                dispatch(update_folderSelectedID(newFolderID)) // On met le focus sur le dossier créé
-            }
-            dispatch(update_folderOnCreation(false)) // On annule le mode création du dossier
-        }
-    }, [folderOnCreation])
-
+    const handleValidFolder = useCallback((event) => { if(event.key === "Enter" && inputRef.current){saveNewFolder()} }, [folderOnCreation])
     // Lors de l'annulation de la création d'un dossier
-    const handleClickOutside = useCallback(() => {
-        if(inputRef.current){
-            if(inputRef.current.value != ""){ // Si un début de nom a été renseigner
-                const newFolderName = inputRef.current.value
-                const newFolderID = generateFolderID()
-                // dispatch(update_addFolder({name:newFolderName})) // On met à jour la liste des dossiers dans redux
-                dispatch(update_folderSelectedID(newFolderID)) // On met le focus sur le dossier créé
-                localStorage_saveNewFolder({name:newFolderName, taskList:[], id:newFolderID}) // On sauvegarde dans le localStorage le dossier créé
-            }
-            dispatch(update_folderOnCreation(false)) // On annule le mode création du dossier
-        }
-    }, [folderOnCreation])
-
-
-
+    const handleClickOutside = useCallback(() => { if(inputRef.current){saveNewFolder()} }, [folderOnCreation])
     
+    // Quand folderOnCreation passe en true ( qu'on est en train de créé un dossier )
     useEffect(() => {
         if(inputRef.current && folderOnCreation){
             inputRef.current.addEventListener("keydown", handleValidFolder)
