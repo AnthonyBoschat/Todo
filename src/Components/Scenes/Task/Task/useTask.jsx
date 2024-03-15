@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_todoStorage } from "../../../../Utils/LocalStorageSlice";
 import { update_taskOnEdition } from "../TaskSlice";
+import useLocalStorage from "../../../../Utils/useLocalStorage";
 
 export default function useTask_One(folderIndex, task){
 
@@ -9,25 +10,22 @@ export default function useTask_One(folderIndex, task){
     const todoStorage = useSelector(store => store.localStorage.todoStorage)
     const [taskEditable, setTaskEditable] = useState(false)
     const [taskFinish, setTaskFinish] = useState(task.finish)
+    const {localStorage_deleteTask} = useLocalStorage()
     
     const taskRef = useRef()
     const taskNameRef = useRef()
     const dispatch = useDispatch()
 
-    // Filtrage du contenu de la task pour permettre les saut à la ligne
+    // Filtre le contenu du taskTitle, pour un affichage correcte des chevrons, des retours à la ligne, des espaces.
     const returnLineFilter = (taskTitle) => {
-        const splitSentence = taskTitle.split('<br>')
+        const taskTitleReplace = taskTitle.replace(/&nbsp;/g, '')
+        const filter = /<br>|&amp;lt;|&amp;gt;/g;
+        const splitSentence = taskTitleReplace.split(filter)
         return splitSentence.flatMap((text, index) => index !== splitSentence.length - 1 ? [text, <br key={index} />] : text);
     }
 
     // Pour supprimer cette task
-    const deleteTask = (taskID) => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        const newTaskList = todoStorage.foldersList[folderIndex].taskList.filter(task => task.id !== taskID)
-        todoStorage.foldersList[folderIndex].taskList = newTaskList
-        dispatch(update_todoStorage(todoStorage))
-        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
-    }
+    const deleteTask = (taskID) => {localStorage_deleteTask(taskID)}
 
     // Click pour rendre le task editable
     const toggleRenameTask = () => {
@@ -45,10 +43,8 @@ export default function useTask_One(folderIndex, task){
         setTaskEditable(false)
     }
 
-    // Pour signaler qu'une task est terminer
-    const validTask = () => {
-        setTaskFinish(!taskFinish)
-    }
+    // Pour toggle une task en finish ou unFinish
+    const validTask = () => { setTaskFinish(!taskFinish) }
 
     useEffect(() => {
         if(taskFinish){

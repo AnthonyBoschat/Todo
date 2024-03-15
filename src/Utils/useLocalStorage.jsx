@@ -47,8 +47,16 @@ export default function useLocalStorage(){
     }
 
     // Pour la suppression d'une tâche
-    const localStorage_deleteTask = () => {
+    const localStorage_deleteTask = (taskID) => {
         const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
+        const newTaskList = todoStorage.foldersList[folderIndex].taskList.filter(task => task.id !== taskID)
+        todoStorage.foldersList[folderIndex].taskList = newTaskList
+        dispatch(update_todoStorage(todoStorage))
+    }
+
+    // Pour le renommage d'une task
+    const localStorage_renameTask = () => {
+        
     }
 
     
@@ -74,5 +82,6 @@ export default function useLocalStorage(){
 
         localStorage_saveNewTask,
         localStorage_deleteTask,
+        localStorage_renameTask
     }
 }
