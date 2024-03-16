@@ -14,6 +14,8 @@ export default function One_Task({task, folderIndex}){
         validTask
     } = useTask_One(folderIndex, task)
 
+    const [taskTitle, setTaskTitle] = useState(task.title)
+
     return(
         <div className="task_Display">
             <div className="check_Box">
@@ -22,7 +24,7 @@ export default function One_Task({task, folderIndex}){
 
             <div style={(taskEditable && taskOnEdition) ? {outline:"1px solid rgb(0, 182, 227)", boxShadow:"0px 0px 10px rgb(0, 182, 227)"} : null} ref={taskRef} className={task.finish === true ? "task_Box taskFinish" : "task_Box"}>
                 <div style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
-                    <span style={{whiteSpace:"pre-wrap"}} ref={taskNameRef} contentEditable={taskEditable} className="taskName">{task.title}</span>
+                    <span ref={taskNameRef} contentEditable={taskEditable} className="taskName">{taskTitle}</span>
                 </div>
                 <div className="rightSideTask">
                     {!taskEditable && (<i onClick={toggleRenameTask} className="fa-solid fa-pen"></i>)}

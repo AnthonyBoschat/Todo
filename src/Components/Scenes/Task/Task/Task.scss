@@ -87,6 +87,7 @@ div.task_Display{
             }
     
             span.taskName{
+                white-space: pre-wrap;
                 font-size: 1.3rem;
                 color: white;
                 padding-right: 2rem;
