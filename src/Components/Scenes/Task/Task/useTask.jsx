@@ -16,14 +16,6 @@ export default function useTask_One(folderIndex, task){
     const taskNameRef = useRef()
     const dispatch = useDispatch()
 
-    // Filtre le contenu du taskTitle, pour un affichage correcte des chevrons, des retours à la ligne, des espaces.
-    const returnLineFilter = (taskTitle) => {
-        const taskTitleReplace = taskTitle.replace(/&nbsp;/g, '')
-        const filter = /<br>|&lt;|&gt;/g;
-        const splitSentence = taskTitleReplace.split(filter)
-        return splitSentence.flatMap((text, index) => index !== splitSentence.length - 1 ? [text, <br key={index} />] : text);
-    }
-
     // Pour supprimer cette task
     const deleteTask = (taskID) => {localStorage_deleteTask(taskID)}
 
@@ -35,7 +27,7 @@ export default function useTask_One(folderIndex, task){
 
     // Bouton de validation pour valider l'edit de task
     const valideRenameTask = (taskID) => {
-        const newTaskTitle = taskNameRef.current.innerHTML
+        const newTaskTitle = taskNameRef.current.innerText
         localStorage_renameTask(taskID, newTaskTitle)
         setTaskEditable(false)
     }
@@ -115,7 +107,6 @@ export default function useTask_One(folderIndex, task){
         taskNameRef,
         valideRenameTask,
         taskOnEdition,
-        returnLineFilter,
         validTask
     }
 }

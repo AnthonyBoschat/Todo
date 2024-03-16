@@ -36,7 +36,7 @@ export default function useTask_Creation(){
 
     // Prépare la sauvegarde dans le localStorage de la nouvelle tâche
     const saveNewTask = () => {
-        const taskTitle = taskCreationRef.current.innerHTML
+        const taskTitle = taskCreationRef.current.innerText
         const taskID = generateTaskID()
         const newTask = {title:taskTitle, id:taskID, finish:false}
         localStorage_saveNewTask(newTask)
