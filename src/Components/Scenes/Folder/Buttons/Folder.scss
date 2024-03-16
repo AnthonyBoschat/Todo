@@ -5,11 +5,13 @@ li.folderButton_Box{
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    // background-color: red;
+    width: 100%;
+    justify-content: center;
+    // background-color: red; //
 
     button{
         // outline: 1px solid red; //
-        width: max-content;
+        width: fit-content;
         font-size: 1.3rem;
         color: v.$blue;
         border: none;
