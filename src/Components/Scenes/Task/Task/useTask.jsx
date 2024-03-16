@@ -10,7 +10,7 @@ export default function useTask_One(folderIndex, task){
     const todoStorage = useSelector(store => store.localStorage.todoStorage)
     const [taskEditable, setTaskEditable] = useState(false)
     const [taskFinish, setTaskFinish] = useState(task.finish)
-    const {localStorage_deleteTask} = useLocalStorage()
+    const {localStorage_deleteTask, localStorage_renameTask} = useLocalStorage()
     
     const taskRef = useRef()
     const taskNameRef = useRef()
@@ -19,7 +19,7 @@ export default function useTask_One(folderIndex, task){
     // Filtre le contenu du taskTitle, pour un affichage correcte des chevrons, des retours à la ligne, des espaces.
     const returnLineFilter = (taskTitle) => {
         const taskTitleReplace = taskTitle.replace(/&nbsp;/g, '')
-        const filter = /<br>|&amp;lt;|&amp;gt;/g;
+        const filter = /<br>|&lt;|&gt;/g;
         const splitSentence = taskTitleReplace.split(filter)
         return splitSentence.flatMap((text, index) => index !== splitSentence.length - 1 ? [text, <br key={index} />] : text);
     }
@@ -35,11 +35,8 @@ export default function useTask_One(folderIndex, task){
 
     // Bouton de validation pour valider l'edit de task
     const valideRenameTask = (taskID) => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        const taskIndex = todoStorage.foldersList[folderIndex].taskList.findIndex(task => task.id === taskID)
-        todoStorage.foldersList[folderIndex].taskList[taskIndex].title = taskNameRef.current.innerHTML
-        dispatch(update_todoStorage(todoStorage))
-        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
+        const newTaskTitle = taskNameRef.current.innerHTML
+        localStorage_renameTask(taskID, newTaskTitle)
         setTaskEditable(false)
     }
 

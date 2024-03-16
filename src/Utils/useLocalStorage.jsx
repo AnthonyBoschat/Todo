@@ -55,8 +55,11 @@ export default function useLocalStorage(){
     }
 
     // Pour le renommage d'une task
-    const localStorage_renameTask = () => {
-        
+    const localStorage_renameTask = (taskID, newTaskTitle) => {
+        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
+        const taskIndex = todoStorage.foldersList[folderIndex].taskList.findIndex(task => task.id === taskID)
+        todoStorage.foldersList[folderIndex].taskList[taskIndex].title = newTaskTitle
+        dispatch(update_todoStorage(todoStorage))
     }
 
     
