@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_todoStorage } from "./LocalStorageSlice";
+import { update_addFolder, update_loadFolder, update_todoStorage } from "./LocalStorageSlice";
 import { update_folderSelectedID, update_folderSelectedName } from "../Components/Scenes/Folder/FolderSlice";
-import { update_taskOnCreation } from "../Components/Scenes/Task/TaskSlice";
+import { update_taskList, update_taskOnCreation } from "../Components/Scenes/Task/TaskSlice";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useLocalStorage(){
@@ -16,18 +16,48 @@ export default function useLocalStorage(){
 
     // Enregistrer un nouveau dossier
     const localStorage_saveNewFolder = (newFolder) => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage")) // On récupère le localStorage
-        todoStorage.foldersList.push(newFolder) // On push le nouveau dossier
-        dispatch(update_todoStorage(todoStorage)) // On met à jour l'état redux todoStorage
-        dispatch(update_folderSelectedID(newFolder.id)) // On met le focus sur le dossier créé
+        fetch("http://localhost:4000/folders/addFolder", {
+            method:"POST",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newFolder)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Dossier enregistrer :", data)
+            const {name, _id} = data
+            dispatch(update_addFolder({name, _id})) // On met à jour l'état redux todoStorage
+            dispatch(update_folderSelectedID(_id))
+        })
+        .catch(error => console.error("Erreur lors de l'enregistrement du dossier : ", error))
     }
 
     // Pour la suppression d'un dossier
     const localStorage_deleteFolder = () => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        todoStorage.foldersList = todoStorage.foldersList.filter(folder => folder.id !== folderSelectedID)
-        dispatch(update_todoStorage(todoStorage))
-        dispatch(update_folderSelectedID(null))
+        fetch(`http://localhost:4000/folders/deleteFolder/${folderSelectedID}`, {method:"DELETE"})
+        .then(response => {
+            if(!response.ok){
+                throw new Error(`Échec de la suppression du dossier ${folderSelectedID}`)
+            }
+            return response.json()
+        })
+        .then(result => {
+            console.log(result.message)
+            fetch(`http://localhost:4000/tasks/deleteAllTaskForThisFolder/${folderSelectedID}`, {method:"DELETE"})
+            .then(response => {
+                if(!response.ok){
+                    throw new Error(`Echec de la suppression des task associé au dossier ${folderSelectedID}`)
+                }
+                return response.json()
+            })
+            .then(result => {
+                console.log(result.message)
+                dispatch(update_folderSelectedID(null))
+            })
+            .catch(error => console.error(error.message))
+        })
+        .catch(error => {console.error(`Erreur lors de la suppression du dossier :`,error)})
     }
 
     // Pour le renommage d'un dossier
@@ -62,12 +92,56 @@ export default function useLocalStorage(){
         dispatch(update_todoStorage(todoStorage))
     }
 
+    // Pour le toggle d'une tâche
+    const localStorage_toggleTask = (taskID, taskCompleted) => {
+        fetch(`http://localhost:4000/tasks/toggleTask/${taskID}`, {
+            method:"PUT",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({completed:taskCompleted})
+        })
+        .then(response => {
+            if(!response.ok){
+                throw new Error("erreur lors de la requête toggle")
+            }
+            return response.json()
+        })
+        .then(result => {
+            console.log("Le toggle de la tâche a été modifier")
+        })
+        .catch(error => console.error("Erreur lors de la modification du toggle de la task : ", error))
+    }
+
     
 
-    // Synchronise en permanence la sauvegarde dans le localStorage quand l'état rédux todoStorage change
+    // Première récupération de la liste complète des folders dans la base de donnée
     useEffect(() => {
-        localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
-    }, [todoStorage])
+        fetch("http://localhost:4000/folders/getAllFolders")
+        .then(response => response.json())
+        .then(allFolders => {
+            console.log("Tout les dossiers ont été récupérer de la base de donnée")
+            dispatch(update_loadFolder(allFolders))
+        })
+        .catch(error => console.error("Erreur lors de la récupération des dossiers :", error));
+    }, [])
+
+
+
+    useEffect(() => {
+        if(folderSelectedID){
+            // On récupère les tasks correspondantes s'il y en a
+            fetch(`http://localhost:4000/tasks/getTasks/${folderSelectedID}`)
+            .then(response => response.json())
+            .then(allTasks => {
+                dispatch(update_taskList(allTasks))
+            })
+            .catch(error => {
+                console.error("Erreur lors de la récupération des tasks lié au folder : ", folderSelectedID)
+                dispatch(update_taskList([]))
+            })
+        }
+    }, [folderSelectedID])
 
 
     
@@ -81,6 +155,7 @@ export default function useLocalStorage(){
         localStorage_saveNewFolder,
         localStorage_deleteFolder,
         localStorage_renameFolder,
+        localStorage_toggleTask,
 
 
         localStorage_saveNewTask,

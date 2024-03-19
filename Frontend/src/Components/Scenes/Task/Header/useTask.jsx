@@ -16,6 +16,12 @@ export default function useHeaderTask(){
     const [folderInputDisabled, setFolderInputDisabled] = useState(true)
     // Responsable de la mémorisation du folderName avant modification
     const [folderNameMemory, setFolderNameMemory] = useState(null)
+    const [folderName, setFolderName] = useState(folderSelectedName)
+    useEffect(() => {
+        if(folderSelectedName){
+            setFolderName(folderSelectedName)
+        }
+    }, [folderSelectedName])
 
     // Signale qu'on souhaite ajouter une tâche
     const addTask = () => {
@@ -29,9 +35,6 @@ export default function useHeaderTask(){
             localStorage_deleteFolder()
         }
     }
-
-    // Quand la valeur dans l'input change
-    const handleChange = (e) => { localStorage_renameFolder(e.target.value) }
 
     // Permet de rendre l'inputFolderName Accessible ou non
     const lockUnlockFolder = () => {
@@ -49,6 +52,10 @@ export default function useHeaderTask(){
         folderRef.selectionStart = folderRef.value.length
         folderRef.selectionEnd = folderRef.value.length
         folderRef.focus()
+    }
+
+    const handlefolderNameChange = (e) => {
+        setFolderName(e.target.value)
     }
 
 
@@ -92,9 +99,10 @@ export default function useHeaderTask(){
         addTask,
         deleteFolder,
         folderSelectedName,
-        handleChange,
         folderInputRef,
         folderInputDisabled,
-        lockUnlockFolder
+        lockUnlockFolder,
+        folderName,
+        handlefolderNameChange
     }
 }

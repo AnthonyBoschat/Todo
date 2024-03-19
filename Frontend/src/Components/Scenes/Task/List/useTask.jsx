@@ -9,7 +9,8 @@ export default function useTask_List(){
     const taskOnCreation = useSelector(store => store.task.taskOnCreation) // Est-ce qu'une task est en train d'etre créé
     const displayTaskListRef = useRef()
     const folderIndex = todoStorage.foldersList.findIndex(folder => folder.id === folderSelectedID) // L'index du dossier selectionner dans la liste des dossiers 
-    const taskList = todoStorage.foldersList[folderIndex].taskList // Le dossier correspondant dans la liste des dossier au dossier selectionner
+    // const taskList = todoStorage.foldersList[folderIndex].taskList // Le dossier correspondant dans la liste des dossier au dossier selectionner
+    const taskList = useSelector(store => store.task.taskList)
 
     
 

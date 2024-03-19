@@ -19,7 +19,7 @@ export default function List_Task(){
 
                     {/* Si au moin une task d'enregistrer pour ce dossier, la liste de toutes les task */}
                     {taskList?.length > 0 && (taskList.map((task, index) => (
-                        <One_Task folderIndex={folderIndex} key={`task_${task.id}`} task={task}/>
+                        <One_Task folderIndex={folderIndex} key={`task_${task._id}`} task={task}/>
                     )))}
 
                     {/* Si aucune Task d'enregistrer pour ce dossier */}

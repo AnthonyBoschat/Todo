@@ -9,10 +9,11 @@ export default function Header_Task(){
         addTask, 
         deleteFolder, 
         folderSelectedName, 
-        handleChange,
         folderInputRef,
         folderInputDisabled,
-        lockUnlockFolder
+        lockUnlockFolder,
+        folderName,
+        handlefolderNameChange
     } = useHeaderTask()
 
     
@@ -32,7 +33,7 @@ export default function Header_Task(){
             <div className="folderIndicator_Box">
                 <i onClick={deleteFolder} className="deleteFolder fa-solid fa-trash"></i>
                 <span>/ </span>
-                <input ref={folderInputRef} style={!folderInputDisabled ? {outline:"1px solid white"} : null} disabled={folderInputDisabled} onChange={handleChange} type="text" value={folderSelectedName ? folderSelectedName : ""} />
+                <input onChange={handlefolderNameChange} ref={folderInputRef} style={!folderInputDisabled ? {outline:"1px solid white"} : null} disabled={folderInputDisabled} type="text" value={folderName ? folderName : "undefined"} />
                 {folderInputDisabled && (<i onClick={lockUnlockFolder} className="lockFolder fa-solid fa-lock"></i>)}
                 {!folderInputDisabled && (<i onClick={lockUnlockFolder} className="unlockFolder fa-solid fa-unlock"></i>)}
             </div>

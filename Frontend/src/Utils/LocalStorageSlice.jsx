@@ -1,17 +1,21 @@
 import {createSlice} from "@reduxjs/toolkit"
 
-const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-
 const LocalStorageSlice = createSlice({
     name:"localStorage",
     initialState:{
-        todoStorage: todoStorage ? todoStorage : {
+        todoStorage: {
             foldersList:[]
         }
     },
     reducers:{
         update_todoStorage:(state,action) => {
             state.todoStorage = action.payload
+        },
+        update_addFolder:(state,action) => {
+            state.todoStorage.foldersList.push(action.payload)
+        },
+        update_loadFolder:(state,action) => {
+            state.todoStorage.foldersList = action.payload
         },
         update_RESET_FOLDERS:(state,action) => {
             state.todoStorage = {
@@ -27,6 +31,8 @@ const LocalStorageSlice = createSlice({
 export const LocalStorageSliceReducer = LocalStorageSlice.reducer
 export const {
     update_todoStorage,
+    update_addFolder,
+    update_loadFolder,
     update_RESET_FOLDERS,
     update_RESET_TASK
 } = LocalStorageSlice.actions

@@ -11,8 +11,8 @@ export default function useFolder_Button(folder){
 
     const handleClickFolder = () => {
         // Si l'utilisateur clique sur un dossier qui n'est pas encore selectionner
-        if(folder?.id != folderSelectedID){
-            dispatch(update_folderSelectedID(folder?.id))
+        if(folder?._id != folderSelectedID){
+            dispatch(update_folderSelectedID(folder?._id))
         }
         // Si l'utilisateur clique un dossier qui est déjà présenter
         else{

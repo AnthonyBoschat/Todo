@@ -7,29 +7,14 @@ export default function useFolder_Creation(){
 
     const inputRef = useRef()
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
-    const todoStorage = useSelector(store => store.localStorage.todoStorage)
     const {localStorage_saveNewFolder} = useLocalStorage()
     const dispatch = useDispatch()
-
-
-    // Génère un ID pour le dossier
-    const generateFolderID = () => {
-        let newID
-        if(todoStorage.foldersList.length === 0){
-            newID = 1
-        }else{
-            const maximumID = todoStorage.foldersList.reduce((max, folder) => folder.id > max ? folder.id : max, todoStorage.foldersList[0].id)
-            newID = maximumID + 1
-        }
-        return newID
-    }
 
     // Pour préparer la sauvegarde du nouveau dossier
     const saveNewFolder = () => {
         if(inputRef.current.value !== ""){
             const newFolderName = inputRef.current.value
-            const newFolderID = generateFolderID()
-            localStorage_saveNewFolder({name:newFolderName, taskList:[], id:newFolderID})
+            localStorage_saveNewFolder({name:newFolderName})
         }
         dispatch(update_folderOnCreation(false))
     }

@@ -8,9 +8,10 @@ export default function useTask_One(folderIndex, task){
 
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
     const todoStorage = useSelector(store => store.localStorage.todoStorage)
+    const taskList = useSelector(store => store.task.taskList)
     const [taskEditable, setTaskEditable] = useState(false)
-    const [taskFinish, setTaskFinish] = useState(task.finish)
-    const {localStorage_deleteTask, localStorage_renameTask} = useLocalStorage()
+    const [taskFinish, setTaskFinish] = useState(task.completed)
+    const {localStorage_deleteTask, localStorage_renameTask, localStorage_toggleTask} = useLocalStorage()
     
     const taskRef = useRef()
     const taskNameRef = useRef()
@@ -37,24 +38,18 @@ export default function useTask_One(folderIndex, task){
 
     useEffect(() => {
         if(taskFinish){
-            const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-            todoStorage.foldersList[folderIndex].taskList.map(object => {
-                if(object.id === task.id){
-                    object.finish = true
+            taskList.map(object => {
+                if(object._id === task._id){
+                    localStorage_toggleTask(task._id, true)
                 }
             })
-            dispatch(update_todoStorage(todoStorage))
-            localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
         }
         else if(!taskFinish){
-            const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-            todoStorage.foldersList[folderIndex].taskList.map(object => {
-                if(object.id === task.id){
-                    object.finish = false
+            taskList.map(object => {
+                if(object._id === task._id){
+                    localStorage_toggleTask(task._id, false)
                 }
             })
-            dispatch(update_todoStorage(todoStorage))
-            localStorage.setItem("todoStorage", JSON.stringify(todoStorage))
         }
     }, [taskFinish])
 
@@ -107,6 +102,7 @@ export default function useTask_One(folderIndex, task){
         taskNameRef,
         valideRenameTask,
         taskOnEdition,
-        validTask
+        validTask,
+        taskFinish
     }
 }
