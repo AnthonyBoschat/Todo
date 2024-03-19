@@ -49,7 +49,7 @@ router.put("/toggleTask/:taskID", async (request, response) => {
     }
 })
 
-// Supprime toutes les tâches d'un dossier uqi vient d'être supprimer grâce à son id
+// Supprime toutes les tâches d'un dossier qui vient d'être supprimer grâce à son id
 router.delete("/deleteAllTaskForThisFolder/:folderID", async (request, response) => {
     const folderID = request.params.folderID
     try{
@@ -60,7 +60,28 @@ router.delete("/deleteAllTaskForThisFolder/:folderID", async (request, response)
     }
 })
 
+// Supprime une tâche
+router.delete("/deleteTask/:taskID", async (request, response) => {
+    const taskID = request.params.taskID
+    try{
+        const taskDeleted = await Task.findByIdAndDelete(taskID)
+        if(!taskDeleted){
+            response.status(404).json({message:`La tâche ${taskID} n'a pas été trouver`})
+        }
+        response.status(200).json({message:`La tâche ${taskID} a correctement été supprimer`, taskDeleted:taskDeleted})
+    }catch(error){
+        response.status(400).json({message:`Erreur lors de la suppresion de la tâche ${taskID}`})
+    }
+})
 
 
+// DEVTOOLS ///////////////////////////////////////////////
+// Supprime toutes les tasks
+router.delete("/DELETE_ALL_TASK", async (request, response) => {
+    try{
+        await Task.deleteMany()
+        response.status(200).json({message:"Toutes les tâches ont été supprimés"})
+    }catch(error){response.status(400).json({message:error.message})}
+})
 
 module.exports = router;

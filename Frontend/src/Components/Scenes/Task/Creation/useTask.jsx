@@ -5,9 +5,7 @@ import useLocalStorage from "../../../../Utils/useLocalStorage";
 
 export default function useTask_Creation(){
 
-    const todoStorage = useSelector(store => store.localStorage.todoStorage) // La liste des dossiers
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
-    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     
     const {localStorage_saveNewTask} = useLocalStorage()
     const dispatch = useDispatch()

@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_todoStorage } from "../../../../Utils/LocalStorageSlice";
 import { update_taskOnEdition } from "../TaskSlice";
 import useLocalStorage from "../../../../Utils/useLocalStorage";
 
 export default function useTask_One(folderIndex, task){
 
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
-    const todoStorage = useSelector(store => store.localStorage.todoStorage)
     const tasksList = useSelector(store => store.task.tasksList)
     const [taskEditable, setTaskEditable] = useState(false)
     const [taskFinish, setTaskFinish] = useState(task.completed)
@@ -18,7 +16,9 @@ export default function useTask_One(folderIndex, task){
     const dispatch = useDispatch()
 
     // Pour supprimer cette task
-    const deleteTask = (taskID) => {localStorage_deleteTask(taskID)}
+    const deleteTask = (taskID) => {
+        localStorage_deleteTask(taskID)
+    }
 
     // Click pour rendre le task editable
     const toggleRenameTask = () => {

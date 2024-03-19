@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_RESET_FOLDERS, update_RESET_TASK, update_deleteFolder } from "../../../Utils/LocalStorageSlice";
-import { update_folderSelectedID} from "../Folder/FolderSlice";
+import { update_folderSelectedID, update_loadFoldersList} from "../Folder/FolderSlice";
 import { update_addTask, update_loadTasksList } from "../Task/TaskSlice";
 
 export default function DevTools(){
     
     const dispatch = useDispatch()
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const todoStorage = useSelector(store => store.localStorage.todoStorage)
     const [taskForceNumber, setTaskForceNumber] = useState(1)
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,14 +20,19 @@ export default function DevTools(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Supprime tout les dossiers
     const deleteFolders = () => {
-        fetch("http://localhost:4000/folders/DELETE_ALL_FOLDER", {
-            method:"DELETE",
-        })
+        fetch("http://localhost:4000/folders/DELETE_ALL_FOLDER", { method:"DELETE"})
         .then(response => response.json())
-        .then(finalResponse => {
-            console.log(finalResponse.message)
+        .then(result => {
+            console.log(result.message)
             dispatch(update_folderSelectedID(null))
-            dispatch(update_RESET_FOLDERS())
+            
+            fetch("http://localhost:4000/tasks/DELETE_ALL_TASK", {method:"DELETE"})
+            .then(response => response.json())
+            .then(result => {
+                console.log(result.message)
+                dispatch(update_loadFoldersList([]))
+            })
+            .catch(error => console.error(error.message))
         })
         .catch(error => console.error("Erreur lors de la suppression des dossiers : ", error))
     }

@@ -1,17 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_addFolder, update_deleteFolder, update_loadFolder, update_todoStorage } from "./LocalStorageSlice";
-import { update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
-import { update_addTask, update_loadTasksList, update_taskList, update_taskOnCreation } from "../Components/Scenes/Task/TaskSlice";
+import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
+import { update_addTask, update_deleteTask, update_loadTasksList, update_taskList, update_taskOnCreation } from "../Components/Scenes/Task/TaskSlice";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useLocalStorage(){
 
-    const todoStorage = useSelector(store => store.localStorage.todoStorage)
+    const allFoldersLoad = useSelector(store => store.folder.allFoldersLoad)
     const taskList = useSelector(store => store.task.tasksList)
     const foldersList = useSelector(store => store.folder.foldersList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const folderIndex = todoStorage.foldersList.findIndex(folder => folder.id === folderSelectedID)
+    const folderIndex = foldersList.findIndex(folder => folder.id === folderSelectedID)
     const dispatch = useDispatch()
 
 
@@ -38,11 +37,11 @@ export default function useLocalStorage(){
             body: JSON.stringify(newFolder)
         })
         .then(response => response.json())
-        .then(data => {
-            console.log("Dossier enregistrer :", data)
-            const {name, _id} = data
-            dispatch(update_addFolder({name, _id})) // On met à jour l'état redux todoStorage
-            dispatch(update_folderSelectedID(_id))
+        .then(folderSave => {
+            console.log("Dossier enregistrer :", folderSave)
+            // const {name, _id} = data
+            dispatch(update_addFolder({name:folderSave.name, _id:folderSave._id})) // On met à jour l'état redux todoStorage
+            dispatch(update_folderSelectedID(folderSave._id))
         })
         .catch(error => console.error("Erreur lors de l'enregistrement du dossier : ", error))
     }
@@ -69,7 +68,7 @@ export default function useLocalStorage(){
             })
             .then(result => {
                 console.log(result.message)
-                const folderIndex = todoStorage.foldersList.findIndex(folder => folder._id === folderSelectedID)
+                const folderIndex = foldersList.findIndex(folder => folder._id === folderSelectedID)
                 dispatch(update_deleteFolder(folderIndex))
                 dispatch(update_loadTasksList([]))
                 dispatch(update_folderSelectedID(null))
@@ -126,19 +125,23 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour la suppression d'une tâche
     const localStorage_deleteTask = (taskID) => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        const newTaskList = todoStorage.foldersList[folderIndex].taskList.filter(task => task.id !== taskID)
-        todoStorage.foldersList[folderIndex].taskList = newTaskList
-        dispatch(update_todoStorage(todoStorage))
+        fetch(`http://localhost:4000/tasks/deleteTask/${taskID}`, {method:"DELETE"})
+        .then(response => response.json())
+        .then(result => {
+            console.log(result.message)
+            const deletedTaskIndex = taskList.findIndex(task => task._id === result.taskDeleted._id) 
+            dispatch(update_deleteTask(deletedTaskIndex))
+        })
+        .catch(error => console.error(error.message))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour le renommage d'une task
     const localStorage_renameTask = (taskID, newTaskTitle) => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        const taskIndex = todoStorage.foldersList[folderIndex].taskList.findIndex(task => task.id === taskID)
-        todoStorage.foldersList[folderIndex].taskList[taskIndex].title = newTaskTitle
-        dispatch(update_todoStorage(todoStorage))
+        // const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
+        // const taskIndex = todoStorage.foldersList[folderIndex].taskList.findIndex(task => task.id === taskID)
+        // todoStorage.foldersList[folderIndex].taskList[taskIndex].title = newTaskTitle
+        // dispatch(update_todoStorage(todoStorage))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -177,13 +180,16 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Première récupération de la liste complète des folders dans la base de donnée
     useEffect(() => {
-        fetch("http://localhost:4000/folders/getAllFolders")
-        .then(response => response.json())
-        .then(allFolders => {
-            console.log("Tout les dossiers ont été récupérer de la base de donnée")
-            dispatch(update_loadFoldersList(allFolders))
-        })
-        .catch(error => console.error("Erreur lors de la récupération des dossiers :", error));
+        if(!allFoldersLoad){
+            fetch("http://localhost:4000/folders/getAllFolders")
+            .then(response => response.json())
+            .then(allFolders => {
+                console.log("Tout les dossiers ont été récupérer de la base de donnée")
+                dispatch(update_loadFoldersList(allFolders))
+                dispatch(update_allFoldersLoad(true))
+            })
+            .catch(error => console.error("Erreur lors de la récupération des dossiers :", error));   
+        }
     }, [])
 
 

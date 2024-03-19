@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useTask_One from "./useTask";
 
 export default function One_Task({task, folderIndex}){
