@@ -8,37 +8,16 @@ export default function useTask_Creation(){
     const todoStorage = useSelector(store => store.localStorage.todoStorage) // La liste des dossiers
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const folderIndex = todoStorage.foldersList.findIndex(folder => folder.id === folderSelectedID) // L'index du dossier selectionner dans la liste des dossiers 
     
     const {localStorage_saveNewTask} = useLocalStorage()
     const dispatch = useDispatch()
     const taskCreationRef = useRef()
 
 
-
-
-
-    // Génère l'id d'une tâche
-    const generateTaskID = () => {
-        let newID
-        if(todoStorage.foldersList[folderIndex].taskList.length === 0){
-            newID = 0
-        }else{
-            const taskList = todoStorage.foldersList[folderIndex].taskList
-            const maximumID = taskList.reduce((max, task) => task.id > max ? task.id : max, taskList[0].id)
-            newID = maximumID + 1
-        }
-        return newID
-    }
-
-
-    
-
     // Prépare la sauvegarde dans le localStorage de la nouvelle tâche
     const saveNewTask = () => {
         const taskTitle = taskCreationRef.current.innerText
-        const taskID = generateTaskID()
-        const newTask = {title:taskTitle, id:taskID, finish:false}
+        const newTask = {content:taskTitle, completed:false}
         localStorage_saveNewTask(newTask)
     }
 
@@ -87,6 +66,5 @@ export default function useTask_Creation(){
 
     return{
         taskCreationRef,
-        generateTaskID
     }
 }

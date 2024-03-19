@@ -8,7 +8,7 @@ export default function useTask_One(folderIndex, task){
 
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
     const todoStorage = useSelector(store => store.localStorage.todoStorage)
-    const taskList = useSelector(store => store.task.taskList)
+    const tasksList = useSelector(store => store.task.tasksList)
     const [taskEditable, setTaskEditable] = useState(false)
     const [taskFinish, setTaskFinish] = useState(task.completed)
     const {localStorage_deleteTask, localStorage_renameTask, localStorage_toggleTask} = useLocalStorage()
@@ -37,20 +37,7 @@ export default function useTask_One(folderIndex, task){
     const validTask = () => { setTaskFinish(!taskFinish) }
 
     useEffect(() => {
-        if(taskFinish){
-            taskList.map(object => {
-                if(object._id === task._id){
-                    localStorage_toggleTask(task._id, true)
-                }
-            })
-        }
-        else if(!taskFinish){
-            taskList.map(object => {
-                if(object._id === task._id){
-                    localStorage_toggleTask(task._id, false)
-                }
-            })
-        }
+        localStorage_toggleTask(task._id, taskFinish)
     }, [taskFinish])
 
     // Afin de placer le focus et le curseur sur la task qu'on souhaite modifier

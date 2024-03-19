@@ -7,6 +7,7 @@ export default function useHeaderTask(){
 
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
     const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
+    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const {localStorage_renameFolder, localStorage_deleteFolder} = useLocalStorage()
 
     const dispatch = useDispatch()
@@ -14,20 +15,26 @@ export default function useHeaderTask(){
 
     // Responsable de si oui ou non, on laisse l'input folderName etre accessible
     const [folderInputDisabled, setFolderInputDisabled] = useState(true)
-    // Responsable de la mémorisation du folderName avant modification
-    const [folderNameMemory, setFolderNameMemory] = useState(null)
     const [folderName, setFolderName] = useState(folderSelectedName)
-    useEffect(() => {
-        if(folderSelectedName){
-            setFolderName(folderSelectedName)
-        }
-    }, [folderSelectedName])
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FONCTION
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Signale qu'on souhaite ajouter une tâche
     const addTask = () => {
         dispatch(update_taskOnCreation(!taskOnCreation))
     }
 
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Signale qu'on souhaite supprimer ce dossier
     const deleteFolder = () => {
         const userValidDelete = window.confirm(`Are you sure, delete ${folderSelectedName} ?`)
@@ -36,17 +43,19 @@ export default function useHeaderTask(){
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Permet de rendre l'inputFolderName Accessible ou non
     const lockUnlockFolder = () => {
         setFolderInputDisabled(!folderInputDisabled)
-        setFolderNameMemory(folderSelectedName)
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Controle pour verifier que le nom du dossier n'est pas vide
     const controlFolderNameNotEmpty = (folderName) => {
         return /\S/.test(folderName)
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Permet de mettre le focus sur l'input
     const focusInputFolder = (folderRef) => {
         folderRef.selectionStart = folderRef.value.length
@@ -54,13 +63,32 @@ export default function useHeaderTask(){
         folderRef.focus()
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Quand l'input se met à changer à cause des frappes utilisateurs
     const handlefolderNameChange = (e) => {
         setFolderName(e.target.value)
     }
 
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // USE EFFECT
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Gère les listener de validation de changement de nom de l'input folderName pour le repasser en lock
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Reponsable du premier chargement du nom du dossier dans l'input
+    useEffect(() => {
+        if(folderSelectedName){
+            setFolderName(folderSelectedName)
+        }
+    }, [folderSelectedName])
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Gère les listener de validation de changement de nom de l'input folderName pour le repasser en lock, et la sauvegarde
     useEffect(() => {
         if(!folderInputDisabled && folderInputRef.current){
 
@@ -70,19 +98,24 @@ export default function useHeaderTask(){
                 if(e.target !== folderInputRef.current){
                     if(!controlFolderNameNotEmpty(folderInputRef.current.value)){
                         window.alert("The name of your folder cannot be empty.")
-                        localStorage_renameFolder(folderNameMemory)
+                        setFolderName(folderSelectedName)
+                        setFolderInputDisabled(true)
                     }else{
+                        const newFolderName = folderInputRef.current.value
+                        localStorage_renameFolder(newFolderName)
                         setFolderInputDisabled(true)
                     }
-                    
                 }
             }
             const handleKeyDown = (e) => {
                 if(e.key === "Enter"){
                     if(!controlFolderNameNotEmpty(folderInputRef.current.value)){
                         window.alert("The name of your folder cannot be empty.")
-                        localStorage_renameFolder(folderNameMemory)
+                        setFolderName(folderSelectedName)
+                        setFolderInputDisabled(true)
                     }else{
+                        const newFolderName = folderInputRef.current.value
+                        localStorage_renameFolder(newFolderName)
                         setFolderInputDisabled(true)
                     }
                 }

@@ -14,6 +14,9 @@ const LocalStorageSlice = createSlice({
         update_addFolder:(state,action) => {
             state.todoStorage.foldersList.push(action.payload)
         },
+        update_deleteFolder:(state,action) => {
+            state.todoStorage.foldersList.splice(action.payload, 1)
+        },
         update_loadFolder:(state,action) => {
             state.todoStorage.foldersList = action.payload
         },
@@ -32,6 +35,7 @@ export const LocalStorageSliceReducer = LocalStorageSlice.reducer
 export const {
     update_todoStorage,
     update_addFolder,
+    update_deleteFolder,
     update_loadFolder,
     update_RESET_FOLDERS,
     update_RESET_TASK

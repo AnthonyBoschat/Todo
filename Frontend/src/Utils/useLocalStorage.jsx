@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_addFolder, update_loadFolder, update_todoStorage } from "./LocalStorageSlice";
-import { update_folderSelectedID, update_folderSelectedName } from "../Components/Scenes/Folder/FolderSlice";
-import { update_taskList, update_taskOnCreation } from "../Components/Scenes/Task/TaskSlice";
+import { update_addFolder, update_deleteFolder, update_loadFolder, update_todoStorage } from "./LocalStorageSlice";
+import { update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
+import { update_addTask, update_loadTasksList, update_taskList, update_taskOnCreation } from "../Components/Scenes/Task/TaskSlice";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useLocalStorage(){
 
     const todoStorage = useSelector(store => store.localStorage.todoStorage)
+    const taskList = useSelector(store => store.task.tasksList)
+    const foldersList = useSelector(store => store.folder.foldersList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const folderIndex = todoStorage.foldersList.findIndex(folder => folder.id === folderSelectedID)
     const dispatch = useDispatch()
@@ -67,6 +69,9 @@ export default function useLocalStorage(){
             })
             .then(result => {
                 console.log(result.message)
+                const folderIndex = todoStorage.foldersList.findIndex(folder => folder._id === folderSelectedID)
+                dispatch(update_deleteFolder(folderIndex))
+                dispatch(update_loadTasksList([]))
                 dispatch(update_folderSelectedID(null))
             })
             .catch(error => console.error(error.message))
@@ -78,19 +83,44 @@ export default function useLocalStorage(){
     // Pour le renommage d'un dossier
 
     const localStorage_renameFolder = (newFolderName) => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        todoStorage.foldersList[folderIndex].name = newFolderName
-        dispatch(update_todoStorage(todoStorage))
-        dispatch(update_folderSelectedName(newFolderName))
+        fetch(`http://localhost:4000/folders/updateFolderName/${folderSelectedID}`, {
+            method:"PUT",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify({newFolderName})
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response.message)
+            console.log(response.updatedFolder)
+            const folderIndex = foldersList.findIndex(folder => folder._id === response.updatedFolder._id)
+            dispatch(update_folderRename({folderIndex:folderIndex, newFolderName:response.updatedFolder.name}))
+        })
+        .catch(error => console.error(`Erreur lors de la modification du nom du dossier ${folderSelectedID} ( ${newFolderName} ) ==> ${error.message}`))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Enregistrer une nouvelle tâche
+    // Enregistre une nouvelle tâche
 
     const localStorage_saveNewTask = (newTask) => {
-        const todoStorage = JSON.parse(localStorage.getItem("todoStorage"))
-        todoStorage.foldersList[folderIndex].taskList.push(newTask)
-        dispatch(update_todoStorage(todoStorage))
+        const taskForce = {
+            content:newTask.content,
+            completed:newTask.completed,
+            folderID:folderSelectedID
+        }
+        // Envoyer la tâche à l'API
+        fetch("http://localhost:4000/tasks/addTask", {
+            method:"POST",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(taskForce)
+        })
+        .then(response => response.json())
+        .then(task => {
+            console.log("Tâche rengistrée :", task)
+            dispatch(update_addTask(task))
+        })
+        .catch(error => console.error("Erreur lors de l'enregistrement de la tâche : ", error))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,9 +146,7 @@ export default function useLocalStorage(){
     const localStorage_toggleTask = (taskID, taskCompleted) => {
         fetch(`http://localhost:4000/tasks/toggleTask/${taskID}`, {
             method:"PUT",
-            headers:{
-                "Content-Type": "application/json",
-            },
+            headers:{"Content-Type": "application/json"},
             body: JSON.stringify({completed:taskCompleted})
         })
         .then(response => {
@@ -153,7 +181,7 @@ export default function useLocalStorage(){
         .then(response => response.json())
         .then(allFolders => {
             console.log("Tout les dossiers ont été récupérer de la base de donnée")
-            dispatch(update_loadFolder(allFolders))
+            dispatch(update_loadFoldersList(allFolders))
         })
         .catch(error => console.error("Erreur lors de la récupération des dossiers :", error));
     }, [])
@@ -166,11 +194,11 @@ export default function useLocalStorage(){
             fetch(`http://localhost:4000/tasks/getTasks/${folderSelectedID}`)
             .then(response => response.json())
             .then(allTasks => {
-                dispatch(update_taskList(allTasks))
+                dispatch(update_loadTasksList(allTasks))
             })
             .catch(error => {
                 console.error("Erreur lors de la récupération des tasks lié au folder : ", folderSelectedID)
-                dispatch(update_taskList([]))
+                dispatch(update_loadTasksList([]))
             })
         }
     }, [folderSelectedID])

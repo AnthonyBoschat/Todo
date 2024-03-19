@@ -5,13 +5,13 @@ import { update_folderSelectedName } from "./FolderSlice";
 export default function useFolder_Render(){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const todoStorage = useSelector(store => store.localStorage.todoStorage)
+    const foldersList = useSelector(store => store.folder.foldersList)
     const dispatch = useDispatch()
 
     useEffect(() => {
         if(folderSelectedID){
-            const folderIndex = todoStorage.foldersList.findIndex(folder => folder._id === folderSelectedID)
-            const folderName = todoStorage.foldersList[folderIndex].name
+            const folderIndex = foldersList.findIndex(folder => folder._id === folderSelectedID)
+            const folderName = foldersList[folderIndex].name
             dispatch(update_folderSelectedName(folderName))
         }
     }, [folderSelectedID])

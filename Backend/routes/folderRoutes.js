@@ -33,7 +33,6 @@ router.post("/addFolder", async (request, response) => {
 // Supprime un dossier grâce à son ID
 router.delete("/deleteFolder/:folderID", async (request, response) => {
     const folderID = request.params.folderID
-    console.log(folderID)
     try{
         const deletedFolder = await Folder.findByIdAndDelete(folderID)
         if(!deletedFolder){
@@ -47,7 +46,7 @@ router.delete("/deleteFolder/:folderID", async (request, response) => {
 })
 
 // Modifie le nom d'un dossier
-router.delete("/updateFolder/:folderID", async (request, response) => {
+router.put("/updateFolderName/:folderID", async (request, response) => {
     const {folderID} = request.params
     const {newFolderName} = request.body
     try{
@@ -59,9 +58,9 @@ router.delete("/updateFolder/:folderID", async (request, response) => {
         if(!updatedFolder){
             return response.status(404).send(`Impossible de trouver le dossier ${folderID}, échec du renommage`)
         }
-        
+        response.status(200).json({message:`Le dossier ${folderID} a bien été renommer (${newFolderName})`, updatedFolder:updatedFolder})
     }catch(error){
-        response.status(400).send(error)
+        response.status(400).json({message:error.message})
     }
 })
 

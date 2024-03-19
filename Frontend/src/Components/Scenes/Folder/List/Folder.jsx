@@ -5,20 +5,20 @@ import Creation_Folder from "../Creation/Folder";
 
 export default function List_Folder(){
 
-    const todoStorage = useSelector(store => store.localStorage.todoStorage)
+    const foldersList = useSelector(store => store.folder.foldersList)
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
 
     return(
         <div className="listFolder_Display">
             <ul className="listFolder_Box">
 
-                {todoStorage.foldersList.length !== 0 && (
-                    todoStorage.foldersList.map((folder, index) => (
+                {foldersList.length !== 0 && (
+                    foldersList.map((folder, index) => (
                         <Button_Folder folder={folder} key={index}/>
                     ))
                 )}
 
-                {(todoStorage.foldersList.length === 0 && !folderOnCreation) && (
+                {(foldersList.length === 0 && !folderOnCreation) && (
                     <div className="noFolders_Box">
                         <span>( No folders )</span>
                     </div>
