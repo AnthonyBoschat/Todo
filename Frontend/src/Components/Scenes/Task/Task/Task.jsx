@@ -11,17 +11,16 @@ export default function One_Task({task, folderIndex}){
         taskNameRef,
         valideRenameTask,
         taskOnEdition,
-        validTask,
-        taskFinish
+        toggleTask,
     } = useTask_One(folderIndex, task)
 
     return(
         <div className="task_Display">
             <div className="check_Box">
-                <i  style={taskFinish === true ? {opacity:"1"} : null} onClick={validTask} className="fa-solid fa-square-check"></i>
+                <i  style={task.completed === true ? {opacity:"1"} : null} onClick={() => toggleTask(task._id, !task.completed)} className="fa-solid fa-square-check"></i>
             </div>
 
-            <div style={(taskEditable && taskOnEdition) ? {outline:"1px solid rgb(0, 182, 227)", boxShadow:"0px 0px 10px rgb(0, 182, 227)"} : null} ref={taskRef} className={taskFinish === true ? "task_Box taskFinish" : "task_Box"}>
+            <div style={(taskEditable && taskOnEdition) ? {outline:"1px solid rgb(0, 182, 227)", boxShadow:"0px 0px 10px rgb(0, 182, 227)"} : null} ref={taskRef} className={task.completed === true ? "task_Box taskFinish" : "task_Box"}>
                 <div style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
                     <span ref={taskNameRef} contentEditable={taskEditable} className="taskName">{task.content}</span>
                 </div>

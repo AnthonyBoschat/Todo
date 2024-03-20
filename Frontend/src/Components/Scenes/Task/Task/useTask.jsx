@@ -8,7 +8,6 @@ export default function useTask_One(folderIndex, task){
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
     const tasksList = useSelector(store => store.task.tasksList)
     const [taskEditable, setTaskEditable] = useState(false)
-    const [taskFinish, setTaskFinish] = useState(task.completed)
     const {localStorage_deleteTask, localStorage_renameTask, localStorage_toggleTask} = useLocalStorage()
     
     const taskRef = useRef()
@@ -34,11 +33,9 @@ export default function useTask_One(folderIndex, task){
     }
 
     // Pour toggle une task en finish ou unFinish
-    const validTask = () => { setTaskFinish(!taskFinish) }
-
-    useEffect(() => {
-        localStorage_toggleTask(task._id, taskFinish)
-    }, [taskFinish])
+    const toggleTask = (taskID, newValueTaskCompleted) => { 
+        localStorage_toggleTask(taskID, newValueTaskCompleted)
+    }
 
     // Afin de placer le focus et le curseur sur la task qu'on souhaite modifier
     useEffect(() => {
@@ -63,7 +60,7 @@ export default function useTask_One(folderIndex, task){
                     if(event.shiftKey){
                         return
                     }else{
-                        valideRenameTask(task.id)
+                        valideRenameTask(task._id)
                     }
                 }
             }
@@ -89,7 +86,6 @@ export default function useTask_One(folderIndex, task){
         taskNameRef,
         valideRenameTask,
         taskOnEdition,
-        validTask,
-        taskFinish
+        toggleTask,
     }
 }

@@ -22,6 +22,12 @@ const TaskSlice = createSlice({
         },
         update_deleteTask:(state,action) => {
             state.tasksList.splice(action.payload,1)
+        },
+        update_renameTask:(state,action) => {
+            state.tasksList[action.payload.taskIndex].content = action.payload.newTaskContent
+        },
+        update_toggleTask:(state,action) => {
+            state.tasksList[action.payload.taskIndex].completed = action.payload.newTaskToggle
         }
     },
 })
@@ -32,5 +38,7 @@ export const {
     update_taskOnEdition,
     update_loadTasksList,
     update_addTask,
-    update_deleteTask
+    update_deleteTask,
+    update_renameTask,
+    update_toggleTask
 } = TaskSlice.actions
