@@ -9,24 +9,25 @@ export default function useBackend(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ROUTER
     const fetchRequest = (method, request) => {
-
         const fetchOptions = {
             method:method,
             headers:{}
         }
-        if(method === "POST" || "PUT"){
+        if(method === "POST" || method === "PUT"){
             fetchOptions.headers["Content-Type"] = "application/json"
             fetchOptions.body = JSON.stringify(request.body)
         }
         fetch(`${backendURL}${request.route}`, fetchOptions)
-        .then(response => response.json())
-        .then(result => {
-            if(fetchConsoleMessage){console.log(result.message)}
-            if(request.finalAction){request.finalAction(result.payload)}
+        .then(response => Promise.all([response.ok, response.json()]))
+        .then(([ok, data]) => {
+            if(!ok){throw new Error(data.message || 'Une erreur inconnue est survenue')}
+            else{
+                if(fetchConsoleMessage){console.log(data.message)}
+                if(request.finalAction){request.finalAction(data.payload)}
+            }
         })
         .catch(error => {
             console.log(error.message)
-            console.error(error.payload)
         })
     }
     return{

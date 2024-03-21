@@ -11,6 +11,8 @@
 
 @use "Components/Scenes/Render/Render.scss";
 
+@use "Components/Scenes/Connection/Connection.scss";
+
 @use "Components/Scenes/Folder/FolderRender.scss";
 @use "Components/Scenes/Folder/Add/Folder.scss" as Add_Folder;
 @use "Components/Scenes/Folder/Buttons/Folder.scss" as Button_Folder;

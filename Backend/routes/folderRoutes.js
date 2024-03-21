@@ -132,7 +132,12 @@ router.put("/updateFolderName/:folderID", async (request, response) => {
 router.delete("/DELETE_ALL_FOLDER", async (request, response) => {
     try{
         await Folder.deleteMany()
-        response.status(200).send({message:"Tout les dossiers ont été supprimés"})
+        await Task.deleteMany()
+        response.status(200).send({message:
+`
+---------------------------------------------------------
+Tout les dossiers et toutes les tâches ont été supprimés
+---------------------------------------------------------`})
     }catch(error){
         response.status(400).send(error)
     }

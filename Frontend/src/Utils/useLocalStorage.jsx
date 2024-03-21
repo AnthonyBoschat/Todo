@@ -25,6 +25,17 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Enregistre un utilisateur
+    const mongoDB_saveNewUser = (newUser) => {
+        fetchRequest("POST", {
+            route:"/users/addUser",
+            body:newUser,
+            finalAction: () => {
+                console.log("Utilisateur enregistrer")
+            }
+        })
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistrer un nouveau dossier
@@ -187,6 +198,8 @@ export default function useLocalStorage(){
 
         localStorage_saveNewTask,
         localStorage_deleteTask,
-        localStorage_renameTask
+        localStorage_renameTask,
+
+        mongoDB_saveNewUser,
     }
 }

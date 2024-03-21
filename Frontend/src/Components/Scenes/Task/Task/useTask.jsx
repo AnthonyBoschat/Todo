@@ -12,6 +12,7 @@ export default function useTask_One(folderIndex, task){
     
     const taskRef = useRef()
     const taskNameRef = useRef()
+    const leftSideRef = useRef()
     const dispatch = useDispatch()
 
     // Pour supprimer cette task
@@ -78,6 +79,14 @@ export default function useTask_One(folderIndex, task){
         }
     }, [taskOnEdition])
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Pour placer le listener pour gérer le doubleClick pour rename
+    useEffect(() => {
+        if(leftSideRef.current){
+            leftSideRef.current.addEventListener("dblclick", toggleRenameTask)
+        }
+    }, [leftSideRef])
+
     return{
         deleteTask, 
         taskEditable,
@@ -87,5 +96,6 @@ export default function useTask_One(folderIndex, task){
         valideRenameTask,
         taskOnEdition,
         toggleTask,
+        leftSideRef
     }
 }

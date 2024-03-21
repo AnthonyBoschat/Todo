@@ -12,6 +12,7 @@ export default function One_Task({task, folderIndex}){
         valideRenameTask,
         taskOnEdition,
         toggleTask,
+        leftSideRef
     } = useTask_One(folderIndex, task)
 
     return(
@@ -21,7 +22,7 @@ export default function One_Task({task, folderIndex}){
             </div>
 
             <div style={(taskEditable && taskOnEdition) ? {outline:"1px solid rgb(0, 182, 227)", boxShadow:"0px 0px 10px rgb(0, 182, 227)"} : null} ref={taskRef} className={task.completed === true ? "task_Box taskFinish" : "task_Box"}>
-                <div style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
+                <div ref={leftSideRef} style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
                     <span ref={taskNameRef} contentEditable={taskEditable} className="taskName">{task.content}</span>
                 </div>
                 <div className="rightSideTask">

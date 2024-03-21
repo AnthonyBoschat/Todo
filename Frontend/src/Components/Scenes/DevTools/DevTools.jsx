@@ -4,12 +4,14 @@ import { update_folderSelectedID, update_loadFoldersList} from "../Folder/Folder
 import { update_addTask, update_loadTasksList } from "../Task/TaskSlice";
 import useBackend from "../../../Utils/useBackend";
 import { update_fetchConsoleMessage } from "../../../Utils/BackendSlice";
+import { update_connected } from "../Connection/ConnectionSlice";
 
 export default function DevTools(){
     
     const dispatch = useDispatch()
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const fetchConsoleMessage = useSelector(store => store.backend.fetchConsoleMessage)
+    const connected = useSelector(store => store.connection.connected)
     const {fetchRequest} = useBackend()
     const [taskForceNumber, setTaskForceNumber] = useState(1)
 
@@ -28,12 +30,7 @@ export default function DevTools(){
             route:"/folders/DELETE_ALL_FOLDER",
             finalAction: () => {
                 dispatch(update_folderSelectedID(null))
-                fetchRequest("DELETE", {
-                    route:"/tasks/DELETE_ALL_TASK",
-                    finalAction: () => {
-                        dispatch(update_loadFoldersList([]))
-                    }
-                })
+                dispatch(update_loadFoldersList([]))
             }
         })
     }
@@ -71,6 +68,7 @@ export default function DevTools(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Active ou non les message dans la console
     const toggleConsoleMessage = () => {dispatch(update_fetchConsoleMessage(!fetchConsoleMessage))}
+    const toggleConnected = () => {dispatch(update_connected(!connected))}
 
     return(
         <div className="devtools_Box">
@@ -78,6 +76,7 @@ export default function DevTools(){
             <button onClick={deleteTask}>Delete all Task</button>
             <button onClick={addForceTask}>Force une task</button>
             <button onClick={toggleConsoleMessage} style={fetchConsoleMessage ? {backgroundColor:"white"} : null}>Message console</button>
+            <button onClick={toggleConnected} style={connected ? {backgroundColor:"white"} : null}>Connected</button>
         </div>
     )
 }
