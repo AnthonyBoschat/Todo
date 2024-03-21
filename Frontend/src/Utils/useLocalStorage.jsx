@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
 import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_taskList, update_taskOnCreation, update_toggleTask } from "../Components/Scenes/Task/TaskSlice";
+import useBackend from "./useBackend";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useLocalStorage(){
@@ -13,7 +14,7 @@ export default function useLocalStorage(){
     const folderIndex = foldersList.findIndex(folder => folder.id === folderSelectedID)
     const dispatch = useDispatch()
 
-
+    const {fetchRequest} = useBackend()
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,153 +30,109 @@ export default function useLocalStorage(){
     // Enregistrer un nouveau dossier
 
     const localStorage_saveNewFolder = (newFolder) => {
-        fetch("http://localhost:4000/folders/addFolder", {
-            method:"POST",
-            headers:{
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newFolder)
+        fetchRequest("POST", {
+            route:"/folders/addFolder",
+            body: newFolder,
+            finalAction: (payload) => {
+                dispatch(update_addFolder({name:payload.name, _id:payload._id}))
+                dispatch(update_folderSelectedID(payload._id))
+            }
         })
-        .then(response => response.json())
-        .then(folderSave => {
-            console.log("Dossier enregistrer :", folderSave)
-            // const {name, _id} = data
-            dispatch(update_addFolder({name:folderSave.name, _id:folderSave._id})) // On met à jour l'état redux todoStorage
-            dispatch(update_folderSelectedID(folderSave._id))
-        })
-        .catch(error => console.error("Erreur lors de l'enregistrement du dossier : ", error))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour la suppression d'un dossier
 
     const localStorage_deleteFolder = () => {
-        fetch(`http://localhost:4000/folders/deleteFolder/${folderSelectedID}`, {method:"DELETE"})
-        .then(response => {
-            if(!response.ok){
-                throw new Error(`Échec de la suppression du dossier ${folderSelectedID}`)
+
+        fetchRequest("DELETE", {
+            route:`/folders/deleteFolder/${folderSelectedID}`,
+            finalAction: () => {
+                fetchRequest("DELETE", {
+                    route:`/tasks/deleteAllTaskForThisFolder/${folderSelectedID}`,
+                    finalAction: (payload) => {
+                        const folderIndex = foldersList.findIndex(folder => folder._id === payload)
+                        dispatch(update_deleteFolder(folderIndex))
+                        dispatch(update_loadTasksList([]))
+                        dispatch(update_folderSelectedID(null))
+                    }
+                })
             }
-            return response.json()
         })
-        .then(result => {
-            console.log(result.message)
-            fetch(`http://localhost:4000/tasks/deleteAllTaskForThisFolder/${folderSelectedID}`, {method:"DELETE"})
-            .then(response => {
-                console.log(response)
-                if(!response.ok){
-                    throw new Error(`Echec de la suppression des task associé au dossier ${folderSelectedID}`)
-                }
-                return response.json()
-            })
-            .then(result => {
-                console.log(result.message)
-                const folderIndex = foldersList.findIndex(folder => folder._id === folderSelectedID)
-                dispatch(update_deleteFolder(folderIndex))
-                dispatch(update_loadTasksList([]))
-                dispatch(update_folderSelectedID(null))
-            })
-            .catch(error => console.error(error.message))
-        })
-        .catch(error => {console.error(`Erreur lors de la suppression du dossier :`,error)})
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour le renommage d'un dossier
 
     const localStorage_renameFolder = (newFolderName) => {
-        fetch(`http://localhost:4000/folders/updateFolderName/${folderSelectedID}`, {
-            method:"PUT",
-            headers:{"Content-Type": "application/json"},
-            body: JSON.stringify({newFolderName})
+        fetchRequest("PUT", {
+            route:`/folders/updateFolderName/${folderSelectedID}`,
+            body:{newFolderName},
+            finalAction:(payload)=>{
+                const folderIndex = foldersList.findIndex(folder => folder._id === payload._id)
+                const newFolderName = payload.name
+                dispatch(update_folderRename({folderIndex:folderIndex, newFolderName:newFolderName}))
+            }
         })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response.message)
-            console.log(response.updatedFolder)
-            const folderIndex = foldersList.findIndex(folder => folder._id === response.updatedFolder._id)
-            dispatch(update_folderRename({folderIndex:folderIndex, newFolderName:response.updatedFolder.name}))
-        })
-        .catch(error => console.error(`Erreur lors de la modification du nom du dossier ${folderSelectedID} ( ${newFolderName} ) ==> ${error.message}`))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistre une nouvelle tâche
 
     const localStorage_saveNewTask = (newTask) => {
-        const taskForce = {
+        const task = {
             content:newTask.content,
             completed:newTask.completed,
             folderID:folderSelectedID
         }
-        // Envoyer la tâche à l'API
-        fetch("http://localhost:4000/tasks/addTask", {
-            method:"POST",
-            headers:{
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(taskForce)
+
+        fetchRequest("POST", {
+            route:"/tasks/addTask",
+            body:task,
+            finalAction: (payload) => {
+                dispatch(update_addTask(payload))
+            }
         })
-        .then(response => response.json())
-        .then(task => {
-            console.log("Tâche rengistrée :", task)
-            dispatch(update_addTask(task))
-        })
-        .catch(error => console.error("Erreur lors de l'enregistrement de la tâche : ", error))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour la suppression d'une tâche
     const localStorage_deleteTask = (taskID) => {
-        fetch(`http://localhost:4000/tasks/deleteTask/${taskID}`, {method:"DELETE"})
-        .then(response => response.json())
-        .then(result => {
-            console.log(result)
-            console.log(result.message)
-            const deletedTaskIndex = taskList.findIndex(task => task._id === result.taskDeleted._id) 
-            dispatch(update_deleteTask(deletedTaskIndex))
+        fetchRequest("DELETE", {
+            route:`/tasks/deleteTask/${taskID}`,
+            finalAction: (payload) => {
+                const deletedTaskIndex = taskList.findIndex(task => task._id === payload._id)
+                dispatch(update_deleteTask(deletedTaskIndex))
+            }
         })
-        .catch(error => console.error(error.message))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour le renommage d'une task
     const localStorage_renameTask = (taskID, newTaskContent) => {
-        fetch(`http://localhost:4000/tasks/renameTask/${taskID}`, {
-            method:"PUT",
-            headers:{"Content-Type": "application/json"},
-            body:JSON.stringify({newTaskContent})
+        fetchRequest("PUT", {
+            route:`/tasks/renameTask/${taskID}`,
+            body:{newTaskContent},
+            finalAction:(payload) => {
+                const taskIndex = taskList.findIndex(task => task._id === payload._id)
+                const newTaskContent = payload.content
+                dispatch(update_renameTask({taskIndex:taskIndex, newTaskContent:newTaskContent}))
+            }
         })
-        .then(response => response.json())
-        .then(result => {
-            console.log(result.message)
-            const taskIndex = taskList.findIndex(task => task._id === result.payload._id)
-            const newTaskContent = result.payload.content
-            dispatch(update_renameTask({taskIndex:taskIndex, newTaskContent:newTaskContent}))
-        })
-        .catch(error => console.error(error.message))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour le toggle d'une tâche
     const localStorage_toggleTask = (taskID, taskCompleted) => {
-        fetch(`http://localhost:4000/tasks/toggleTask/${taskID}`, {
-            method:"PUT",
-            headers:{"Content-Type": "application/json"},
-            body: JSON.stringify({completed:taskCompleted})
-        })
-        .then(response => {
-            if(!response.ok){
-                throw new Error("erreur lors de la requête toggle")
+        fetchRequest("PUT", {
+            route:`/tasks/toggleTask/${taskID}`,
+            body:{completed:taskCompleted},
+            finalAction:(payload) => {
+                const taskIndex = taskList.findIndex(task => task._id === payload._id)
+                const newTaskToggle = payload.completed
+                dispatch(update_toggleTask({taskIndex, newTaskToggle}))
             }
-            return response.json()
         })
-        .then(result => {
-            console.log(result.message)
-            const taskIndex = taskList.findIndex(task => task._id === result.payload._id)
-            const newTaskToggle = result.payload.completed
-            dispatch(update_toggleTask({taskIndex, newTaskToggle}))
-        })
-        .catch(error => console.error("Erreur lors de la modification du toggle de la task : ", error))
     }
 
     
@@ -195,14 +152,13 @@ export default function useLocalStorage(){
     // Première récupération de la liste complète des folders dans la base de donnée
     useEffect(() => {
         if(!allFoldersLoad){
-            fetch("http://localhost:4000/folders/getAllFolders")
-            .then(response => response.json())
-            .then(allFolders => {
-                console.log("Tout les dossiers ont été récupérer de la base de donnée")
-                dispatch(update_loadFoldersList(allFolders))
-                dispatch(update_allFoldersLoad(true))
-            })
-            .catch(error => console.error("Erreur lors de la récupération des dossiers :", error));   
+            fetchRequest("GET", {
+                route:`/folders/getAllFolders`,
+                finalAction:(payload) => {
+                    dispatch(update_loadFoldersList(payload))
+                    dispatch(update_allFoldersLoad(true))
+                }
+            })  
         }
     }, [])
 
@@ -210,15 +166,11 @@ export default function useLocalStorage(){
 
     useEffect(() => {
         if(folderSelectedID){
-            // On récupère les tasks correspondantes s'il y en a
-            fetch(`http://localhost:4000/tasks/getTasks/${folderSelectedID}`)
-            .then(response => response.json())
-            .then(allTasks => {
-                dispatch(update_loadTasksList(allTasks))
-            })
-            .catch(error => {
-                console.error("Erreur lors de la récupération des tasks lié au folder : ", folderSelectedID)
-                dispatch(update_loadTasksList([]))
+            fetchRequest("GET", {
+                route:`/tasks/getTasks/${folderSelectedID}`,
+                finalAction:(payload) => {
+                    dispatch(update_loadTasksList(payload))
+                }
             })
         }
     }, [folderSelectedID])
