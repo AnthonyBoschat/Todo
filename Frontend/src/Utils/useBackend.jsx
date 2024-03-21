@@ -1,10 +1,13 @@
 import React, {} from "react";
 import { useSelector } from "react-redux";
+import usePopup from "../Components/Scenes/Popup/usePopup";
 
 export default function useBackend(){
 
     const backendURL = "http://localhost:4000"
-    const fetchConsoleMessage = useSelector(store => store.backend.fetchConsoleMessage)
+    const debugConsole = useSelector(store => store.devtools.debugConsole)
+    const debugPopup = useSelector(store => store.devtools.debugPopup)
+    const {popup} = usePopup()
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ROUTER
@@ -22,13 +25,23 @@ export default function useBackend(){
         .then(([ok, data]) => {
             if(!ok){throw new Error(data.message || 'Une erreur inconnue est survenue')}
             else{
-                if(fetchConsoleMessage){console.log(data.message)}
+                if(debugConsole){console.log(data.message)}
+                if(debugPopup){popup({
+                    message:data.message,
+                    color:"debug",
+                    hidden:false
+                })}
                 if(request.finalAction){request.finalAction(data.payload)}
             }
         })
         .catch(error => {
-            if(fetchConsoleMessage){console.log(error.message)}
-            if(request.popupAction){request.popupAction()}
+            if(debugConsole){console.log(error.message)}
+            if(debugPopup){popup({
+                message:error.message,
+                color:"debug",
+                hidden:false
+            })}
+            if(request.errorAction){request.errorAction()}
         })
     }
     return{

@@ -9,6 +9,7 @@ export default function useConnection(){
     const connected = useSelector(store => store.connection.connected)
     const usernameInputRef = useRef()
     const passwordInputRef = useRef()
+    const formRef = useRef()
     const {
         mongoDB_saveNewUser
     } = useLocalStorage()
@@ -25,12 +26,16 @@ export default function useConnection(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Inscrit l'utilisateur
     const handleInscription = () => {
-        const newUser = {
-            userName:usernameInputRef.current.value,
-            userPassword:passwordInputRef.current.value
+        const formulaireValid = formRef.current.checkValidity()
+        if(!formulaireValid){
+            return formRef.current.reportValidity()
+        }else{
+            const newUser = {
+                userName:usernameInputRef.current.value,
+                userPassword:passwordInputRef.current.value
+            }
+            mongoDB_saveNewUser(newUser)
         }
-        console.log(`userName : ${newUser.userName} \npassword : ${newUser.userPassword}`)
-        mongoDB_saveNewUser(newUser)
     }
 
     return{
@@ -38,6 +43,7 @@ export default function useConnection(){
         handleInscription,
         usernameInputRef,
         passwordInputRef,
-        connected
+        connected,
+        formRef
     }
 }

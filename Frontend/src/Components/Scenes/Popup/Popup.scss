@@ -1,6 +1,5 @@
 div.popup_Box{
     // background-color: blue; //
-    background-color: rgb(205, 205, 205);
     // background-color: rgb(115, 179, 115); //
     width: fit-content;
     height: fit-content;
@@ -10,6 +9,7 @@ div.popup_Box{
     box-shadow: 2px 2px 5px black;
     position: absolute;
     top: 0;
+    z-index: 1;
     transform: translateY(-100%);
     animation: errorConnectionAppear 0.1s linear forwards,
                 errorConnectionDisappear 0.3s 2s linear forwards;

@@ -32,7 +32,8 @@ router.post("/addUser", async(request, response) => {
 `-----------------------
 Utilisateur enregistré :
 
-${JSON.stringify(savedUser, null, 2)}`
+${JSON.stringify(savedUser, null, 2)}`,
+payload:savedUser
         })  
         }
         

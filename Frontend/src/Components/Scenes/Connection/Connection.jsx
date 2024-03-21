@@ -8,12 +8,13 @@ export default function Connection(){
         handleInscription,
         usernameInputRef,
         passwordInputRef,
+        formRef
     } = useConnection()
 
     return(
         <div className="connection_Display">
             <div className="connection_Box">
-                <form onSubmit={handleSubmit} action="">
+                <form ref={formRef} onSubmit={handleSubmit} action="">
 
                     <div className="username_password_Box">
                         <input required ref={usernameInputRef} className="usernameInput" placeholder="Nom d'utilisateur" type="text" />

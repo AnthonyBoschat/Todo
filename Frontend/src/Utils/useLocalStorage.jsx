@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
 import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_taskList, update_taskOnCreation, update_toggleTask } from "../Components/Scenes/Task/TaskSlice";
-import {update_connected} from "../Components/Scenes/Connection/ConnectionSlice"
+import {update_connected, update_connectedUser} from "../Components/Scenes/Connection/ConnectionSlice"
 import useBackend from "./useBackend";
 import { update_popup } from "../Components/Scenes/Popup/PopupSlice";
+import usePopup from "../Components/Scenes/Popup/usePopup";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useLocalStorage(){
@@ -16,6 +17,7 @@ export default function useLocalStorage(){
     const dispatch = useDispatch()
 
     const {fetchRequest} = useBackend()
+    const {popup} = usePopup()
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,26 +31,25 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistre un utilisateur
     const mongoDB_saveNewUser = (newUser,) => {
-        dispatch(update_popup({hidden:true}))
         fetchRequest("POST", {
             route:"/users/addUser",
             body:newUser,
-            finalAction: () => {
+            finalAction: (payload) => {
                 dispatch(update_connected(true))
-                
-                dispatch(update_popup({
-                    hidden:false,
+                dispatch(update_connectedUser({
+                    name:payload.userName,
+                    _id:payload._id
+                }))
+                popup({
                     message:"Registration successful.",
-                    color:"rgb(115, 179, 115)"
-                }))
+                    color:"good"
+                })
             },
-            popupAction: () => {
-
-                dispatch(update_popup({
-                    hidden:false,
+            errorAction: () => {
+                popup({
                     message:"This username is already used. Please try with another username.",
-                    color:"rgb(205, 205, 205)"
-                }))
+                    color:"neutral"
+                })
             }
         })
     }
