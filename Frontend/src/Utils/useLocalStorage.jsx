@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
 import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_taskList, update_taskOnCreation, update_toggleTask } from "../Components/Scenes/Task/TaskSlice";
+import {update_connected} from "../Components/Scenes/Connection/ConnectionSlice"
 import useBackend from "./useBackend";
+import { update_popup } from "../Components/Scenes/Popup/PopupSlice";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useLocalStorage(){
@@ -11,7 +13,6 @@ export default function useLocalStorage(){
     const taskList = useSelector(store => store.task.tasksList)
     const foldersList = useSelector(store => store.folder.foldersList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const folderIndex = foldersList.findIndex(folder => folder.id === folderSelectedID)
     const dispatch = useDispatch()
 
     const {fetchRequest} = useBackend()
@@ -27,12 +28,27 @@ export default function useLocalStorage(){
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistre un utilisateur
-    const mongoDB_saveNewUser = (newUser) => {
+    const mongoDB_saveNewUser = (newUser,) => {
+        dispatch(update_popup({hidden:true}))
         fetchRequest("POST", {
             route:"/users/addUser",
             body:newUser,
             finalAction: () => {
-                console.log("Utilisateur enregistrer")
+                dispatch(update_connected(true))
+                
+                dispatch(update_popup({
+                    hidden:false,
+                    message:"Registration successful.",
+                    color:"rgb(115, 179, 115)"
+                }))
+            },
+            popupAction: () => {
+
+                dispatch(update_popup({
+                    hidden:false,
+                    message:"This username is already used. Please try with another username.",
+                    color:"rgb(205, 205, 205)"
+                }))
             }
         })
     }

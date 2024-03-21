@@ -27,7 +27,8 @@ export default function useBackend(){
             }
         })
         .catch(error => {
-            console.log(error.message)
+            if(fetchConsoleMessage){console.log(error.message)}
+            if(request.popupAction){request.popupAction()}
         })
     }
     return{

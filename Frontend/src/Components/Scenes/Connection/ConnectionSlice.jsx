@@ -3,7 +3,9 @@ import {createSlice} from "@reduxjs/toolkit"
 const ConnectionSlice = createSlice({
     name:"connection",
     initialState:{
-        connected:false
+        connected:false,
+        popup:false,
+        popupMessage:"Oups ! ce nom d'utilisateur existe déjà."
     },
     reducers:{
         update_connected:(state,action) => {

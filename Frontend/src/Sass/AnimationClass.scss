@@ -12,3 +12,19 @@
     from{width: 100%;}
     to{width: 0%;}
 }
+
+@keyframes errorConnectionAppear{
+    from{
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(50%);
+        opacity: 1;
+    }
+}
+
+@keyframes errorConnectionDisappear{
+    from{opacity: 1;}
+    to{opacity: 0; display: none;}
+}

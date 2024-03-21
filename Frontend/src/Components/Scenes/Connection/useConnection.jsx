@@ -1,8 +1,12 @@
 import React, { useRef } from "react";
 import useLocalStorage from "../../../Utils/useLocalStorage";
+import { useSelector } from "react-redux";
 
 export default function useConnection(){
 
+    const popup = useSelector(store => store.connection.popup)
+    const popupMessage = useSelector(store => store.connection.popupMessage)
+    const connected = useSelector(store => store.connection.connected)
     const usernameInputRef = useRef()
     const passwordInputRef = useRef()
     const {
@@ -34,5 +38,6 @@ export default function useConnection(){
         handleInscription,
         usernameInputRef,
         passwordInputRef,
+        connected
     }
 }

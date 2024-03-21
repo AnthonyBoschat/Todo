@@ -65,6 +65,19 @@ export default function DevTools(){
         })
     }
 
+    const deleteAllUsers = () => {
+        fetchRequest("DELETE", {
+            route:"/users/DELETE_ALL_USERS",
+            finalAction:() => {
+                dispatch(update_connected(false))
+            }
+        })
+    }
+
+    const deleteThisUser = () => {
+
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Active ou non les message dans la console
     const toggleConsoleMessage = () => {dispatch(update_fetchConsoleMessage(!fetchConsoleMessage))}
@@ -74,6 +87,8 @@ export default function DevTools(){
         <div className="devtools_Box">
             <button onClick={deleteFolders}>Delete All Folder</button>
             <button onClick={deleteTask}>Delete all Task</button>
+            <button onClick={deleteAllUsers}>Delete All Users</button>
+            <button onClick={deleteThisUser}>Delete This Users</button>
             <button onClick={addForceTask}>Force une task</button>
             <button onClick={toggleConsoleMessage} style={fetchConsoleMessage ? {backgroundColor:"white"} : null}>Message console</button>
             <button onClick={toggleConnected} style={connected ? {backgroundColor:"white"} : null}>Connected</button>

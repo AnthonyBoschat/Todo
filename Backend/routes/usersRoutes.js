@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user")
+const Task = require("../models/task")
+const Folder = require("../models/folder")
 
 // middleware pour parser le JSON
 router.use(express.json())
@@ -53,7 +55,20 @@ ${JSON.stringify(savedUser, null, 2)}`
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
-
+router.delete("/DELETE_ALL_USERS", async(request, response) => {
+    try{
+        await Folder.deleteMany()
+        await Task.deleteMany()
+        await User.deleteMany()
+        response.status(200).send({message:
+`
+---------------------------------------------------------------------------
+Tout les utilisateurs, tout dossiers et toutes les tâches ont été supprimés
+---------------------------------------------------------------------------`})
+    }catch(error){
+        response.status(400).send(error)
+    }
+})
 
 
 
