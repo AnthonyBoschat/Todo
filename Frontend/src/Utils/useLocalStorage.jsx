@@ -47,16 +47,11 @@ export default function useLocalStorage(){
 
         fetchRequest("DELETE", {
             route:`/folders/deleteFolder/${folderSelectedID}`,
-            finalAction: () => {
-                fetchRequest("DELETE", {
-                    route:`/tasks/deleteAllTaskForThisFolder/${folderSelectedID}`,
-                    finalAction: (payload) => {
-                        const folderIndex = foldersList.findIndex(folder => folder._id === payload)
-                        dispatch(update_deleteFolder(folderIndex))
-                        dispatch(update_loadTasksList([]))
-                        dispatch(update_folderSelectedID(null))
-                    }
-                })
+            finalAction: (payload) => {
+                const folderIndex = foldersList.findIndex(folder => folder._id === payload)
+                dispatch(update_deleteFolder(folderIndex))
+                dispatch(update_loadTasksList([]))
+                dispatch(update_folderSelectedID(null))
             }
         })
     }

@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { update_folderSelectedID, update_loadFoldersList} from "../Folder/FolderSlice";
 import { update_addTask, update_loadTasksList } from "../Task/TaskSlice";
 import useBackend from "../../../Utils/useBackend";
+import { update_fetchConsoleMessage } from "../../../Utils/BackendSlice";
 
 export default function DevTools(){
     
     const dispatch = useDispatch()
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
+    const fetchConsoleMessage = useSelector(store => store.backend.fetchConsoleMessage)
     const {fetchRequest} = useBackend()
     const [taskForceNumber, setTaskForceNumber] = useState(1)
 
@@ -66,11 +68,16 @@ export default function DevTools(){
         })
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Active ou non les message dans la console
+    const toggleConsoleMessage = () => {dispatch(update_fetchConsoleMessage(!fetchConsoleMessage))}
+
     return(
         <div className="devtools_Box">
             <button onClick={deleteFolders}>Delete All Folder</button>
             <button onClick={deleteTask}>Delete all Task</button>
             <button onClick={addForceTask}>Force une task</button>
+            <button onClick={toggleConsoleMessage} style={fetchConsoleMessage ? {backgroundColor:"white"} : null}>Message console</button>
         </div>
     )
 }

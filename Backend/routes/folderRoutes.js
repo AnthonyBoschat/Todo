@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const Folder = require("../models/folder")
+const Task = require("../models/task")
 
 router.use(express.json())
 
@@ -51,13 +52,36 @@ router.post("/addFolder", async (request, response) => {
 router.delete("/deleteFolder/:folderID", async (request, response) => {
     const folderID = request.params.folderID
     try{
+        // Suppresion du dossier
         const deletedFolder = await Folder.findByIdAndDelete(folderID)
         if(!deletedFolder){
             return response.status(404).json({message:`Impossible de trouver le dossier ${folderID}, Echec de la suppression`})
         }
+        // Récupération de la liste des tâche associés
+        const getListTask = await Task.find({folderID}).lean()
+        const listTask = getListTask.map(task => 
+`
+Task._id => ${task._id}
+Task.folderID => ${task.folderID}
+Task.content => ${task.content}
+Task.completed => ${task.completed}
+`).join("\n")
+
+
+        // Suppression des tâches associés
+        const deletedTask = await Task.deleteMany({folderID:folderID})
         response.status(200).json({
-            message:`Dossier supprimé avec succès : ${deletedFolder.name}`, 
-            payload:deletedFolder
+            message:
+`
+------------------- Dossier supprimé : 
+
+deleteFolder.name => ${deletedFolder.name}
+deletedFolder._id => ${deletedFolder._id}
+
+------------------- Tâche supprimé (${deletedTask.deletedCount}) : 
+
+${listTask}`,
+            payload:folderID
         })
     }catch(error){
         response.status(400).json({

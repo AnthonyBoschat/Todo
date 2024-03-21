@@ -1,10 +1,10 @@
 import React, {} from "react";
+import { useSelector } from "react-redux";
 
 export default function useBackend(){
 
     const backendURL = "http://localhost:4000"
-
-    
+    const fetchConsoleMessage = useSelector(store => store.backend.fetchConsoleMessage)
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ROUTER
@@ -21,7 +21,7 @@ export default function useBackend(){
         fetch(`${backendURL}${request.route}`, fetchOptions)
         .then(response => response.json())
         .then(result => {
-            console.log(result.message)
+            if(fetchConsoleMessage){console.log(result.message)}
             if(request.finalAction){request.finalAction(result.payload)}
         })
         .catch(error => {

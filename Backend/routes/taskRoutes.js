@@ -135,31 +135,6 @@ router.put("/renameTask/:taskID", async (request, response) => {
 })
 
 //////////////////////////////////////////////////////////////////////////////////////
-// Supprime toutes les tâches d'un dossier
-router.delete("/deleteAllTaskForThisFolder/:folderID", async (request, response) => {
-    const folderID = request.params.folderID
-    try{
-        await Task.deleteMany({folderID:folderID})
-        response.status(200).json({
-            message:`Toutes les tâches ayant pour folderID ${folderID} ont été supprimé`,
-            payload:folderID
-        })
-    }catch(error){
-        response.status(500).json({
-            message:`Echec lors de la suppression des tâches associé au dossier ${folderID}`,
-            payload:error.message
-        })
-    }
-})
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 // DEVTOOLS
 //////////////////////////////////////////////////////////////////////////////////////
