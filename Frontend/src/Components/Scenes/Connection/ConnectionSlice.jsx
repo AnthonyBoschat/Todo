@@ -15,6 +15,15 @@ const ConnectionSlice = createSlice({
         },
         update_connectedUser:(state,action) => {
             state.connectedUser = action.payload
+        },
+        update_closeConnection:(state,action)=>{
+            return state = {
+                connected:false,
+                connectedUser:{
+                    name:null,
+                    _id:null
+                }
+            }
         }
     },
 })
@@ -22,5 +31,6 @@ const ConnectionSlice = createSlice({
 export const ConnectionSliceReducer = ConnectionSlice.reducer
 export const {
     update_connected,
-    update_connectedUser
+    update_connectedUser,
+    update_closeConnection
 } = ConnectionSlice.actions

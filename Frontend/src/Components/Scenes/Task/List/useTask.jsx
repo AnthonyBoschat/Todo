@@ -1,5 +1,8 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import useBackend from "../../../../Utils/useBackend";
+import { update_loadTasksList } from "../TaskSlice";
+import { useDispatch } from "react-redux";
 
 export default function useTask_List(){
 
@@ -10,9 +13,19 @@ export default function useTask_List(){
     const displayTaskListRef = useRef()
     const folderIndex = foldersList.findIndex(folder => folder._id === folderSelectedID) // L'index du dossier selectionner dans la liste des dossiers 
     // const taskList = todoStorage.foldersList[folderIndex].taskList // Le dossier correspondant dans la liste des dossier au dossier selectionner
-    
+    const {fetchRequest} = useBackend()
+    const dispatch = useDispatch()
 
-    
+    useEffect(() => {
+        if(folderSelectedID){
+            fetchRequest("GET", {
+                route:`/tasks/getTasks/${folderSelectedID}`,
+                finalAction:(payload) => {
+                    dispatch(update_loadTasksList(payload))
+                }
+            })
+        }
+    }, [folderSelectedID])
 
     return{
         tasksList,

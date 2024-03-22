@@ -2,6 +2,6 @@ div.app{
     // background-color: red;//
     overflow: hidden;
     display: grid;
-    grid-template-columns: minmax(15rem, 15vw) 85vw;
+    grid-template-columns: minmax(15rem, 15vw) 1fr;
     grid-template-rows: 100vh;
 }

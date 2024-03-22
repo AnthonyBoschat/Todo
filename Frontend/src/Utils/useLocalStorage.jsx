@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
 import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_taskList, update_taskOnCreation, update_toggleTask } from "../Components/Scenes/Task/TaskSlice";
@@ -187,16 +187,16 @@ export default function useLocalStorage(){
 
 
 
-    useEffect(() => {
-        if(folderSelectedID){
-            fetchRequest("GET", {
-                route:`/tasks/getTasks/${folderSelectedID}`,
-                finalAction:(payload) => {
-                    dispatch(update_loadTasksList(payload))
-                }
-            })
-        }
-    }, [folderSelectedID])
+    // useEffect(() => {
+    //     if(folderSelectedID){
+    //         fetchRequest("GET", {
+    //             route:`/tasks/getTasks/${folderSelectedID}`,
+    //             finalAction:(payload) => {
+    //                 dispatch(update_loadTasksList(payload))
+    //             }
+    //         })
+    //     }
+    // }, [folderSelectedID])
 
 
     
