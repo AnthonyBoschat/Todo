@@ -1,6 +1,8 @@
 div.popup_Box{
     // background-color: blue; //
     // background-color: rgb(115, 179, 115); //
+    display: flex;
+    justify-content: center;
     width: fit-content;
     height: fit-content;
     padding: 1rem;
@@ -9,9 +11,25 @@ div.popup_Box{
     box-shadow: 2px 2px 5px black;
     position: absolute;
     top: 0;
+    // left: 50%;
     z-index: 1;
-    transform: translateY(-100%);
+    // transform: translate(-50% -100%);
     animation: errorConnectionAppear 0.1s linear forwards,
                 errorConnectionDisappear 0.3s 2s linear forwards;
     opacity: 0;
+}
+
+div.popupDisconnected{
+    left: 50%;
+    transform: translate(-50% -100%);
+    animation: errorConnectionAppear 0.1s linear forwards,
+                errorConnectionDisappear 0.3s 2s linear forwards;
+}
+
+div.popupConnected{
+    right: 0%;
+    width: 20rem;
+    transform: translate(-50% -100%);
+    animation: errorConnectionAppear 0.1s linear forwards,
+                errorConnectionDisappear 0.3s 2s linear forwards;
 }

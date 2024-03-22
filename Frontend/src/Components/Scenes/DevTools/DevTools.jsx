@@ -30,25 +30,31 @@ export default function DevTools(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Supprime tout les dossiers
     const deleteFolders = () => {
-        fetchRequest("DELETE", {
-            route:"/folders/DELETE_ALL_FOLDER",
-            finalAction: () => {
-                dispatch(update_folderSelectedID(null))
-                dispatch(update_loadFoldersList([]))
-            }
-        })
+        const confirmation = window.confirm("Supprimer TOUT les DOSSIERS ?")
+        if(confirmation){
+            fetchRequest("DELETE", {
+                route:"/folders/DELETE_ALL_FOLDER",
+                finalAction: () => {
+                    dispatch(update_folderSelectedID(null))
+                    dispatch(update_loadFoldersList([]))
+                }
+            })
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Supprime toutes les tasks d'un dossier
     const deleteTask = () => {
-        fetchRequest("DELETE", {
-            route:`/tasks/deleteAllTaskForThisFolder/${folderSelectedID}`,
-            finalAction:() => {
-                dispatch(update_loadTasksList([]))
-                setTaskForceNumber(1)
-            }
-        })
+        const confirmation = window.confirm("Supprimer TOUTES les TACHES ?")
+        if(confirmation){
+            fetchRequest("DELETE", {
+                route:`/tasks/deleteAllTaskForThisFolder/${folderSelectedID}`,
+                finalAction:() => {
+                    dispatch(update_loadTasksList([]))
+                    setTaskForceNumber(1)
+                }
+            })
+        }
     }
 
     // Ajoute de force une task au dossier selectionner
@@ -71,34 +77,41 @@ export default function DevTools(){
     }
 
     const deleteAllUsers = () => {
-        fetchRequest("DELETE", {
-            route:"/users/DELETE_ALL_USERS",
-            finalAction:() => {
-                dispatch(update_closeConnection())
-                dispatch(update_folderSelectedID(null))
-                dispatch(update_loadFoldersList([]))
-                dispatch(update_loadTasksList([]))
-                dispatch(update_allFoldersLoad(false))
-            }
-        })
+        const confirmation = window.confirm("Supprimer TOUT les UTILISATEURS ?")
+        if(confirmation){
+            fetchRequest("DELETE", {
+                route:"/users/DELETE_ALL_USERS",
+                finalAction:() => {
+                    dispatch(update_closeConnection())
+                    dispatch(update_folderSelectedID(null))
+                    dispatch(update_loadFoldersList([]))
+                    dispatch(update_loadTasksList([]))
+                    dispatch(update_allFoldersLoad(false))
+                }
+            })
+        }
     }
 
     const deleteThisUser = () => {
-        fetchRequest("DELETE", {
-            route:`/users/DELETE_THIS_USER/${userID}`,
-            finalAction:() => {
-                dispatch(update_closeConnection())
-                dispatch(update_folderSelectedID(null))
-                dispatch(update_loadFoldersList([]))
-                dispatch(update_loadTasksList([]))
-                dispatch(update_allFoldersLoad(false))
-            },
-            errorAction:()=>{
-                popup({
-                    message:"Aucun utilisateur de connecter. Impossible de supprimer l'utilisateur"
-                })
-            }
-        })
+        const confirmation = window.confirm("Supprimer CET UTILISATEUR ?")
+        if(confirmation){
+            fetchRequest("DELETE", {
+                route:`/users/DELETE_THIS_USER/${userID}`,
+                finalAction:() => {
+                    dispatch(update_closeConnection())
+                    dispatch(update_folderSelectedID(null))
+                    dispatch(update_loadFoldersList([]))
+                    dispatch(update_loadTasksList([]))
+                    dispatch(update_allFoldersLoad(false))
+                },
+                errorAction:()=>{
+                    popup({
+                        message:"Aucun utilisateur de connecter. Impossible de supprimer l'utilisateur"
+                    })
+                }
+            })
+        }
+        
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

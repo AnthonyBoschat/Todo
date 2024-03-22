@@ -117,8 +117,6 @@ router.delete("/DELETE_THIS_USER/:userID", async(request, response) => {
         if(!userDeleted){ return response.status(404).json({message:`Aucun utilisateur trouver avec l'identifiant ${userID}`})}
         const foldersDeleted = await Folder.deleteMany({userID:userID})
         const tasksDeleted = await Task.deleteMany({userID:userID})
-        console.log(foldersDeleted)
-        console.log(tasksDeleted)
         response.status(200).json({
 message:
 `

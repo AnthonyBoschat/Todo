@@ -15,11 +15,11 @@
 
 @keyframes errorConnectionAppear{
     from{
-        transform: translateY(-100%);
+        transform: translate(-50%, -100%);
         opacity: 0;
     }
     to{
-        transform: translateY(50%);
+        transform: translate(-50%, 50%);
         opacity: 1;
     }
 }
@@ -27,4 +27,14 @@
 @keyframes errorConnectionDisappear{
     from{opacity: 1;}
     to{opacity: 0; display: none;}
+}
+
+@keyframes folderRenderApparition{
+    from{transform: translateX(-100%);}
+    to{transform: translateX(0%);}
+}
+
+@keyframes opacityIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
 }

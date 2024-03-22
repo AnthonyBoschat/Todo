@@ -1,5 +1,5 @@
 .renderDisplay{
-    background-color: rgb(62, 62, 62);
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,5 +8,7 @@
         position: absolute;
         color: rgb(195, 195, 195);
         font-size: 3vw;
+        opacity: 0;
+        animation: opacityIn 0.2s linear forwards;
     }
 }
