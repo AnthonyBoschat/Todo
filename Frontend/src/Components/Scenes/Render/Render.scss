@@ -11,4 +11,12 @@
         opacity: 0;
         animation: opacityIn 0.2s linear forwards;
     }
+
+    i.logo.apparition{
+        animation: opacityIn 0.2s linear forwards;
+    }
+
+    i.logo.disparition{
+        animation: opacityOut 0.2s linear forwards;
+    }
 }

@@ -6,6 +6,8 @@ div.connection_Display{
     align-items: center;
     justify-content: center;
     position: absolute;
+    opacity: 0;
+    animation: opacityIn 0.3s linear forwards;
 
 
     div.connection_Box{

@@ -13,6 +13,14 @@
         grid-template-columns: 1fr;
         grid-template-rows: 10% 80% 10%;
         transform: translateX(-100%);
+        
+    }
+
+    .apparition{
         animation: folderRenderApparition 0.3s ease forwards;
+    }
+
+    .disparition{
+        animation: folderRenderDisparition 0.3s ease forwards;
     }
 }

@@ -8,10 +8,11 @@ export default function FolderRender(){
 
     
     const connected = useSelector(store => store.connection.connected)
+    const onDisconnection = useSelector(store => store.connection.onDisconnection)
     
     return(
         <div className="folderRender_display">
-            <div style={!connected ? {display:"none"} : null} className="folderRender_Box">
+            <div style={!connected ? {display:"none"} : null} className={!onDisconnection ? "folderRender_Box apparition" : "folderRender_Box disparition" }>
                 <Add_Folder/>
                 <List_Folder/>
                 <User/>

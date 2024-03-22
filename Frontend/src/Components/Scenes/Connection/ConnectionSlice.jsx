@@ -7,7 +7,8 @@ const ConnectionSlice = createSlice({
         connectedUser:{
             name:null,
             _id:null
-        }
+        },
+        onDisconnection:false
     },
     reducers:{
         update_connected:(state,action) => {
@@ -22,8 +23,12 @@ const ConnectionSlice = createSlice({
                 connectedUser:{
                     name:null,
                     _id:null
-                }
+                },
+                onDisconnection:false
             }
+        },
+        update_onDisconnection:(state,action) => {
+            state.onDisconnection = action.payload
         }
     },
 })
@@ -32,5 +37,6 @@ export const ConnectionSliceReducer = ConnectionSlice.reducer
 export const {
     update_connected,
     update_connectedUser,
-    update_closeConnection
+    update_closeConnection,
+    update_onDisconnection
 } = ConnectionSlice.actions
