@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_addFolder, update_folderOnCreation, update_folderSelectedName } from "../FolderSlice";
+import { update_addFolder, update_allFoldersLoad, update_folderOnCreation, update_folderSelectedName, update_loadFoldersList } from "../FolderSlice";
 import useLocalStorage from "../../../../Utils/useLocalStorage";
 
 export default function useListFolder(inputRef){
@@ -44,6 +44,10 @@ export default function useListFolder(inputRef){
             return () => window.removeEventListener("click", handleClick)
         }
     }, [folderOnCreation])
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Première récupération de la liste complète des folders dans la base de donnée
+    
 
 
     return{

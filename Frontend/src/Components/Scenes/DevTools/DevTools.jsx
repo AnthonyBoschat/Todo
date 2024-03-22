@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_folderSelectedID, update_loadFoldersList} from "../Folder/FolderSlice";
+import { update_allFoldersLoad, update_folderSelectedID, update_loadFoldersList} from "../Folder/FolderSlice";
 import { update_addTask, update_loadTasksList } from "../Task/TaskSlice";
 import useBackend from "../../../Utils/useBackend";
 import { update_closeConnection, update_connected } from "../Connection/ConnectionSlice";
@@ -73,6 +73,8 @@ export default function DevTools(){
                 dispatch(update_closeConnection())
                 dispatch(update_folderSelectedID(null))
                 dispatch(update_loadFoldersList([]))
+                dispatch(update_loadTasksList([]))
+                dispatch(update_allFoldersLoad(false))
             }
         })
     }

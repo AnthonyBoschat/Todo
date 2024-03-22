@@ -7,6 +7,7 @@ export default function useFolder_Creation(){
 
     const inputRef = useRef()
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
+    const userID = useSelector(store => store.connection.connectedUser._id)
     const {localStorage_saveNewFolder} = useLocalStorage()
     const dispatch = useDispatch()
 
@@ -14,7 +15,7 @@ export default function useFolder_Creation(){
     const saveNewFolder = () => {
         if(inputRef.current.value !== ""){
             const newFolderName = inputRef.current.value
-            localStorage_saveNewFolder({name:newFolderName})
+            localStorage_saveNewFolder({name:newFolderName, userID:userID})
         }
         dispatch(update_folderOnCreation(false))
     }

@@ -11,16 +11,19 @@ export default function useConnection(){
     const passwordInputRef = useRef()
     const formRef = useRef()
     const {
-        mongoDB_saveNewUser
+        mongoDB_saveNewUser,
+        mongDB_connectUser
     } = useLocalStorage()
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Connecte l'utilisateur
     const handleSubmit = (e) => {
         e.preventDefault()
-        // const userName = usernameInputRef.current.value
-        // const password = passwordInputRef.current.value
-        // console.log(`userName : ${userName} \npassword : ${password}`)
+        const user = {
+            userName:usernameInputRef.current.value,
+            password:passwordInputRef.current.value
+        }
+        mongDB_connectUser(user)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -15,6 +15,40 @@ router.use(express.json())
 //////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////
+// Connecte un utilisateur
+router.post("/connectUser", async(request, response) => {
+    const {userName, password} = request.body
+    try{
+        const userNameExist = await User.findOne({userName:userName})
+        if(!userNameExist){
+            return response.status(400).json({
+                message:"Nom d'utilisateur incorrecte"
+            })
+        }else{
+            const correctPassword = userNameExist.userPassword === password
+            if(!correctPassword){
+                return response.status(400).json({
+                    message:"Mot de passe incorrecte"
+                })
+            }else{
+                response.status(200).json({
+                    message:
+`
+Utilisateur connecté :
+${JSON.stringify(userNameExist, null, 2)}`,
+payload:userNameExist
+                })
+            }
+        }
+    }catch(error){
+        response.status(400).json({
+            message:`Echec lors de la connection de l'utilisateur ${userName}`,
+            payload:error.message
+        })
+    }
+})
+
+//////////////////////////////////////////////////////////////////////////////////////
 // Ajouter un utilisateur
 router.post("/addUser", async(request, response) => {
     const newUser = new User(request.body)

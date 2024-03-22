@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
 import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_taskList, update_taskOnCreation, update_toggleTask } from "../Components/Scenes/Task/TaskSlice";
 import {update_connected, update_connectedUser} from "../Components/Scenes/Connection/ConnectionSlice"
 import useBackend from "./useBackend";
-import { update_popup } from "../Components/Scenes/Popup/PopupSlice";
 import usePopup from "../Components/Scenes/Popup/usePopup";
+import { useEffect } from "react";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useLocalStorage(){
 
-    const allFoldersLoad = useSelector(store => store.folder.allFoldersLoad)
     const taskList = useSelector(store => store.task.tasksList)
     const foldersList = useSelector(store => store.folder.foldersList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
+    const allFoldersLoad = useSelector(store => store.folder.allFoldersLoad)
+    const userID = useSelector(store => store.connection.connectedUser._id)
     const dispatch = useDispatch()
 
     const {fetchRequest} = useBackend()
@@ -29,8 +29,34 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Connecte un utilisateur
+    const mongDB_connectUser = (user) => {
+        fetchRequest("POST", {
+            route:`/users/connectUser`,
+            body:user,
+            finalAction: (payload) => {
+                dispatch(update_connected(true))
+                dispatch(update_connectedUser({
+                    name:payload.userName,
+                    _id:payload._id
+                }))
+                popup({
+                    message:"Connection successful.",
+                    color:"good"
+                })
+            },
+            errorAction:() => {
+                popup({
+                    message:"userName or Password incorrect",
+                    color:"bad"
+                })
+            }
+        })
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistre un utilisateur
-    const mongoDB_saveNewUser = (newUser,) => {
+    const mongoDB_saveNewUser = (newUser) => {
         fetchRequest("POST", {
             route:"/users/addUser",
             body:newUser,
@@ -168,35 +194,22 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Première récupération de la liste complète des folders dans la base de donnée
     useEffect(() => {
-        if(!allFoldersLoad){
+        if(!allFoldersLoad && userID){
+            console.log("récupération")
             fetchRequest("GET", {
-                route:`/folders/getAllFolders`,
+                route:`/folders/getAllFolders/${userID}`,
                 finalAction:(payload) => {
                     dispatch(update_loadFoldersList(payload))
                     dispatch(update_allFoldersLoad(true))
                 }
             })  
         }
-    }, [])
+    }, [userID])
 
 
-
-    // useEffect(() => {
-    //     if(folderSelectedID){
-    //         fetchRequest("GET", {
-    //             route:`/tasks/getTasks/${folderSelectedID}`,
-    //             finalAction:(payload) => {
-    //                 dispatch(update_loadTasksList(payload))
-    //             }
-    //         })
-    //     }
-    // }, [folderSelectedID])
+    
+    
 
 
     
@@ -218,5 +231,6 @@ export default function useLocalStorage(){
         localStorage_renameTask,
 
         mongoDB_saveNewUser,
+        mongDB_connectUser,
     }
 }

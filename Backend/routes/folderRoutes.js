@@ -14,9 +14,10 @@ router.use(express.json())
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Récupère tout les dossiers
-router.get("/getAllFolders", async(request, response) => {
+router.get("/getAllFolders/:userID", async(request, response) => {
+    const userID = request.params.userID
     try{
-        const allFolders = await Folder.find({})
+        const allFolders = await Folder.find({userID:userID})
         response.status(200).json({
             message:"Tout les dossiers ont été récupérer avec succès",
             payload:allFolders
