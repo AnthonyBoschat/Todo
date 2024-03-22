@@ -5,6 +5,7 @@ import { update_addTask, update_loadTasksList } from "../Task/TaskSlice";
 import useBackend from "../../../Utils/useBackend";
 import { update_closeConnection, update_connected } from "../Connection/ConnectionSlice";
 import { update_debugConsole, update_debugPopup } from "./DevToolsSlice";
+import usePopup from "../Popup/usePopup";
 
 export default function DevTools(){
     
@@ -13,7 +14,9 @@ export default function DevTools(){
     const debugConsole = useSelector(store => store.devtools.debugConsole)
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const connected = useSelector(store => store.connection.connected)
+    const userID = useSelector(store => store.connection.connectedUser._id)
     const {fetchRequest} = useBackend()
+    const {popup} = usePopup()
     const [taskForceNumber, setTaskForceNumber] = useState(1)
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +57,7 @@ export default function DevTools(){
             content:`Tâche forcé depuis le devTools numéro --> ${taskForceNumber} `,
             completed:false,
             folderID:folderSelectedID,
+            userID:userID
         }
 
         fetchRequest("POST", {
@@ -80,7 +84,21 @@ export default function DevTools(){
     }
 
     const deleteThisUser = () => {
-
+        fetchRequest("DELETE", {
+            route:`/users/DELETE_THIS_USER/${userID}`,
+            finalAction:() => {
+                dispatch(update_closeConnection())
+                dispatch(update_folderSelectedID(null))
+                dispatch(update_loadFoldersList([]))
+                dispatch(update_loadTasksList([]))
+                dispatch(update_allFoldersLoad(false))
+            },
+            errorAction:()=>{
+                popup({
+                    message:"Aucun utilisateur de connecter. Impossible de supprimer l'utilisateur"
+                })
+            }
+        })
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

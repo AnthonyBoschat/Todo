@@ -132,7 +132,8 @@ export default function useLocalStorage(){
         const task = {
             content:newTask.content,
             completed:newTask.completed,
-            folderID:folderSelectedID
+            folderID:folderSelectedID,
+            userID:userID
         }
 
         fetchRequest("POST", {

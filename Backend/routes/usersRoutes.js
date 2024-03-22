@@ -90,6 +90,8 @@ payload:savedUser
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////////////////
+// Supprime tout les utilisateurs
 router.delete("/DELETE_ALL_USERS", async(request, response) => {
     try{
         await Folder.deleteMany()
@@ -100,6 +102,33 @@ router.delete("/DELETE_ALL_USERS", async(request, response) => {
 ---------------------------------------------------------------------------
 Tout les utilisateurs, tout dossiers et toutes les tâches ont été supprimés
 ---------------------------------------------------------------------------`})
+    }catch(error){
+        response.status(400).send(error)
+    }
+})
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Supprime l'utilisateur en cours
+router.delete("/DELETE_THIS_USER/:userID", async(request, response) => {
+    const userID = request.params.userID
+    try{
+        const userDeleted = await User.deleteMany({_id:userID})
+        if(!userDeleted){ return response.status(404).json({message:`Aucun utilisateur trouver avec l'identifiant ${userID}`})}
+        const foldersDeleted = await Folder.deleteMany({userID:userID})
+        const tasksDeleted = await Task.deleteMany({userID:userID})
+        console.log(foldersDeleted)
+        console.log(tasksDeleted)
+        response.status(200).json({
+message:
+`
+---------------------------------
+Suppression de l'utilisateur fini :
+
+Tâche supprimer : ${tasksDeleted.deletedCount}
+Dossier supprimer : ${foldersDeleted.deletedCount}
+---------------------------------`
+        })
     }catch(error){
         response.status(400).send(error)
     }
