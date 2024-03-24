@@ -18,6 +18,7 @@ router.get("/getAllFolders/:userID", async(request, response) => {
     const userID = request.params.userID
     try{
         const allFolders = await Folder.find({userID:userID})
+        console.log(allFolders)
         response.status(200).json({
             message:"Tout les dossiers ont été récupérer avec succès",
             payload:allFolders
@@ -37,7 +38,7 @@ router.post("/addFolder", async (request, response) => {
         const folder = new Folder(request.body)
         await folder.save()
         response.status(201).json({
-            message:`Le dossier ${folder.name} a été enregistrer.`,
+            message:`Le dossier a été enregistrer \n\n ${JSON.stringify(folder, null, 2)}`,
             payload:folder
         })
     }catch(error){
@@ -60,28 +61,20 @@ router.delete("/deleteFolder/:folderID", async (request, response) => {
         }
         // Récupération de la liste des tâche associés
         const getListTask = await Task.find({folderID}).lean()
-        const listTask = getListTask.map(task => 
-`
-Task._id => ${task._id}
-Task.folderID => ${task.folderID}
-Task.content => ${task.content}
-Task.completed => ${task.completed}
-`).join("\n")
+        const listDeletedTask = getListTask.map(task => `${JSON.stringify(task, null, 2)}`).join("\n")
 
 
         // Suppression des tâches associés
         const deletedTask = await Task.deleteMany({folderID:folderID})
         response.status(200).json({
-            message:
-`
+            message:`
 ------------------- Dossier supprimé : 
 
-deleteFolder.name => ${deletedFolder.name}
-deletedFolder._id => ${deletedFolder._id}
+${JSON.stringify(deletedFolder, null, 2)}
 
 ------------------- Tâche supprimé (${deletedTask.deletedCount}) : 
 
-${listTask}`,
+${listDeletedTask}`,
             payload:folderID
         })
     }catch(error){
@@ -110,11 +103,11 @@ router.put("/updateFolderName/:folderID", async (request, response) => {
             })
         }
         response.status(200).json({
-            message:`Le dossier ${folderID} a bien été renommer (${newFolderName})`, 
+            message:`Le dossier a bien été renommer \n\n ${JSON.stringify(updatedFolder, null, 2)}`, 
             payload:updatedFolder})
     }catch(error){
         response.status(400).json({
-            message:`Echec lors de la suppression du renommage du dossier ${folderID} => ${newFolderName}`,
+            message:`Echec lors de la suppression du renommage du dossier ${folderID}`,
             payload:error.message
         })
     }

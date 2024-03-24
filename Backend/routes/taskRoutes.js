@@ -46,12 +46,12 @@ router.post("/addTask", async (request, response) => {
         const newTask = new Task(request.body);
         await newTask.save();
         response.status(200).json({
-            message:`La tâche ${newTask._id} a été correctement sauvegarder`,
+            message:`La tâche a été correctement sauvegarder \n\n ${JSON.stringify(newTask, null, 2)}`,
             payload:newTask
         })
     }catch(error){
         response.status(400).json({
-            message:`Echec dans l'enregistrement de la tâche ${request.body}`,
+            message:`Echec dans l'enregistrement de la tâche ${JSON.stringify(request.body, null, 2)}`,
             payload:error.message
         });
     }
@@ -69,7 +69,7 @@ router.delete("/deleteTask/:taskID", async (request, response) => {
             })
         }
         response.status(200).json({
-            message:`La tâche ${taskID} a correctement été supprimer`,
+            message:`La tâche a correctement été supprimer \n\n ${JSON.stringify(taskDeleted, null, 2)}`,
             payload:taskDeleted
         })
     }catch(error){
@@ -99,7 +99,7 @@ router.put("/toggleTask/:taskID", async (request, response) => {
             });
         }
         response.status(200).json({
-            message:`Le toggle de la tâche ${updatedTask._id} a correctement été modifier`,
+            message:`Le toggle de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             payload:updatedTask
         });
     }catch(error){
@@ -125,7 +125,7 @@ router.put("/renameTask/:taskID", async (request, response) => {
             message:`Aucune tâche trouvé avec l'identifiant ${taskID}, échec de la modification de son "content"`
         })}
         response.status(200).json({
-            message:`La tâche ${taskID} a vu son "content" correctement mis à jour`,
+            message:`La tâche a vu son "content" correctement mis à jour \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             payload:updatedTask
         })
     }catch(error){

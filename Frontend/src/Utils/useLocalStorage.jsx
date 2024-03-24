@@ -28,42 +28,6 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    const mongoDB_disconnectUser = () => {
-        fetchRequest("GET", {
-            route:"/users/disconnection",
-            finalAction: (payload) => {
-                dispatch(update_loadFoldersList([]))
-                dispatch(update_loadTasksList([]))
-                dispatch(update_allFoldersLoad(false))
-                dispatch(update_folderSelectedID(null))
-                dispatch(update_closeConnection())
-                popup({
-                    message:"You have been disconnected",
-                    color:"good",
-                    hidden:false
-                })
-            }
-        })
-    }
-
-    const mondoDB_reconnectUser = (setReconnectionControle) => {
-        fetchRequest("GET", {
-            route:"/users/reconnectUser",
-            finalAction:(payload) => {
-                dispatch(update_connected(true))
-                dispatch(update_connectedUser({
-                    name:payload.userName,
-                    _id:payload._id
-                }))
-                setReconnectionControle(true)
-                popup({
-                    message:"Connection successful.",
-                    color:"good"
-                })
-            }
-        })
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Connecte un utilisateur
     const mongDB_connectUser = (user) => {
@@ -89,6 +53,48 @@ export default function useLocalStorage(){
             }
         })
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Déconnecte un utilisateur
+    const mongoDB_disconnectUser = () => {
+        fetchRequest("GET", {
+            route:"/users/disconnection",
+            finalAction: (payload) => {
+                dispatch(update_loadFoldersList([]))
+                dispatch(update_loadTasksList([]))
+                dispatch(update_allFoldersLoad(false))
+                dispatch(update_folderSelectedID(null))
+                dispatch(update_closeConnection())
+                popup({
+                    message:"You have been disconnected",
+                    color:"good",
+                    hidden:false
+                })
+            }
+        })
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Reconnecte un utilisateur
+    const mondoDB_reconnectUser = (setReconnectionControle) => {
+        fetchRequest("GET", {
+            route:"/users/reconnectUser",
+            finalAction:(payload) => {
+                dispatch(update_connected(true))
+                dispatch(update_connectedUser({
+                    name:payload.userName,
+                    _id:payload._id
+                }))
+                setReconnectionControle(true)
+                popup({
+                    message:"Connection successful.",
+                    color:"good"
+                })
+            }
+        })
+    }
+
+    
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistre un utilisateur
@@ -234,18 +240,17 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    useEffect(() => {
-        if(!allFoldersLoad && userID){
-            console.log("récupération")
-            fetchRequest("GET", {
-                route:`/folders/getAllFolders/${userID}`,
-                finalAction:(payload) => {
-                    dispatch(update_loadFoldersList(payload))
-                    dispatch(update_allFoldersLoad(true))
-                }
-            })  
-        }
-    }, [userID])
+    // useEffect(() => {
+    //     if(!allFoldersLoad && userID){
+    //         fetchRequest("GET", {
+    //             route:`/folders/getAllFolders/${userID}`,
+    //             finalAction:(payload) => {
+    //                 dispatch(update_loadFoldersList(payload))
+    //                 dispatch(update_allFoldersLoad(true))
+    //             }
+    //         })  
+    //     }
+    // }, [userID])
 
 
     

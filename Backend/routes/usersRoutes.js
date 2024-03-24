@@ -23,7 +23,6 @@ const authenticateMiddleware = (request, response, next) => {
     if(!token){
         return
     }
-
     try{
         const decoded = jwt.verify(token, "secretKey")
         request.user = decoded
@@ -44,16 +43,10 @@ router.get("/reconnectUser", authenticateMiddleware, async(request,response) => 
                 message:"Utilisateur introuvable"
             })
         }
-
-        
-            response.status(200).json({
-                message:
-`
-Reconnection réussi
-${JSON.stringify(user, null, 2)}`,
-payload:user
-                })
-        
+        response.status(200).json({
+            message:`Reconnection réussi \n\n ${JSON.stringify(user, null, 2)}`,
+            payload:user
+        })
     }catch(error){
         response.status(400).json({
             message:`Echec lors de la reconnection de l'utilisateur ${userName}`,
@@ -89,11 +82,8 @@ router.post("/connectUser", async(request, response) => {
                     maxAge:3600000 // Durée de vie du cookie en millisecondes (1 heure ici)
                 })
                 response.status(200).json({
-                    message:
-`
-Utilisateur connecté :
-${JSON.stringify(user, null, 2)}`,
-payload:user
+                    message:`Utilisateur connecté \n\n ${JSON.stringify(user, null, 2)}`,
+                    payload:user
                 })
             }
         }
@@ -126,23 +116,20 @@ router.post("/addUser", async(request, response) => {
             })
         }else{
             const savedUser = await newUser.save()
-            const token = jwt.sign({userID:savedUser._id, userPassword:savedUser.userPassword}, "secretKey", {expiresIn:"1h"})
-                response.cookie("session_token", token, {
-                    httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
-                    // secure:true, // Le cookie est envoyé uniquement sur HTTPS
-                    maxAge:3600000 // Durée de vie du cookie en millisecondes (1 heure ici)
-                })
+            const token = jwt.sign(
+                {userID:savedUser._id, userPassword:savedUser.userPassword}, 
+                "secretKey", 
+                {expiresIn:"1h"})
+            response.cookie("session_token", token, {
+                httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
+                // secure:true, // Le cookie est envoyé uniquement sur HTTPS
+                maxAge:3600000 // Durée de vie du cookie en millisecondes (1 heure ici)
+            })
             response.status(200).json({
-                message:
-`-----------------------
-Utilisateur enregistré :
-
-${JSON.stringify(savedUser, null, 2)}`,
-payload:savedUser
-        })  
+                message: `Utilisateur enregistré : ${JSON.stringify(savedUser, null, 2)}`,
+                payload:savedUser
+            })  
         }
-        
-        
     }catch(error){
         response.status(400).json({
             message:`Echec lors de l'enregistrement de l'utilisateur \n\n${JSON.stringify(newUser, null, 2)}`,
@@ -176,8 +163,7 @@ router.delete("/DELETE_ALL_USERS", async(request, response) => {
         await Folder.deleteMany()
         await Task.deleteMany()
         await User.deleteMany()
-        response.status(200).send({message:
-`
+        response.status(200).send({message:`
 ---------------------------------------------------------------------------
 Tout les utilisateurs, tout dossiers et toutes les tâches ont été supprimés
 ---------------------------------------------------------------------------`})
@@ -197,8 +183,7 @@ router.delete("/DELETE_THIS_USER/:userID", async(request, response) => {
         const foldersDeleted = await Folder.deleteMany({userID:userID})
         const tasksDeleted = await Task.deleteMany({userID:userID})
         response.status(200).json({
-message:
-`
+            message:`
 ---------------------------------
 Suppression de l'utilisateur fini :
 
