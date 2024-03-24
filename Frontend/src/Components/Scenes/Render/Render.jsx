@@ -13,8 +13,8 @@ export default function Render(){
     useFolder_Render()
     
     return(
-        <div className="renderDisplay">
-            {(connected && !folderSelectedID) && (<i className={!onDisconnection ? "logo apparition fa-solid fa-layer-group" : "logo disparition fa-solid fa-layer-group"}></i>)}
+        <div className={!onDisconnection ? "renderDisplay apparition" : "renderDisplay disparition"}>
+            {(connected && !folderSelectedID) && (<i className="logo fa-solid fa-layer-group"></i>)}
             {(connected && folderSelectedID) && (<TaskRender />)}
         </div>
     )

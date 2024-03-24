@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { update_taskOnCreation } from "../TaskSlice";
 import useLocalStorage from "../../../../Utils/useLocalStorage";
 import { useEffect, useRef, useState } from "react";
+import usePopup from "../../Popup/usePopup";
 
 export default function useHeaderTask(){
 
@@ -9,13 +10,14 @@ export default function useHeaderTask(){
     const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const {localStorage_renameFolder, localStorage_deleteFolder} = useLocalStorage()
+    const {popup} = usePopup()
 
     const dispatch = useDispatch()
     const folderInputRef = useRef()
 
     // Responsable de si oui ou non, on laisse l'input folderName etre accessible
     const [folderInputDisabled, setFolderInputDisabled] = useState(true)
-    const [folderName, setFolderName] = useState(folderSelectedName)
+    const [folderName, setFolderName] = useState(null)
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,8 +66,8 @@ export default function useHeaderTask(){
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Quand l'input se met à changer à cause des frappes utilisateurs
-    const handlefolderNameChange = (e) => {
+    // Quand on modifie le nom du dossier
+    const handleChangeInputFolder = (e) => {
         setFolderName(e.target.value)
     }
 
@@ -97,7 +99,11 @@ export default function useHeaderTask(){
             const handleClickOutside = (e) => {
                 if(e.target !== folderInputRef.current){
                     if(!controlFolderNameNotEmpty(folderInputRef.current.value)){
-                        window.alert("The name of your folder cannot be empty.")
+                        popup({
+                            message:"The name of your folder cannot be empty.",
+                            color:"bad",
+                            hidden:false
+                        })
                         setFolderName(folderSelectedName)
                         setFolderInputDisabled(true)
                     }else{
@@ -110,7 +116,11 @@ export default function useHeaderTask(){
             const handleKeyDown = (e) => {
                 if(e.key === "Enter"){
                     if(!controlFolderNameNotEmpty(folderInputRef.current.value)){
-                        window.alert("The name of your folder cannot be empty.")
+                        popup({
+                            message:"The name of your folder cannot be empty.",
+                            color:"bad",
+                            hidden:false
+                        })
                         setFolderName(folderSelectedName)
                         setFolderInputDisabled(true)
                     }else{
@@ -124,7 +134,10 @@ export default function useHeaderTask(){
             setTimeout(() => {window.addEventListener("click", handleClickOutside)}, 1);
             folderInputRef.current.addEventListener("keydown", handleKeyDown)
 
-            return () => window.removeEventListener("click", handleClickOutside)
+            return () => {
+                window.removeEventListener("click", handleClickOutside)
+                folderInputRef.current.removeEventListener("keydown", handleKeyDown)
+            }
         } 
     }, [folderInputDisabled])
 
@@ -136,6 +149,6 @@ export default function useHeaderTask(){
         folderInputDisabled,
         lockUnlockFolder,
         folderName,
-        handlefolderNameChange
+        handleChangeInputFolder
     }
 }

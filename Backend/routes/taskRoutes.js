@@ -142,9 +142,10 @@ router.put("/renameTask/:taskID", async (request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime toutes les tâches
-router.delete("/DELETE_ALL_TASK", async (request, response) => {
+router.delete("/deleteAllTaskForThisFolder/:folderID", async (request, response) => {
+    const folderID = request.params.folderID
     try{
-        await Task.deleteMany()
+        await Task.deleteMany({folderID:folderID})
         response.status(200).json({message:"Toutes les tâches ont été supprimés"})
     }catch(error){response.status(400).json({message:error.message})}
 })

@@ -12,19 +12,21 @@ export default function useUser(){
 
     const handleClickDisconnection = () => {
         dispatch(update_onDisconnection(true))
-        dispatch(update_folderSelectedID(null))
-        dispatch(update_loadFoldersList([]))
-        dispatch(update_loadTasksList([]))
-        dispatch(update_allFoldersLoad(false))
+        
+        
         
         setTimeout(() => {
+            dispatch(update_loadFoldersList([]))
+            dispatch(update_loadTasksList([]))
+            dispatch(update_allFoldersLoad(false))
+            dispatch(update_folderSelectedID(null))
             dispatch(update_closeConnection())
             popup({
                 message:"You have been disconnected",
                 color:"good",
                 hidden:false
             })
-        }, 300);
+        }, 350);
     }
 
     return{

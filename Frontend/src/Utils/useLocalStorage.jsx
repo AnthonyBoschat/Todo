@@ -74,7 +74,7 @@ export default function useLocalStorage(){
             errorAction: () => {
                 popup({
                     message:"This username is already used. Please try with another username.",
-                    color:"neutral"
+                    color:"bad"
                 })
             }
         })
@@ -90,6 +90,8 @@ export default function useLocalStorage(){
             finalAction: (payload) => {
                 dispatch(update_addFolder({name:payload.name, _id:payload._id}))
                 dispatch(update_folderSelectedID(payload._id))
+                console.log("1 => ", payload.name)
+                dispatch(update_folderSelectedName(payload.name))
             }
         })
     }
@@ -121,6 +123,7 @@ export default function useLocalStorage(){
                 const folderIndex = foldersList.findIndex(folder => folder._id === payload._id)
                 const newFolderName = payload.name
                 dispatch(update_folderRename({folderIndex:folderIndex, newFolderName:newFolderName}))
+                dispatch(update_folderSelectedName(newFolderName))
             }
         })
     }

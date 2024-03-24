@@ -97,6 +97,7 @@ ${listTask}`,
 // Modifie le nom d'un dossier
 router.put("/updateFolderName/:folderID", async (request, response) => {
     const {folderID} = request.params
+    console.log(folderID)
     const {newFolderName} = request.body
     try{
         const updatedFolder = await Folder.findByIdAndUpdate(
@@ -130,11 +131,12 @@ router.put("/updateFolderName/:folderID", async (request, response) => {
 //////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////
-// Supprime tout les dossiers
-router.delete("/DELETE_ALL_FOLDER", async (request, response) => {
+// Supprime tout les dossiers de cette utilisateur
+router.delete("/DELETE_ALL_FOLDER/:userID", async (request, response) => {
+    const userID = request.params.userID
     try{
-        await Folder.deleteMany()
-        await Task.deleteMany()
+        await Folder.deleteMany({userID:userID})
+        await Task.deleteMany({userID:userID})
         response.status(200).send({message:
 `
 ---------------------------------------------------------

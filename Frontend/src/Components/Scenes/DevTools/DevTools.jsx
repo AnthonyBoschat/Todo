@@ -30,10 +30,10 @@ export default function DevTools(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Supprime tout les dossiers
     const deleteFolders = () => {
-        const confirmation = window.confirm("Supprimer TOUT les DOSSIERS ?")
+        const confirmation = window.confirm("Supprimer TOUT les DOSSIERS de cette utilisateur ?")
         if(confirmation){
             fetchRequest("DELETE", {
-                route:"/folders/DELETE_ALL_FOLDER",
+                route:`/folders/DELETE_ALL_FOLDER/${userID}`,
                 finalAction: () => {
                     dispatch(update_folderSelectedID(null))
                     dispatch(update_loadFoldersList([]))

@@ -8,6 +8,7 @@ div.connection_Display{
     position: absolute;
     opacity: 0;
     animation: opacityIn 0.3s linear forwards;
+    z-index: 2;
 
 
     div.connection_Box{
