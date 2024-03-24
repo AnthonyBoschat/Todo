@@ -46,7 +46,7 @@ export default function useLocalStorage(){
         })
     }
 
-    const mondoDB_reconnectUser = () => {
+    const mondoDB_reconnectUser = (setReconnectionControle) => {
         fetchRequest("GET", {
             route:"/users/reconnectUser",
             finalAction:(payload) => {
@@ -55,6 +55,7 @@ export default function useLocalStorage(){
                     name:payload.userName,
                     _id:payload._id
                 }))
+                setReconnectionControle(true)
                 popup({
                     message:"Connection successful.",
                     color:"good"

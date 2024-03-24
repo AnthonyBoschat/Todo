@@ -6,7 +6,7 @@ import "./Css/main.css"
 import useLocalStorage from "./Utils/useLocalStorage";
 import Connection from "./Components/Scenes/Connection/Connection";
 import Popup from "./Components/Scenes/Popup/Popup";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
 
@@ -14,24 +14,29 @@ function App() {
   const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
   const connected = useSelector(store => store.connection.connected)
   const popupHidden = useSelector(store => store.popup.hidden)
-  
+  const [reconnectionControle, setReconnectionControle] = useState(false)
 
   useEffect(() => {
-    mondoDB_reconnectUser()
+    mondoDB_reconnectUser(setReconnectionControle)
   }, [])
 
   return (
     
-      <div className="app">
+    <>
+      {reconnectionControle && (
+        <div className="app">
 
-        <FolderRender/>
-        {(!connected && !folderSelectedID) && (<Connection/>)}
-        {!popupHidden && <Popup/>}
-        <Render/>
+          <FolderRender/>
+          {(!connected && !folderSelectedID) && (<Connection/>)}
+          {!popupHidden && <Popup/>}
+          <Render/>
 
 
-        <DevTools/>
-      </div>
+          {/* <DevTools/> */}
+        </div>
+      )}
+    </>
+      
   );
 }
 
