@@ -18,7 +18,6 @@ router.get("/getAllFolders/:userID", async(request, response) => {
     const userID = request.params.userID
     try{
         const allFolders = await Folder.find({userID:userID})
-        console.log(allFolders)
         response.status(200).json({
             message:"Tout les dossiers ont été récupérer avec succès",
             payload:allFolders
@@ -89,7 +88,6 @@ ${listDeletedTask}`,
 // Modifie le nom d'un dossier
 router.put("/updateFolderName/:folderID", async (request, response) => {
     const {folderID} = request.params
-    console.log(folderID)
     const {newFolderName} = request.body
     try{
         const updatedFolder = await Folder.findByIdAndUpdate(
