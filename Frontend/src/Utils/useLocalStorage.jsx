@@ -4,7 +4,6 @@ import { update_addTask, update_deleteTask, update_loadTasksList, update_renameT
 import {update_closeConnection, update_connected, update_connectedUser} from "../Components/Scenes/Connection/ConnectionSlice"
 import useBackend from "./useBackend";
 import usePopup from "../Components/Scenes/Popup/usePopup";
-import { useEffect } from "react";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useLocalStorage(){
@@ -12,10 +11,8 @@ export default function useLocalStorage(){
     const taskList = useSelector(store => store.task.tasksList)
     const foldersList = useSelector(store => store.folder.foldersList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const allFoldersLoad = useSelector(store => store.folder.allFoldersLoad)
     const userID = useSelector(store => store.connection.connectedUser._id)
     const dispatch = useDispatch()
-
     const {fetchRequest} = useBackend()
     const {popup} = usePopup()
 
@@ -229,39 +226,6 @@ export default function useLocalStorage(){
             }
         })
     }
-
-    
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // USE EFFECT
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // useEffect(() => {
-    //     if(!allFoldersLoad && userID){
-    //         fetchRequest("GET", {
-    //             route:`/folders/getAllFolders/${userID}`,
-    //             finalAction:(payload) => {
-    //                 dispatch(update_loadFoldersList(payload))
-    //                 dispatch(update_allFoldersLoad(true))
-    //             }
-    //         })  
-    //     }
-    // }, [userID])
-
-
-    
-    
-
-
-    
-
-
-
-
     
 
     return{
