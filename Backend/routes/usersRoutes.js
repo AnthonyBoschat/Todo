@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const User = require("../models/user")
 const Task = require("../models/task")
 const Folder = require("../models/folder")
@@ -15,28 +17,83 @@ router.use(express.json())
 //////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////
+// Reocnnecte un utilisateur
+const authenticateMiddleware = (request, response, next) => {
+    const token = request.cookies.session_token;
+    if(!token){
+        return
+    }
+
+    try{
+        const decoded = jwt.verify(token, "secretKey")
+        request.user = decoded
+        next()
+    }catch(error){
+        response.status(400).json({
+            message:"Erreur percu dans le middleWare authenticateMiddleware, token invalide ou expiré"
+        })
+    }
+}
+router.get("/reconnectUser", authenticateMiddleware, async(request,response) => {
+    
+    const {userID} = request.user
+    try{
+        const user = await User.findOne({_id:userID})
+        if(!user){
+            return response.status(400).json({
+                message:"Utilisateur introuvable"
+            })
+        }
+
+        
+            response.status(200).json({
+                message:
+`
+Reconnection réussi
+${JSON.stringify(user, null, 2)}`,
+payload:user
+                })
+        
+    }catch(error){
+        response.status(400).json({
+            message:`Echec lors de la reconnection de l'utilisateur ${userName}`,
+            payload:error.message
+        })
+    }
+})
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
 // Connecte un utilisateur
 router.post("/connectUser", async(request, response) => {
-    const {userName, password} = request.body
+    const {userName, userPassword} = request.body
     try{
-        const userNameExist = await User.findOne({userName:userName})
-        if(!userNameExist){
+        const user = await User.findOne({userName:userName})
+        if(!user){
             return response.status(400).json({
                 message:"Nom d'utilisateur incorrecte"
             })
         }else{
-            const correctPassword = userNameExist.userPassword === password
+            const correctPassword = await bcrypt.compare(userPassword, user.userPassword)
             if(!correctPassword){
                 return response.status(400).json({
                     message:"Mot de passe incorrecte"
                 })
             }else{
+                const token = jwt.sign({userID:user._id, userPassword:user.userPassword}, "secretKey", {expiresIn:"1h"})
+                response.cookie("session_token", token, {
+                    httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
+                    // secure:true, // Le cookie est envoyé uniquement sur HTTPS
+                    maxAge:3600000 // Durée de vie du cookie en millisecondes (1 heure ici)
+                })
                 response.status(200).json({
                     message:
 `
 Utilisateur connecté :
-${JSON.stringify(userNameExist, null, 2)}`,
-payload:userNameExist
+${JSON.stringify(user, null, 2)}`,
+payload:user
                 })
             }
         }
@@ -51,7 +108,15 @@ payload:userNameExist
 //////////////////////////////////////////////////////////////////////////////////////
 // Ajouter un utilisateur
 router.post("/addUser", async(request, response) => {
-    const newUser = new User(request.body)
+    const {userName, userPassword} = request.body
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(userPassword, salt)
+    const userToSave = {
+        userName:userName,
+        userPassword:hashedPassword
+    }
+    const newUser = new User(userToSave)
+    
 
     try{
         const userAlreadyExist = await User.findOne({userName:newUser.userName})
@@ -61,6 +126,12 @@ router.post("/addUser", async(request, response) => {
             })
         }else{
             const savedUser = await newUser.save()
+            const token = jwt.sign({userID:savedUser._id, userPassword:savedUser.userPassword}, "secretKey", {expiresIn:"1h"})
+                response.cookie("session_token", token, {
+                    httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
+                    // secure:true, // Le cookie est envoyé uniquement sur HTTPS
+                    maxAge:3600000 // Durée de vie du cookie en millisecondes (1 heure ici)
+                })
             response.status(200).json({
                 message:
 `-----------------------
@@ -79,6 +150,14 @@ payload:savedUser
         })
     }
     
+})
+
+
+router.get("/disconnection", async(request, response) => {
+    response.cookie("session_token", '', {expires:new Date(0), path:"/"})
+    response.status(200).json({
+        message:"Deconnexion réussie."
+    })
 })
 
 

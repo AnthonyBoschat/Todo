@@ -36,7 +36,6 @@ router.post("/addFolder", async (request, response) => {
     try{
         const folder = new Folder(request.body)
         await folder.save()
-        console.log("controle")
         response.status(201).json({
             message:`Le dossier ${folder.name} a été enregistrer.`,
             payload:folder

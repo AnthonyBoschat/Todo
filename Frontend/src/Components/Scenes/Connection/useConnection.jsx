@@ -21,7 +21,7 @@ export default function useConnection(){
         e.preventDefault()
         const user = {
             userName:usernameInputRef.current.value,
-            password:passwordInputRef.current.value
+            userPassword:passwordInputRef.current.value
         }
         mongDB_connectUser(user)
     }

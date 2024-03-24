@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
 import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_taskList, update_taskOnCreation, update_toggleTask } from "../Components/Scenes/Task/TaskSlice";
-import {update_connected, update_connectedUser} from "../Components/Scenes/Connection/ConnectionSlice"
+import {update_closeConnection, update_connected, update_connectedUser} from "../Components/Scenes/Connection/ConnectionSlice"
 import useBackend from "./useBackend";
 import usePopup from "../Components/Scenes/Popup/usePopup";
 import { useEffect } from "react";
@@ -27,6 +27,41 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    const mongoDB_disconnectUser = () => {
+        fetchRequest("GET", {
+            route:"/users/disconnection",
+            finalAction: (payload) => {
+                dispatch(update_loadFoldersList([]))
+                dispatch(update_loadTasksList([]))
+                dispatch(update_allFoldersLoad(false))
+                dispatch(update_folderSelectedID(null))
+                dispatch(update_closeConnection())
+                popup({
+                    message:"You have been disconnected",
+                    color:"good",
+                    hidden:false
+                })
+            }
+        })
+    }
+
+    const mondoDB_reconnectUser = () => {
+        fetchRequest("GET", {
+            route:"/users/reconnectUser",
+            finalAction:(payload) => {
+                dispatch(update_connected(true))
+                dispatch(update_connectedUser({
+                    name:payload.userName,
+                    _id:payload._id
+                }))
+                popup({
+                    message:"Connection successful.",
+                    color:"good"
+                })
+            }
+        })
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Connecte un utilisateur
@@ -236,5 +271,7 @@ export default function useLocalStorage(){
 
         mongoDB_saveNewUser,
         mongDB_connectUser,
+        mongoDB_disconnectUser,
+        mondoDB_reconnectUser,
     }
 }

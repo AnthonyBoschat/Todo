@@ -14,7 +14,8 @@ export default function useBackend(){
     const fetchRequest = (method, request) => {
         const fetchOptions = {
             method:method,
-            headers:{}
+            headers:{},
+            credentials:"include",
         }
         if(method === "POST" || method === "PUT"){
             fetchOptions.headers["Content-Type"] = "application/json"

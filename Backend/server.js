@@ -3,6 +3,7 @@ require("dotenv").config() // Permet l'utilisation des variables d'environnement
 const express = require("express") // Créé serveur http
 const mongoose = require("mongoose") // Intéragi avec mongoDB
 const cors = require("cors") // Active la politique de partage de ressource entre origine
+const cookieParser = require("cookie-parser")
 const taskRoutes = require("./routes/taskRoutes")
 const folderRoutes = require("./routes/folderRoutes")
 const usersRoutes = require("./routes/usersRoutes")
@@ -16,9 +17,14 @@ const databaseURL = process.env.Mongo_URL // url de la base de donnée
 
 
 // Utilisation de cors
-app.use(cors())
+app.use(cors({
+  origin:"http://localhost:3000",
+  credentials:true
+}))
 // Utilisation de express.json
 app.use(express.json())
+// Utilisation de cookie-Parser pour accéder aux cookies
+app.use(cookieParser())
 
 
 

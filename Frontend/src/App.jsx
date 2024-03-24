@@ -6,14 +6,19 @@ import "./Css/main.css"
 import useLocalStorage from "./Utils/useLocalStorage";
 import Connection from "./Components/Scenes/Connection/Connection";
 import Popup from "./Components/Scenes/Popup/Popup";
+import { useEffect } from "react";
 
 function App() {
 
-  useLocalStorage()
+  const {mondoDB_reconnectUser} = useLocalStorage()
   const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
   const connected = useSelector(store => store.connection.connected)
   const popupHidden = useSelector(store => store.popup.hidden)
+  
 
+  useEffect(() => {
+    mondoDB_reconnectUser()
+  }, [])
 
   return (
     
