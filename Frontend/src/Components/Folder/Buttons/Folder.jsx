@@ -1,7 +1,4 @@
-import React, { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { update_folderSelectedID, update_folderSelectedName } from "../FolderSlice";
-import { update_taskOnEdition } from "../../Task/TaskSlice";
+import React from "react";
 import useFolder_Button from "./useFolder";
 
 export default function Button_Folder({folder}){
@@ -17,11 +14,11 @@ export default function Button_Folder({folder}){
     return(
         <li className="folderButton_Box">
             <button 
-            className={folderSelectedID === folder?._id ? "folderSelected" : null} 
-            onClick={handleClickFolder} 
-            ref={buttonFolderRef}
+                className={folderSelectedID === folder._id ? "folderSelected" : null} 
+                onClick={handleClickFolder} 
+                ref={buttonFolderRef}
             >
-                {folder?.name}
+                {folder.name}
             </button>
             
         </li>

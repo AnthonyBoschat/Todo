@@ -118,7 +118,6 @@ export default function DevTools(){
     // Active ou non les message dans la console ou dans les popups
     const toggleConsoleMessage = () => {dispatch(update_debugConsole(!debugConsole))}
     const togglePopupMessage = () => {dispatch(update_debugPopup(!debugPopup))}
-    
     const toggleConnected = () => {dispatch(update_connected(!connected))}
 
     return(

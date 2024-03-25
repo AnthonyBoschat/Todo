@@ -1,4 +1,3 @@
-import React, {} from "react";
 import { update_popup } from "./PopupSlice";
 import { useDispatch } from "react-redux";
 

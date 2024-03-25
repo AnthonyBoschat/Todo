@@ -3,13 +3,12 @@ import { useSelector } from "react-redux";
 
 export default function Popup(){
 
-    const popupMessage = useSelector(store => store.popup.message)
-    const popupColor = useSelector(store => store.popup.color)
+    const popup = useSelector(store => store.popup)
     const connected = useSelector(store => store.connection.connected)
 
     return(
-        <div style={{backgroundColor:popupColor}} className={!connected ? "popup_Box popupDisconnected" : "popup_Box popupConnected" }>
-            {popupMessage}
+        <div style={{backgroundColor:popup.color}} className={!connected ? "popup_Box popupDisconnected" : "popup_Box popupConnected" }>
+            {popup.message}
         </div>
     )
 }

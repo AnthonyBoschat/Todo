@@ -16,6 +16,7 @@ export default function Pannel(){
     const {fetchRequest} = useBackend()
     const dispatch = useDispatch()
 
+    // Après la connection, va récupérer la list de tout les dossiers de l'utilisateur connecter
     useEffect(() => {
         if(!allFoldersLoad && userID){
             fetchRequest("GET", {
@@ -29,12 +30,19 @@ export default function Pannel(){
     }, [userID])
 
     return(
+        
         <div className="pannel_display">
             <div style={!connected ? {display:"none"} : null} className={!onDisconnection ? "pannel_Box apparition" : "pannel_Box disparition" }>
-                <Add_Folder/>
-                <List_Folder/>
-                <User/>
+
+                {allFoldersLoad && ( // Seulement quand tout les dossiers ont été chargé, on charge les autres composants
+                    <>
+                        <Add_Folder/>
+                        <List_Folder/>
+                        <User/>
+                    </>
+                )}
             </div>
+
         </div>
     )
 }

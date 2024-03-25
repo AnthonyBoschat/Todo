@@ -11,18 +11,18 @@ export default function useFolder_Creation(){
     const {mongoDB_saveNewFolder} = useMongoDB()
     const dispatch = useDispatch()
 
-    // Pour préparer la sauvegarde du nouveau dossier
+    // Check la validité du dossier qui souhaite etre enregistrer
     const saveNewFolder = () => {
-        if(inputRef.current.value !== ""){
+        if(inputRef.current.value !== ""){ // S'il n'a pas un nom vide
             const newFolderName = inputRef.current.value
-            mongoDB_saveNewFolder({name:newFolderName, userID:userID})
+            mongoDB_saveNewFolder({name:newFolderName, userID:userID}) // On l'enregistre dans la base de donnée
         }
-        dispatch(update_folderOnCreation(false))
+        dispatch(update_folderOnCreation(false)) // Dans tout les cas, on annule le mode creation
     }
 
-    // Quand le dossier veut etre valider
+    // Appuie sur la touche entrée
     const handleValidFolder = useCallback((event) => { if(event.key === "Enter" && inputRef.current){saveNewFolder()} }, [folderOnCreation])
-    // Lors de l'annulation de la création d'un dossier
+    // Si l'utilisateur clique ailleurs
     const handleClickOutside = useCallback(() => { if(inputRef.current){saveNewFolder()} }, [folderOnCreation])
     
     // Quand folderOnCreation passe en true ( qu'on est en train de créé un dossier )

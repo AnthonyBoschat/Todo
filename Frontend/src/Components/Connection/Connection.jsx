@@ -17,13 +17,13 @@ export default function Connection(){
                 <form ref={formRef} onSubmit={handleSubmit} action="">
 
                     <div className="username_password_Box">
-                        <input required ref={usernameInputRef} className="usernameInput" placeholder="Nom d'utilisateur" type="text" />
-                        <input required ref={passwordInputRef} className="passwordInput" placeholder="Mot de passe" type="password" />
+                        <input required ref={usernameInputRef} className="usernameInput" placeholder="Username" type="text" />
+                        <input required ref={passwordInputRef} className="passwordInput" placeholder="Password" type="password" />
                     </div>
                     
                     <div className="connection_inscription_Box">
-                        <input className="connectionInput" value={"Connection"} type="submit" />
-                        <input onClick={handleInscription} className="inscriptionInput" type="button" value={"Inscription"} />
+                        <input className="connectionInput" value="Sign in" type="submit" />
+                        <input onClick={handleInscription} className="inscriptionInput" type="button" value="Sign up" />
                     </div>
                     
                 </form>

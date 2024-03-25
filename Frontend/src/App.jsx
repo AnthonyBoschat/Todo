@@ -11,15 +11,18 @@ import useUpdate from "./Utils/useUpdate";
 
 function App() {
 
-  const {mongoDB_reconnectUser} = useMongoDB()
+  
   const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
   const connected = useSelector(store => store.connection.connected)
   const popupHidden = useSelector(store => store.popup.hidden)
+  const {mongoDB_reconnectUser} = useMongoDB()
+
   const [reconnectionControle, setReconnectionControle] = useState(false)
 
   // Responsable de toutes les mises à jours redux automatique
   useUpdate()
 
+  // Tentative de reconnection par le cookie
   useEffect(() => {
     const reconnect = async () => {
       await mongoDB_reconnectUser()
