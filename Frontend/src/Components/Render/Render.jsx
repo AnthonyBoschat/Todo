@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import TaskRender from "../Task/TaskRender"
+import Header_Task from "../Task/Header/Task";
+import List_Task from "../Task/List/Task";
 
 
 export default function Render(){
@@ -11,8 +12,16 @@ export default function Render(){
     
     return(
         <div className={!onDisconnection ? "renderDisplay apparition" : "renderDisplay disparition"}>
+
             {!folderSelectedID && (<i className="logo fa-solid fa-layer-group"></i>)}
-            {folderSelectedID && (<TaskRender />)}
+
+            {folderSelectedID && (
+                <div className="taskRender_Display">
+                    <Header_Task/>
+                    <List_Task/>
+                </div>
+            )}
+            
         </div>
     )
 }
