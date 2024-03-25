@@ -11,13 +11,14 @@
 
 @use "Components/Render/Render.scss";
 
+@use "Components/Pannel/Pannel.scss";
+
 @use "Components/Connection/Connection.scss";
 
 @use "Components/Popup/Popup.scss";
 
 @use "Components/User/User.scss";
 
-@use "Components/Folder/FolderRender.scss";
 @use "Components/Folder/Add/Folder.scss" as Add_Folder;
 @use "Components/Folder/Buttons/Folder.scss" as Button_Folder;
 @use "Components/Folder/List/Folder.scss" as List_Folder;

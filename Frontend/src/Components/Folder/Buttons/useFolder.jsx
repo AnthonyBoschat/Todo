@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_folderSelectedID, update_folderSelectedName } from "../FolderSlice";
-import { update_taskOnEdition } from "../../Task/TaskSlice";
+import { update_loadTasksList, update_taskOnEdition } from "../../Task/TaskSlice";
 
 export default function useFolder_Button(folder){
 
@@ -15,11 +15,12 @@ export default function useFolder_Button(folder){
         if(folder?._id != folderSelectedID){
             dispatch(update_folderSelectedID(folder?._id))
             const folderIndex = foldersList.findIndex(folder => folder?._id === folderSelectedID)
-            dispatch(update_folderSelectedName(foldersList[folderIndex]?.name))
+            // dispatch(update_folderSelectedName(foldersList[folderIndex]?.name))
         }
         // Si l'utilisateur clique un dossier qui est déjà présenter
         else{
             dispatch(update_folderSelectedID(null))
+            dispatch(update_loadTasksList([]))
         }
         dispatch(update_taskOnEdition(false))
     }

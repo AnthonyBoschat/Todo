@@ -29,12 +29,12 @@
     to{opacity: 0; display: none;}
 }
 
-@keyframes folderRenderApparition{
+@keyframes pannelApparition{
     from{transform: translateX(-100%);}
     to{transform: translateX(0%);}
 }
 
-@keyframes folderRenderDisparition{
+@keyframes pannelDisparition{
     from{transform: translateX(0%);}
     to{transform: translateX(-100%);}
 }

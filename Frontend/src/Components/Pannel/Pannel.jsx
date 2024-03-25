@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import Add_Folder from "./Add/Folder";
-import List_Folder from "./List/Folder";
+import Add_Folder from "../Folder/Add/Folder";
+import List_Folder from "../Folder/List/Folder";
 import User from "../User/User";
-import { useSelector } from "react-redux";
-import useBackend from "../../Utils/useBackend";
 import { useDispatch } from "react-redux";
-import { update_allFoldersLoad, update_loadFoldersList } from "./FolderSlice";
+import useBackend from "../../Utils/useBackend";
+import { update_allFoldersLoad, update_loadFoldersList } from "../Folder/FolderSlice";
+import { useSelector } from "react-redux";
 
-export default function FolderRender(){
+export default function Pannel(){
 
     const allFoldersLoad = useSelector(store => store.folder.allFoldersLoad)
     const connected = useSelector(store => store.connection.connected)
@@ -27,10 +27,10 @@ export default function FolderRender(){
             })  
         }
     }, [userID])
-    
+
     return(
-        <div className="folderRender_display">
-            <div style={!connected ? {display:"none"} : null} className={!onDisconnection ? "folderRender_Box apparition" : "folderRender_Box disparition" }>
+        <div className="pannel_display">
+            <div style={!connected ? {display:"none"} : null} className={!onDisconnection ? "pannel_Box apparition" : "pannel_Box disparition" }>
                 <Add_Folder/>
                 <List_Folder/>
                 <User/>
