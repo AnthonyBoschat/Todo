@@ -146,6 +146,10 @@ export default function useLocalStorage(){
                 dispatch(update_deleteFolder(folderIndex))
                 dispatch(update_loadTasksList([]))
                 dispatch(update_folderSelectedID(null))
+                popup({
+                    message:"Folder deleted",
+                    color:"good"
+                })
             }
         })
     }
