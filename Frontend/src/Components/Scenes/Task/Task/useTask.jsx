@@ -13,6 +13,7 @@ export default function useTask_One(folderIndex, task){
     const taskRef = useRef()
     const taskNameRef = useRef()
     const leftSideRef = useRef()
+    const toggleCoverRef = useRef()
     const dispatch = useDispatch()
 
     // Pour supprimer cette task
@@ -38,7 +39,17 @@ export default function useTask_One(folderIndex, task){
 
     // Pour toggle une task en finish ou unFinish
     const toggleTask = (taskID, newValueTaskCompleted) => { 
-        localStorage_toggleTask(taskID, newValueTaskCompleted)
+        if(!newValueTaskCompleted){
+            toggleCoverRef.current.classList.add("coverReturn")
+            setTimeout(() => {
+                localStorage_toggleTask(taskID, newValueTaskCompleted)
+                toggleCoverRef.current.classList.remove("coverReturn")
+            }, 225);
+        }
+        if(newValueTaskCompleted){
+            localStorage_toggleTask(taskID, newValueTaskCompleted)
+        }
+        
     }
 
     // Afin de placer le focus et le curseur sur la task qu'on souhaite modifier
@@ -99,6 +110,7 @@ export default function useTask_One(folderIndex, task){
         valideRenameTask,
         taskOnEdition,
         toggleTask,
-        leftSideRef
+        leftSideRef,
+        toggleCoverRef
     }
 }
