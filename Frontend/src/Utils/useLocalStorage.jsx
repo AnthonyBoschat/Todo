@@ -194,6 +194,10 @@ export default function useLocalStorage(){
             finalAction: (payload) => {
                 const deletedTaskIndex = taskList.findIndex(task => task._id === payload._id)
                 dispatch(update_deleteTask(deletedTaskIndex))
+                popup({
+                    message:"Task Deleted",
+                    color:"good",
+                })
             }
         })
     }

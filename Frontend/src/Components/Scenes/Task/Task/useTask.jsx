@@ -17,7 +17,10 @@ export default function useTask_One(folderIndex, task){
 
     // Pour supprimer cette task
     const deleteTask = (taskID) => {
-        localStorage_deleteTask(taskID)
+        const confirmation = window.confirm("Delete this task ?")
+        if(confirmation){
+            localStorage_deleteTask(taskID)
+        }
     }
 
     // Click pour rendre le task editable
