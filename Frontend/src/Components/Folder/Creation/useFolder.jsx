@@ -1,21 +1,21 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_folderOnCreation, update_folderSelectedID, update_folderSelectedName } from "../FolderSlice";
-import useLocalStorage from "../../../../Utils/useLocalStorage";
+import { update_folderOnCreation } from "../FolderSlice";
+import useMongoDB from "../../../Utils/useMongoDB";
 
 export default function useFolder_Creation(){
 
     const inputRef = useRef()
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
     const userID = useSelector(store => store.connection.connectedUser._id)
-    const {localStorage_saveNewFolder} = useLocalStorage()
+    const {mongoDB_saveNewFolder} = useMongoDB()
     const dispatch = useDispatch()
 
     // Pour préparer la sauvegarde du nouveau dossier
     const saveNewFolder = () => {
         if(inputRef.current.value !== ""){
             const newFolderName = inputRef.current.value
-            localStorage_saveNewFolder({name:newFolderName, userID:userID})
+            mongoDB_saveNewFolder({name:newFolderName, userID:userID})
         }
         dispatch(update_folderOnCreation(false))
     }

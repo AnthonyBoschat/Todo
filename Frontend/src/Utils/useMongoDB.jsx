@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Scenes/Folder/FolderSlice";
-import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_taskList, update_taskOnCreation, update_toggleTask } from "../Components/Scenes/Task/TaskSlice";
-import {update_closeConnection, update_connected, update_connectedUser} from "../Components/Scenes/Connection/ConnectionSlice"
+import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Folder/FolderSlice";
+import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_taskList, update_taskOnCreation, update_toggleTask } from "../Components/Task/TaskSlice";
+import {update_closeConnection, update_connected, update_connectedUser} from "../Components/Connection/ConnectionSlice"
 import useBackend from "./useBackend";
-import usePopup from "../Components/Scenes/Popup/usePopup";
+import usePopup from "../Components/Popup/usePopup";
 
 // Toute modificaiton du localStorage passe par ce hook
-export default function useLocalStorage(){
+export default function useMongoDB(){
 
     const taskList = useSelector(store => store.task.tasksList)
     const foldersList = useSelector(store => store.folder.foldersList)
@@ -27,7 +27,7 @@ export default function useLocalStorage(){
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Connecte un utilisateur
-    const mongDB_connectUser = (user) => {
+    const mongoDB_connectUser = (user) => {
         fetchRequest("POST", {
             route:`/users/connectUser`,
             body:user,
@@ -64,8 +64,7 @@ export default function useLocalStorage(){
                 dispatch(update_closeConnection())
                 popup({
                     message:"You have been disconnected",
-                    color:"good",
-                    hidden:false
+                    color:"good"
                 })
             }
         })
@@ -121,7 +120,7 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistrer un nouveau dossier
 
-    const localStorage_saveNewFolder = (newFolder) => {
+    const mongoDB_saveNewFolder = (newFolder) => {
         fetchRequest("POST", {
             route:"/folders/addFolder",
             body: newFolder,
@@ -137,7 +136,7 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour la suppression d'un dossier
 
-    const localStorage_deleteFolder = () => {
+    const mongoDB_deleteFolder = () => {
 
         fetchRequest("DELETE", {
             route:`/folders/deleteFolder/${folderSelectedID}`,
@@ -157,7 +156,7 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour le renommage d'un dossier
 
-    const localStorage_renameFolder = (newFolderName) => {
+    const mongoDB_renameFolder = (newFolderName) => {
         fetchRequest("PUT", {
             route:`/folders/updateFolderName/${folderSelectedID}`,
             body:{newFolderName},
@@ -166,6 +165,10 @@ export default function useLocalStorage(){
                 const newFolderName = payload.name
                 dispatch(update_folderRename({folderIndex:folderIndex, newFolderName:newFolderName}))
                 dispatch(update_folderSelectedName(newFolderName))
+                popup({
+                    message:"Your folder have been rename.",
+                    color:"good"
+                })
             }
         })
     }
@@ -173,7 +176,7 @@ export default function useLocalStorage(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistre une nouvelle tâche
 
-    const localStorage_saveNewTask = (newTask) => {
+    const mongoDB_saveNewTask = (newTask) => {
         const task = {
             content:newTask.content,
             completed:newTask.completed,
@@ -192,7 +195,7 @@ export default function useLocalStorage(){
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour la suppression d'une tâche
-    const localStorage_deleteTask = (taskID) => {
+    const mongoDB_deleteTask = (taskID) => {
         fetchRequest("DELETE", {
             route:`/tasks/deleteTask/${taskID}`,
             finalAction: (payload) => {
@@ -208,7 +211,7 @@ export default function useLocalStorage(){
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour le renommage d'une task
-    const localStorage_renameTask = (taskID, newTaskContent) => {
+    const mongoDB_renameTask = (taskID, newTaskContent) => {
         fetchRequest("PUT", {
             route:`/tasks/renameTask/${taskID}`,
             body:{newTaskContent},
@@ -222,7 +225,7 @@ export default function useLocalStorage(){
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pour le toggle d'une tâche
-    const localStorage_toggleTask = (taskID, taskCompleted) => {
+    const mongoDB_toggleTask = (taskID, taskCompleted) => {
         fetchRequest("PUT", {
             route:`/tasks/toggleTask/${taskID}`,
             body:{completed:taskCompleted},
@@ -236,18 +239,18 @@ export default function useLocalStorage(){
     
 
     return{
-        localStorage_saveNewFolder,
-        localStorage_deleteFolder,
-        localStorage_renameFolder,
-        localStorage_toggleTask,
+        mongoDB_saveNewFolder,
+        mongoDB_deleteFolder,
+        mongoDB_renameFolder,
+        mongoDB_toggleTask,
 
 
-        localStorage_saveNewTask,
-        localStorage_deleteTask,
-        localStorage_renameTask,
+        mongoDB_saveNewTask,
+        mongoDB_deleteTask,
+        mongoDB_renameTask,
 
         mongoDB_saveNewUser,
-        mongDB_connectUser,
+        mongoDB_connectUser,
         mongoDB_disconnectUser,
         mongoDB_reconnectUser,
     }

@@ -1,14 +1,14 @@
 import {useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_taskOnEdition } from "../TaskSlice";
-import useLocalStorage from "../../../../Utils/useLocalStorage";
+import useMongoDB from "../../../Utils/useMongoDB";
 
 export default function useTask_One(folderIndex, task){
 
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
     const tasksList = useSelector(store => store.task.tasksList)
     const [taskEditable, setTaskEditable] = useState(false)
-    const {localStorage_deleteTask, localStorage_renameTask, localStorage_toggleTask} = useLocalStorage()
+    const {mongoDB_deleteTask, mongoDB_renameTask, mongoDB_toggleTask} = useMongoDB()
     
     const taskRef = useRef()
     const taskNameRef = useRef()
@@ -20,7 +20,7 @@ export default function useTask_One(folderIndex, task){
     const deleteTask = (taskID) => {
         const confirmation = window.confirm("Delete this task ?")
         if(confirmation){
-            localStorage_deleteTask(taskID)
+            mongoDB_deleteTask(taskID)
         }
     }
 
@@ -33,7 +33,7 @@ export default function useTask_One(folderIndex, task){
     // Bouton de validation pour valider l'edit de task
     const valideRenameTask = (taskID) => {
         const newTaskTitle = taskNameRef.current.innerText
-        localStorage_renameTask(taskID, newTaskTitle)
+        mongoDB_renameTask(taskID, newTaskTitle)
         setTaskEditable(false)
     }
 
@@ -42,12 +42,12 @@ export default function useTask_One(folderIndex, task){
         if(!newValueTaskCompleted){
             toggleCoverRef.current.classList.add("coverReturn")
             setTimeout(() => {
-                localStorage_toggleTask(taskID, newValueTaskCompleted)
+                mongoDB_toggleTask(taskID, newValueTaskCompleted)
                 toggleCoverRef.current.classList.remove("coverReturn")
             }, 225);
         }
         if(newValueTaskCompleted){
-            localStorage_toggleTask(taskID, newValueTaskCompleted)
+            mongoDB_toggleTask(taskID, newValueTaskCompleted)
         }
         
     }

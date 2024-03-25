@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { update_taskOnCreation } from "../TaskSlice";
-import useLocalStorage from "../../../../Utils/useLocalStorage";
+import useMongoDB from "../../../Utils/useMongoDB";
 import { useEffect, useRef, useState } from "react";
 import usePopup from "../../Popup/usePopup";
 
@@ -9,7 +9,7 @@ export default function useHeaderTask(){
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
     const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const {localStorage_renameFolder, localStorage_deleteFolder} = useLocalStorage()
+    const {mongoDB_renameFolder, mongoDB_deleteFolder} = useMongoDB()
     const {popup} = usePopup()
 
     const dispatch = useDispatch()
@@ -41,7 +41,7 @@ export default function useHeaderTask(){
     const deleteFolder = () => {
         const userValidDelete = window.confirm(`Are you sure, delete ${folderSelectedName} ?`)
         if(userValidDelete){
-            localStorage_deleteFolder()
+            mongoDB_deleteFolder()
         }
     }
 
@@ -108,7 +108,7 @@ export default function useHeaderTask(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        localStorage_renameFolder(newFolderName)
+                        mongoDB_renameFolder(newFolderName)
                         setFolderInputDisabled(true)
                     }
                 }
@@ -125,7 +125,7 @@ export default function useHeaderTask(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        localStorage_renameFolder(newFolderName)
+                        mongoDB_renameFolder(newFolderName)
                         setFolderInputDisabled(true)
                     }
                 }

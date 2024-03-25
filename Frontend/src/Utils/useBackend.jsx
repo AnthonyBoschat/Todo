@@ -1,6 +1,6 @@
 import React, {} from "react";
 import { useSelector } from "react-redux";
-import usePopup from "../Components/Scenes/Popup/usePopup";
+import usePopup from "../Components/Popup/usePopup";
 
 export default function useBackend(){
 

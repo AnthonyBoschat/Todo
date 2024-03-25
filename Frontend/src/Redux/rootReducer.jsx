@@ -1,9 +1,9 @@
 import { combineReducers } from "@reduxjs/toolkit"
-import { FolderSliceReducer } from "../Components/Scenes/Folder/FolderSlice"
-import { TaskSliceReducer } from "../Components/Scenes/Task/TaskSlice"
-import { ConnectionSliceReducer } from "../Components/Scenes/Connection/ConnectionSlice"
-import { PopupSliceReducer } from "../Components/Scenes/Popup/PopupSlice"
-import { DevToolsSliceReducer } from "../Components/Scenes/DevTools/DevToolsSlice"
+import { FolderSliceReducer } from "../Components/Folder/FolderSlice"
+import { TaskSliceReducer } from "../Components/Task/TaskSlice"
+import { ConnectionSliceReducer } from "../Components/Connection/ConnectionSlice"
+import { PopupSliceReducer } from "../Components/Popup/PopupSlice"
+import { DevToolsSliceReducer } from "../Components/DevTools/DevToolsSlice"
 
 const rootReducer = combineReducers({
     folder:FolderSliceReducer,

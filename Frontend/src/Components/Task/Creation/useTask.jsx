@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_taskOnCreation } from "../TaskSlice";
-import useLocalStorage from "../../../../Utils/useLocalStorage";
+import useMongoDB from "../../../Utils/useMongoDB";
 
 export default function useTask_Creation(){
 
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
     
-    const {localStorage_saveNewTask} = useLocalStorage()
+    const {mongoDB_saveNewTask} = useMongoDB()
     const dispatch = useDispatch()
     const taskCreationRef = useRef()
 
 
-    // Prépare la sauvegarde dans le localStorage de la nouvelle tâche
+    // Prépare la sauvegarde dans le mongoDB de la nouvelle tâche
     const saveNewTask = () => {
         const taskTitle = taskCreationRef.current.innerText
         const newTask = {content:taskTitle, completed:false}
-        localStorage_saveNewTask(newTask)
+        mongoDB_saveNewTask(newTask)
     }
 
     // Validation de la task par le click en dehors, si le nom est rempli au moin

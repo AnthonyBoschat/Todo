@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
 import {update_onDisconnection } from "../Connection/ConnectionSlice";
-import useLocalStorage from "../../../Utils/useLocalStorage";
+import useMongoDB from "../../Utils/useMongoDB";
 
 export default function useUser(){
 
     const dispatch = useDispatch()
-    const {mongoDB_disconnectUser} = useLocalStorage()
+    const {mongoDB_disconnectUser} = useMongoDB()
 
     const handleClickDisconnection = () => {
         dispatch(update_onDisconnection(true))

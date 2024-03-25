@@ -1,19 +1,17 @@
 import React, { useRef } from "react";
-import useLocalStorage from "../../../Utils/useLocalStorage";
+import useMongoDB from "../../Utils/useMongoDB";
 import { useSelector } from "react-redux";
 
 export default function useConnection(){
 
-    const popup = useSelector(store => store.connection.popup)
-    const popupMessage = useSelector(store => store.connection.popupMessage)
     const connected = useSelector(store => store.connection.connected)
     const usernameInputRef = useRef()
     const passwordInputRef = useRef()
     const formRef = useRef()
     const {
         mongoDB_saveNewUser,
-        mongDB_connectUser
-    } = useLocalStorage()
+        mongoDB_connectUser
+    } = useMongoDB()
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Connecte l'utilisateur
@@ -23,7 +21,7 @@ export default function useConnection(){
             userName:usernameInputRef.current.value,
             userPassword:passwordInputRef.current.value
         }
-        mongDB_connectUser(user)
+        mongoDB_connectUser(user)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
