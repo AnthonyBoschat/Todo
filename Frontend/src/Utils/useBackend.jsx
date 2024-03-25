@@ -42,7 +42,9 @@ export default function useBackend(){
                 color:"debug",
                 hidden:false
             })}
-            if(request.errorAction){request.errorAction()}
+            if(request.errorAction){
+                console.log("0")
+                request.errorAction()}
         })
     }
     return{

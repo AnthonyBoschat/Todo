@@ -73,7 +73,7 @@ export default function useLocalStorage(){
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Reconnecte un utilisateur
-    const mondoDB_reconnectUser = (setReconnectionControle) => {
+    const mongoDB_reconnectUser = () => {
         fetchRequest("GET", {
             route:"/users/reconnectUser",
             finalAction:(payload) => {
@@ -82,12 +82,11 @@ export default function useLocalStorage(){
                     name:payload.userName,
                     _id:payload._id
                 }))
-                setReconnectionControle(true)
                 popup({
                     message:"Connection successful.",
                     color:"good"
                 })
-            }
+            },
         })
     }
 
@@ -242,6 +241,6 @@ export default function useLocalStorage(){
         mongoDB_saveNewUser,
         mongDB_connectUser,
         mongoDB_disconnectUser,
-        mondoDB_reconnectUser,
+        mongoDB_reconnectUser,
     }
 }

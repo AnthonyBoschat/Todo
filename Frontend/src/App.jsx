@@ -10,14 +10,18 @@ import { useEffect, useState } from "react";
 
 function App() {
 
-  const {mondoDB_reconnectUser} = useLocalStorage()
+  const {mongoDB_reconnectUser} = useLocalStorage()
   const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
   const connected = useSelector(store => store.connection.connected)
   const popupHidden = useSelector(store => store.popup.hidden)
   const [reconnectionControle, setReconnectionControle] = useState(false)
 
   useEffect(() => {
-    mondoDB_reconnectUser(setReconnectionControle)
+    const reconnect = async () => {
+      await mongoDB_reconnectUser()
+      setReconnectionControle(true)
+    }
+    reconnect()
   }, [])
 
   return (
@@ -32,7 +36,7 @@ function App() {
           <Render/>
 
 
-          {/* <DevTools/> */}
+          <DevTools/>
         </div>
       )}
     </>
