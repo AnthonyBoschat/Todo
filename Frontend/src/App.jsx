@@ -24,11 +24,12 @@ function App() {
 
   // Tentative de reconnection par le cookie
   useEffect(() => {
-    const reconnect = async () => {
+
+    (async () => {
       await mongoDB_reconnectUser()
       setReconnectionControle(true)
-    }
-    reconnect()
+    })()
+
   }, [])
 
   

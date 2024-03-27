@@ -73,6 +73,7 @@ export default function useMongoDB(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Reconnecte un utilisateur
     const mongoDB_reconnectUser = () => {
+        
         fetchRequest("GET", {
             route:"/users/reconnectUser",
             finalAction:(payload) => {
@@ -80,6 +81,7 @@ export default function useMongoDB(){
                 dispatch(update_connectedUser({
                     name:payload.userName,
                     _id:payload._id
+                    
                 }))
                 popup({
                     message:"Connection successful.",
@@ -87,6 +89,7 @@ export default function useMongoDB(){
                 })
             },
         })
+        
     }
 
     

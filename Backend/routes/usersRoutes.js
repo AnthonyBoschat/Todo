@@ -33,6 +33,7 @@ const authenticateMiddleware = (request, response, next) => {
         })
     }
 }
+
 router.get("/reconnectUser", authenticateMiddleware, async(request,response) => {
     
     const {userID} = request.user
@@ -75,7 +76,7 @@ router.post("/connectUser", async(request, response) => {
                     message:"Mot de passe incorrecte"
                 })
             }else{
-                const token = jwt.sign({userID:user._id, userPassword:user.userPassword}, "secretKey", {expiresIn:"1h"})
+                const token = jwt.sign({userID:user._id}, "secretKey", {expiresIn:"1h"})
                 response.cookie("session_token", token, {
                     httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
                     // secure:true, // Le cookie est envoyé uniquement sur HTTPS

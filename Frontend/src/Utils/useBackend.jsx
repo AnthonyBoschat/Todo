@@ -43,7 +43,6 @@ export default function useBackend(){
                 hidden:false
             })}
             if(request.errorAction){
-                console.log("0")
                 request.errorAction()}
         })
     }
