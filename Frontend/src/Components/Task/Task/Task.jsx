@@ -25,7 +25,7 @@ export default function One_Task({task, folderIndex}){
             <div style={(taskEditable && taskOnEdition) ? {outline:"1px solid rgb(0, 182, 227)", boxShadow:"0px 0px 10px rgb(0, 182, 227)"} : null} ref={taskRef} className="task_Box">
 
                 <div ref={leftSideRef} style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
-                    <span ref={taskNameRef} contentEditable={taskEditable} className="taskName">{task.content}</span>
+                    <span ref={taskNameRef} contentEditable={taskEditable} suppressContentEditableWarning={taskEditable} className="taskName">{task.content}</span>
                 </div>
 
                 <div className="rightSideTask">
