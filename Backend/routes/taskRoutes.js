@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Task = require("../models/task")
+const authenticationMiddleware = require("../middleware/authentication")
 
 // middleware pour parser le JSON
 router.use(express.json())
@@ -23,10 +24,11 @@ router.use(express.json())
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Récupère les tasks d'un dossier
-router.get("/getTasks/:folderID", async (request, response) => {
+router.get("/getTasks/:folderID", authenticationMiddleware, async (request, response) => {
+    const {userID} = request.token
     try{
         const folderID = request.params.folderID
-        const allTasks = await Task.find({folderID:folderID})
+        const allTasks = await Task.find({folderID:folderID, userID:userID})
         response.status(200).json({
             message:`Toutes les tâches du dossier  "${folderID}" ont été récupérer avec succès`,
             payload:allTasks
@@ -59,17 +61,19 @@ router.post("/addTask", async (request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime une task
-router.delete("/deleteTask/:taskID", async (request, response) => {
+router.delete("/deleteTask/:taskID", authenticationMiddleware, async (request, response) => {
+    const {userID} = request.token
     const taskID = request.params.taskID
     try{
-        const taskDeleted = await Task.findByIdAndDelete(taskID)
+        const task = await Task.findById(taskID)
+        const taskDeleted = await Task.deleteOne({_id:taskID, userID:userID})
         if(!taskDeleted){
             response.status(404).json({
                 message:`La tâche ${taskID} n'a pas été trouver`
             })
         }
         response.status(200).json({
-            message:`La tâche a correctement été supprimer \n\n ${JSON.stringify(taskDeleted, null, 2)}`,
+            message:`La tâche a correctement été supprimer \n\n ${JSON.stringify(task, null, 2)}`,
             payload:taskDeleted
         })
     }catch(error){
@@ -83,14 +87,14 @@ router.delete("/deleteTask/:taskID", async (request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Toggle une task
-router.put("/toggleTask/:taskID", async (request, response) => {
-    
+router.put("/toggleTask/:taskID", authenticationMiddleware, async (request, response) => {
+    const {userID} = request.token
     const {taskID} = request.params
     const {completed} = request.body
     try{
-        const updatedTask = await Task.findByIdAndUpdate(
-            taskID,
-            {$set:{completed:completed}},
+        const updatedTask = await Task.findOneAndUpdate(
+            {_id:taskID, userID:userID},
+            {$set: {completed:completed}},
             {new:true}
         )
         if (!updatedTask) {
@@ -112,12 +116,13 @@ router.put("/toggleTask/:taskID", async (request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Rename une task
-router.put("/renameTask/:taskID", async (request, response) => {
+router.put("/renameTask/:taskID", authenticationMiddleware, async (request, response) => {
+    const {userID} = request.token
     const taskID = request.params.taskID
     const {newTaskContent} = request.body
     try{
-        const updatedTask = await Task.findByIdAndUpdate(
-            taskID,
+        const updatedTask = await Task.findOneAndUpdate(
+            {_id:taskID, userID:userID},
             {$set:{content:newTaskContent}},
             {new:true}
         )
