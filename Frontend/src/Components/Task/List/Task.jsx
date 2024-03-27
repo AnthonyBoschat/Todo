@@ -14,26 +14,31 @@ export default function List_Task(){
     
 
     return(
-        <div ref={displayTaskListRef} className="listTask_Display">
-                <div className="listTask_Box">
+        <>
+            {tasksList && (
+                <div ref={displayTaskListRef} className="listTask_Display">
+                    <div className="listTask_Box">
 
-                    {/* Si au moin une task d'enregistrer pour ce dossier, la liste de toutes les task */}
-                    {tasksList?.length > 0 && (tasksList.map((task, index) => (
-                        <One_Task folderIndex={folderIndex} key={`task_${task._id}`} task={task}/>
-                    )))}
+                        {/* Si au moin une task d'enregistrer pour ce dossier, la liste de toutes les task */}
+                        {tasksList.length > 0 && (tasksList.map((task, index) => (
+                            <One_Task folderIndex={folderIndex} key={`task_${task._id}`} task={task}/>
+                        )))}
 
-                    {/* Si aucune Task d'enregistrer pour ce dossier */}
-                    {(tasksList?.length === 0 && !taskOnCreation) && (
-                        <div className="noTask_Box">
-                            <span>( No Task )</span>
-                        </div>
-                    )}
+                        {/* Si aucune Task d'enregistrer pour ce dossier */}
+                        {(tasksList.length === 0 && !taskOnCreation) && (
+                            <div className="noTask_Box">
+                                <span>( No Task )</span>
+                            </div>
+                        )}
 
-                    {/* Nouvelle task en cours de création */}
-                    {taskOnCreation && ( 
-                        <Creation_Task/>
-                    )}
+                        {/* Nouvelle task en cours de création */}
+                        {taskOnCreation && ( 
+                            <Creation_Task/>
+                        )}
+                    </div>
                 </div>
-        </div>
+            )}
+        </>
+        
     )
 }

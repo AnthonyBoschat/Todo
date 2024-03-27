@@ -14,7 +14,7 @@ export default function useFolder_Button(folder){
             dispatch(update_folderSelectedID(folder._id))
         }else{ // Si l'utilisateur clique un dossier qui est déjà en cours de présentation
             dispatch(update_folderSelectedID(null))
-            dispatch(update_loadTasksList([]))
+            dispatch(update_loadTasksList(null))
         }
         dispatch(update_taskOnEdition(false)) // Dans tout les cas, on coupe le mode edition des tasks
     }

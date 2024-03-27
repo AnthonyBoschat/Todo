@@ -5,7 +5,7 @@ const TaskSlice = createSlice({
     initialState:{
         taskOnCreation:false,
         taskOnEdition:false,
-        tasksList:[]
+        tasksList:null,
     },
     reducers:{
         update_taskOnCreation:(state,action) => {
@@ -28,7 +28,7 @@ const TaskSlice = createSlice({
         },
         update_toggleTask:(state,action) => {
             state.tasksList[action.payload.taskIndex].completed = action.payload.newTaskToggle
-        }
+        },
     },
 })
 
@@ -40,5 +40,5 @@ export const {
     update_addTask,
     update_deleteTask,
     update_renameTask,
-    update_toggleTask
+    update_toggleTask,
 } = TaskSlice.actions
