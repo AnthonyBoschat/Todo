@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 const User = require("../models/user")
 const Task = require("../models/task")
 const Folder = require("../models/folder")
+const authenticationMiddleware = require("../middleware/authentication")
 
 // middleware pour parser le JSON
 router.use(express.json())
@@ -16,27 +17,10 @@ router.use(express.json())
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////
-// Reocnnecte un utilisateur
-const authenticateMiddleware = (request, response, next) => {
-    const token = request.cookies.session_token;
-    if(!token){
-        return
-    }
-    try{
-        const decoded = jwt.verify(token, "secretKey")
-        request.user = decoded
-        next()
-    }catch(error){
-        response.status(400).json({
-            message:"Erreur percu dans le middleWare authenticateMiddleware, token invalide ou expiré"
-        })
-    }
-}
 
-router.get("/reconnectUser", authenticateMiddleware, async(request,response) => {
-    
-    const {userID} = request.user
+
+router.get("/reconnectUser", authenticationMiddleware, async(request,response) => {
+    const {userID} = request.token
     try{
         const user = await User.findOne({_id:userID})
         if(!user){
@@ -50,7 +34,7 @@ router.get("/reconnectUser", authenticateMiddleware, async(request,response) => 
         })
     }catch(error){
         response.status(400).json({
-            message:`Echec lors de la reconnection de l'utilisateur ${userName}`,
+            message:`Echec lors de la reconnection de l'utilisateur ${userID}`,
             payload:error.message
         })
     }
@@ -118,7 +102,7 @@ router.post("/addUser", async(request, response) => {
         }else{
             const savedUser = await newUser.save()
             const token = jwt.sign(
-                {userID:savedUser._id, userPassword:savedUser.userPassword}, 
+                {userID:savedUser._id}, 
                 "secretKey", 
                 {expiresIn:"1h"})
             response.cookie("session_token", token, {

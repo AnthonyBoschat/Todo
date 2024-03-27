@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Folder = require("../models/folder")
 const Task = require("../models/task")
+const authenticationMiddleware = require("../middleware/authentication")
 
 router.use(express.json())
 
@@ -14,8 +15,8 @@ router.use(express.json())
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Récupère tout les dossiers
-router.get("/getAllFolders/:userID", async(request, response) => {
-    const userID = request.params.userID
+router.get("/getAllFolders/:userID", authenticationMiddleware, async(request, response) => {
+    const {userID} = request.token
     try{
         const allFolders = await Folder.find({userID:userID})
         response.status(200).json({
@@ -32,7 +33,7 @@ router.get("/getAllFolders/:userID", async(request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Enregistre un dossier
-router.post("/addFolder", async (request, response) => {
+router.post("/addFolder", authenticationMiddleware, async (request, response) => {
     try{
         const folder = new Folder(request.body)
         await folder.save()
@@ -50,26 +51,28 @@ router.post("/addFolder", async (request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime un dossier
-router.delete("/deleteFolder/:folderID", async (request, response) => {
+router.delete("/deleteFolder/:folderID", authenticationMiddleware, async (request, response) => {
+    const {userID} = request.token
     const folderID = request.params.folderID
     try{
         // Suppresion du dossier
-        const deletedFolder = await Folder.findByIdAndDelete(folderID)
-        if(!deletedFolder){
+        const folder = await Folder.findById(folderID)
+        if(!folder){
             return response.status(404).json({message:`Impossible de trouver le dossier ${folderID}, Echec de la suppression`})
         }
+        await Folder.deleteMany({_id:folderID, userID:userID})
         // Récupération de la liste des tâche associés
         const getListTask = await Task.find({folderID}).lean()
         const listDeletedTask = getListTask.map(task => `${JSON.stringify(task, null, 2)}`).join("\n")
 
 
         // Suppression des tâches associés
-        const deletedTask = await Task.deleteMany({folderID:folderID})
+        const deletedTask = await Task.deleteMany({folderID:folderID, userID:userID})
         response.status(200).json({
             message:`
 ------------------- Dossier supprimé : 
 
-${JSON.stringify(deletedFolder, null, 2)}
+${JSON.stringify(folder, null, 2)}
 
 ------------------- Tâche supprimé (${deletedTask.deletedCount}) : 
 
@@ -86,7 +89,7 @@ ${listDeletedTask}`,
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Modifie le nom d'un dossier
-router.put("/updateFolderName/:folderID", async (request, response) => {
+router.put("/updateFolderName/:folderID", authenticationMiddleware, async (request, response) => {
     const {folderID} = request.params
     const {newFolderName} = request.body
     try{

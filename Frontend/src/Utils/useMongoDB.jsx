@@ -74,21 +74,26 @@ export default function useMongoDB(){
     // Reconnecte un utilisateur
     const mongoDB_reconnectUser = () => {
         
-        fetchRequest("GET", {
-            route:"/users/reconnectUser",
-            finalAction:(payload) => {
-                dispatch(update_connected(true))
-                dispatch(update_connectedUser({
-                    name:payload.userName,
-                    _id:payload._id
-                    
-                }))
-                popup({
-                    message:"Connection successful.",
-                    color:"good"
-                })
-            },
+        return new Promise((resolve,reject) => {
+            fetchRequest("GET", {
+                route:"/users/reconnectUser",
+                finalAction:(payload) => {
+                    dispatch(update_connected(true))
+                    dispatch(update_connectedUser({
+                        name:payload.userName,
+                        _id:payload._id
+                        
+                    }))
+                    popup({
+                        message:"Connection successful.",
+                        color:"good"
+                    })
+                    resolve()
+                },
+                errorAction: () => resolve()
+            })
         })
+        
         
     }
 
@@ -130,7 +135,6 @@ export default function useMongoDB(){
             finalAction: (payload) => {
                 dispatch(update_addFolder({name:payload.name, _id:payload._id}))
                 dispatch(update_folderSelectedID(payload._id))
-                console.log("1 => ", payload.name)
                 dispatch(update_folderSelectedName(payload.name))
             }
         })

@@ -21,6 +21,7 @@ export default function useBackend(){
             fetchOptions.headers["Content-Type"] = "application/json"
             fetchOptions.body = JSON.stringify(request.body)
         }
+        
         fetch(`${backendURL}${request.route}`, fetchOptions)
         .then(response => Promise.all([response.ok, response.json()]))
         .then(([ok, data]) => {
@@ -42,9 +43,9 @@ export default function useBackend(){
                 color:"debug",
                 hidden:false
             })}
-            if(request.errorAction){
-                request.errorAction()}
+            if(request.errorAction){request.errorAction(error.message)}
         })
+        
     }
     return{
         fetchRequest
