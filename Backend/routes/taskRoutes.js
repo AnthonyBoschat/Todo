@@ -43,7 +43,7 @@ router.get("/getTasks/:folderID", authenticationMiddleware, async (request, resp
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Ajoute une tâche
-router.post("/addTask", async (request, response) => {
+router.post("/addTask", authenticationMiddleware, async (request, response) => {
     try{
         const newTask = new Task(request.body);
         await newTask.save();

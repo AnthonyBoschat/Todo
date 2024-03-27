@@ -1,22 +1,33 @@
 const jwt = require("jsonwebtoken")
+const User = require("../models/user")
 
-const authenticationMiddleware = (request,response,next) => {
-    const tokenExist = request.cookies.session_token // On récupère un possible cookie session
-    if(!tokenExist){ // S'il n'y a pas de cookie de session
-        return response.status(401).json({
-            message:"Accès refusé, Aucune session. ( Aucun token trouvé )"
-        })
-    }else{
-        try{
-            const tokenDecoded = jwt.verify(tokenExist, "secretKey")
+const authenticationMiddleware = async (request,response,next) => {
+
+
+    try {
+        const tokenExist = request.cookies.session_token // On récupère un possible cookie session
+        if (!tokenExist) { // S'il n'y a pas de cookie de session
+            const error = new Error("Aucune session. ( Aucun token trouvé )")
+            error.statusCode = 404
+            throw error
+        }
+        const tokenDecoded = jwt.verify(tokenExist, "secretKey")
+        const userExist = await User.findOne({ _id: tokenDecoded.userID })
+        if (!userExist) {
+            const error = new Error(`Aucun utilisateur connu dans la base de donnée avec cet ID (token) : ${tokenDecoded.userID}`)
+            error.statusCode = 404
+            throw error
+        }else{
             request.token = tokenDecoded
             next()
-        }catch(error){
-            response.status(400).json({
-                message:"Erreur percu dans le middleWare anthenticationMiddleware, token invalide ou expiré"
-            })
         }
+    }catch(error) {
+        // Gestion des erreurs JWT ou autres erreurs inattendues
+        response.status(error.statusCode || 500).json({
+            message: error.message
+        })
     }
+
 }
 
 module.exports = authenticationMiddleware

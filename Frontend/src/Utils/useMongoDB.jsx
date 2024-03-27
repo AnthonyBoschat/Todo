@@ -130,7 +130,7 @@ export default function useMongoDB(){
 
     const mongoDB_saveNewFolder = (newFolder) => {
         fetchRequest("POST", {
-            route:"/folders/addFolder",
+            route:"/create/folder",
             body: newFolder,
             finalAction: (payload) => {
                 dispatch(update_addFolder({name:payload.name, _id:payload._id}))
@@ -192,7 +192,7 @@ export default function useMongoDB(){
         }
 
         fetchRequest("POST", {
-            route:"/tasks/addTask",
+            route:"/create/task",
             body:task,
             finalAction: (payload) => {
                 dispatch(update_addTask(payload))

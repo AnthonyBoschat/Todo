@@ -9,6 +9,14 @@ export default function useBackend(){
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const {popup} = usePopup()
 
+    const objectRequest = {
+        method:"POST/GET/DELETE/PUT",
+        action:"create/rename/delete",
+        target:"task/folder/user",
+        body:"body",
+
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ROUTER
     const fetchRequest = (method, request) => {
