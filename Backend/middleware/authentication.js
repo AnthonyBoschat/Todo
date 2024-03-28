@@ -8,7 +8,7 @@ const authenticationMiddleware = async (request,response,next) => {
         const tokenExist = request.cookies.session_token // On récupère un possible cookie session
         if (!tokenExist) { // S'il n'y a pas de cookie de session
             const error = new Error("Aucune session. ( Aucun token trouvé )")
-            error.statusCode = 404
+            error.statusCode = 403
             throw error
         }
         const tokenDecoded = jwt.verify(tokenExist, "secretKey")

@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser")
 const taskRoutes = require("./routes/taskRoutes")
 const folderRoutes = require("./routes/folderRoutes")
 const usersRoutes = require("./routes/usersRoutes")
-const testRoute = require("./routes/test")
 const app = express() // app => nouvelle application express pour configurer le serveur
 const PORT = process.env.PORT || 5000 // Port sur lequel le serveur va écouter (Inutile pour le moment ?)
 const databaseURL = process.env.Mongo_URL // url de la base de donnée
@@ -41,7 +40,6 @@ mongoose.connect(databaseURL, { useNewUrlParser: true, useUnifiedTopology: true 
 app.use("/tasks", taskRoutes)
 app.use("/folders", folderRoutes)
 app.use("/users", usersRoutes)
-app.use("", testRoute)
 
 
 

@@ -33,8 +33,10 @@ router.get("/getAllFolders/:userID", authenticationMiddleware, async(request, re
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Enregistre un dossier
-router.post("/addFolder", authenticationMiddleware, async (request, response) => {
+router.post("/create", authenticationMiddleware, async (request, response) => {
     try{
+        const {userID} = request.token
+        request.body.userID = userID
         const folder = new Folder(request.body)
         await folder.save()
         response.status(201).json({
@@ -43,7 +45,7 @@ router.post("/addFolder", authenticationMiddleware, async (request, response) =>
         })
     }catch(error){
         response.status(400).json({
-            message:`Echec de l'enregistrement du dossier ${request.body}`,
+            message:`Echec de l'enregistrement du dossier \n\n ${JSON.stringify(request.body, null, 2)}`,
             payload:error.message
         })
     }
@@ -51,7 +53,7 @@ router.post("/addFolder", authenticationMiddleware, async (request, response) =>
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime un dossier
-router.delete("/deleteFolder/:folderID", authenticationMiddleware, async (request, response) => {
+router.delete("/delete/:folderID", authenticationMiddleware, async (request, response) => {
     const {userID} = request.token
     const folderID = request.params.folderID
     try{
@@ -89,7 +91,7 @@ ${listDeletedTask}`,
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Modifie le nom d'un dossier
-router.put("/updateFolderName/:folderID", authenticationMiddleware, async (request, response) => {
+router.put("/rename/:folderID", authenticationMiddleware, async (request, response) => {
     const {folderID} = request.params
     const {newFolderName} = request.body
     try{

@@ -24,7 +24,7 @@ router.use(express.json())
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Récupère les tasks d'un dossier
-router.get("/getTasks/:folderID", authenticationMiddleware, async (request, response) => {
+router.get("/getAll/:folderID", authenticationMiddleware, async (request, response) => {
     const {userID} = request.token
     try{
         const folderID = request.params.folderID
@@ -43,8 +43,10 @@ router.get("/getTasks/:folderID", authenticationMiddleware, async (request, resp
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Ajoute une tâche
-router.post("/addTask", authenticationMiddleware, async (request, response) => {
+router.post("/create", authenticationMiddleware, async (request, response) => {
     try{
+        const {userID} = request.token
+        request.body.userID = userID
         const newTask = new Task(request.body);
         await newTask.save();
         response.status(200).json({
@@ -61,7 +63,7 @@ router.post("/addTask", authenticationMiddleware, async (request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime une task
-router.delete("/deleteTask/:taskID", authenticationMiddleware, async (request, response) => {
+router.delete("/delete/:taskID", authenticationMiddleware, async (request, response) => {
     const {userID} = request.token
     const taskID = request.params.taskID
     try{
@@ -87,7 +89,7 @@ router.delete("/deleteTask/:taskID", authenticationMiddleware, async (request, r
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Toggle une task
-router.put("/toggleTask/:taskID", authenticationMiddleware, async (request, response) => {
+router.put("/toggle/:taskID", authenticationMiddleware, async (request, response) => {
     const {userID} = request.token
     const {taskID} = request.params
     const {completed} = request.body
@@ -116,7 +118,7 @@ router.put("/toggleTask/:taskID", authenticationMiddleware, async (request, resp
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Rename une task
-router.put("/renameTask/:taskID", authenticationMiddleware, async (request, response) => {
+router.put("/rename/:taskID", authenticationMiddleware, async (request, response) => {
     const {userID} = request.token
     const taskID = request.params.taskID
     const {newTaskContent} = request.body

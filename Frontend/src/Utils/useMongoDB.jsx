@@ -29,7 +29,7 @@ export default function useMongoDB(){
     // Connecte un utilisateur
     const mongoDB_connectUser = (user) => {
         fetchRequest("POST", {
-            route:`/users/connectUser`,
+            route:`/users/connect`,
             body:user,
             finalAction: (payload) => {
                 dispatch(update_connected(true))
@@ -55,7 +55,7 @@ export default function useMongoDB(){
     // Déconnecte un utilisateur
     const mongoDB_disconnectUser = () => {
         fetchRequest("GET", {
-            route:"/users/disconnection",
+            route:"/users/disconnect",
             finalAction: (payload) => {
                 dispatch(update_loadFoldersList([]))
                 dispatch(update_loadTasksList([]))
@@ -76,7 +76,7 @@ export default function useMongoDB(){
         
         return new Promise((resolve,reject) => {
             fetchRequest("GET", {
-                route:"/users/reconnectUser",
+                route:"/users/reconnect",
                 finalAction:(payload) => {
                     dispatch(update_connected(true))
                     dispatch(update_connectedUser({
@@ -103,7 +103,7 @@ export default function useMongoDB(){
     // Enregistre un utilisateur
     const mongoDB_saveNewUser = (newUser) => {
         fetchRequest("POST", {
-            route:"/users/addUser",
+            route:"/users/create",
             body:newUser,
             finalAction: (payload) => {
                 dispatch(update_connected(true))
@@ -125,12 +125,28 @@ export default function useMongoDB(){
         })
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistrer un nouveau dossier
 
     const mongoDB_saveNewFolder = (newFolder) => {
         fetchRequest("POST", {
-            route:"/create/folder",
+            route:"/folders/create",
             body: newFolder,
             finalAction: (payload) => {
                 dispatch(update_addFolder({name:payload.name, _id:payload._id}))
@@ -146,7 +162,7 @@ export default function useMongoDB(){
     const mongoDB_deleteFolder = () => {
 
         fetchRequest("DELETE", {
-            route:`/folders/deleteFolder/${folderSelectedID}`,
+            route:`/folders/delete/${folderSelectedID}`,
             finalAction: (payload) => {
                 const folderIndex = foldersList.findIndex(folder => folder._id === payload)
                 dispatch(update_deleteFolder(folderIndex))
@@ -165,7 +181,7 @@ export default function useMongoDB(){
 
     const mongoDB_renameFolder = (newFolderName) => {
         fetchRequest("PUT", {
-            route:`/folders/updateFolderName/${folderSelectedID}`,
+            route:`/folders/rename/${folderSelectedID}`,
             body:{newFolderName},
             finalAction:(payload)=>{
                 const folderIndex = foldersList.findIndex(folder => folder._id === payload._id)
@@ -180,6 +196,28 @@ export default function useMongoDB(){
         })
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Enregistre une nouvelle tâche
 
@@ -188,11 +226,10 @@ export default function useMongoDB(){
             content:newTask.content,
             completed:newTask.completed,
             folderID:folderSelectedID,
-            userID:userID
         }
 
         fetchRequest("POST", {
-            route:"/create/task",
+            route:"/tasks/create",
             body:task,
             finalAction: (payload) => {
                 dispatch(update_addTask(payload))
@@ -204,7 +241,7 @@ export default function useMongoDB(){
     // Pour la suppression d'une tâche
     const mongoDB_deleteTask = (taskID) => {
         fetchRequest("DELETE", {
-            route:`/tasks/deleteTask/${taskID}`,
+            route:`/tasks/delete/${taskID}`,
             finalAction: (payload) => {
                 const deletedTaskIndex = taskList.findIndex(task => task._id === payload._id)
                 dispatch(update_deleteTask(deletedTaskIndex))
@@ -220,7 +257,7 @@ export default function useMongoDB(){
     // Pour le renommage d'une task
     const mongoDB_renameTask = (taskID, newTaskContent) => {
         fetchRequest("PUT", {
-            route:`/tasks/renameTask/${taskID}`,
+            route:`/tasks/rename/${taskID}`,
             body:{newTaskContent},
             finalAction:(payload) => {
                 const taskIndex = taskList.findIndex(task => task._id === payload._id)
@@ -234,12 +271,21 @@ export default function useMongoDB(){
     // Pour le toggle d'une tâche
     const mongoDB_toggleTask = (taskID, taskCompleted) => {
         fetchRequest("PUT", {
-            route:`/tasks/toggleTask/${taskID}`,
+            route:`/tasks/toggle/${taskID}`,
             body:{completed:taskCompleted},
             finalAction:(payload) => {
                 const taskIndex = taskList.findIndex(task => task._id === payload._id)
                 const newTaskToggle = payload.completed
                 dispatch(update_toggleTask({taskIndex, newTaskToggle}))
+            }
+        })
+    }
+
+    const mongoDB_getTask = () => {
+        fetchRequest("GET", {
+            route:`/tasks/getAll/${folderSelectedID}`,
+            finalAction:(payload) => {
+                dispatch(update_loadTasksList(payload))
             }
         })
     }
@@ -249,9 +295,9 @@ export default function useMongoDB(){
         mongoDB_saveNewFolder,
         mongoDB_deleteFolder,
         mongoDB_renameFolder,
+
         mongoDB_toggleTask,
-
-
+        mongoDB_getTask,
         mongoDB_saveNewTask,
         mongoDB_deleteTask,
         mongoDB_renameTask,

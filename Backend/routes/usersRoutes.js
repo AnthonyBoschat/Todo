@@ -19,7 +19,7 @@ router.use(express.json())
 
 
 
-router.get("/reconnectUser", authenticationMiddleware, async(request,response) => {
+router.get("/reconnect", authenticationMiddleware, async(request,response) => {
     const {userID} = request.token
     try{
         const user = await User.findOne({_id:userID})
@@ -45,7 +45,7 @@ router.get("/reconnectUser", authenticationMiddleware, async(request,response) =
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Connecte un utilisateur
-router.post("/connectUser", async(request, response) => {
+router.post("/connect", async(request, response) => {
     const {userName, userPassword} = request.body
     try{
         const user = await User.findOne({userName:userName})
@@ -82,7 +82,7 @@ router.post("/connectUser", async(request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Ajouter un utilisateur
-router.post("/addUser", async(request, response) => {
+router.post("/create", async(request, response) => {
     const {userName, userPassword} = request.body
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(userPassword, salt)
@@ -125,7 +125,7 @@ router.post("/addUser", async(request, response) => {
 })
 
 
-router.get("/disconnection", async(request, response) => {
+router.get("/disconnect", async(request, response) => {
     response.cookie("session_token", '', {expires:new Date(0), path:"/"})
     response.status(200).json({
         message:"Deconnexion réussie."
