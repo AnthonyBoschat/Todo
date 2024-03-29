@@ -31,12 +31,6 @@ export default function useMongoDB(){
         fetchRequest("POST", {
             route:"/users/create",
             body:newUser,
-            errorAction: () => {
-                popup({
-                    message:"This username is already used. Please try with another username.",
-                    color:"bad"
-                })
-            }
         })
     }
 
@@ -46,12 +40,6 @@ export default function useMongoDB(){
         fetchRequest("POST", {
             route:`/users/connect`,
             body:user,
-            errorAction:() => {
-                popup({
-                    message:"userName or Password incorrect",
-                    color:"bad"
-                })
-            }
         })
     }
 
@@ -164,15 +152,9 @@ export default function useMongoDB(){
     // Enregistre une nouvelle tâche
 
     const mongoDB_saveNewTask = (newTask) => {
-        const task = {
-            content:newTask.content,
-            completed:newTask.completed,
-            folderID:folderSelectedID,
-        }
-
         fetchRequest("POST", {
             route:"/tasks/create",
-            body:task,
+            body:newTask,
         })
     }
 

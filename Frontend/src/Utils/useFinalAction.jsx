@@ -134,6 +134,10 @@ export default function useFinalAction(){
             case "/tasks/getAll":
                 dispatch(update_loadTasksList(payload))
                 break
+
+
+            default:
+                return
             
         }
     }

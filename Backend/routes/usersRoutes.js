@@ -34,9 +34,9 @@ router.post("/create", async(request, response) => {
     try{
         const userAlreadyExist = await User.findOne({userName:newUser.userName})
         if(userAlreadyExist){
-            return response.status(400).json({
-                message:"Nom d'utilisateur déjà existant dans la base de donnée"
-            })
+            const error = new Error("Nom d'utilisateur déjà existant dans la base de donnée")
+            error.status = 400
+            throw error
         }else{
             const savedUser = await newUser.save()
             const token = jwt.sign(
@@ -57,7 +57,9 @@ router.post("/create", async(request, response) => {
     }catch(error){
         response.status(400).json({
             message:`Echec lors de l'enregistrement de l'utilisateur \n\n${JSON.stringify(newUser, null, 2)}`,
-            payload:error.message
+            payload:error.message,
+            popup:error.message,
+            errorAction:"/users/create"
         })
     }
     
@@ -71,15 +73,15 @@ router.post("/connect", async(request, response) => {
     try{
         const user = await User.findOne({userName:userName})
         if(!user){
-            return response.status(400).json({
-                message:"Nom d'utilisateur incorrecte"
-            })
+            const error = new Error("Nom d'utilisateur incorrecte")
+            error.status = 400
+            throw error
         }else{
             const correctPassword = await bcrypt.compare(userPassword, user.userPassword)
             if(!correctPassword){
-                return response.status(400).json({
-                    message:"Mot de passe incorrecte"
-                })
+                const error = new Error("Mot de passe incorrecte")
+                error.status = 400
+                throw error
             }else{
                 const token = jwt.sign({userID:user._id}, "secretKey", {expiresIn:"1h"})
                 response.cookie("session_token", token, {
@@ -97,7 +99,8 @@ router.post("/connect", async(request, response) => {
     }catch(error){
         response.status(400).json({
             message:`Echec lors de la connection de l'utilisateur ${userName}`,
-            payload:error.message
+            payload:error.message,
+            errorAction:"/users/connect"
         })
     }
 })

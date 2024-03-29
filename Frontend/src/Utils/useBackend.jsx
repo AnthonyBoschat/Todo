@@ -2,6 +2,7 @@ import React, {} from "react";
 import { useSelector } from "react-redux";
 import usePopup from "../Components/Popup/usePopup";
 import useFinalAction from "./useFinalAction";
+import useErrorAction from "./useErrorAction";
 
 export default function useBackend(){
 
@@ -10,6 +11,7 @@ export default function useBackend(){
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const {popup} = usePopup()
     const {finalAction} = useFinalAction()
+    const {errorAction} = useErrorAction()
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ROUTER
@@ -27,28 +29,41 @@ export default function useBackend(){
         fetch(`${backendURL}${request.route}`, fetchOptions)
         .then(response => Promise.all([response.ok, response.json()]))
         .then(([ok, data]) => {
-            if(!ok){throw new Error(data.message || 'Une erreur inconnue est survenue')}
+            if(!ok){
+                throw data
+            }
             else{
-                if(debugConsole){console.log(data.message)}
+                if(debugConsole){
+                    console.log(data.message)
+                }
                 if(debugPopup){popup({
                     message:data.message,
                     color:"debug",
                     hidden:false
                 })}
-                if(request.finalAction){request.finalAction(data.payload)}
+                if(request.finalAction){
+                    request.finalAction(data.payload)
+                }
                 if(data.finalAction){
                     finalAction(data.finalAction, data.payload)
                 }
             }
         })
         .catch(error => {
-            if(debugConsole){console.log(error.message)}
+            if(debugConsole){
+                console.log(error.message)
+            }
             if(debugPopup){popup({
-                message:error.message,
+                message:error.popup,
                 color:"debug",
                 hidden:false
             })}
-            if(request.errorAction){request.errorAction(error.message)}
+            if(request.errorAction){
+                request.errorAction(error.message)
+            }
+            if(error.errorAction){
+                errorAction(error.errorAction, error.popup)
+            }
         })
         
     }

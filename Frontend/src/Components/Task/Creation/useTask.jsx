@@ -6,6 +6,7 @@ import useMongoDB from "../../../Utils/useMongoDB";
 export default function useTask_Creation(){
 
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
+    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     
     const {mongoDB_saveNewTask} = useMongoDB()
     const dispatch = useDispatch()
@@ -15,7 +16,11 @@ export default function useTask_Creation(){
     // Prépare la sauvegarde dans le mongoDB de la nouvelle tâche
     const saveNewTask = () => {
         const taskTitle = taskCreationRef.current.innerText
-        const newTask = {content:taskTitle, completed:false}
+        const newTask = {
+            content:taskTitle, 
+            completed:false,
+            folderID:folderSelectedID
+        }
         mongoDB_saveNewTask(newTask)
     }
 
