@@ -11,17 +11,9 @@ export default function useErrorAction(){
         switch(route){
             
             case "/users/create":
-                popup({
-                    message:"This username is already used. Please try with another username.",
-                    color:"bad"
-                })
                 break
             
             case "/users/connect":
-                popup({
-                    message:"userName or Password incorrect",
-                    color:"bad"
-                })
                 break
 
             default:

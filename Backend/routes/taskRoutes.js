@@ -30,7 +30,8 @@ router.get("/getAll/:folderID", authenticationMiddleware, async (request, respon
         const folderID = request.params.folderID
         const allTasks = await Task.find({folderID:folderID, userID:userID})
         response.status(200).json({
-            message:`Toutes les tâches du dossier  "${folderID}" ont été récupérer avec succès`,
+            messageDebugConsole:`Toutes les tâches du dossier  "${folderID}" ont été récupérer avec succès`,
+            messageDebugPopup:`Tâche récupérer`,
             payload:allTasks,
             finalAction:"/tasks/getAll"
         })
@@ -77,7 +78,9 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
             })
         }
         response.status(200).json({
-            message:`La tâche a correctement été supprimer \n\n ${JSON.stringify(task, null, 2)}`,
+            messageDebugConsole:`La tâche a correctement été supprimer \n\n ${JSON.stringify(task, null, 2)}`,
+            messageDebugPopup:`Tâche supprimer (${task._id})`,
+            messagePopupUser:`Task deleted`,
             payload:taskDeleted,
             finalAction:"/tasks/delete"
         })

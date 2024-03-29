@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import useBackend from "../../Utils/useBackend";
 import { update_allFoldersLoad, update_loadFoldersList } from "../Folder/FolderSlice";
 import { useSelector } from "react-redux";
+import useMongoDB from "../../Utils/useMongoDB";
 
 export default function Pannel(){
 
@@ -13,19 +14,12 @@ export default function Pannel(){
     const connected = useSelector(store => store.connection.connected)
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
     const userID = useSelector(store => store.connection.connectedUser._id)
-    const {fetchRequest} = useBackend()
-    const dispatch = useDispatch()
+    const  {mongoDB_getFolder} = useMongoDB()
 
     // Après la connection, va récupérer la list de tout les dossiers de l'utilisateur connecter
     useEffect(() => {
         if(!allFoldersLoad && userID){
-            fetchRequest("GET", {
-                route:`/folders/getAllFolders/${userID}`,
-                finalAction:(payload) => {
-                    dispatch(update_loadFoldersList(payload))
-                    dispatch(update_allFoldersLoad(true))
-                }
-            })  
+            mongoDB_getFolder()
         }
     }, [userID])
 

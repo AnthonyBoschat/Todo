@@ -1,20 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Folder/FolderSlice";
-import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_taskList, update_taskOnCreation, update_toggleTask } from "../Components/Task/TaskSlice";
-import {update_closeConnection, update_connected, update_connectedUser} from "../Components/Connection/ConnectionSlice"
+import { useSelector } from "react-redux";
 import useBackend from "./useBackend";
-import usePopup from "../Components/Popup/usePopup";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useMongoDB(){
 
-    const taskList = useSelector(store => store.task.tasksList)
-    const foldersList = useSelector(store => store.folder.foldersList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const userID = useSelector(store => store.connection.connectedUser._id)
-    const dispatch = useDispatch()
     const {fetchRequest} = useBackend()
-    const {popup} = usePopup()
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +74,7 @@ export default function useMongoDB(){
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Enregistrer un nouveau dossier
+    // Enregistre un dossier
 
     const mongoDB_saveNewFolder = (newFolder) => {
         fetchRequest("POST", {
@@ -92,7 +84,7 @@ export default function useMongoDB(){
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Pour la suppression d'un dossier
+    // Supprime un dossier
 
     const mongoDB_deleteFolder = () => {
         fetchRequest("DELETE", {
@@ -101,11 +93,18 @@ export default function useMongoDB(){
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Pour le renommage d'un dossier
+    // Renomme un dossier
 
     const mongoDB_renameFolder = (newFolderName) => {
         fetchRequest("PUT", {
             route:`/folders/rename/${folderSelectedID}`,
+            body:{newFolderName},
+        })
+    }
+
+    const mongoDB_getFolder = (newFolderName) => {
+        fetchRequest("GET", {
+            route:`/folders/getAll/${userID}`,
             body:{newFolderName},
         })
     }
@@ -133,7 +132,7 @@ export default function useMongoDB(){
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Enregistre une nouvelle tâche
+    // Enregistre une tâche
 
     const mongoDB_saveNewTask = (newTask) => {
         fetchRequest("POST", {
@@ -143,7 +142,7 @@ export default function useMongoDB(){
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Pour la suppression d'une tâche
+    // Supprime une tâche
     const mongoDB_deleteTask = (taskID) => {
         fetchRequest("DELETE", {
             route:`/tasks/delete/${taskID}`,
@@ -151,7 +150,7 @@ export default function useMongoDB(){
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Pour le renommage d'une task
+    // Renomme une tâche
     const mongoDB_renameTask = (taskID, newTaskContent) => {
         fetchRequest("PUT", {
             route:`/tasks/rename/${taskID}`,
@@ -160,7 +159,7 @@ export default function useMongoDB(){
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Pour le toggle d'une tâche
+    // Toggle une tâche
     const mongoDB_toggleTask = (taskID, taskCompleted) => {
         fetchRequest("PUT", {
             route:`/tasks/toggle/${taskID}`,
@@ -168,6 +167,8 @@ export default function useMongoDB(){
         })
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Récupère les tâches
     const mongoDB_getTask = () => {
         fetchRequest("GET", {
             route:`/tasks/getAll/${folderSelectedID}`,
@@ -179,6 +180,7 @@ export default function useMongoDB(){
         mongoDB_saveNewFolder,
         mongoDB_deleteFolder,
         mongoDB_renameFolder,
+        mongoDB_getFolder,
 
         mongoDB_toggleTask,
         mongoDB_getTask,

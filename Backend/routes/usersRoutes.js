@@ -49,16 +49,19 @@ router.post("/create", async(request, response) => {
                 maxAge:3600000 // Durée de vie du cookie en millisecondes (1 heure ici)
             })
             response.status(200).json({
-                message: `Utilisateur enregistré : ${JSON.stringify(savedUser, null, 2)}`,
+                messageDebugConsole: `Utilisateur enregistré : ${JSON.stringify(savedUser, null, 2)}`,
+                messageDebugPopup:`Utilisateur enregistrer (${savedUser.userName})`,
+                messagePopupUser:`Registration successful`,
                 payload:savedUser,
                 finalAction:"/user/create"
             })  
         }
     }catch(error){
+        console.log(error)
         response.status(400).json({
-            message:`Echec lors de l'enregistrement de l'utilisateur \n\n${JSON.stringify(newUser, null, 2)}`,
-            payload:error.message,
-            popup:error.message,
+            messageDebugConsole:`Nom d'utilisateur déjà existant dans la base de donnée (${userName})`,
+            messageDebugPopup:`Nom d'utilisateur existe déjà (${userName})`,
+            messagePopupUser:`This username is already used. Please try another one`,
             errorAction:"/users/create"
         })
     }
@@ -75,12 +78,14 @@ router.post("/connect", async(request, response) => {
         if(!user){
             const error = new Error("Nom d'utilisateur incorrecte")
             error.status = 400
+            error.payload = userName
             throw error
         }else{
             const correctPassword = await bcrypt.compare(userPassword, user.userPassword)
             if(!correctPassword){
                 const error = new Error("Mot de passe incorrecte")
                 error.status = 400
+                error.payload = userPassword
                 throw error
             }else{
                 const token = jwt.sign({userID:user._id}, "secretKey", {expiresIn:"1h"})
@@ -90,7 +95,9 @@ router.post("/connect", async(request, response) => {
                     maxAge:3600000 // Durée de vie du cookie en millisecondes (1 heure ici)
                 })
                 response.status(200).json({
-                    message:`Utilisateur connecté \n\n ${JSON.stringify(user, null, 2)}`,
+                    messageDebugConsole:`Utilisateur connecté \n\n ${JSON.stringify(user, null, 2)}`,
+                    messageDebugPopup:`Utilisateur connecté (${user.userName})`,
+                    messagePopupUser:`Connection successful`,
                     payload:user,
                     finalAction:"/user/connect"
                 })
@@ -98,8 +105,9 @@ router.post("/connect", async(request, response) => {
         }
     }catch(error){
         response.status(400).json({
-            message:`Echec lors de la connection de l'utilisateur ${userName}`,
-            payload:error.message,
+            messageDebugConsole:`${error.message} (${error.payload})`,
+            messageDebugPopup:`${error.message} (${error.payload})`,
+            messagePopupUser:`userName or Password incorrect`,
             errorAction:"/users/connect"
         })
     }
@@ -108,7 +116,9 @@ router.post("/connect", async(request, response) => {
 router.get("/disconnect", async(request, response) => {
     response.cookie("session_token", '', {expires:new Date(0), path:"/"})
     response.status(200).json({
-        message:"Deconnexion réussie.",
+        messageDebugConsole:"Deconnexion réussie",
+        messageDebugPopup:"Deconnexion réussie",
+        messagePopupUser:"You have been disconnected",
         finalAction:"/user/disconnect"
     })
 })
@@ -123,7 +133,9 @@ router.get("/reconnect", authenticationMiddleware, async(request,response) => {
             })
         }
         response.status(200).json({
-            message:`Reconnection réussi \n\n ${JSON.stringify(user, null, 2)}`,
+            messageDebugConsole:`Reconnection réussi \n\n ${JSON.stringify(user, null, 2)}`,
+            messageDebugPopup:`Reconnection réussi (${user.userName})`,
+            messagePopupUser:"Connection successful",
             payload:user,
             finalAction:"/user/reconnect"
         })

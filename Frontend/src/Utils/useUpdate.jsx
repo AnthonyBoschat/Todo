@@ -12,7 +12,6 @@ export default function useUpdate(){
     const foldersList = useSelector(store => store.folder.foldersList)
 
     const dispatch = useDispatch()
-    const {fetchRequest} = useBackend()
     const {mongoDB_getTask} = useMongoDB()
 
     // Récupération automatique des tasks correspondant au dossier

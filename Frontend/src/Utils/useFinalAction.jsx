@@ -16,6 +16,7 @@ export default function useFinalAction(){
     const finalAction = (route, payload) => {
         let taskIndex
         let folderIndex
+        let newFolderName
         switch(route){
 
 
@@ -25,10 +26,6 @@ export default function useFinalAction(){
                     name:payload.userName,
                     _id:payload._id
                 }))
-                popup({
-                    message:"Registration successful.",
-                    color:"good"
-                })
                 break
 
             case "/user/connect":
@@ -37,10 +34,6 @@ export default function useFinalAction(){
                     name:payload.userName,
                     _id:payload._id
                 }))
-                popup({
-                    message:"Connection successful.",
-                    color:"good"
-                })
                 break   
                 
             case "/user/disconnect":
@@ -49,10 +42,6 @@ export default function useFinalAction(){
                 dispatch(update_allFoldersLoad(false))
                 dispatch(update_folderSelectedID(null))
                 dispatch(update_closeConnection())
-                popup({
-                    message:"You have been disconnected",
-                    color:"good"
-                })
                 break
 
             case "/user/reconnect":
@@ -62,10 +51,6 @@ export default function useFinalAction(){
                     _id:payload._id
                     
                 }))
-                popup({
-                    message:"Connection successful.",
-                    color:"good"
-                })
                 break
             
 
@@ -88,21 +73,18 @@ export default function useFinalAction(){
                 dispatch(update_deleteFolder(folderIndex))
                 dispatch(update_loadTasksList([]))
                 dispatch(update_folderSelectedID(null))
-                popup({
-                    message:"Folder deleted",
-                    color:"good"
-                })
                 break
 
             case "/folder/rename":
                 folderIndex = foldersList.findIndex(folder => folder._id === payload._id)
-                const newFolderName = payload.name
+                newFolderName = payload.name
                 dispatch(update_folderRename({folderIndex:folderIndex, newFolderName:newFolderName}))
                 dispatch(update_folderSelectedName(newFolderName))
-                popup({
-                    message:"Your folder have been rename.",
-                    color:"good"
-                })
+                break
+
+            case "/folder/getAll":
+                dispatch(update_loadFoldersList(payload))
+                dispatch(update_allFoldersLoad(true))
                 break
 
 
@@ -125,10 +107,6 @@ export default function useFinalAction(){
             case "/tasks/delete":
                 const deletedTaskIndex = taskList.findIndex(task => task._id === payload._id)
                 dispatch(update_deleteTask(deletedTaskIndex))
-                popup({
-                    message:"Task Deleted",
-                    color:"good",
-                })
                 break
             
             case "/tasks/rename":

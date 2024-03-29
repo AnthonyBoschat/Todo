@@ -33,38 +33,19 @@ export default function useBackend(){
                 throw data
             }
             else{
-                if(debugConsole){
-                    console.log(data.message)
-                }
-                if(debugPopup){popup({
-                    message:data.message,
-                    color:"debug",
-                    hidden:false
-                })}
-                if(request.finalAction){
-                    request.finalAction(data.payload)
-                }
-                if(data.finalAction){
-                    finalAction(data.finalAction, data.payload)
-                }
+                if(data.messagePopupUser)(popup({message:data.messagePopupUser, color:"good"}))
+                if(debugConsole){console.log(data.messageDebugConsole)}
+                if(debugPopup){popup({message:data.messageDebugPopup,color:"debug"})}
+                if(data.finalAction){finalAction(data.finalAction, data.payload)}
                 if(request.finaly){request.finaly()}
             }
         })
         .catch(error => {
-            if(debugConsole){
-                console.log(error.message)
-            }
-            if(debugPopup){popup({
-                message:error.popup,
-                color:"debug",
-                hidden:false
-            })}
-            if(request.errorAction){
-                request.errorAction(error.message)
-            }
-            if(error.errorAction){
-                errorAction(error.errorAction, error.popup)
-            }
+            console.log(error)
+            if(error.messagePopupUser)(popup({message:error.messagePopupUser, color:"bad"}))
+            if(debugConsole){console.log(error.messageDebugConsole)}
+            if(debugPopup){popup({message:error.messageDebugPopup,color:"debug"})}
+            // if(error.errorAction){errorAction(error.errorAction, error.popup)}
             if(request.finaly){request.finaly()}
         })
         

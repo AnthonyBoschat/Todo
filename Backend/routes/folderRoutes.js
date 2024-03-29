@@ -15,13 +15,15 @@ router.use(express.json())
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Récupère tout les dossiers
-router.get("/getAllFolders/:userID", authenticationMiddleware, async(request, response) => {
+router.get("/getAll/:userID", authenticationMiddleware, async(request, response) => {
     const {userID} = request.token
     try{
         const allFolders = await Folder.find({userID:userID})
         response.status(200).json({
-            message:"Tout les dossiers ont été récupérer avec succès",
-            payload:allFolders
+            messageDebugConsole:`Tout les dossiers ont été récupérer avec succès`,
+            messageDebugPopup:`Dossiers récupérer`,
+            payload:allFolders,
+            finalAction:"/folder/getAll"
         })
     }catch(error){
         response.status(400).json({
@@ -40,9 +42,11 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         const folder = new Folder(request.body)
         await folder.save()
         response.status(201).json({
-            message:`Le dossier a été enregistrer \n\n ${JSON.stringify(folder, null, 2)}`,
+            messageDebugConsole:`Le dossier a été enregistrer \n\n ${JSON.stringify(folder, null, 2)}`,
+            messageDebugPopup:`Dossier enregistrer (${folder.name})`,
+            messagePopupUser:`Folder created`,
             payload:folder,
-            finalAction:"/folder/create"
+            finalAction:"/folder/create",
         })
     }catch(error){
         response.status(400).json({
@@ -72,7 +76,7 @@ router.delete("/delete/:folderID", authenticationMiddleware, async (request, res
         // Suppression des tâches associés
         const deletedTask = await Task.deleteMany({folderID:folderID, userID:userID})
         response.status(200).json({
-            message:`
+            messageDebugConsole:`
 ------------------- Dossier supprimé : 
 
 ${JSON.stringify(folder, null, 2)}
@@ -80,6 +84,8 @@ ${JSON.stringify(folder, null, 2)}
 ------------------- Tâche supprimé (${deletedTask.deletedCount}) : 
 
 ${listDeletedTask}`,
+            messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedTask.deletedCount}`,
+            messagePopupUser:`Folder deleted`,
             payload:folderID,
             finalAction:"/folder/delete"
         })
@@ -108,7 +114,9 @@ router.put("/rename/:folderID", authenticationMiddleware, async (request, respon
             })
         }
         response.status(200).json({
-            message:`Le dossier a bien été renommer \n\n ${JSON.stringify(updatedFolder, null, 2)}`, 
+            messageDebugConsole:`Le dossier a bien été renommer \n\n ${JSON.stringify(updatedFolder, null, 2)}`, 
+            messageDebugPopup:`Dossier renommer (${updatedFolder.name})`,
+            messagePopupUser:`Folder renamed`,
             payload:updatedFolder,
             finalAction:"/folder/rename"
         })
