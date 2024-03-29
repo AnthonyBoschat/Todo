@@ -125,11 +125,13 @@ router.get("/reconnect", authenticationMiddleware, async(request,response) => {
         response.status(200).json({
             message:`Reconnection réussi \n\n ${JSON.stringify(user, null, 2)}`,
             payload:user,
+            finalAction:"/user/reconnect"
         })
     }catch(error){
         response.status(400).json({
             message:`Echec lors de la reconnection de l'utilisateur ${userID}`,
-            payload:error.message
+            payload:error.message,
+            errorAction:"/user/reconnect"
         })
     }
 })

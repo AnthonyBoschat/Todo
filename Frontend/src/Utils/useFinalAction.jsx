@@ -54,6 +54,19 @@ export default function useFinalAction(){
                     color:"good"
                 })
                 break
+
+            case "/user/reconnect":
+                dispatch(update_connected(true))
+                dispatch(update_connectedUser({
+                    name:payload.userName,
+                    _id:payload._id
+                    
+                }))
+                popup({
+                    message:"Connection successful.",
+                    color:"good"
+                })
+                break
             
 
 

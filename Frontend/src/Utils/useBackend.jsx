@@ -47,6 +47,7 @@ export default function useBackend(){
                 if(data.finalAction){
                     finalAction(data.finalAction, data.payload)
                 }
+                if(request.finaly){request.finaly()}
             }
         })
         .catch(error => {
@@ -64,6 +65,7 @@ export default function useBackend(){
             if(error.errorAction){
                 errorAction(error.errorAction, error.popup)
             }
+            if(request.finaly){request.finaly()}
         })
         
     }
