@@ -26,22 +26,26 @@ export default function useMongoDB(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Enregistre un utilisateur
+    const mongoDB_saveNewUser = (newUser) => {
+        fetchRequest("POST", {
+            route:"/users/create",
+            body:newUser,
+            errorAction: () => {
+                popup({
+                    message:"This username is already used. Please try with another username.",
+                    color:"bad"
+                })
+            }
+        })
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Connecte un utilisateur
     const mongoDB_connectUser = (user) => {
         fetchRequest("POST", {
             route:`/users/connect`,
             body:user,
-            finalAction: (payload) => {
-                dispatch(update_connected(true))
-                dispatch(update_connectedUser({
-                    name:payload.userName,
-                    _id:payload._id
-                }))
-                popup({
-                    message:"Connection successful.",
-                    color:"good"
-                })
-            },
             errorAction:() => {
                 popup({
                     message:"userName or Password incorrect",
@@ -55,18 +59,7 @@ export default function useMongoDB(){
     // Déconnecte un utilisateur
     const mongoDB_disconnectUser = () => {
         fetchRequest("GET", {
-            route:"/users/disconnect",
-            finalAction: (payload) => {
-                dispatch(update_loadFoldersList([]))
-                dispatch(update_loadTasksList([]))
-                dispatch(update_allFoldersLoad(false))
-                dispatch(update_folderSelectedID(null))
-                dispatch(update_closeConnection())
-                popup({
-                    message:"You have been disconnected",
-                    color:"good"
-                })
-            }
+            route:"/users/disconnect"
         })
     }
 
@@ -97,33 +90,8 @@ export default function useMongoDB(){
         
     }
 
-    
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Enregistre un utilisateur
-    const mongoDB_saveNewUser = (newUser) => {
-        fetchRequest("POST", {
-            route:"/users/create",
-            body:newUser,
-            finalAction: (payload) => {
-                dispatch(update_connected(true))
-                dispatch(update_connectedUser({
-                    name:payload.userName,
-                    _id:payload._id
-                }))
-                popup({
-                    message:"Registration successful.",
-                    color:"good"
-                })
-            },
-            errorAction: () => {
-                popup({
-                    message:"This username is already used. Please try with another username.",
-                    color:"bad"
-                })
-            }
-        })
-    }
+    
 
 
 
@@ -148,11 +116,6 @@ export default function useMongoDB(){
         fetchRequest("POST", {
             route:"/folders/create",
             body: newFolder,
-            finalAction: (payload) => {
-                dispatch(update_addFolder({name:payload.name, _id:payload._id}))
-                dispatch(update_folderSelectedID(payload._id))
-                dispatch(update_folderSelectedName(payload.name))
-            }
         })
     }
 
@@ -160,19 +123,8 @@ export default function useMongoDB(){
     // Pour la suppression d'un dossier
 
     const mongoDB_deleteFolder = () => {
-
         fetchRequest("DELETE", {
             route:`/folders/delete/${folderSelectedID}`,
-            finalAction: (payload) => {
-                const folderIndex = foldersList.findIndex(folder => folder._id === payload)
-                dispatch(update_deleteFolder(folderIndex))
-                dispatch(update_loadTasksList([]))
-                dispatch(update_folderSelectedID(null))
-                popup({
-                    message:"Folder deleted",
-                    color:"good"
-                })
-            }
         })
     }
 
@@ -183,16 +135,6 @@ export default function useMongoDB(){
         fetchRequest("PUT", {
             route:`/folders/rename/${folderSelectedID}`,
             body:{newFolderName},
-            finalAction:(payload)=>{
-                const folderIndex = foldersList.findIndex(folder => folder._id === payload._id)
-                const newFolderName = payload.name
-                dispatch(update_folderRename({folderIndex:folderIndex, newFolderName:newFolderName}))
-                dispatch(update_folderSelectedName(newFolderName))
-                popup({
-                    message:"Your folder have been rename.",
-                    color:"good"
-                })
-            }
         })
     }
 
@@ -231,9 +173,6 @@ export default function useMongoDB(){
         fetchRequest("POST", {
             route:"/tasks/create",
             body:task,
-            finalAction: (payload) => {
-                dispatch(update_addTask(payload))
-            }
         })
     }
 
@@ -242,14 +181,6 @@ export default function useMongoDB(){
     const mongoDB_deleteTask = (taskID) => {
         fetchRequest("DELETE", {
             route:`/tasks/delete/${taskID}`,
-            finalAction: (payload) => {
-                const deletedTaskIndex = taskList.findIndex(task => task._id === payload._id)
-                dispatch(update_deleteTask(deletedTaskIndex))
-                popup({
-                    message:"Task Deleted",
-                    color:"good",
-                })
-            }
         })
     }
 
@@ -259,11 +190,6 @@ export default function useMongoDB(){
         fetchRequest("PUT", {
             route:`/tasks/rename/${taskID}`,
             body:{newTaskContent},
-            finalAction:(payload) => {
-                const taskIndex = taskList.findIndex(task => task._id === payload._id)
-                const newTaskContent = payload.content
-                dispatch(update_renameTask({taskIndex:taskIndex, newTaskContent:newTaskContent}))
-            }
         })
     }
 
@@ -273,20 +199,12 @@ export default function useMongoDB(){
         fetchRequest("PUT", {
             route:`/tasks/toggle/${taskID}`,
             body:{completed:taskCompleted},
-            finalAction:(payload) => {
-                const taskIndex = taskList.findIndex(task => task._id === payload._id)
-                const newTaskToggle = payload.completed
-                dispatch(update_toggleTask({taskIndex, newTaskToggle}))
-            }
         })
     }
 
     const mongoDB_getTask = () => {
         fetchRequest("GET", {
             route:`/tasks/getAll/${folderSelectedID}`,
-            finalAction:(payload) => {
-                dispatch(update_loadTasksList(payload))
-            }
         })
     }
     

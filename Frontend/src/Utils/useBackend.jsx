@@ -1,6 +1,7 @@
 import React, {} from "react";
 import { useSelector } from "react-redux";
 import usePopup from "../Components/Popup/usePopup";
+import useFinalAction from "./useFinalAction";
 
 export default function useBackend(){
 
@@ -8,14 +9,7 @@ export default function useBackend(){
     const debugConsole = useSelector(store => store.devtools.debugConsole)
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const {popup} = usePopup()
-
-    const objectRequest = {
-        method:"POST/GET/DELETE/PUT",
-        action:"create/rename/delete",
-        target:"task/folder/user",
-        body:"body",
-
-    }
+    const {finalAction} = useFinalAction()
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ROUTER
@@ -42,6 +36,9 @@ export default function useBackend(){
                     hidden:false
                 })}
                 if(request.finalAction){request.finalAction(data.payload)}
+                if(data.finalAction){
+                    finalAction(data.finalAction, data.payload)
+                }
             }
         })
         .catch(error => {

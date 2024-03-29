@@ -31,7 +31,8 @@ router.get("/getAll/:folderID", authenticationMiddleware, async (request, respon
         const allTasks = await Task.find({folderID:folderID, userID:userID})
         response.status(200).json({
             message:`Toutes les tâches du dossier  "${folderID}" ont été récupérer avec succès`,
-            payload:allTasks
+            payload:allTasks,
+            finalAction:"/tasks/getAll"
         })
     }catch(error){
         response.status(400).json({
@@ -51,12 +52,13 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         await newTask.save();
         response.status(200).json({
             message:`La tâche a été correctement sauvegarder \n\n ${JSON.stringify(newTask, null, 2)}`,
-            payload:newTask
+            payload:newTask,
+            finalAction:"/tasks/create"
         })
     }catch(error){
         response.status(400).json({
             message:`Echec dans l'enregistrement de la tâche ${JSON.stringify(request.body, null, 2)}`,
-            payload:error.message
+            payload:error.message,
         });
     }
 });
@@ -76,7 +78,8 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
         }
         response.status(200).json({
             message:`La tâche a correctement été supprimer \n\n ${JSON.stringify(task, null, 2)}`,
-            payload:taskDeleted
+            payload:taskDeleted,
+            finalAction:"/tasks/delete"
         })
     }catch(error){
         response.status(400).json({
@@ -106,7 +109,8 @@ router.put("/toggle/:taskID", authenticationMiddleware, async (request, response
         }
         response.status(200).json({
             message:`Le toggle de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
-            payload:updatedTask
+            payload:updatedTask,
+            finalAction:"/tasks/toggle"
         });
     }catch(error){
         response.status(400).json({
@@ -133,7 +137,8 @@ router.put("/rename/:taskID", authenticationMiddleware, async (request, response
         })}
         response.status(200).json({
             message:`La tâche a vu son "content" correctement mis à jour \n\n ${JSON.stringify(updatedTask, null, 2)}`,
-            payload:updatedTask
+            payload:updatedTask,
+            finalAction:"/tasks/rename"
         })
     }catch(error){
         response.status(400).json({

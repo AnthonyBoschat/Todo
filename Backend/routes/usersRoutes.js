@@ -18,68 +18,6 @@ router.use(express.json())
 //////////////////////////////////////////////////////////////////////////////////////
 
 
-
-router.get("/reconnect", authenticationMiddleware, async(request,response) => {
-    const {userID} = request.token
-    try{
-        const user = await User.findOne({_id:userID})
-        if(!user){
-            return response.status(400).json({
-                message:"Utilisateur introuvable"
-            })
-        }
-        response.status(200).json({
-            message:`Reconnection réussi \n\n ${JSON.stringify(user, null, 2)}`,
-            payload:user
-        })
-    }catch(error){
-        response.status(400).json({
-            message:`Echec lors de la reconnection de l'utilisateur ${userID}`,
-            payload:error.message
-        })
-    }
-})
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////
-// Connecte un utilisateur
-router.post("/connect", async(request, response) => {
-    const {userName, userPassword} = request.body
-    try{
-        const user = await User.findOne({userName:userName})
-        if(!user){
-            return response.status(400).json({
-                message:"Nom d'utilisateur incorrecte"
-            })
-        }else{
-            const correctPassword = await bcrypt.compare(userPassword, user.userPassword)
-            if(!correctPassword){
-                return response.status(400).json({
-                    message:"Mot de passe incorrecte"
-                })
-            }else{
-                const token = jwt.sign({userID:user._id}, "secretKey", {expiresIn:"1h"})
-                response.cookie("session_token", token, {
-                    httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
-                    // secure:true, // Le cookie est envoyé uniquement sur HTTPS
-                    maxAge:3600000 // Durée de vie du cookie en millisecondes (1 heure ici)
-                })
-                response.status(200).json({
-                    message:`Utilisateur connecté \n\n ${JSON.stringify(user, null, 2)}`,
-                    payload:user
-                })
-            }
-        }
-    }catch(error){
-        response.status(400).json({
-            message:`Echec lors de la connection de l'utilisateur ${userName}`,
-            payload:error.message
-        })
-    }
-})
-
 //////////////////////////////////////////////////////////////////////////////////////
 // Ajouter un utilisateur
 router.post("/create", async(request, response) => {
@@ -112,7 +50,8 @@ router.post("/create", async(request, response) => {
             })
             response.status(200).json({
                 message: `Utilisateur enregistré : ${JSON.stringify(savedUser, null, 2)}`,
-                payload:savedUser
+                payload:savedUser,
+                finalAction:"/user/create"
             })  
         }
     }catch(error){
@@ -125,12 +64,76 @@ router.post("/create", async(request, response) => {
 })
 
 
+//////////////////////////////////////////////////////////////////////////////////////
+// Connecte un utilisateur
+router.post("/connect", async(request, response) => {
+    const {userName, userPassword} = request.body
+    try{
+        const user = await User.findOne({userName:userName})
+        if(!user){
+            return response.status(400).json({
+                message:"Nom d'utilisateur incorrecte"
+            })
+        }else{
+            const correctPassword = await bcrypt.compare(userPassword, user.userPassword)
+            if(!correctPassword){
+                return response.status(400).json({
+                    message:"Mot de passe incorrecte"
+                })
+            }else{
+                const token = jwt.sign({userID:user._id}, "secretKey", {expiresIn:"1h"})
+                response.cookie("session_token", token, {
+                    httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
+                    // secure:true, // Le cookie est envoyé uniquement sur HTTPS
+                    maxAge:3600000 // Durée de vie du cookie en millisecondes (1 heure ici)
+                })
+                response.status(200).json({
+                    message:`Utilisateur connecté \n\n ${JSON.stringify(user, null, 2)}`,
+                    payload:user,
+                    finalAction:"/user/connect"
+                })
+            }
+        }
+    }catch(error){
+        response.status(400).json({
+            message:`Echec lors de la connection de l'utilisateur ${userName}`,
+            payload:error.message
+        })
+    }
+})
+
 router.get("/disconnect", async(request, response) => {
     response.cookie("session_token", '', {expires:new Date(0), path:"/"})
     response.status(200).json({
-        message:"Deconnexion réussie."
+        message:"Deconnexion réussie.",
+        finalAction:"/user/disconnect"
     })
 })
+
+router.get("/reconnect", authenticationMiddleware, async(request,response) => {
+    const {userID} = request.token
+    try{
+        const user = await User.findOne({_id:userID})
+        if(!user){
+            return response.status(400).json({
+                message:"Utilisateur introuvable"
+            })
+        }
+        response.status(200).json({
+            message:`Reconnection réussi \n\n ${JSON.stringify(user, null, 2)}`,
+            payload:user,
+        })
+    }catch(error){
+        response.status(400).json({
+            message:`Echec lors de la reconnection de l'utilisateur ${userID}`,
+            payload:error.message
+        })
+    }
+})
+
+
+
+
 
 
 

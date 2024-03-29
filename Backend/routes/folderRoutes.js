@@ -41,7 +41,8 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         await folder.save()
         response.status(201).json({
             message:`Le dossier a été enregistrer \n\n ${JSON.stringify(folder, null, 2)}`,
-            payload:folder
+            payload:folder,
+            finalAction:"/folder/create"
         })
     }catch(error){
         response.status(400).json({
@@ -79,7 +80,8 @@ ${JSON.stringify(folder, null, 2)}
 ------------------- Tâche supprimé (${deletedTask.deletedCount}) : 
 
 ${listDeletedTask}`,
-            payload:folderID
+            payload:folderID,
+            finalAction:"/folder/delete"
         })
     }catch(error){
         response.status(400).json({
@@ -107,7 +109,9 @@ router.put("/rename/:folderID", authenticationMiddleware, async (request, respon
         }
         response.status(200).json({
             message:`Le dossier a bien été renommer \n\n ${JSON.stringify(updatedFolder, null, 2)}`, 
-            payload:updatedFolder})
+            payload:updatedFolder,
+            finalAction:"/folder/rename"
+        })
     }catch(error){
         response.status(400).json({
             message:`Echec lors de la suppression du renommage du dossier ${folderID}`,
