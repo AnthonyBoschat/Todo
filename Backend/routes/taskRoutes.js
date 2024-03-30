@@ -93,30 +93,60 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
 
 
 //////////////////////////////////////////////////////////////////////////////////////
-// Toggle une task
-router.put("/toggle/:taskID", authenticationMiddleware, async (request, response) => {
+// Toggle une task (completed)
+router.put("/toggleCompleted/:taskID", authenticationMiddleware, async (request, response) => {
     const {userID} = request.token
     const {taskID} = request.params
     const {completed} = request.body
     try{
         const updatedTask = await Task.findOneAndUpdate(
             {_id:taskID, userID:userID},
-            {$set: {completed:completed}},
+            {$set: {completed:completed, onWorking:false}},
             {new:true}
         )
         if (!updatedTask) {
             throw Error()
         }
         response.status(200).json({
-            messageDebugConsole:`Le toggle de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
-            messageDebugPopup:"Toggle modifier",
+            messageDebugConsole:`Le toggle completed de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
+            messageDebugPopup:"Toggle completed modifier",
             payload:updatedTask,
-            finalAction:"/tasks/toggle"
+            finalAction:"/tasks/toggleCompleted"
         });
     }catch(error){
         response.status(400).json({
-            messageDebugConsole:`Echec lors de la modification du toggle de la tâche ${taskID}`,
-            messageDebugPopup:"Echec mise à jour du toggle",
+            messageDebugConsole:`Echec lors de la modification du toggle completed de la tâche ${taskID}`,
+            messageDebugPopup:"Echec mise à jour du toggle completed",
+        })
+    }
+})
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Toggle une task (onWorking)
+router.put("/toggleOnWorking/:taskID", authenticationMiddleware, async(request, response) => {
+    const {userID} = request.token
+    const {taskID} = request.params
+    const {onWorking} = request.body
+    try{
+        const updatedTask = await Task.findOneAndUpdate(
+            {_id:taskID, userID:userID},
+            {$set: {onWorking:onWorking}},
+            {new:true}
+        )
+        if(!updatedTask){
+            throw Error()
+        }
+        response.status(200).json({
+            messageDebugConsole:`Le toggle onWorking de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
+            messageDebugPopup:"Toggle onWorking modifier",
+            payload:updatedTask,
+            finalAction:"/tasks/toggleOnWorking",
+        })
+    }catch(error){
+        response.status(400).json({
+            messageDebugConsole:`Echec lors de la modification du toggle onWorking de la tâche ${taskID}`,
+            messageDebugPopup:"Echec mise à jour du toggle onWorking",
         })
     }
 })

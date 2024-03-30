@@ -11,18 +11,22 @@ export default function One_Task({task, folderIndex}){
         taskNameRef,
         valideRenameTask,
         taskOnEdition,
-        toggleTask,
+        toggle_completedTask,
         leftSideRef,
-        toggleCoverRef
+        toggleCoverRef,
+        toggle_onWorkingTask
     } = useTask_One(folderIndex, task)
 
     return(
         <div className="task_Display">
+
+            {/* Button */}
             <div className="check_Box">
-                <i class="fa-regular fa-hourglass-half"></i>
-                <i  style={task.completed === true ? {opacity:"1"} : null} onClick={() => toggleTask(task._id, !task.completed)} className="fa-solid fa-square-check"></i>
+                <i style={task.completed ? {visibility:"hidden"} : task.onWorking ? {opacity:"1"} : null} onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className="fa-regular fa-hourglass-half"></i>
+                <i  style={task.completed ? {opacity:"1"} : null} onClick={() => toggle_completedTask(task._id, !task.completed)} className="fa-solid fa-square-check"></i>
             </div>
 
+            {/* Task */}
             <div style={(taskEditable && taskOnEdition) ? {outline:"1px solid rgb(0, 182, 227)", boxShadow:"0px 0px 10px rgb(0, 182, 227)"} : null} ref={taskRef} className="task_Box">
 
                 <div ref={leftSideRef} style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
@@ -36,7 +40,26 @@ export default function One_Task({task, folderIndex}){
                     <i onClick={() => deleteTask(task._id)} className="deleteTask fa-solid fa-trash"></i>
                 </div>
 
-                <div ref={toggleCoverRef} className={task.completed === true ? "toggleCover cover" : "toggleCover"}></div>
+
+
+
+                {/* Cover */}
+                <div 
+                ref={toggleCoverRef} 
+                style={
+                    task.completed ?
+                    {backgroundColor:"rgba(0, 141, 176, 0.5)", outline:"1px solid rgba(0, 141, 176, 0.461)"}
+                    :task.onWorking ?
+                    {backgroundColor:"rgb(252, 160, 26, 0.5)", outline:"1px solid rgb(252, 180, 26)"}
+                    :null
+                } 
+                className={
+                    task.completed || task.onWorking ?
+                     "toggleCover cover" 
+                     : "toggleCover"
+                }></div>
+
+
             </div>
 
             

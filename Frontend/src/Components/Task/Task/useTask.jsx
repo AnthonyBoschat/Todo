@@ -8,7 +8,7 @@ export default function useTask_One(folderIndex, task){
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
     const tasksList = useSelector(store => store.task.tasksList)
     const [taskEditable, setTaskEditable] = useState(false)
-    const {mongoDB_deleteTask, mongoDB_renameTask, mongoDB_toggleTask} = useMongoDB()
+    const {mongoDB_deleteTask, mongoDB_renameTask, mongoDB_toggleCompletedTask, mongoDB_onWorkingTask} = useMongoDB()
     
     const taskRef = useRef()
     const taskNameRef = useRef()
@@ -38,18 +38,62 @@ export default function useTask_One(folderIndex, task){
     }
 
     // Pour toggle une task en finish ou unFinish
-    const toggleTask = async(taskID, newValueTaskCompleted) => { 
+    const toggle_completedTask = (taskID, newValueTaskCompleted) => { 
         if(!newValueTaskCompleted){
             toggleCoverRef.current.classList.add("coverReturn")
             setTimeout(async() => {
-                await mongoDB_toggleTask(taskID, newValueTaskCompleted)
+                await mongoDB_toggleCompletedTask(taskID, newValueTaskCompleted)
                 toggleCoverRef.current.classList.remove("coverReturn")
-            }, 225);
+            }, 250);
         }
         if(newValueTaskCompleted){
-            mongoDB_toggleTask(taskID, newValueTaskCompleted)
+            mongoDB_toggleCompletedTask(taskID, newValueTaskCompleted)
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const toggle_onWorkingTask = (taskID, newValueTaskonWorking) => {
+        if(!newValueTaskonWorking){
+            toggleCoverRef.current.classList.add("coverReturn")
+            setTimeout(async() => {
+                await mongoDB_onWorkingTask(taskID, newValueTaskonWorking)
+                toggleCoverRef.current.classList.remove("coverReturn")
+            }, 250);
+        }
+        if(newValueTaskonWorking){
+            mongoDB_onWorkingTask(taskID, newValueTaskonWorking)
+        }
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Afin de placer le focus et le curseur sur la task qu'on souhaite modifier
     useEffect(() => {
@@ -108,8 +152,9 @@ export default function useTask_One(folderIndex, task){
         taskNameRef,
         valideRenameTask,
         taskOnEdition,
-        toggleTask,
+        toggle_completedTask,
         leftSideRef,
-        toggleCoverRef
+        toggleCoverRef,
+        toggle_onWorkingTask
     }
 }

@@ -165,11 +165,21 @@ export default function useMongoDB(){
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Toggle une tâche
-    const mongoDB_toggleTask = (taskID, taskCompleted) => {
+    const mongoDB_toggleCompletedTask = (taskID, taskCompleted) => {
         return new Promise((resolve) => {
             fetchRequest("PUT", {
-                route:`/tasks/toggle/${taskID}`,
+                route:`/tasks/toggleCompleted/${taskID}`,
                 body:{completed:taskCompleted},
+                finaly:() => resolve()
+            })
+        })
+    }
+
+    const mongoDB_onWorkingTask = (taskID, newValueTaskonWorking) => {
+        return new Promise((resolve) => {
+            fetchRequest("PUT", {
+                route:`/tasks/toggleOnWorking/${taskID}`,
+                body:{onWorking:newValueTaskonWorking},
                 finaly:() => resolve()
             })
         })
@@ -191,11 +201,12 @@ export default function useMongoDB(){
         mongoDB_renameFolder,
         mongoDB_getFolder,
 
-        mongoDB_toggleTask,
+        mongoDB_toggleCompletedTask,
         mongoDB_getTask,
         mongoDB_saveNewTask,
         mongoDB_deleteTask,
         mongoDB_renameTask,
+        mongoDB_onWorkingTask,
 
         mongoDB_saveNewUser,
         mongoDB_connectUser,

@@ -1,7 +1,7 @@
 import React, {} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_toggleTask } from "../Components/Task/TaskSlice";
+import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_toggleOnWorkingTask, update_toggleCompletedTask, update_changeOneTask } from "../Components/Task/TaskSlice";
 import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Folder/FolderSlice";
 import { update_closeConnection, update_connected, update_connectedUser } from "../Components/Connection/ConnectionSlice";
 
@@ -15,6 +15,7 @@ export default function useFinalAction(){
         let taskIndex
         let folderIndex
         let newFolderName
+        let newTask
         switch(route){
 
 
@@ -37,8 +38,8 @@ export default function useFinalAction(){
             case "/user/disconnect":
                 dispatch(update_loadFoldersList([]))
                 dispatch(update_loadTasksList([]))
-                dispatch(update_allFoldersLoad(false))
                 dispatch(update_folderSelectedID(null))
+                dispatch(update_allFoldersLoad(false))
                 dispatch(update_closeConnection())
                 break
 
@@ -52,19 +53,19 @@ export default function useFinalAction(){
                 break
 
             case "/user/DELETE_THIS_USER":
-                dispatch(update_closeConnection())
-                dispatch(update_folderSelectedID(null))
                 dispatch(update_loadFoldersList([]))
                 dispatch(update_loadTasksList([]))
+                dispatch(update_folderSelectedID(null))
                 dispatch(update_allFoldersLoad(false))
+                dispatch(update_closeConnection())
                 break
 
             case "/user/DELETE_ALL_USERS":
-                dispatch(update_closeConnection())
-                dispatch(update_folderSelectedID(null))
                 dispatch(update_loadFoldersList([]))
                 dispatch(update_loadTasksList([]))
+                dispatch(update_folderSelectedID(null))
                 dispatch(update_allFoldersLoad(false))
+                dispatch(update_closeConnection())
                 break
             
 
@@ -135,10 +136,16 @@ export default function useFinalAction(){
                 break
 
 
-            case "/tasks/toggle":
+            case "/tasks/toggleCompleted":
                 taskIndex = taskList.findIndex(task => task._id === payload._id)
-                const newTaskToggle = payload.completed
-                dispatch(update_toggleTask({taskIndex, newTaskToggle}))
+                newTask = payload
+                dispatch(update_changeOneTask({taskIndex, newTask}))
+                break
+
+            case "/tasks/toggleOnWorking":
+                taskIndex = taskList.findIndex(task => task._id === payload._id)
+                newTask = payload
+                dispatch(update_changeOneTask({taskIndex, newTask}))
                 break
 
             case "/tasks/getAll":
