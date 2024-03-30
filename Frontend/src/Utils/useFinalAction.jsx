@@ -19,23 +19,16 @@ export default function useFinalAction(){
         switch(route){
 
 
-            case "/user/create":
+            // Pour connecter un utilisateur
+            case "connectUser":
                 dispatch(update_connected(true))
                 dispatch(update_connectedUser({
                     name:payload.userName,
                     _id:payload._id
                 }))
                 break
-
-            case "/user/connect":
-                dispatch(update_connected(true))
-                dispatch(update_connectedUser({
-                    name:payload.userName,
-                    _id:payload._id
-                }))
-                break   
-                
-            case "/user/disconnect":
+            // Pour déconnecter un utilisateur
+            case "disconnectUser":
                 dispatch(update_loadFoldersList([]))
                 dispatch(update_loadTasksList([]))
                 dispatch(update_folderSelectedID(null))
@@ -43,31 +36,7 @@ export default function useFinalAction(){
                 dispatch(update_closeConnection())
                 break
 
-            case "/user/reconnect":
-                dispatch(update_connected(true))
-                dispatch(update_connectedUser({
-                    name:payload.userName,
-                    _id:payload._id
-                    
-                }))
-                break
 
-            case "/user/DELETE_THIS_USER":
-                dispatch(update_loadFoldersList([]))
-                dispatch(update_loadTasksList([]))
-                dispatch(update_folderSelectedID(null))
-                dispatch(update_allFoldersLoad(false))
-                dispatch(update_closeConnection())
-                break
-
-            case "/user/DELETE_ALL_USERS":
-                dispatch(update_loadFoldersList([]))
-                dispatch(update_loadTasksList([]))
-                dispatch(update_folderSelectedID(null))
-                dispatch(update_allFoldersLoad(false))
-                dispatch(update_closeConnection())
-                break
-            
 
 
 
@@ -78,9 +47,8 @@ export default function useFinalAction(){
 
 
             case "/folder/create":
-                dispatch(update_addFolder({name:payload.name, _id:payload._id}))
+                dispatch(update_addFolder(payload))
                 dispatch(update_folderSelectedID(payload._id))
-                dispatch(update_folderSelectedName(payload.name))
                 break
 
             case "/folder/delete":
@@ -93,7 +61,7 @@ export default function useFinalAction(){
             case "/folder/rename":
                 folderIndex = foldersList.findIndex(folder => folder._id === payload._id)
                 newFolderName = payload.name
-                dispatch(update_folderRename({folderIndex:folderIndex, newFolderName:newFolderName}))
+                dispatch(update_folderRename({folderIndex, newFolderName}))
                 dispatch(update_folderSelectedName(newFolderName))
                 break
 
@@ -112,6 +80,7 @@ export default function useFinalAction(){
 
 
 
+                
 
 
 
@@ -132,17 +101,10 @@ export default function useFinalAction(){
             case "/tasks/rename":
                 taskIndex = taskList.findIndex(task => task._id === payload._id)
                 const newTaskContent = payload.content
-                dispatch(update_renameTask({taskIndex:taskIndex, newTaskContent:newTaskContent}))
+                dispatch(update_renameTask({taskIndex, newTaskContent}))
                 break
 
-
-            case "/tasks/toggleCompleted":
-                taskIndex = taskList.findIndex(task => task._id === payload._id)
-                newTask = payload
-                dispatch(update_changeOneTask({taskIndex, newTask}))
-                break
-
-            case "/tasks/toggleOnWorking":
+            case "updateToggle":
                 taskIndex = taskList.findIndex(task => task._id === payload._id)
                 newTask = payload
                 dispatch(update_changeOneTask({taskIndex, newTask}))

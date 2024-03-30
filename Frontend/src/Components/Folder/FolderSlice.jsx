@@ -9,7 +9,7 @@ const FolderSlice = createSlice({
         folderOnCreation:false,
         folderSelectedID:null,
         folderSelectedName:null,
-        foldersList:[]
+        foldersList:null
     },
     reducers:{
         update_allFoldersLoad:(state,action) => {

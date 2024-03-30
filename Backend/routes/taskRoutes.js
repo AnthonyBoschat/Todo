@@ -111,7 +111,7 @@ router.put("/toggleCompleted/:taskID", authenticationMiddleware, async (request,
             messageDebugConsole:`Le toggle completed de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Toggle completed modifier",
             payload:updatedTask,
-            finalAction:"/tasks/toggleCompleted"
+            finalAction:"updateToggle"
         });
     }catch(error){
         response.status(400).json({
@@ -141,7 +141,7 @@ router.put("/toggleOnWorking/:taskID", authenticationMiddleware, async(request, 
             messageDebugConsole:`Le toggle onWorking de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Toggle onWorking modifier",
             payload:updatedTask,
-            finalAction:"/tasks/toggleOnWorking",
+            finalAction:"updateToggle",
         })
     }catch(error){
         response.status(400).json({
