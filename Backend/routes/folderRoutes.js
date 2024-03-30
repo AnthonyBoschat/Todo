@@ -44,7 +44,7 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         response.status(201).json({
             messageDebugConsole:`Le dossier a été enregistrer \n\n ${JSON.stringify(folder, null, 2)}`,
             messageDebugPopup:`Dossier enregistrer (${folder.name})`,
-            messagePopupUser:`Folder created`,
+            messageUserPopup:`Folder created`,
             payload:folder,
             finalAction:"/folder/create",
         })
@@ -85,7 +85,7 @@ ${JSON.stringify(folder, null, 2)}
 
 ${listDeletedTask}`,
             messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedTask.deletedCount}`,
-            messagePopupUser:`Folder deleted`,
+            messageUserPopup:`Folder deleted`,
             payload:folderID,
             finalAction:"/folder/delete"
         })
@@ -116,7 +116,7 @@ router.put("/rename/:folderID", authenticationMiddleware, async (request, respon
         response.status(200).json({
             messageDebugConsole:`Le dossier a bien été renommer \n\n ${JSON.stringify(updatedFolder, null, 2)}`, 
             messageDebugPopup:`Dossier renommer (${updatedFolder.name})`,
-            messagePopupUser:`Folder renamed`,
+            messageUserPopup:`Folder renamed`,
             payload:updatedFolder,
             finalAction:"/folder/rename"
         })
@@ -139,18 +139,21 @@ router.put("/rename/:folderID", authenticationMiddleware, async (request, respon
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime tout les dossiers de cette utilisateur
-router.delete("/DELETE_ALL_FOLDER/:userID", async (request, response) => {
+router.delete("/DELETE_ALL_FOLDERS/:userID", async (request, response) => {
     const userID = request.params.userID
     try{
-        await Folder.deleteMany({userID:userID})
-        await Task.deleteMany({userID:userID})
-        response.status(200).send({message:
-`
----------------------------------------------------------
-Tout les dossiers et toutes les tâches ont été supprimés
----------------------------------------------------------`})
+        const foldersDeleted = await Folder.deleteMany({userID:userID})
+        const tasksDeleted = await Task.deleteMany({userID:userID})
+        response.status(200).json({
+            messageDebugConsole:`Tout les dossier et toutes les tâches ont été supprimer \n\nDossier : ${foldersDeleted.deletedCount}\nTâches : ${tasksDeleted.deletedCount} `,
+            messageDebugPopup:`Tout les dossier et toutes les tâches supprimer`,
+            finalAction:"/folder/DELETE_ALL_FOLDERS"
+        })
     }catch(error){
-        response.status(400).send(error)
+        response.status(400).json({
+            messageDebugConsole:`Echec lors de la suppression de tout les dossier et toutes les tâches de cet utilisateur`,
+            messageDebugPopup:`Echec de la suppression des dossier et des tâches`,
+        })
     }
 })
 

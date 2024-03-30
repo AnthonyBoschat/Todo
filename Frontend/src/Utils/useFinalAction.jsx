@@ -2,7 +2,6 @@ import React, {} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_toggleTask } from "../Components/Task/TaskSlice";
-import usePopup from "../Components/Popup/usePopup";
 import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Folder/FolderSlice";
 import { update_closeConnection, update_connected, update_connectedUser } from "../Components/Connection/ConnectionSlice";
 
@@ -11,7 +10,6 @@ export default function useFinalAction(){
     const taskList = useSelector(store => store.task.tasksList)
     const foldersList = useSelector(store => store.folder.foldersList)
     const dispatch = useDispatch()
-    const {popup} = usePopup()
 
     const finalAction = (route, payload) => {
         let taskIndex
@@ -52,6 +50,22 @@ export default function useFinalAction(){
                     
                 }))
                 break
+
+            case "/user/DELETE_THIS_USER":
+                dispatch(update_closeConnection())
+                dispatch(update_folderSelectedID(null))
+                dispatch(update_loadFoldersList([]))
+                dispatch(update_loadTasksList([]))
+                dispatch(update_allFoldersLoad(false))
+                break
+
+            case "/user/DELETE_ALL_USERS":
+                dispatch(update_closeConnection())
+                dispatch(update_folderSelectedID(null))
+                dispatch(update_loadFoldersList([]))
+                dispatch(update_loadTasksList([]))
+                dispatch(update_allFoldersLoad(false))
+                break
             
 
 
@@ -85,6 +99,11 @@ export default function useFinalAction(){
             case "/folder/getAll":
                 dispatch(update_loadFoldersList(payload))
                 dispatch(update_allFoldersLoad(true))
+                break
+
+            case "/folder/DELETE_ALL_FOLDERS":
+                dispatch(update_folderSelectedID(null))
+                dispatch(update_loadFoldersList([]))
                 break
 
 
@@ -126,6 +145,9 @@ export default function useFinalAction(){
                 dispatch(update_loadTasksList(payload))
                 break
 
+            case "/tasks/DELETE_ALL_TASKS":
+                dispatch(update_loadTasksList([]))
+                break
 
             default:
                 return

@@ -33,11 +33,7 @@ export default function DevTools(){
         const confirmation = window.confirm("Supprimer TOUT les DOSSIERS de cette utilisateur ?")
         if(confirmation){
             fetchRequest("DELETE", {
-                route:`/folders/DELETE_ALL_FOLDER/${userID}`,
-                finalAction: () => {
-                    dispatch(update_folderSelectedID(null))
-                    dispatch(update_loadFoldersList([]))
-                }
+                route:`/folders/DELETE_ALL_FOLDERS/${userID}`,
             })
         }
     }
@@ -48,11 +44,8 @@ export default function DevTools(){
         const confirmation = window.confirm("Supprimer TOUTES les TACHES ?")
         if(confirmation){
             fetchRequest("DELETE", {
-                route:`/tasks/deleteAllTaskForThisFolder/${folderSelectedID}`,
-                finalAction:() => {
-                    dispatch(update_loadTasksList([]))
-                    setTaskForceNumber(1)
-                }
+                route:`/tasks/DELETE_ALL_TASKS/${folderSelectedID}`,
+                finaly: () => setTaskForceNumber(1)
             })
         }
     }
@@ -67,12 +60,9 @@ export default function DevTools(){
         }
 
         fetchRequest("POST", {
-            route:"/tasks/addTask",
+            route:"/tasks/create",
             body:taskForce,
-            finalAction: (payload) => {
-                dispatch(update_addTask(payload))
-                setTaskForceNumber(current => current + 1)
-            }
+            finaly:() => {setTaskForceNumber(current => current + 1)}
         })
     }
 
@@ -80,14 +70,7 @@ export default function DevTools(){
         const confirmation = window.confirm("Supprimer TOUT les UTILISATEURS ?")
         if(confirmation){
             fetchRequest("DELETE", {
-                route:"/users/DELETE_ALL_USERS",
-                finalAction:() => {
-                    dispatch(update_closeConnection())
-                    dispatch(update_folderSelectedID(null))
-                    dispatch(update_loadFoldersList([]))
-                    dispatch(update_loadTasksList([]))
-                    dispatch(update_allFoldersLoad(false))
-                }
+                route:"/users/DELETE_ALL_USERS"
             })
         }
     }
@@ -96,19 +79,7 @@ export default function DevTools(){
         const confirmation = window.confirm("Supprimer CET UTILISATEUR ?")
         if(confirmation){
             fetchRequest("DELETE", {
-                route:`/users/DELETE_THIS_USER/${userID}`,
-                finalAction:() => {
-                    dispatch(update_closeConnection())
-                    dispatch(update_folderSelectedID(null))
-                    dispatch(update_loadFoldersList([]))
-                    dispatch(update_loadTasksList([]))
-                    dispatch(update_allFoldersLoad(false))
-                },
-                errorAction:()=>{
-                    popup({
-                        message:"Aucun utilisateur de connecter. Impossible de supprimer l'utilisateur"
-                    })
-                }
+                route:`/users/DELETE_THIS_USER/${userID}`
             })
         }
         

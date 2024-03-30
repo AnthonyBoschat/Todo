@@ -33,7 +33,7 @@ export default function useBackend(){
                 throw data
             }
             else{
-                if(data.messagePopupUser)(popup({message:data.messagePopupUser, color:"good"}))
+                if(data.messageUserPopup)(popup({message:data.messageUserPopup, color:"good"}))
                 if(debugConsole){console.log(data.messageDebugConsole)}
                 if(debugPopup){popup({message:data.messageDebugPopup,color:"debug"})}
                 if(data.finalAction){finalAction(data.finalAction, data.payload)}
@@ -41,11 +41,10 @@ export default function useBackend(){
             }
         })
         .catch(error => {
-            console.log(error)
-            if(error.messagePopupUser)(popup({message:error.messagePopupUser, color:"bad"}))
+            if(error.messageUserPopup)(popup({message:error.messageUserPopup, color:"bad"}))
             if(debugConsole){console.log(error.messageDebugConsole)}
             if(debugPopup){popup({message:error.messageDebugPopup,color:"debug"})}
-            // if(error.errorAction){errorAction(error.errorAction, error.popup)}
+            if(error.errorAction){errorAction(error.errorAction, error.popup)}
             if(request.finaly){request.finaly()}
         })
         

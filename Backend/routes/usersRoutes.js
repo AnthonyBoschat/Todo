@@ -51,7 +51,7 @@ router.post("/create", async(request, response) => {
             response.status(200).json({
                 messageDebugConsole: `Utilisateur enregistré : ${JSON.stringify(savedUser, null, 2)}`,
                 messageDebugPopup:`Utilisateur enregistrer (${savedUser.userName})`,
-                messagePopupUser:`Registration successful`,
+                messageUserPopup:`Registration successful`,
                 payload:savedUser,
                 finalAction:"/user/create"
             })  
@@ -61,7 +61,7 @@ router.post("/create", async(request, response) => {
         response.status(400).json({
             messageDebugConsole:`Nom d'utilisateur déjà existant dans la base de donnée (${userName})`,
             messageDebugPopup:`Nom d'utilisateur existe déjà (${userName})`,
-            messagePopupUser:`This username is already used. Please try another one`,
+            messageUserPopup:`This username is already used. Please try another one`,
             errorAction:"/users/create"
         })
     }
@@ -97,7 +97,7 @@ router.post("/connect", async(request, response) => {
                 response.status(200).json({
                     messageDebugConsole:`Utilisateur connecté \n\n ${JSON.stringify(user, null, 2)}`,
                     messageDebugPopup:`Utilisateur connecté (${user.userName})`,
-                    messagePopupUser:`Connection successful`,
+                    messageUserPopup:`Connection successful`,
                     payload:user,
                     finalAction:"/user/connect"
                 })
@@ -107,7 +107,7 @@ router.post("/connect", async(request, response) => {
         response.status(400).json({
             messageDebugConsole:`${error.message} (${error.payload})`,
             messageDebugPopup:`${error.message} (${error.payload})`,
-            messagePopupUser:`userName or Password incorrect`,
+            messageUserPopup:`userName or Password incorrect`,
             errorAction:"/users/connect"
         })
     }
@@ -118,7 +118,7 @@ router.get("/disconnect", async(request, response) => {
     response.status(200).json({
         messageDebugConsole:"Deconnexion réussie",
         messageDebugPopup:"Deconnexion réussie",
-        messagePopupUser:"You have been disconnected",
+        messageUserPopup:"You have been disconnected",
         finalAction:"/user/disconnect"
     })
 })
@@ -135,7 +135,7 @@ router.get("/reconnect", authenticationMiddleware, async(request,response) => {
         response.status(200).json({
             messageDebugConsole:`Reconnection réussi \n\n ${JSON.stringify(user, null, 2)}`,
             messageDebugPopup:`Reconnection réussi (${user.userName})`,
-            messagePopupUser:"Connection successful",
+            messageUserPopup:"Connection successful",
             payload:user,
             finalAction:"/user/reconnect"
         })
@@ -165,15 +165,19 @@ router.get("/reconnect", authenticationMiddleware, async(request,response) => {
 // Supprime tout les utilisateurs
 router.delete("/DELETE_ALL_USERS", async(request, response) => {
     try{
-        await Folder.deleteMany()
-        await Task.deleteMany()
-        await User.deleteMany()
-        response.status(200).send({message:`
----------------------------------------------------------------------------
-Tout les utilisateurs, tout dossiers et toutes les tâches ont été supprimés
----------------------------------------------------------------------------`})
+        const foldersDeleted = await Folder.deleteMany()
+        const tasksDeleted = await Task.deleteMany()
+        const userDeleted = await User.deleteMany()
+        response.status(200).json({
+            messageDebugConsole:`Base de donnée correctement vidée \n\nUtilisateur supprimer : ${userDeleted.deletedCount}\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${tasksDeleted.deletedCount}`,
+            messageDebugPopup:"Base de donnée correctement vidée",
+            finalAction:"/user/DELETE_ALL_USERS"
+        })
     }catch(error){
-        response.status(400).send(error)
+        response.status(400).json({
+            messageDebugConsole:`Echec de la suppression de tout les utilisateurs de la base de donnée`,
+            messageDebugPopup:`Echec lors de la suppression de tout les utilisateurs`,
+        })
     }
 })
 
@@ -188,16 +192,16 @@ router.delete("/DELETE_THIS_USER/:userID", async(request, response) => {
         const foldersDeleted = await Folder.deleteMany({userID:userID})
         const tasksDeleted = await Task.deleteMany({userID:userID})
         response.status(200).json({
-            message:`
----------------------------------
-Suppression de l'utilisateur fini :
-
-Tâche supprimer : ${tasksDeleted.deletedCount}
-Dossier supprimer : ${foldersDeleted.deletedCount}
----------------------------------`
+            messageDebugConsole:`Suppression de l'utilisateur terminer :\n\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${tasksDeleted.deletedCount}`,
+            messageDebugPopup:`Utilisateur correctement supprimer (ID : ${userID})`,
+            messageUserPopup:`Your account has been successfully deleted`,
+            finalAction:"/user/DELETE_THIS_USER",
         })
     }catch(error){
-        response.status(400).send(error)
+        response.status(400).json({
+            messageDebugConsole:`Echec lors de la suppression de l'utilisateur \n\n ID : ${userID}`,
+            messageDebugPopup:`Echec de la suppression de l'utilisateur (ID : ${userID})`
+        })
     }
 })
 
