@@ -38,18 +38,17 @@ export default function useTask_One(folderIndex, task){
     }
 
     // Pour toggle une task en finish ou unFinish
-    const toggleTask = (taskID, newValueTaskCompleted) => { 
+    const toggleTask = async(taskID, newValueTaskCompleted) => { 
         if(!newValueTaskCompleted){
             toggleCoverRef.current.classList.add("coverReturn")
-            setTimeout(() => {
-                mongoDB_toggleTask(taskID, newValueTaskCompleted)
+            setTimeout(async() => {
+                await mongoDB_toggleTask(taskID, newValueTaskCompleted)
                 toggleCoverRef.current.classList.remove("coverReturn")
             }, 225);
         }
         if(newValueTaskCompleted){
             mongoDB_toggleTask(taskID, newValueTaskCompleted)
         }
-        
     }
 
     // Afin de placer le focus et le curseur sur la task qu'on souhaite modifier

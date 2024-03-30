@@ -12,10 +12,10 @@ export default function useFolder_Creation(){
     const dispatch = useDispatch()
 
     // Check la validité du dossier qui souhaite etre enregistrer
-    const saveNewFolder = () => {
+    const saveNewFolder = async() => {
         if(inputRef.current.value !== ""){ // S'il n'a pas un nom vide
             const newFolderName = inputRef.current.value
-            mongoDB_saveNewFolder({name:newFolderName}) // On l'enregistre dans la base de donnée
+            await mongoDB_saveNewFolder({name:newFolderName}) // On l'enregistre dans la base de donnée
         }
         dispatch(update_folderOnCreation(false)) // Dans tout les cas, on annule le mode creation
     }

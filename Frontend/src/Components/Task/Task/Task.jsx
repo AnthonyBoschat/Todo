@@ -19,6 +19,7 @@ export default function One_Task({task, folderIndex}){
     return(
         <div className="task_Display">
             <div className="check_Box">
+                <i class="fa-regular fa-hourglass-half"></i>
                 <i  style={task.completed === true ? {opacity:"1"} : null} onClick={() => toggleTask(task._id, !task.completed)} className="fa-solid fa-square-check"></i>
             </div>
 

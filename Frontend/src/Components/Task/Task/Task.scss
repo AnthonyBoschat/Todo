@@ -9,12 +9,31 @@ div.task_Display{
 
 
     div.check_Box{
-        i{
+        height: 100%;
+        // outline: 1px solid red; //
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+
+        i.fa-square-check{
             font-size: 1.5rem;
             color: v.$blue;
             opacity: 0.3;
             transition: opacity 0.05s linear;
-            box-shadow: 2px 2px 10px 1px black;
+            // box-shadow: 2px 2px 10px 1px black;
+
+            &:hover{
+                cursor: pointer;
+                opacity: 0.7;
+            }
+        }
+
+        i.fa-hourglass-half{
+            font-size: 1.5rem;
+            align-self: center;
+            color: v.$orange;
+            opacity: 0.3;
+            transition: opacity 0.05s linear;
 
             &:hover{
                 cursor: pointer;
@@ -27,6 +46,23 @@ div.task_Display{
             transform: translateX(1rem);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     div.toggleCover{
         position: absolute;

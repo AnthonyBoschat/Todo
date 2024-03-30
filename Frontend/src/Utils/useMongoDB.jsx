@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux";
 import useBackend from "./useBackend";
+import { update_folderOnCreation } from "../Components/Folder/FolderSlice";
+import { useDispatch } from "react-redux";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useMongoDB(){
@@ -77,9 +79,12 @@ export default function useMongoDB(){
     // Enregistre un dossier
 
     const mongoDB_saveNewFolder = (newFolder) => {
-        fetchRequest("POST", {
-            route:"/folders/create",
-            body: newFolder,
+        return new Promise((resolve) => {
+            fetchRequest("POST", {
+                route:"/folders/create",
+                body: newFolder,
+                finaly: () => resolve()
+            })
         })
     }
 
@@ -161,10 +166,14 @@ export default function useMongoDB(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Toggle une tâche
     const mongoDB_toggleTask = (taskID, taskCompleted) => {
-        fetchRequest("PUT", {
-            route:`/tasks/toggle/${taskID}`,
-            body:{completed:taskCompleted},
+        return new Promise((resolve) => {
+            fetchRequest("PUT", {
+                route:`/tasks/toggle/${taskID}`,
+                body:{completed:taskCompleted},
+                finaly:() => resolve()
+            })
         })
+        
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
