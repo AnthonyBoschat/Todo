@@ -44,8 +44,6 @@ export default function useFinalAction(){
 
 
 
-
-
             case "/folder/create":
                 dispatch(update_addFolder(payload))
                 dispatch(update_folderSelectedID(payload._id))
@@ -80,7 +78,6 @@ export default function useFinalAction(){
 
 
 
-                
 
 
 
@@ -104,7 +101,14 @@ export default function useFinalAction(){
                 dispatch(update_renameTask({taskIndex, newTaskContent}))
                 break
 
-            case "updateToggle":
+
+            case "/tasks/toggleCompleted":
+                taskIndex = taskList.findIndex(task => task._id === payload._id)
+                newTask = payload
+                dispatch(update_changeOneTask({taskIndex, newTask}))
+                break
+
+            case "/tasks/toggleOnWorking":
                 taskIndex = taskList.findIndex(task => task._id === payload._id)
                 newTask = payload
                 dispatch(update_changeOneTask({taskIndex, newTask}))
