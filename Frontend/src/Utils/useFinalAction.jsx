@@ -15,7 +15,7 @@ export default function useFinalAction(){
         let taskIndex
         let folderIndex
         let newFolderName
-        let newTask
+        let updatedTask
         switch(route){
 
 
@@ -104,14 +104,22 @@ export default function useFinalAction(){
 
             case "/tasks/toggleCompleted":
                 taskIndex = taskList.findIndex(task => task._id === payload._id)
-                newTask = payload
-                dispatch(update_changeOneTask({taskIndex, newTask}))
+                updatedTask = payload
+                dispatch(update_changeOneTask({taskIndex, updatedTask}))
                 break
 
             case "/tasks/toggleOnWorking":
-                taskIndex = taskList.findIndex(task => task._id === payload._id)
-                newTask = payload
-                dispatch(update_changeOneTask({taskIndex, newTask}))
+                taskIndex = taskList.findIndex(task => task._id === payload.updatedTask._id)
+                updatedTask = payload.updatedTask
+                dispatch(update_changeOneTask({taskIndex, updatedTask}))
+                if(payload.resetTask){
+                    taskIndex = taskList.findIndex(task => task._id === payload.resetTask._id)
+                    updatedTask = payload.resetTask
+                    dispatch(update_changeOneTask({taskIndex, updatedTask}))
+                }
+                
+                
+                
                 break
 
             case "/tasks/getAll":

@@ -129,6 +129,11 @@ router.put("/toggleOnWorking/:taskID", authenticationMiddleware, async(request, 
     const {taskID} = request.params
     const {onWorking} = request.body
     try{
+        const resetTask = await Task.findOneAndUpdate(
+            {userID:userID, onWorking:true},
+            {$set: {onWorking:false}},
+            {new:true}
+        )
         const updatedTask = await Task.findOneAndUpdate(
             {_id:taskID, userID:userID},
             {$set: {onWorking:onWorking}},
@@ -137,10 +142,17 @@ router.put("/toggleOnWorking/:taskID", authenticationMiddleware, async(request, 
         if(!updatedTask){
             throw Error()
         }
+        // const payload = {
+        //     resetTask:resetTask,
+        //     updatedTask:updatedTask
+        // }
         response.status(200).json({
             messageDebugConsole:`Le toggle onWorking de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Toggle onWorking modifier",
-            payload:updatedTask,
+            payload:{
+                resetTask:resetTask,
+                updatedTask:updatedTask
+            },
             finalAction:"/tasks/toggleOnWorking",
         })
     }catch(error){

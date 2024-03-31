@@ -27,8 +27,7 @@ const TaskSlice = createSlice({
             state.tasksList[action.payload.taskIndex].content = action.payload.newTaskContent
         },
         update_changeOneTask:(state,action) => {
-            console.log(action)
-            state.tasksList[action.payload.taskIndex] = action.payload.newTask
+            state.tasksList[action.payload.taskIndex] = action.payload.updatedTask
         },
     },
 })

@@ -22,7 +22,7 @@ export default function One_Task({task, folderIndex}){
 
             {/* Button */}
             <div className="check_Box">
-                <i style={task.completed ? {visibility:"hidden"} : task.onWorking ? {opacity:"1"} : null} onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className="fa-regular fa-hourglass-half"></i>
+                <i style={task.completed ? {visibility:"hidden"} : task.onWorking ? {opacity:"1"} : null} onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className="fa-regular fa-circle-dot"></i>
                 <i  style={task.completed ? {opacity:"1"} : null} onClick={() => toggle_completedTask(task._id, !task.completed)} className="fa-solid fa-square-check"></i>
             </div>
 
