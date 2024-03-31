@@ -79,16 +79,29 @@ export default function useFinalAction(){
 
 
 
+
+
             // Detruits tout les dossiers
-            case "/folder/DELETE_ALL_FOLDERS":
+            case "DEVTOOLS_DELETE_ALL_FOLDERS":
                 dispatch(update_DELETE_ALL_DATAS())
                 dispatch(update_folderSelectedID(null))
                 break
 
-            // Détuits toutes les tâches
-            case "/tasks/DELETE_ALL_TASKS":
-                dispatch(update_dataList({listName:"userTasksList", newList:[]}))
+            case "DEVTOOLS_DELETE_ALL_TASKS":
+                dispatch(update_dataList({listName:payload.target, newList:payload.data}))
                 break
+
+
+            // // Detruits tout les dossiers
+            // case "/folder/DELETE_ALL_FOLDERS":
+            //     dispatch(update_DELETE_ALL_DATAS())
+            //     dispatch(update_folderSelectedID(null))
+            //     break
+
+            // // Détuits toutes les tâches
+            // case "/tasks/DELETE_ALL_TASKS":
+            //     dispatch(update_dataList({listName:"userTasksList", newList:[]}))
+            //     break
 
             default:
                 return

@@ -158,7 +158,7 @@ router.delete("/DELETE_ALL_FOLDERS/:userID", async (request, response) => {
         response.status(200).json({
             messageDebugConsole:`Tout les dossier et toutes les tâches ont été supprimer \n\nDossier : ${foldersDeleted.deletedCount}\nTâches : ${tasksDeleted.deletedCount} `,
             messageDebugPopup:`Tout les dossier et toutes les tâches supprimer`,
-            finalAction:"/folder/DELETE_ALL_FOLDERS"
+            payload:payload_contructor({finalAction:library_finalAction.DEVTOOLS_DELETE_ALL_FOLDERS})
         })
     }catch(error){
         response.status(400).json({

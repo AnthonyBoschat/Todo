@@ -218,15 +218,21 @@ router.put("/rename/:taskID", authenticationMiddleware, async (request, response
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime toutes les tâches
-router.delete("/DELETE_ALL_TASKS/:folderID", async (request, response) => {
+router.delete("/DELETE_ALL_TASKS/:folderID", authenticationMiddleware, async (request, response) => {
+    const {userID} = request.token
     const folderID = request.params.folderID
     try{
         const allTasks = await Task.find({folderID:folderID})
         const deletedTasks = await Task.deleteMany({folderID:folderID})
+        const allTasksUpdate = await Task.find({userID:userID}) // Pertinence ?
         response.status(200).json({
             messageDebugConsole:`Toutes les tâches ont été supprimés \n\n ${JSON.stringify(allTasks, null, 2)}`,
             messageDebugPopup:`Toutes les tâches ont été supprimer (${deletedTasks.deletedCount})`,
-            finalAction:"/tasks/DELETE_ALL_TASKS"
+            payload:payload_constructor({
+                finalAction:library_finalAction.DEVTOOLS_DELETE_ALL_TASKS,
+                target:"tasks",
+                data:allTasksUpdate,
+            })
         })
     }catch(error){response.status(400).json({
         messageDebugConsole:`Echec lors de la suppression des tasks du dossier \n\n ${folderID}`,

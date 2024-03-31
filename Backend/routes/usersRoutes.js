@@ -214,7 +214,9 @@ router.delete("/DELETE_ALL_USERS", async(request, response) => {
         response.status(200).json({
             messageDebugConsole:`Base de donnée correctement vidée \n\nUtilisateur supprimer : ${userDeleted.deletedCount}\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${tasksDeleted.deletedCount}`,
             messageDebugPopup:"Base de donnée correctement vidée",
-            payload:payload_constructor("disconnectUser", null, null),
+            payload:payload_constructor({
+                finalAction:library_finalAction.disconnectUser
+            }),
         })
     }catch(error){
         response.status(400).json({
@@ -238,7 +240,7 @@ router.delete("/DELETE_THIS_USER/:userID", async(request, response) => {
             messageDebugConsole:`Suppression de l'utilisateur terminer :\n\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${tasksDeleted.deletedCount}`,
             messageDebugPopup:`Utilisateur correctement supprimer (ID : ${userID})`,
             messageUserPopup:`Your account has been successfully deleted`,
-            payload:payload_constructor("disconnectUser", null, null),
+            payload:payload_constructor({finalAction:library_finalAction.disconnectUser}),
         })
     }catch(error){
         response.status(400).json({
