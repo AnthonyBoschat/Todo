@@ -86,7 +86,7 @@ ${JSON.stringify(folder, null, 2)}
 ${listDeletedTask}`,
             messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedTask.deletedCount}`,
             messageUserPopup:`Folder deleted`,
-            payload:folderID,
+            payload:folder,
             finalAction:"/folder/delete"
         })
     }catch(error){

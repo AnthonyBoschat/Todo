@@ -15,7 +15,7 @@ export default function One_Task({task, folderIndex}){
         leftSideRef,
         toggleCoverRef,
         toggle_onWorkingTask
-    } = useTask_One(folderIndex, task)
+    } = useTask_One(task)
 
     return(
         <div className="task_Display">

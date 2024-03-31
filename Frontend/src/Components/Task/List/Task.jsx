@@ -6,26 +6,29 @@ import One_Task from "../Task/Task";
 export default function List_Task(){
 
     const {
-        tasksList, 
+        userTasksList, 
         taskOnCreation,
         displayTaskListRef,
-        folderIndex,
+        atLeastOneTask,
+        folderSelectedID
     } = useTask_List()
     
 
     return(
         <>
-            {tasksList && (
+            {userTasksList && (
                 <div ref={displayTaskListRef} className="listTask_Display">
                     <div className="listTask_Box">
 
-                        {/* Si au moin une task d'enregistrer pour ce dossier, la liste de toutes les task */}
-                        {tasksList.length > 0 && (tasksList.map((task, index) => (
-                            <One_Task folderIndex={folderIndex} key={`task_${task._id}`} task={task}/>
-                        )))}
+                        {/* Si au moin une task d'enregistrer pour ce dossier, la liste de toutes les task*/}
+                        {atLeastOneTask && (userTasksList.map(task => {
+                            if(task.folderID === folderSelectedID){
+                                return(<One_Task key={`task_${task._id}`} task={task}/>)
+                            }
+                        }))}
 
                         {/* Si aucune Task d'enregistrer pour ce dossier */}
-                        {(tasksList.length === 0 && !taskOnCreation) && (
+                        {(!taskOnCreation && !atLeastOneTask) && (
                             <div className="noTask_Box">
                                 <span>( No Task )</span>
                             </div>

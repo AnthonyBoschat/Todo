@@ -3,17 +3,19 @@ import { useSelector } from "react-redux";
 
 export default function useTask_List(){
 
-    const folderSelectedID = useSelector(store => store.folder.folderSelectedID) // L'id du dossier selectionner
     const taskOnCreation = useSelector(store => store.task.taskOnCreation) // Est-ce qu'une task est en train d'etre créé
-    const tasksList = useSelector(store => store.task.tasksList)
-    const foldersList = useSelector(store => store.folder.foldersList)
+    const userTasksList = useSelector(store => store.user.datas.userTasksList)
+    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const displayTaskListRef = useRef()
-    const folderIndex = foldersList.findIndex(folder => folder._id === folderSelectedID) // L'index du dossier selectionner dans la liste des dossiers 
+
+
+    const atLeastOneTask = userTasksList.some(task => task.folderID === folderSelectedID)
 
     return{
-        tasksList,
+        userTasksList,
         taskOnCreation,
         displayTaskListRef,
-        folderIndex,
+        atLeastOneTask,
+        folderSelectedID
     }
 }

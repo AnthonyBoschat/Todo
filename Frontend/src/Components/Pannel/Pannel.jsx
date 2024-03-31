@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 export default function Pannel(){
 
-    const allFoldersLoad = useSelector(store => store.folder.allFoldersLoad)
+    const allDatasLoad = useSelector(store => store.user.allDatasLoad)
     const connected = useSelector(store => store.connection.connected)
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
 
@@ -17,7 +17,7 @@ export default function Pannel(){
         <div className="pannel_display">
             <div style={!connected ? {display:"none"} : null} className={!onDisconnection ? "pannel_Box apparition" : "pannel_Box disparition" }>
 
-                {allFoldersLoad && ( // Seulement quand tout les dossiers ont été chargé, on charge les autres composants
+                {allDatasLoad && ( // Seulement quand tout les dossiers ont été chargé, on charge les autres composants
                     <>
                         <Add_Folder/>
                         <List_Folder/>

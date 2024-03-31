@@ -56,6 +56,15 @@ export default function useMongoDB(){
         })
     }
 
+    const mongoDB_getAllData = () => {
+        return new Promise(resolve => {
+            fetchRequest("GET", {
+                route:"/users/getAllData",
+                finaly: () => resolve()
+            })
+        })
+    }
+
 
     
 
@@ -212,5 +221,6 @@ export default function useMongoDB(){
         mongoDB_connectUser,
         mongoDB_disconnectUser,
         mongoDB_reconnectUser,
+        mongoDB_getAllData,
     }
 }

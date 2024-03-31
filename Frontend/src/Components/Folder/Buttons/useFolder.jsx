@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_folderSelectedID } from "../FolderSlice";
-import { update_loadTasksList, update_taskOnEdition } from "../../Task/TaskSlice";
+import { update_taskOnEdition } from "../../Task/TaskSlice";
 
 export default function useFolder_Button(folder){
 
@@ -14,7 +14,6 @@ export default function useFolder_Button(folder){
             dispatch(update_folderSelectedID(folder._id))
         }else{ // Si l'utilisateur clique un dossier qui est déjà en cours de présentation
             dispatch(update_folderSelectedID(null))
-            dispatch(update_loadTasksList(null))
         }
         dispatch(update_taskOnEdition(false)) // Dans tout les cas, on coupe le mode edition des tasks
     }

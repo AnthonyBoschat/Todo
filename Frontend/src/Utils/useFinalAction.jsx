@@ -1,21 +1,18 @@
 import React, {} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { update_addTask, update_deleteTask, update_loadTasksList, update_renameTask, update_toggleOnWorkingTask, update_toggleCompletedTask, update_changeOneTask } from "../Components/Task/TaskSlice";
-import { update_addFolder, update_allFoldersLoad, update_deleteFolder, update_folderRename, update_folderSelectedID, update_folderSelectedName, update_loadFoldersList } from "../Components/Folder/FolderSlice";
+import { update_folderSelectedID, update_folderSelectedName } from "../Components/Folder/FolderSlice";
 import { update_closeConnection, update_connected, update_connectedUser } from "../Components/Connection/ConnectionSlice";
+import { update_loadAllDatas, update_allDatasLoad, update_dataList, update_addData, update_deleteData, update_changeData, update_DELETE_ALL_DATAS } from "../Components/User/UserSlice";
 
 export default function useFinalAction(){
 
-    const taskList = useSelector(store => store.task.tasksList)
-    const foldersList = useSelector(store => store.folder.foldersList)
+    const userFoldersList = useSelector(store => store.user.datas.userFoldersList)
+    const userTasksList = useSelector(store => store.user.datas.userTasksList)
     const dispatch = useDispatch()
 
     const finalAction = (route, payload) => {
-        let taskIndex
-        let folderIndex
-        let newFolderName
-        let updatedTask
+        let dataIndex
         switch(route){
 
 
@@ -27,13 +24,21 @@ export default function useFinalAction(){
                     _id:payload._id
                 }))
                 break
+                
             // Pour déconnecter un utilisateur
             case "disconnectUser":
-                dispatch(update_loadFoldersList([]))
-                dispatch(update_loadTasksList([]))
+                dispatch(update_dataList({listName:"userFoldersList", newList:null}))
+                dispatch(update_dataList({listName:"userTasksList", newList:null}))
                 dispatch(update_folderSelectedID(null))
-                dispatch(update_allFoldersLoad(false))
+                dispatch(update_allDatasLoad(false))
                 dispatch(update_closeConnection())
+                break
+
+            case "loadAllDatas":
+                const newUserFoldersList = payload.userFoldersList
+                const newUserTasksList = payload.userTasksList
+                dispatch(update_loadAllDatas({userFoldersList:newUserFoldersList, userTasksList:newUserTasksList}))
+                dispatch(update_allDatasLoad(true))
                 break
 
 
@@ -45,32 +50,25 @@ export default function useFinalAction(){
 
 
             case "/folder/create":
-                dispatch(update_addFolder(payload))
+                dispatch(update_addData({listName:"userFoldersList", newData:payload}))
                 dispatch(update_folderSelectedID(payload._id))
                 break
 
             case "/folder/delete":
-                folderIndex = foldersList.findIndex(folder => folder._id === payload)
-                dispatch(update_deleteFolder(folderIndex))
-                dispatch(update_loadTasksList([]))
+                dataIndex = userFoldersList.findIndex(folder => folder._id === payload._id)
+                dispatch(update_deleteData({listName:"userFoldersList", dataIndex:dataIndex}))
                 dispatch(update_folderSelectedID(null))
                 break
 
             case "/folder/rename":
-                folderIndex = foldersList.findIndex(folder => folder._id === payload._id)
-                newFolderName = payload.name
-                dispatch(update_folderRename({folderIndex, newFolderName}))
-                dispatch(update_folderSelectedName(newFolderName))
-                break
-
-            case "/folder/getAll":
-                dispatch(update_loadFoldersList(payload))
-                dispatch(update_allFoldersLoad(true))
+                dataIndex = userFoldersList.findIndex(folder => folder._id === payload._id)
+                dispatch(update_changeData({listName:"userFoldersList", dataIndex:dataIndex, newData:payload}))
+                dispatch(update_folderSelectedName(payload.name))
                 break
 
             case "/folder/DELETE_ALL_FOLDERS":
+                dispatch(update_DELETE_ALL_DATAS())
                 dispatch(update_folderSelectedID(null))
-                dispatch(update_loadFoldersList([]))
                 break
 
 
@@ -87,47 +85,36 @@ export default function useFinalAction(){
 
 
             case "/tasks/create":
-                dispatch(update_addTask(payload))
+                dispatch(update_addData({listName:"userTasksList", newData:payload}))
                 break
 
             case "/tasks/delete":
-                const deletedTaskIndex = taskList.findIndex(task => task._id === payload._id)
-                dispatch(update_deleteTask(deletedTaskIndex))
+                dataIndex = userTasksList.findIndex(task => task._id === payload._id)
+                dispatch(update_deleteData({listName:"userTasksList", dataIndex:dataIndex}))
                 break
             
             case "/tasks/rename":
-                taskIndex = taskList.findIndex(task => task._id === payload._id)
-                const newTaskContent = payload.content
-                dispatch(update_renameTask({taskIndex, newTaskContent}))
+                dataIndex = userTasksList.findIndex(task => task._id === payload._id)
+                dispatch(update_changeData({listName:"userTasksList", dataIndex:dataIndex, newData:payload}))
                 break
 
 
             case "/tasks/toggleCompleted":
-                taskIndex = taskList.findIndex(task => task._id === payload._id)
-                updatedTask = payload
-                dispatch(update_changeOneTask({taskIndex, updatedTask}))
+                dataIndex = userTasksList.findIndex(task => task._id === payload._id)
+                dispatch(update_changeData({listName:"userTasksList", dataIndex:dataIndex, newData:payload}))
                 break
 
             case "/tasks/toggleOnWorking":
-                taskIndex = taskList.findIndex(task => task._id === payload.updatedTask._id)
-                updatedTask = payload.updatedTask
-                dispatch(update_changeOneTask({taskIndex, updatedTask}))
+                dataIndex = userTasksList.findIndex(task => task._id === payload.updatedTask._id)
+                dispatch(update_changeData({listName:"userTasksList", dataIndex:dataIndex, newData:payload.updatedTask}))
                 if(payload.resetTask){
-                    taskIndex = taskList.findIndex(task => task._id === payload.resetTask._id)
-                    updatedTask = payload.resetTask
-                    dispatch(update_changeOneTask({taskIndex, updatedTask}))
+                    dataIndex = userTasksList.findIndex(task => task._id === payload.resetTask._id)
+                    dispatch(update_changeData({listName:"userTasksList", dataIndex:dataIndex, newData:payload.resetTask}))
                 }
-                
-                
-                
-                break
-
-            case "/tasks/getAll":
-                dispatch(update_loadTasksList(payload))
                 break
 
             case "/tasks/DELETE_ALL_TASKS":
-                dispatch(update_loadTasksList([]))
+                dispatch(update_dataList({listName:"userTasksList", newList:[]}))
                 break
 
             default:

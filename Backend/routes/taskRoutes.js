@@ -80,7 +80,7 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
             messageDebugConsole:`La tâche a correctement été supprimer \n\n ${JSON.stringify(task, null, 2)}`,
             messageDebugPopup:`Tâche supprimer (${task._id})`,
             messageUserPopup:`Task deleted`,
-            payload:taskDeleted,
+            payload:task,
             finalAction:"/tasks/delete"
         })
     }catch(error){

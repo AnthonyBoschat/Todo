@@ -114,6 +114,8 @@ router.post("/connect", async(request, response) => {
     }
 })
 
+//////////////////////////////////////////////////////////////////////////////////////
+// Deconnecte un utilisateur
 router.get("/disconnect", async(request, response) => {
     response.cookie("session_token", '', {expires:new Date(0), path:"/"})
     response.status(200).json({
@@ -124,6 +126,8 @@ router.get("/disconnect", async(request, response) => {
     })
 })
 
+//////////////////////////////////////////////////////////////////////////////////////
+// Reconnecte un utilisateur
 router.get("/reconnect", authenticationMiddleware, async(request,response) => {
     const {userID} = request.token
     try{
@@ -145,6 +149,31 @@ router.get("/reconnect", authenticationMiddleware, async(request,response) => {
             message:`Echec lors de la reconnection de l'utilisateur ${userID}`,
             payload:error.message,
             errorAction:"/user/reconnect"
+        })
+    }
+})
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Récupère toute les datas de l'utilisateur
+router.get("/getAllData", authenticationMiddleware, async(request, response) => {
+    const {userID} = request.token
+    try{
+        const user = await User.findOne({_id: userID})
+        const userFoldersList = await Folder.find({userID:userID})
+        const userTasksList = await Task.find({userID:userID})
+        response.status(201).json({
+            messageDebugConsole:`Récupération des données de l'utilisateur réussi \n\n ${JSON.stringify(user, null, 2)}`,
+            messageDebugPopup:"Récupération des données de l'utilisateur réussi",
+            payload:{
+                userFoldersList:userFoldersList,
+                userTasksList:userTasksList,
+            },
+            finalAction:"loadAllDatas"
+        })
+    }catch(error){
+        response.status(400).json({
+            messageDebugConsole:`Echec lors de la récupération des données de l'utilisateur ${userID}`,
+            messageDebugPopup:`Echec récupération données utilisateur (${userID})`,
         })
     }
 })

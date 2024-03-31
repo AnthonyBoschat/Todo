@@ -1,41 +1,43 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_folderSelectedID, update_folderSelectedName } from "../Components/Folder/FolderSlice";
-import { update_loadTasksList } from "../Components/Task/TaskSlice";
-import useBackend from "../Utils/useBackend";
+import { update_folderSelectedName } from "../Components/Folder/FolderSlice";
 import useMongoDB from "./useMongoDB";
 
 
 export default function useUpdate(){
 
-    const allFoldersLoad = useSelector(store => store.folder.allFoldersLoad)
+    const allDatasLoad = useSelector(store => store.user.allDatasLoad)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const foldersList = useSelector(store => store.folder.foldersList)
+    const userFoldersList = useSelector(store => store.user.datas.userFoldersList)
+    const userTasksList = useSelector(store => store.user.datas.userTasksList)
     const userID = useSelector(store => store.connection.connectedUser._id)
 
     const dispatch = useDispatch()
-    const {mongoDB_getTask, mongoDB_getFolder} = useMongoDB()
+    const {mongoDB_getAllData} = useMongoDB()
 
-    // Après la connection, va récupérer la list de tout les dossiers de l'utilisateur connecter
+    // Après la connection, va récupérer toutes les datas de l'utilisateur
     useEffect(() => {
-        if(!allFoldersLoad && userID){
-            mongoDB_getFolder()
+        if(!allDatasLoad && userID){
+            mongoDB_getAllData()
         }
     }, [userID])
 
-    // Récupération automatique des tasks correspondant au dossier
-    useEffect(() => {
-        if(folderSelectedID){
-            mongoDB_getTask()
-        }
-    }, [folderSelectedID])
 
-    // Update automatique du folderSelectedName dans redux quand l'id selected change
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Change les datas à afficher quand l'utilisateur le dossier selectionner changer
     useEffect(() => {
         if(folderSelectedID){
-            const folderIndex = foldersList.findIndex(folder => folder._id === folderSelectedID)
-            const folderName = foldersList[folderIndex].name
+            const folderIndex = userFoldersList.findIndex(folder => folder._id === folderSelectedID)
+            const folderName = userFoldersList[folderIndex].name
             dispatch(update_folderSelectedName(folderName))
+
+            // On met à jour la liste des tâches à afficher
+            const allTasksToShow = []
+            userTasksList.map(task => {
+                if(task.folderID === folderSelectedID){
+                    allTasksToShow.push(task)
+                }
+            })
         }else{
             dispatch(update_folderSelectedName(null))
         }
