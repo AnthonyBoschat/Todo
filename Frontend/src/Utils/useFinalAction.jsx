@@ -1,27 +1,26 @@
-import React, {} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { update_folderSelectedID, update_folderSelectedName } from "../Components/Folder/FolderSlice";
 import { update_closeConnection, update_connected, update_connectedUser } from "../Components/Connection/ConnectionSlice";
 import { update_loadAllDatas, update_allDatasLoad, update_dataList, update_addData, update_deleteData, update_changeData, update_DELETE_ALL_DATAS } from "../Components/User/UserSlice";
+import useSideEffect from "./useSideEffect";
+import useDictionnary from "./useDictionnary";
 
 export default function useFinalAction(){
 
-    const userFoldersList = useSelector(store => store.user.datas.userFoldersList)
-    const userTasksList = useSelector(store => store.user.datas.userTasksList)
     const dispatch = useDispatch()
+    const {startSideEffect} = useSideEffect()
+    const {dataListDictionary} = useDictionnary()
 
-    const finalAction = (route, payload) => {
+    const finalAction = (payload) => {
         let dataIndex
-        switch(route){
-
-
+        switch(payload.finalAction){
             // Pour connecter un utilisateur
             case "connectUser":
                 dispatch(update_connected(true))
                 dispatch(update_connectedUser({
-                    name:payload.userName,
-                    _id:payload._id
+                    name:payload.data.userName,
+                    _id:payload.data._id
                 }))
                 break
                 
@@ -34,85 +33,59 @@ export default function useFinalAction(){
                 dispatch(update_closeConnection())
                 break
 
+            // Récupère toutes les données de l'utilisateur
             case "loadAllDatas":
-                const newUserFoldersList = payload.userFoldersList
-                const newUserTasksList = payload.userTasksList
-                dispatch(update_loadAllDatas({userFoldersList:newUserFoldersList, userTasksList:newUserTasksList}))
+                const {userFoldersList, userTasksList} = payload.data
+                dispatch(update_loadAllDatas({userFoldersList, userTasksList}))
                 dispatch(update_allDatasLoad(true))
                 break
 
-
-
-
-
-
-
-
-
-            case "/folder/create":
-                dispatch(update_addData({listName:"userFoldersList", newData:payload}))
-                dispatch(update_folderSelectedID(payload._id))
+            // Ajoute une donnée
+            case "createData":
+                dispatch(update_addData({listName:payload.target, newData:payload.data}))
+                if(payload.sideEffect){
+                    startSideEffect(payload.sideEffect, payload.data)
+                }
                 break
 
-            case "/folder/delete":
-                dataIndex = userFoldersList.findIndex(folder => folder._id === payload._id)
-                dispatch(update_deleteData({listName:"userFoldersList", dataIndex:dataIndex}))
-                dispatch(update_folderSelectedID(null))
+            // Supprime une donnée
+            case "deleteData":
+                dataIndex = dataListDictionary[payload.target].findIndex(item => item._id === payload.data._id)
+                dispatch(update_deleteData({listName:payload.target, dataIndex:dataIndex}))
+                if(payload.sideEffect){
+                    startSideEffect(payload.sideEffect, payload.data)
+                }
                 break
 
-            case "/folder/rename":
-                dataIndex = userFoldersList.findIndex(folder => folder._id === payload._id)
-                dispatch(update_changeData({listName:"userFoldersList", dataIndex:dataIndex, newData:payload}))
-                dispatch(update_folderSelectedName(payload.name))
+            // Modifie une ou plusieurs données
+            case "changeData":
+                if(Array.isArray(payload.data)){
+                    payload.data.forEach(data => {
+                        dataIndex = dataListDictionary[payload.target].findIndex(item => item._id === data._id)
+                        dispatch(update_changeData({listName:payload.target, dataIndex:dataIndex, newData:data}))
+                    })
+                }else{
+                    dataIndex = dataListDictionary[payload.target].findIndex(item => item._id === payload.data._id)
+                    dispatch(update_changeData({listName:payload.target, dataIndex:dataIndex, newData:payload.data}))
+                }
+                if(payload.sideEffect){
+                    startSideEffect(payload.sideEffect, payload.data[0])
+                }
                 break
 
+
+
+
+
+
+
+            // Detruits tout les dossiers
             case "/folder/DELETE_ALL_FOLDERS":
                 dispatch(update_DELETE_ALL_DATAS())
                 dispatch(update_folderSelectedID(null))
                 break
 
-
-
-
-
-
-
-
-
-
-                
-
-
-
-            case "/tasks/create":
-                dispatch(update_addData({listName:"userTasksList", newData:payload}))
-                break
-
-            case "/tasks/delete":
-                dataIndex = userTasksList.findIndex(task => task._id === payload._id)
-                dispatch(update_deleteData({listName:"userTasksList", dataIndex:dataIndex}))
-                break
-            
-            case "/tasks/rename":
-                dataIndex = userTasksList.findIndex(task => task._id === payload._id)
-                dispatch(update_changeData({listName:"userTasksList", dataIndex:dataIndex, newData:payload}))
-                break
-
-
-            case "/tasks/toggleCompleted":
-                dataIndex = userTasksList.findIndex(task => task._id === payload._id)
-                dispatch(update_changeData({listName:"userTasksList", dataIndex:dataIndex, newData:payload}))
-                break
-
-            case "/tasks/toggleOnWorking":
-                dataIndex = userTasksList.findIndex(task => task._id === payload.updatedTask._id)
-                dispatch(update_changeData({listName:"userTasksList", dataIndex:dataIndex, newData:payload.updatedTask}))
-                if(payload.resetTask){
-                    dataIndex = userTasksList.findIndex(task => task._id === payload.resetTask._id)
-                    dispatch(update_changeData({listName:"userTasksList", dataIndex:dataIndex, newData:payload.resetTask}))
-                }
-                break
-
+            // Détuits toutes les tâches
             case "/tasks/DELETE_ALL_TASKS":
                 dispatch(update_dataList({listName:"userTasksList", newList:[]}))
                 break

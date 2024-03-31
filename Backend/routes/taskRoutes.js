@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Task = require("../models/task")
-const authenticationMiddleware = require("../middleware/authentication")
+const authenticationMiddleware = require("../middleware/authentication");
+const payload_constructor = require("../Library/payload_constructor")
+const library_finalAction = require ("../Library/finalAction")
 
 // middleware pour parser le JSON
 router.use(express.json())
@@ -54,8 +56,11 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         response.status(200).json({
             messageDebugConsole:`La tâche a été correctement sauvegarder \n\n ${JSON.stringify(newTask, null, 2)}`,
             messageDebugPopup:`Tâche sauvegarder`,
-            payload:newTask,
-            finalAction:"/tasks/create"
+            payload:payload_constructor({
+                finalAction:library_finalAction.createData,
+                target:"tasks",
+                data:newTask
+            })
         })
     }catch(error){
         response.status(400).json({
@@ -80,8 +85,17 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
             messageDebugConsole:`La tâche a correctement été supprimer \n\n ${JSON.stringify(task, null, 2)}`,
             messageDebugPopup:`Tâche supprimer (${task._id})`,
             messageUserPopup:`Task deleted`,
-            payload:task,
-            finalAction:"/tasks/delete"
+            payload:payload_constructor({
+                finalAction:library_finalAction.deleteData,
+                target:"tasks",
+                data:task
+            })
+            // finalAction:finalAction.deleteData.action,
+            // payload:{
+            //     data:task,
+            //     listName:finalAction.deleteData.target.task,
+            //     sideEffect:finalAction.deleteData.sideEffect.task
+            // },
         })
     }catch(error){
         response.status(400).json({
@@ -110,8 +124,11 @@ router.put("/toggleCompleted/:taskID", authenticationMiddleware, async (request,
         response.status(200).json({
             messageDebugConsole:`Le toggle completed de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Toggle completed modifier",
-            payload:updatedTask,
-            finalAction:"/tasks/toggleCompleted"
+            payload:payload_constructor({
+                finalAction:library_finalAction.changeData,
+                target:"tasks",
+                data:updatedTask
+            }),
         });
     }catch(error){
         response.status(400).json({
@@ -142,18 +159,15 @@ router.put("/toggleOnWorking/:taskID", authenticationMiddleware, async(request, 
         if(!updatedTask){
             throw Error()
         }
-        // const payload = {
-        //     resetTask:resetTask,
-        //     updatedTask:updatedTask
-        // }
+
         response.status(200).json({
             messageDebugConsole:`Le toggle onWorking de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Toggle onWorking modifier",
-            payload:{
-                resetTask:resetTask,
-                updatedTask:updatedTask
-            },
-            finalAction:"/tasks/toggleOnWorking",
+            payload:payload_constructor({
+                finalAction:library_finalAction.changeData,
+                target:"tasks",
+                data:[updatedTask, resetTask]
+            }),
         })
     }catch(error){
         response.status(400).json({
@@ -182,8 +196,11 @@ router.put("/rename/:taskID", authenticationMiddleware, async (request, response
             messageDebugConsole:`La tâche a vu son "content" correctement mis à jour \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Contenu de la tâche mise à jour",
             messageUserPopup:"Task updated",
-            payload:updatedTask,
-            finalAction:"/tasks/rename"
+            payload:payload_constructor({
+                finalAction:library_finalAction.changeData,
+                target:"tasks",
+                data:updatedTask
+            }),
         })
     }catch(error){
         response.status(400).json({

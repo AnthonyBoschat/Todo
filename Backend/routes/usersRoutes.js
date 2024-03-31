@@ -5,8 +5,9 @@ const jwt = require("jsonwebtoken")
 const User = require("../models/user")
 const Task = require("../models/task")
 const Folder = require("../models/folder")
-const finalAction = require("../finalAction/finalAction")
+const library_finalAction = require("../Library/finalAction")
 const authenticationMiddleware = require("../middleware/authentication")
+const payload_constructor = require("../Library/payload_constructor")
 
 // middleware pour parser le JSON
 router.use(express.json())
@@ -53,8 +54,12 @@ router.post("/create", async(request, response) => {
                 messageDebugConsole: `Utilisateur enregistré : ${JSON.stringify(savedUser, null, 2)}`,
                 messageDebugPopup:`Utilisateur enregistrer (${savedUser.userName})`,
                 messageUserPopup:`Registration successful`,
-                payload:savedUser,
-                finalAction:finalAction.connectUser
+                payload:payload_constructor({
+                    finalAction:library_finalAction.connectUser,
+                    data:savedUser
+                })
+                // payload:savedUser,
+                // finalAction:finalAction.connectUser
             })  
         }
     }catch(error){
@@ -99,8 +104,12 @@ router.post("/connect", async(request, response) => {
                     messageDebugConsole:`Utilisateur connecté \n\n ${JSON.stringify(user, null, 2)}`,
                     messageDebugPopup:`Utilisateur connecté (${user.userName})`,
                     messageUserPopup:`Connection successful`,
-                    payload:user,
-                    finalAction:finalAction.connectUser
+                    payload:payload_constructor({
+                        finalAction:library_finalAction.connectUser,
+                        data:user
+                    })
+                    // payload:user,
+                    // finalAction:finalAction.connectUser
                 })
             }
         }
@@ -122,7 +131,10 @@ router.get("/disconnect", async(request, response) => {
         messageDebugConsole:"Deconnexion réussie",
         messageDebugPopup:"Deconnexion réussie",
         messageUserPopup:"You have been disconnected",
-        finalAction:finalAction.disconnectUser
+        payload:payload_constructor("disconnectUser", null, null),
+        payload:payload_constructor({
+            finalAction:library_finalAction.disconnectUser,
+        })
     })
 })
 
@@ -141,8 +153,10 @@ router.get("/reconnect", authenticationMiddleware, async(request,response) => {
             messageDebugConsole:`Reconnection réussi \n\n ${JSON.stringify(user, null, 2)}`,
             messageDebugPopup:`Reconnection réussi (${user.userName})`,
             messageUserPopup:"Connection successful",
-            payload:user,
-            finalAction:finalAction.connectUser
+            payload:payload_constructor({
+                finalAction:library_finalAction.connectUser,
+                data:user
+            })
         })
     }catch(error){
         response.status(400).json({
@@ -164,11 +178,10 @@ router.get("/getAllData", authenticationMiddleware, async(request, response) => 
         response.status(201).json({
             messageDebugConsole:`Récupération des données de l'utilisateur réussi \n\n ${JSON.stringify(user, null, 2)}`,
             messageDebugPopup:"Récupération des données de l'utilisateur réussi",
-            payload:{
-                userFoldersList:userFoldersList,
-                userTasksList:userTasksList,
-            },
-            finalAction:"loadAllDatas"
+            payload:payload_constructor({
+                finalAction:library_finalAction.loadAllDatas,
+                data:{userFoldersList, userTasksList}
+            })
         })
     }catch(error){
         response.status(400).json({
@@ -201,7 +214,7 @@ router.delete("/DELETE_ALL_USERS", async(request, response) => {
         response.status(200).json({
             messageDebugConsole:`Base de donnée correctement vidée \n\nUtilisateur supprimer : ${userDeleted.deletedCount}\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${tasksDeleted.deletedCount}`,
             messageDebugPopup:"Base de donnée correctement vidée",
-            finalAction:finalAction.disconnectUser
+            payload:payload_constructor("disconnectUser", null, null),
         })
     }catch(error){
         response.status(400).json({
@@ -225,7 +238,7 @@ router.delete("/DELETE_THIS_USER/:userID", async(request, response) => {
             messageDebugConsole:`Suppression de l'utilisateur terminer :\n\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${tasksDeleted.deletedCount}`,
             messageDebugPopup:`Utilisateur correctement supprimer (ID : ${userID})`,
             messageUserPopup:`Your account has been successfully deleted`,
-            finalAction:finalAction.disconnectUser
+            payload:payload_constructor("disconnectUser", null, null),
         })
     }catch(error){
         response.status(400).json({

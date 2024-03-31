@@ -2,7 +2,9 @@ const express = require("express")
 const router = express.Router()
 const Folder = require("../models/folder")
 const Task = require("../models/task")
+const library_finalAction = require("../Library/finalAction")
 const authenticationMiddleware = require("../middleware/authentication")
+const payload_contructor = require("../Library/payload_constructor")
 
 router.use(express.json())
 
@@ -45,8 +47,11 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
             messageDebugConsole:`Le dossier a été enregistrer \n\n ${JSON.stringify(folder, null, 2)}`,
             messageDebugPopup:`Dossier enregistrer (${folder.name})`,
             messageUserPopup:`Folder created`,
-            payload:folder,
-            finalAction:"/folder/create",
+            payload:payload_contructor({
+                finalAction:library_finalAction.createData,
+                target:"folders",
+                data:folder
+            })
         })
     }catch(error){
         response.status(400).json({
@@ -86,8 +91,11 @@ ${JSON.stringify(folder, null, 2)}
 ${listDeletedTask}`,
             messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedTask.deletedCount}`,
             messageUserPopup:`Folder deleted`,
-            payload:folder,
-            finalAction:"/folder/delete"
+            payload:payload_contructor({
+                finalAction:library_finalAction.deleteData,
+                target:"folders",
+                data:folder
+            }),
         })
     }catch(error){
         response.status(400).json({
@@ -117,8 +125,11 @@ router.put("/rename/:folderID", authenticationMiddleware, async (request, respon
             messageDebugConsole:`Le dossier a bien été renommer \n\n ${JSON.stringify(updatedFolder, null, 2)}`, 
             messageDebugPopup:`Dossier renommer (${updatedFolder.name})`,
             messageUserPopup:`Folder renamed`,
-            payload:updatedFolder,
-            finalAction:"/folder/rename"
+            payload:payload_contructor({
+                finalAction:library_finalAction.changeData,
+                target:"folders",
+                data:updatedFolder
+            }),
         })
     }catch(error){
         response.status(400).json({

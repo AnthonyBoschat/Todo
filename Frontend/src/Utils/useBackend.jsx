@@ -36,7 +36,7 @@ export default function useBackend(){
                 if(data.messageUserPopup)(popup({message:data.messageUserPopup, color:"good"}))
                 if(debugConsole){console.log(data.messageDebugConsole)}
                 if(debugPopup){popup({message:data.messageDebugPopup,color:"debug"})}
-                if(data.finalAction){finalAction(data.finalAction, data.payload)}
+                if(data.payload.finalAction){finalAction(data.payload)}
                 if(request.finaly){request.finaly()}
             }
         })
