@@ -8,9 +8,9 @@ export default function useSideEffect(){
     const dispatch = useDispatch()
 
     const library_sideEffect = {
-        deleteData_folders:() => {dispatch(update_folderSelectedID(null))},
-        createData_folders:(data) => {dispatch(update_folderSelectedID(data._id))},
-        changeData_folders:(data) => {dispatch(update_folderSelectedName(data.name))}
+        createFolder:(data) => {dispatch(update_folderSelectedID(data._id))},
+        deleteFolder:() => {dispatch(update_folderSelectedID(null))},
+        changeFolderName:(data) => {dispatch(update_folderSelectedName(data.name))}
     }
 
 

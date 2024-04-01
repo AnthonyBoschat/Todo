@@ -2,48 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Task = require("../models/task")
 const authenticationMiddleware = require("../middleware/authentication");
-const payload_constructor = require("../Library/payload_constructor")
-const library_finalAction = require ("../Library/finalAction")
+const library_finalAction = require ("../Library/finalAction");
+const library_target = require("../Library/target");
 
 // middleware pour parser le JSON
 router.use(express.json())
 
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-// ROUTES
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////////////////////////////////////////
-// Récupère les tasks d'un dossier
-router.get("/getAll/:folderID", authenticationMiddleware, async (request, response) => {
-    const {userID} = request.token
-    try{
-        const folderID = request.params.folderID
-        const allTasks = await Task.find({folderID:folderID, userID:userID})
-        response.status(200).json({
-            messageDebugConsole:`Toutes les tâches du dossier  "${folderID}" ont été récupérer avec succès`,
-            messageDebugPopup:`Lise des tâches récupérer`,
-            payload:allTasks,
-            finalAction:"/tasks/getAll"
-        })
-    }catch(error){
-        response.status(400).json({
-            messageDebugConsole:`Echec de la récupération des tâches du dossier ${folderID}`,
-            messageDebugPopup:`Echec récupération des tâches du dossier ${folderID}`,
-        })
-    }
-})
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Ajoute une tâche
@@ -56,11 +20,11 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         response.status(200).json({
             messageDebugConsole:`La tâche a été correctement sauvegarder \n\n ${JSON.stringify(newTask, null, 2)}`,
             messageDebugPopup:`Tâche sauvegarder`,
-            payload:payload_constructor({
+            payload:{
                 finalAction:library_finalAction.createData,
-                target:"tasks",
+                target:library_target.tasks,
                 data:newTask
-            })
+            }
         })
     }catch(error){
         response.status(400).json({
@@ -85,15 +49,15 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
             messageDebugConsole:`La tâche a correctement été supprimer \n\n ${JSON.stringify(task, null, 2)}`,
             messageDebugPopup:`Tâche supprimer (${task._id})`,
             messageUserPopup:`Task deleted`,
-            // payload:payload_constructor({
-            //     finalAction:library_finalAction.deleteData,
-            //     target:"tasks",
-            //     data:task
-            // })
             payload:{
-                finalAction:"task/delete",
+                finalAction:library_finalAction.deleteData,
+                target:library_target.tasks,
                 data:task
             }
+            // payload:{
+            //     finalAction:"task/delete",
+            //     data:task
+            // }
         })
     }catch(error){
         response.status(400).json({
@@ -122,11 +86,11 @@ router.put("/toggleCompleted/:taskID", authenticationMiddleware, async (request,
         response.status(200).json({
             messageDebugConsole:`Le toggle completed de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Toggle completed modifier",
-            payload:payload_constructor({
+            payload:{
                 finalAction:library_finalAction.changeData,
-                target:"tasks",
+                target:library_target.tasks,
                 data:updatedTask
-            }),
+            },
         });
     }catch(error){
         response.status(400).json({
@@ -161,11 +125,11 @@ router.put("/toggleOnWorking/:taskID", authenticationMiddleware, async(request, 
         response.status(200).json({
             messageDebugConsole:`Le toggle onWorking de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Toggle onWorking modifier",
-            payload:payload_constructor({
+            payload:{
                 finalAction:library_finalAction.changeData,
-                target:"tasks",
+                target:library_target.tasks,
                 data:[updatedTask, resetTask]
-            }),
+            },
         })
     }catch(error){
         response.status(400).json({
@@ -194,11 +158,11 @@ router.put("/rename/:taskID", authenticationMiddleware, async (request, response
             messageDebugConsole:`La tâche a vu son "content" correctement mis à jour \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Contenu de la tâche mise à jour",
             messageUserPopup:"Task updated",
-            payload:payload_constructor({
+            payload:{
                 finalAction:library_finalAction.changeData,
-                target:"tasks",
+                target:library_target.tasks,
                 data:updatedTask
-            }),
+            },
         })
     }catch(error){
         response.status(400).json({
@@ -226,11 +190,11 @@ router.delete("/DELETE_ALL_TASKS/:folderID", authenticationMiddleware, async (re
         response.status(200).json({
             messageDebugConsole:`Toutes les tâches ont été supprimés \n\n ${JSON.stringify(allTasks, null, 2)}`,
             messageDebugPopup:`Toutes les tâches ont été supprimer (${deletedTasks.deletedCount})`,
-            payload:payload_constructor({
+            payload:{
                 finalAction:library_finalAction.DEVTOOLS_DELETE_ALL_TASKS,
-                target:"tasks",
+                target:library_target.tasks,
                 data:allTasksUpdate,
-            })
+            }
         })
     }catch(error){response.status(400).json({
         messageDebugConsole:`Echec lors de la suppression des tasks du dossier \n\n ${folderID}`,
