@@ -180,7 +180,7 @@ router.get("/getAllData", authenticationMiddleware, async(request, response) => 
             messageDebugPopup:"Récupération des données de l'utilisateur réussi",
             payload:payload_constructor({
                 finalAction:library_finalAction.loadAllDatas,
-                data:{userFoldersList, userTasksList}
+                data:{newUserFoldersList:userFoldersList, newUserTasksList:userTasksList}
             })
         })
     }catch(error){

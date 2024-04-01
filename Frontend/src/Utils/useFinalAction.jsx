@@ -8,12 +8,15 @@ import useDictionnary from "./useDictionnary";
 
 export default function useFinalAction(){
 
+    const userTasksList = useSelector(store => store.user.datas.userTasksList)
+    const userFoldersList = useSelector(store => store.user.datas.userFoldersList)
     const dispatch = useDispatch()
     const {startSideEffect} = useSideEffect()
     const {dataListDictionary} = useDictionnary()
 
     const finalAction = (payload) => {
         let dataIndex
+
         switch(payload.finalAction){
             // Pour connecter un utilisateur
             case "connectUser":
@@ -26,8 +29,8 @@ export default function useFinalAction(){
                 
             // Pour déconnecter un utilisateur
             case "disconnectUser":
-                dispatch(update_dataList({listName:"userFoldersList", newList:null}))
-                dispatch(update_dataList({listName:"userTasksList", newList:null}))
+                dispatch(update_dataList({listName:"userFoldersList", newList:[]}))
+                dispatch(update_dataList({listName:"userTasksList", newList:[]}))
                 dispatch(update_folderSelectedID(null))
                 dispatch(update_allDatasLoad(false))
                 dispatch(update_closeConnection())
@@ -35,8 +38,8 @@ export default function useFinalAction(){
 
             // Récupère toutes les données de l'utilisateur
             case "loadAllDatas":
-                const {userFoldersList, userTasksList} = payload.data
-                dispatch(update_loadAllDatas({userFoldersList, userTasksList}))
+                const {newUserFoldersList, newUserTasksList} = payload.data
+                dispatch(update_loadAllDatas({newUserFoldersList, newUserTasksList}))
                 dispatch(update_allDatasLoad(true))
                 break
 
@@ -48,32 +51,49 @@ export default function useFinalAction(){
                 }
                 break
 
-            // Supprime une donnée
-            case "deleteData":
-                dataIndex = dataListDictionary[payload.target].findIndex(item => item._id === payload.data._id)
-                dispatch(update_deleteData({listName:payload.target, dataIndex:dataIndex}))
-                if(payload.sideEffect){
-                    startSideEffect(payload.sideEffect, payload.data)
-                }
-                break
-
-            // Modifie une ou plusieurs données
-            case "changeData":
-                if(Array.isArray(payload.data)){
-                    payload.data.forEach(data => {
-                        dataIndex = dataListDictionary[payload.target].findIndex(item => item._id === data._id)
-                        dispatch(update_changeData({listName:payload.target, dataIndex:dataIndex, newData:data}))
-                    })
-                }else{
+                
+                // Modifie une ou plusieurs données
+                case "changeData":
+                    if(Array.isArray(payload.data)){
+                        payload.data.forEach(data => {
+                            dataIndex = dataListDictionary[payload.target].findIndex(item => item._id === data._id)
+                            dispatch(update_changeData({listName:payload.target, dataIndex:dataIndex, newData:data}))
+                        })
+                    }else{
+                        dataIndex = dataListDictionary[payload.target].findIndex(item => item._id === payload.data._id)
+                        dispatch(update_changeData({listName:payload.target, dataIndex:dataIndex, newData:payload.data}))
+                    }
+                    if(payload.sideEffect){
+                        startSideEffect(payload.sideEffect, payload.data[0])
+                    }
+                    break
+                    
+                    
+                    
+                    
+                // Supprime une donnée
+                case "deleteData":
                     dataIndex = dataListDictionary[payload.target].findIndex(item => item._id === payload.data._id)
-                    dispatch(update_changeData({listName:payload.target, dataIndex:dataIndex, newData:payload.data}))
-                }
-                if(payload.sideEffect){
-                    startSideEffect(payload.sideEffect, payload.data[0])
-                }
+                    dispatch(update_deleteData({listName:payload.target, dataIndex:dataIndex}))
+                    if(payload.sideEffect){
+                        startSideEffect(payload.sideEffect, payload.data)
+                    }
+                    break
+
+
+
+
+
+            case "folder/delete":
+                const folderIndex = userFoldersList.findIndex(folder => folder._id === payload.data._id)
+                dispatch(update_deleteData({listName:"userFoldersList", dataIndex:folderIndex}))
+                dispatch(update_folderSelectedID(null))
                 break
 
-
+            case "task/delete":
+                const taskIndex = userTasksList.findIndex(task => task._id === payload.data._id)
+                dispatch(update_deleteData({listName:"userTasksList", dataIndex:taskIndex}))
+                break
 
 
 
@@ -90,18 +110,6 @@ export default function useFinalAction(){
             case "DEVTOOLS_DELETE_ALL_TASKS":
                 dispatch(update_dataList({listName:payload.target, newList:payload.data}))
                 break
-
-
-            // // Detruits tout les dossiers
-            // case "/folder/DELETE_ALL_FOLDERS":
-            //     dispatch(update_DELETE_ALL_DATAS())
-            //     dispatch(update_folderSelectedID(null))
-            //     break
-
-            // // Détuits toutes les tâches
-            // case "/tasks/DELETE_ALL_TASKS":
-            //     dispatch(update_dataList({listName:"userTasksList", newList:[]}))
-            //     break
 
             default:
                 return

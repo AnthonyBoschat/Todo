@@ -12,8 +12,8 @@ const UserSlice = createSlice({
     reducers:{
         update_loadAllDatas:(state,action) => {
             const newDatas = {
-                userFoldersList:action.payload.userFoldersList,
-                userTasksList:action.payload.userTasksList,
+                userFoldersList:action.payload.newUserFoldersList,
+                userTasksList:action.payload.newUserTasksList,
             }
             state.datas = newDatas
         },

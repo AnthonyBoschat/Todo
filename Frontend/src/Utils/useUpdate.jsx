@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_folderSelectedName } from "../Components/Folder/FolderSlice";
+import { update_folderSelectedID, update_folderSelectedName } from "../Components/Folder/FolderSlice";
 import useMongoDB from "./useMongoDB";
+import { update_allDatasLoad } from "../Components/User/UserSlice";
 
 
 export default function useUpdate(){
@@ -23,21 +24,14 @@ export default function useUpdate(){
     }, [userID])
 
 
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Change les datas à afficher quand l'utilisateur le dossier selectionner changer
+    // Responsable de la mise à jour automatique de l'état folderSelectedName
     useEffect(() => {
         if(folderSelectedID){
             const folderIndex = userFoldersList.findIndex(folder => folder._id === folderSelectedID)
             const folderName = userFoldersList[folderIndex].name
             dispatch(update_folderSelectedName(folderName))
-
-            // On met à jour la liste des tâches à afficher
-            const allTasksToShow = []
-            userTasksList.map(task => {
-                if(task.folderID === folderSelectedID){
-                    allTasksToShow.push(task)
-                }
-            })
         }else{
             dispatch(update_folderSelectedName(null))
         }

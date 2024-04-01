@@ -85,17 +85,15 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
             messageDebugConsole:`La tâche a correctement été supprimer \n\n ${JSON.stringify(task, null, 2)}`,
             messageDebugPopup:`Tâche supprimer (${task._id})`,
             messageUserPopup:`Task deleted`,
-            payload:payload_constructor({
-                finalAction:library_finalAction.deleteData,
-                target:"tasks",
+            // payload:payload_constructor({
+            //     finalAction:library_finalAction.deleteData,
+            //     target:"tasks",
+            //     data:task
+            // })
+            payload:{
+                finalAction:"task/delete",
                 data:task
-            })
-            // finalAction:finalAction.deleteData.action,
-            // payload:{
-            //     data:task,
-            //     listName:finalAction.deleteData.target.task,
-            //     sideEffect:finalAction.deleteData.sideEffect.task
-            // },
+            }
         })
     }catch(error){
         response.status(400).json({

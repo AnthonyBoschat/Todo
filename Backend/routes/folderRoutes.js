@@ -91,11 +91,15 @@ ${JSON.stringify(folder, null, 2)}
 ${listDeletedTask}`,
             messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedTask.deletedCount}`,
             messageUserPopup:`Folder deleted`,
-            payload:payload_contructor({
-                finalAction:library_finalAction.deleteData,
-                target:"folders",
+            // payload:payload_contructor({
+            //     finalAction:library_finalAction.deleteData,
+            //     target:"folders",
+            //     data:folder
+            // }),
+            payload:{
+                finalAction:"folder/delete",
                 data:folder
-            }),
+            }
         })
     }catch(error){
         response.status(400).json({
