@@ -44,7 +44,7 @@ export default function useTask_One(task){
             setTimeout(async() => {
                 await mongoDB_toggleCompletedTask(taskID, newValueTaskCompleted)
                 toggleCoverRef.current.classList.remove("coverReturn")
-            }, 250);
+            }, 100);
         }
         if(newValueTaskCompleted){
             mongoDB_toggleCompletedTask(taskID, newValueTaskCompleted)

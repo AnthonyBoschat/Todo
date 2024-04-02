@@ -22,11 +22,15 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
             messageDebugConsole:`Le dossier a été enregistrer \n\n ${JSON.stringify(folder, null, 2)}`,
             messageDebugPopup:`Dossier enregistrer (${folder.name})`,
             messageUserPopup:`Folder created`,
+            // payload:{
+            //     finalAction:library_finalAction.createData,
+            //     target:library_target.folders,
+            //     sideEffect:library_sideEffect.createFolder,
+            //     data:folder,
+            // }
             payload:{
-                finalAction:library_finalAction.createData,
-                target:library_target.folders,
-                sideEffect:library_sideEffect.createFolder,
-                data:folder,
+                finalAction:"folder/create",
+                data:folder
             }
         })
     }catch(error){
@@ -36,6 +40,25 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         })
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime un dossier
@@ -67,16 +90,16 @@ ${JSON.stringify(folder, null, 2)}
 ${listDeletedTask}`,
             messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedTask.deletedCount}`,
             messageUserPopup:`Folder deleted`,
-            payload:{
-                finalAction:library_finalAction.deleteData,
-                target:library_target.folders,
-                sideEffect:library_sideEffect.deleteFolder,
-                data:folder
-            },
             // payload:{
-            //     finalAction:"folder/delete",
+            //     finalAction:library_finalAction.deleteData,
+            //     target:library_target.folders,
+            //     sideEffect:library_sideEffect.deleteFolder,
             //     data:folder
-            // }
+            // },
+            payload:{
+                finalAction:"folder/delete",
+                data:folder
+            }
         })
     }catch(error){
         response.status(400).json({
@@ -85,6 +108,31 @@ ${listDeletedTask}`,
         })
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Modifie le nom d'un dossier
@@ -106,12 +154,16 @@ router.put("/rename/:folderID", authenticationMiddleware, async (request, respon
             messageDebugConsole:`Le dossier a bien été renommer \n\n ${JSON.stringify(updatedFolder, null, 2)}`, 
             messageDebugPopup:`Dossier renommer (${updatedFolder.name})`,
             messageUserPopup:`Folder renamed`,
+            // payload:{
+            //     finalAction:library_finalAction.changeData,
+            //     target:library_target.folders,
+            //     sideEffect:library_sideEffect.changeFolderName,
+            //     data:updatedFolder
+            // },
             payload:{
-                finalAction:library_finalAction.changeData,
-                target:library_target.folders,
-                sideEffect:library_sideEffect.changeFolderName,
+                finalAction:"folder/update",
                 data:updatedFolder
-            },
+            }
         })
     }catch(error){
         response.status(400).json({
@@ -140,8 +192,11 @@ router.delete("/DELETE_ALL_FOLDERS/:userID", async (request, response) => {
         response.status(200).json({
             messageDebugConsole:`Tout les dossier et toutes les tâches ont été supprimer \n\nDossier : ${foldersDeleted.deletedCount}\nTâches : ${tasksDeleted.deletedCount} `,
             messageDebugPopup:`Tout les dossier et toutes les tâches supprimer`,
+            // payload:{
+            //     finalAction:library_finalAction.DEVTOOLS_DELETE_ALL_FOLDERS
+            // }
             payload:{
-                finalAction:library_finalAction.DEVTOOLS_DELETE_ALL_FOLDERS
+                finalAction:"DEVTOOL/DELETE_ALL_FOLDERS"
             }
         })
     }catch(error){

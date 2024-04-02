@@ -4,6 +4,7 @@ const Task = require("../models/task")
 const authenticationMiddleware = require("../middleware/authentication");
 const library_finalAction = require ("../Library/finalAction");
 const library_target = require("../Library/target");
+const library_sideEffect = require("../Library/sideEffect");
 
 // middleware pour parser le JSON
 router.use(express.json())
@@ -20,9 +21,14 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         response.status(200).json({
             messageDebugConsole:`La tâche a été correctement sauvegarder \n\n ${JSON.stringify(newTask, null, 2)}`,
             messageDebugPopup:`Tâche sauvegarder`,
+            // payload:{
+            //     finalAction:library_finalAction.createData,
+            //     target:library_target.tasks,
+            //     sideEffect:library_sideEffect.createTask,
+            //     data:newTask
+            // }
             payload:{
-                finalAction:library_finalAction.createData,
-                target:library_target.tasks,
+                finalAction:"task/create",
                 data:newTask
             }
         })
@@ -33,6 +39,7 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         });
     }
 });
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime une task
@@ -49,15 +56,15 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
             messageDebugConsole:`La tâche a correctement été supprimer \n\n ${JSON.stringify(task, null, 2)}`,
             messageDebugPopup:`Tâche supprimer (${task._id})`,
             messageUserPopup:`Task deleted`,
-            payload:{
-                finalAction:library_finalAction.deleteData,
-                target:library_target.tasks,
-                data:task
-            }
             // payload:{
-            //     finalAction:"task/delete",
+            //     finalAction:library_finalAction.deleteData,
+            //     target:library_target.tasks,
             //     data:task
             // }
+            payload:{
+                finalAction:"task/delete",
+                data:task
+            }
         })
     }catch(error){
         response.status(400).json({
@@ -66,6 +73,8 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
         })
     }
 })
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -86,11 +95,15 @@ router.put("/toggleCompleted/:taskID", authenticationMiddleware, async (request,
         response.status(200).json({
             messageDebugConsole:`Le toggle completed de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Toggle completed modifier",
+            // payload:{
+            //     finalAction:library_finalAction.changeData,
+            //     target:library_target.tasks,
+            //     data:updatedTask
+            // },
             payload:{
-                finalAction:library_finalAction.changeData,
-                target:library_target.tasks,
+                finalAction:"task/update",
                 data:updatedTask
-            },
+            }
         });
     }catch(error){
         response.status(400).json({
@@ -125,11 +138,15 @@ router.put("/toggleOnWorking/:taskID", authenticationMiddleware, async(request, 
         response.status(200).json({
             messageDebugConsole:`Le toggle onWorking de la tâche a correctement été modifier \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Toggle onWorking modifier",
+            // payload:{
+            //     finalAction:library_finalAction.changeData,
+            //     target:library_target.tasks,
+            //     data:[updatedTask, resetTask]
+            // },
             payload:{
-                finalAction:library_finalAction.changeData,
-                target:library_target.tasks,
+                finalAction:"task/update",
                 data:[updatedTask, resetTask]
-            },
+            }
         })
     }catch(error){
         response.status(400).json({
@@ -158,11 +175,15 @@ router.put("/rename/:taskID", authenticationMiddleware, async (request, response
             messageDebugConsole:`La tâche a vu son "content" correctement mis à jour \n\n ${JSON.stringify(updatedTask, null, 2)}`,
             messageDebugPopup:"Contenu de la tâche mise à jour",
             messageUserPopup:"Task updated",
+            // payload:{
+            //     finalAction:library_finalAction.changeData,
+            //     target:library_target.tasks,
+            //     data:updatedTask
+            // },
             payload:{
-                finalAction:library_finalAction.changeData,
-                target:library_target.tasks,
+                finalAction:"task/update",
                 data:updatedTask
-            },
+            }
         })
     }catch(error){
         response.status(400).json({
@@ -190,9 +211,13 @@ router.delete("/DELETE_ALL_TASKS/:folderID", authenticationMiddleware, async (re
         response.status(200).json({
             messageDebugConsole:`Toutes les tâches ont été supprimés \n\n ${JSON.stringify(allTasks, null, 2)}`,
             messageDebugPopup:`Toutes les tâches ont été supprimer (${deletedTasks.deletedCount})`,
+            // payload:{
+            //     finalAction:library_finalAction.DEVTOOLS_DELETE_ALL_TASKS,
+            //     target:library_target.tasks,
+            //     data:allTasksUpdate,
+            // }
             payload:{
-                finalAction:library_finalAction.DEVTOOLS_DELETE_ALL_TASKS,
-                target:library_target.tasks,
+                finalAction:"DEVTOOL/DELETE_ALL_TASKS",
                 data:allTasksUpdate,
             }
         })

@@ -29,19 +29,18 @@ export default function useTask_Creation(){
         if(taskCreationRef.current.innerHTML !== ""){
             saveNewTask()
         }
-        dispatch(update_taskOnCreation(false))
-    }, [taskOnCreation])
+    }, [])
 
 
     // Validation de la task par le click en dehors, si le nom est rempli au moin
-    const handleValidTaskKeydown = useCallback((event) => {
+    const handleValidTaskKeydown = useCallback( async(event) => {
         if(event.key === "Enter"){
             if(!event.shiftKey){
+                event.preventDefault()
                 saveNewTask()
-                dispatch(update_taskOnCreation(false))
             }
         }
-    }, [taskOnCreation])
+    }, [])
 
     
     // Quand une nouvelle task souhaite etre créé, on met le focus dessus
