@@ -7,30 +7,34 @@ import useMongoDB from "./Utils/useMongoDB";
 import Connection from "./Components/Connection/Connection";
 import Popup from "./Components/Popup/Popup";
 import { useEffect, useState } from "react";
-import useUpdate from "./Utils/useUpdate";
 
 function App() {
 
-  
-  const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
   const connected = useSelector(store => store.connection.connected)
-  const popupHidden = useSelector(store => store.popup.hidden)
-  const {mongoDB_reconnectUser} = useMongoDB()
-
+  const userID = useSelector(store => store.connection.connectedUser._id)
+  const allDatasLoad = useSelector(store => store.user.allDatasLoad)
+  const {mongoDB_reconnectUser, mongoDB_getAllData} = useMongoDB()
   const [reconnectionControle, setReconnectionControle] = useState(false)
 
-  // Responsable de toutes les mises à jours redux automatique
-  useUpdate()
-
+  console.log("APP")
   // Tentative de reconnection par le cookie
   useEffect(() => {
-
+    // Hein ?
+    // console.log("1")
     (async () => {
       await mongoDB_reconnectUser()
       setReconnectionControle(true)
     })()
-
   }, [])
+
+  // Après la connection, va récupérer toutes les datas de l'utilisateur
+  useEffect(() => {
+      
+    if(!allDatasLoad && userID){
+        
+          mongoDB_getAllData()
+      }
+  }, [userID])
 
   
 
@@ -39,9 +43,9 @@ function App() {
     <>
       {reconnectionControle && (
         <div className="app">
-          {!popupHidden && <Popup/>}
+          <Popup/>
           
-          {(!connected && !folderSelectedID) && (<Connection/>)}
+          {!connected && (<Connection/>)}
 
           {connected && (
             <>

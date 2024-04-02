@@ -1,13 +1,8 @@
-import { useSelector } from "react-redux";
 import useBackend from "./useBackend";
-import { update_folderOnCreation } from "../Components/Folder/FolderSlice";
-import { useDispatch } from "react-redux";
 
 // Toute modificaiton du localStorage passe par ce hook
 export default function useMongoDB(){
 
-    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const userID = useSelector(store => store.connection.connectedUser._id)
     const {fetchRequest} = useBackend()
 
 
@@ -100,7 +95,7 @@ export default function useMongoDB(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Supprime un dossier
 
-    const mongoDB_deleteFolder = () => {
+    const mongoDB_deleteFolder = (folderSelectedID) => {
         fetchRequest("DELETE", {
             route:`/folders/delete/${folderSelectedID}`,
         })
@@ -109,16 +104,9 @@ export default function useMongoDB(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Renomme un dossier
 
-    const mongoDB_renameFolder = (newFolderName) => {
+    const mongoDB_renameFolder = (newFolderName, folderSelectedID) => {
         fetchRequest("PUT", {
             route:`/folders/rename/${folderSelectedID}`,
-            body:{newFolderName},
-        })
-    }
-
-    const mongoDB_getFolder = (newFolderName) => {
-        fetchRequest("GET", {
-            route:`/folders/getAll/${userID}`,
             body:{newFolderName},
         })
     }
@@ -195,23 +183,14 @@ export default function useMongoDB(){
         
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Récupère les tâches
-    const mongoDB_getTask = () => {
-        fetchRequest("GET", {
-            route:`/tasks/getAll/${folderSelectedID}`,
-        })
-    }
     
 
     return{
         mongoDB_saveNewFolder,
         mongoDB_deleteFolder,
         mongoDB_renameFolder,
-        mongoDB_getFolder,
 
         mongoDB_toggleCompletedTask,
-        mongoDB_getTask,
         mongoDB_saveNewTask,
         mongoDB_deleteTask,
         mongoDB_renameTask,

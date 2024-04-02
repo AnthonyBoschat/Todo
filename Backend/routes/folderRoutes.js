@@ -161,7 +161,7 @@ router.put("/rename/:folderID", authenticationMiddleware, async (request, respon
             //     data:updatedFolder
             // },
             payload:{
-                finalAction:"folder/update",
+                finalAction:"folder/rename",
                 data:updatedFolder
             }
         })

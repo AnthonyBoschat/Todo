@@ -7,8 +7,8 @@ import usePopup from "../../Popup/usePopup";
 export default function useHeaderTask(){
 
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
-    const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
+    const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
     const {mongoDB_renameFolder, mongoDB_deleteFolder} = useMongoDB()
     const {popup} = usePopup()
 
@@ -18,6 +18,13 @@ export default function useHeaderTask(){
     // Responsable de si oui ou non, on laisse l'input folderName etre accessible
     const [folderInputDisabled, setFolderInputDisabled] = useState(true)
     const [folderName, setFolderName] = useState(null)
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Reponsable du premier chargement du nom du dossier dans l'input
+    useEffect(() => {
+        if(folderSelectedName){
+            setFolderName(folderSelectedName)
+        }
+    }, [folderSelectedName])
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +48,7 @@ export default function useHeaderTask(){
     const deleteFolder = () => {
         const userValidDelete = window.confirm(`Are you sure, delete ${folderSelectedName} ?`)
         if(userValidDelete){
-            mongoDB_deleteFolder()
+            mongoDB_deleteFolder(folderSelectedID)
         }
     }
 
@@ -80,13 +87,7 @@ export default function useHeaderTask(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Reponsable du premier chargement du nom du dossier dans l'input
-    useEffect(() => {
-        if(folderSelectedName){
-            setFolderName(folderSelectedName)
-        }
-    }, [folderSelectedName])
+    
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +109,7 @@ export default function useHeaderTask(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        mongoDB_renameFolder(newFolderName)
+                        mongoDB_renameFolder(newFolderName, folderSelectedID)
                         setFolderInputDisabled(true)
                     }
                 }
@@ -125,7 +126,7 @@ export default function useHeaderTask(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        mongoDB_renameFolder(newFolderName)
+                        mongoDB_renameFolder(newFolderName, folderSelectedID)
                         setFolderInputDisabled(true)
                     }
                 }

@@ -146,9 +146,10 @@ export default function useFinalAction(){
                 dispatch(update_folderSelectedID(null))
                 break
 
-            case "folder/update":
+            case "folder/rename":
                 dataIndex = userFoldersList.findIndex(folder => folder._id === payload.data._id)
                 dispatch(update_changeData({listName:"userFoldersList", dataIndex:dataIndex, newData:payload.data}))
+                dispatch(update_folderSelectedName(payload.data.name))
                 break
 
 
