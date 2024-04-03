@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Button_Folder from "../Button/Button_Folder";
-import Creation_Folder from "../Creation/Creation_Folder";
+import Button_Folder from "../Button/Folder_Button";
+import Creation_Folder from "../Creation/Folder_Creation";
 
-export default function List_Folder(){
+export default function Folder_List(){
 
     const userFoldersList = useSelector(store => store.user.datas.userFoldersList)
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)

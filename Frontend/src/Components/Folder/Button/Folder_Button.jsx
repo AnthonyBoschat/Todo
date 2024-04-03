@@ -1,7 +1,7 @@
 import React from "react";
-import useFolder_Button from "./useButton_Folder";
+import useFolder_Button from "./useFolder_Button";
 
-export default function Button_Folder({folder}){
+export default function Folder_Button({folder}){
     
     const {
         folderSelectedID,

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import useMongoDB from "../../../Utils/useMongoDB";
 import usePopup from "../../Popup/usePopup";
 
-export default function useIndicator_Folder(){
+export default function useFolder_Indicator(){
 
     const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)

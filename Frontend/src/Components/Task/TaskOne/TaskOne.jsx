@@ -1,7 +1,7 @@
 import React from "react";
-import useTask_One from "./useOne_Task";
+import useTask_One from "./useTaskOne";
 
-export default function One_Task({task, folderIndex}){
+export default function TaskOne({task, folderIndex}){
 
     const {
         taskRef,

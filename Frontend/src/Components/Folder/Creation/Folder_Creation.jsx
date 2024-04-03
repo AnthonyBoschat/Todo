@@ -1,7 +1,7 @@
 import React from "react";
-import useFolder_Creation from "./useCreation_Folder";
+import useFolder_Creation from "./useFolder_Creation";
 
-export default function Creation_Folder(){
+export default function Folder_Creation(){
 
     const {inputRef} = useFolder_Creation()
 

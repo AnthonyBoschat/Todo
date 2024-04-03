@@ -1,9 +1,9 @@
 import React from "react";
-import useTask_List from "./useList_Task";
-import Creation_Task from "../Creation/Creation_Task";
-import One_Task from "../One_Task/One_Task";
+import useTask_List from "./useTask_List";
+import Creation_Task from "../Creation/Task_Creation";
+import One_Task from "../TaskOne/TaskOne";
 
-export default function List_Task(){
+export default function Task_List(){
 
     const {
         taskOnCreation,

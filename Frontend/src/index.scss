@@ -23,16 +23,16 @@
 
 @use "Components/User/User.scss";
 
-@use "Components/Folder/Add/Add_Folder.scss";
-@use "Components/Folder/List/List_Folder.scss";
-@use "Components/Folder/Creation/Creation_Folder.scss";
-@use "Components/Folder/Button/Button_Folder.scss";
-@use "Components/Folder/Indicator/Indicator_Folder.scss";
+@use "Components/Folder/Add/Folder_Add.scss";
+@use "Components/Folder/List/Folder_List.scss";
+@use "Components/Folder/Creation/Folder_Creation.scss";
+@use "Components/Folder/Button/Folder_Button.scss";
+@use "Components/Folder/Indicator/Folder_Indicator.scss";
 
-@use "Components/Task/Add/Add_Task.scss";
-@use "Components/Task/List/List_Task.scss";
-@use "Components/Task/Creation/Creation_Task.scss";
-@use "Components/Task/One_Task/One_Task.scss";
+@use "Components/Task/Add/Task_Add.scss";
+@use "Components/Task/List/Task_List.scss";
+@use "Components/Task/Creation/Task_Creation.scss";
+@use "Components/Task/TaskOne/TaskOne.scss";
 
 
 @use "Components/DevTools/DevTools.scss";

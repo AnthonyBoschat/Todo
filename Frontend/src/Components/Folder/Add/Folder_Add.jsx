@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { update_folderOnCreation } from "../FolderSlice";
 
-export default function Add_Folder(){
+export default function Folder_Add(){
 
     const dispatch = useDispatch()
 

@@ -1,8 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import useIndicator_Folder from "./useIndicator_Folder";
+import useFolder_Indicator from "./useFolder_Indicator";
 
-export default function Indicator_Folder(){
+export default function Folder_Indicator(){
 
     const {
         folderInputRef,
@@ -12,7 +11,7 @@ export default function Indicator_Folder(){
         handleChangeInputFolder,
         lockUnlockFolder,
         deleteFolder
-    } = useIndicator_Folder()
+    } = useFolder_Indicator()
 
     return(
         <>

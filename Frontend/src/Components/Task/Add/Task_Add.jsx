@@ -1,9 +1,9 @@
 import React from "react";
-import useAdd_Task from "./useAdd_Task";
+import useTask_Add from "./useTask_Add";
 
-export default function Add_Task(){
+export default function Task_Add(){
 
-    const {addTask} = useAdd_Task()
+    const {addTask} = useTask_Add()
 
     return(
         <div onClick={addTask} className="addTask_Box">

@@ -1,6 +1,6 @@
 import React from "react";
-import Add_Folder from "../../Components/Folder/Add/Add_Folder";
-import List_Folder from "../../Components/Folder/List/List_Folder";
+import Add_Folder from "../../Components/Folder/Add/Folder_Add";
+import List_Folder from "../../Components/Folder/List/Folder_List";
 import User from "../../Components/User/User";
 import { useSelector } from "react-redux";
 

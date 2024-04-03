@@ -1,4 +1,3 @@
-import React, {} from "react";
 import { useDispatch } from "react-redux"
 import { update_folderSelectedID, update_folderSelectedName } from "../Components/Folder/FolderSlice"
 import { update_taskOnCreation } from "../Components/Task/TaskSlice";
