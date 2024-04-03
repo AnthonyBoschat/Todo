@@ -1,5 +1,5 @@
 import React, {} from "react";
-import useBackend from "../../Utils/useBackend";
+import useFetchRequest from "../../Utils/useFetchRequest";
 import { useDispatch } from "react-redux";
 import { update_folderOnCreation, update_folderSelectedID, update_folderSelectedName } from "./FolderSlice";
 import { update_addData, update_changeData, update_deleteData } from "../User/UserSlice";
@@ -9,7 +9,7 @@ export default function useFolder_Request(){
 
     const userFoldersList = useSelector(store => store.user.datas.userFoldersList)
     const dispatch = useDispatch()
-    const {fetchRequest} = useBackend()
+    const {fetchRequest} = useFetchRequest()
 
     const folderRequest_Create = async (newFolder) => {
         try{

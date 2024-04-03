@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_allFoldersLoad, update_folderSelectedID, update_loadFoldersList} from "../Folder/FolderSlice";
-import { update_addTask, update_loadTasksList } from "../Task/TaskSlice";
-import useBackend from "../../Utils/useBackend";
-import { update_closeConnection, update_connected } from "../Connection/ConnectionSlice";
+import useFetchRequest from "../../Utils/useFetchRequest";
+import { update_connected } from "../Connection/ConnectionSlice";
 import { update_debugConsole, update_debugPopup } from "./DevToolsSlice";
 import usePopup from "../Popup/usePopup";
+import useDevtoolsRequest from "./DevtoolsRequest";
+import useTask_Request from "../Task/TaskRequest";
 
 export default function DevTools(){
     
@@ -15,8 +15,18 @@ export default function DevTools(){
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const connected = useSelector(store => store.connection.connected)
     const userID = useSelector(store => store.connection.connectedUser._id)
-    const {fetchRequest} = useBackend()
-    const {popup} = usePopup()
+    
+    const {
+        devtoolsRequest_DELETE_ALL_TASKS,
+        devtoolsRequest_DELETE_ALL_FOLDERS,
+        devtoolsRequest_DELETE_ALL_USERS,
+        devtoolsRequest_DELETE_THIS_USER
+    } = useDevtoolsRequest()
+
+    const {
+        taskRequest_Create
+    } = useTask_Request()
+
     const [taskForceNumber, setTaskForceNumber] = useState(1)
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,9 +42,7 @@ export default function DevTools(){
     const deleteFolders = () => {
         const confirmation = window.confirm("Supprimer TOUT les DOSSIERS de cette utilisateur ?")
         if(confirmation){
-            fetchRequest("DELETE", {
-                route:`/folders/DELETE_ALL_FOLDERS/${userID}`,
-            })
+            devtoolsRequest_DELETE_ALL_FOLDERS(userID)
         }
     }
 
@@ -43,10 +51,7 @@ export default function DevTools(){
     const deleteTask = () => {
         const confirmation = window.confirm("Supprimer TOUTES les TACHES ?")
         if(confirmation){
-            fetchRequest("DELETE", {
-                route:`/tasks/DELETE_ALL_TASKS/${folderSelectedID}`,
-                finaly: () => setTaskForceNumber(1)
-            })
+            devtoolsRequest_DELETE_ALL_TASKS(folderSelectedID)
         }
     }
 
@@ -58,29 +63,21 @@ export default function DevTools(){
             folderID:folderSelectedID,
             userID:userID
         }
-
-        fetchRequest("POST", {
-            route:"/tasks/create",
-            body:taskForce,
-            finaly:() => {setTaskForceNumber(current => current + 1)}
-        })
+        taskRequest_Create(taskForce)
+        setTaskForceNumber(current => current + 1)
     }
 
     const deleteAllUsers = () => {
         const confirmation = window.confirm("Supprimer TOUT les UTILISATEURS ?")
         if(confirmation){
-            fetchRequest("DELETE", {
-                route:"/users/DELETE_ALL_USERS"
-            })
+            devtoolsRequest_DELETE_ALL_USERS()
         }
     }
 
     const deleteThisUser = () => {
         const confirmation = window.confirm("Supprimer CET UTILISATEUR ?")
         if(confirmation){
-            fetchRequest("DELETE", {
-                route:`/users/DELETE_THIS_USER/${userID}`
-            })
+            devtoolsRequest_DELETE_THIS_USER(userID)
         }
         
     }

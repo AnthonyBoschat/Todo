@@ -1,17 +1,16 @@
-import React, {} from "react";
 import { useDispatch } from "react-redux";
 import { update_addData, update_changeData, update_deleteData } from "../User/UserSlice";
 import { update_taskOnCreation } from "./TaskSlice";
-import useBackend from "../../Utils/useBackend";
+import useFetchRequest from "../../Utils/useFetchRequest";
 import { useSelector } from "react-redux";
 
 export default function useTask_Request(){
 
     const userTasksList = useSelector(store => store.user.datas.userTasksList)
     const dispatch = useDispatch()
-    const {fetchRequest} = useBackend()
+    const {fetchRequest} = useFetchRequest()
 
-    const taskRequest_Create = async (newTask) => {
+    const taskRequest_Create = async(newTask) => {
         try{
             const {ok, data} = await fetchRequest("POST", {
                 route: "/task/create",
@@ -57,7 +56,7 @@ export default function useTask_Request(){
                 dispatch(update_changeData({listName:"userTasksList", dataIndex:dataIndex, newData:data}))
             }
         }catch(error) {
-            console.error("Une erreur est survenue lors de la suppression de la task:", error)
+            console.error("Une erreur est survenue lors de la modification du toggle completed:", error)
         }
     }
 
@@ -79,7 +78,7 @@ export default function useTask_Request(){
                 })
             }
         }catch(error) {
-            console.error("Une erreur est survenue lors de la suppression de la task:", error)
+            console.error("Une erreur est survenue lors de la modification du toggle onWorking:", error)
         }
     }
 
@@ -99,7 +98,7 @@ export default function useTask_Request(){
                    
             }
         }catch(error) {
-            console.error("Une erreur est survenue lors de la suppression de la task:", error)
+            console.error("Une erreur est survenue lors du renommage de la task:", error)
         }
     }
 

@@ -1,11 +1,10 @@
 import React, { useRef } from "react";
-import useMongoDB from "../../Utils/useMongoDB";
-import { useSelector } from "react-redux";
+import useUser_Request from "../User/UserRequest";
 
 export default function useConnection(){
 
-    
-    const { mongoDB_saveNewUser, mongoDB_connectUser } = useMongoDB()
+
+    const {userRequest_Create, userRequest_Connect} = useUser_Request()
 
     const usernameInputRef = useRef()
     const passwordInputRef = useRef()
@@ -19,7 +18,7 @@ export default function useConnection(){
             userName:usernameInputRef.current.value,
             userPassword:passwordInputRef.current.value
         }
-        mongoDB_connectUser(user)
+        userRequest_Connect(user)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +32,7 @@ export default function useConnection(){
                 userName:usernameInputRef.current.value,
                 userPassword:passwordInputRef.current.value
             }
-            mongoDB_saveNewUser(newUser) // Enregistrement de l'utilisateur
+            userRequest_Create(newUser) // Enregistrement de l'utilisateur
         }
     }
 

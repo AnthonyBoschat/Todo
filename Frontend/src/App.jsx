@@ -3,36 +3,32 @@ import DevTools from "./Components/DevTools/DevTools";
 import Pannel from "./View/Pannel/Pannel";
 import Corp from "./View/Corp/Corp";
 import "./Css/main.css"
-import useMongoDB from "./Utils/useMongoDB";
 import Connection from "./Components/Connection/Connection";
 import Popup from "./Components/Popup/Popup";
 import { useEffect, useState } from "react";
+import useUser_Request from "./Components/User/UserRequest";
 
 function App() {
 
   const connected = useSelector(store => store.connection.connected)
   const userID = useSelector(store => store.connection.connectedUser._id)
   const allDatasLoad = useSelector(store => store.user.allDatasLoad)
-  const {mongoDB_reconnectUser, mongoDB_getAllData} = useMongoDB()
   const [reconnectionControle, setReconnectionControle] = useState(false)
+  const {userRequest_Reconnect, userRequest_LoadDatas} = useUser_Request()
 
   
   // Tentative de reconnection par le cookie
   useEffect(() => {
-    // Hein ?
-    // console.log("1")
     (async () => {
-      await mongoDB_reconnectUser()
+      await userRequest_Reconnect()
       setReconnectionControle(true)
     })()
   }, [])
 
   // Après la connection, va récupérer toutes les datas de l'utilisateur
   useEffect(() => {
-      
     if(!allDatasLoad && userID){
-        
-          mongoDB_getAllData()
+        userRequest_LoadDatas()
       }
   }, [userID])
 

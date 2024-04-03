@@ -175,10 +175,11 @@ router.delete("/DELETE_ALL_TASKS/:folderID", authenticationMiddleware, async (re
             //     target:library_target.tasks,
             //     data:allTasksUpdate,
             // }
-            payload:{
-                finalAction:"DEVTOOL/DELETE_ALL_TASKS",
-                data:allTasksUpdate,
-            }
+            payload:allTasksUpdate
+            // payload:{
+            //     finalAction:"DEVTOOL/DELETE_ALL_TASKS",
+            //     data:allTasksUpdate,
+            // }
         })
     }catch(error){response.status(400).json({
         messageDebugConsole:`Echec lors de la suppression des tasks du dossier \n\n ${folderID}`,

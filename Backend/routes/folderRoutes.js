@@ -144,9 +144,7 @@ router.delete("/DELETE_ALL_FOLDERS/:userID", async (request, response) => {
             // payload:{
             //     finalAction:library_finalAction.DEVTOOLS_DELETE_ALL_FOLDERS
             // }
-            payload:{
-                finalAction:"DEVTOOL/DELETE_ALL_FOLDERS"
-            }
+            payload:"DELETE_ALL_FOLDERS"
         })
     }catch(error){
         response.status(400).json({

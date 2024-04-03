@@ -1,13 +1,11 @@
 import {useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_taskOnEdition } from "../TaskSlice";
-import useMongoDB from "../../../Utils/useMongoDB";
 import useTask_Request from "../TaskRequest";
 
 export default function useTask_One(task){
 
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
-    const tasksList = useSelector(store => store.task.tasksList)
     const [taskEditable, setTaskEditable] = useState(false)
     const {
         taskRequest_Delete, 

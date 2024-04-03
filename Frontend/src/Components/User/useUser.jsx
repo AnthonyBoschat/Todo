@@ -1,17 +1,17 @@
 import { useDispatch } from "react-redux";
 import {update_onDisconnection } from "../Connection/ConnectionSlice";
-import useMongoDB from "../../Utils/useMongoDB";
+import useUser_Request from "./UserRequest";
 
 export default function useUser(){
 
     const dispatch = useDispatch()
-    const {mongoDB_disconnectUser} = useMongoDB()
+    const {userRequest_Disconnect} = useUser_Request()
 
     const handleClickDisconnection = () => {
         dispatch(update_onDisconnection(true))
         
         setTimeout(() => {
-            mongoDB_disconnectUser()
+            userRequest_Disconnect()
         }, 350);
     }
 
