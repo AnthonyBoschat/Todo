@@ -37,8 +37,8 @@ mongoose.connect(databaseURL, { useNewUrlParser: true, useUnifiedTopology: true 
 
 
 // Utilisation des routes
-app.use("/tasks", taskRoutes)
-app.use("/folders", folderRoutes)
+app.use("/task", taskRoutes)
+app.use("/folder", folderRoutes)
 app.use("/users", usersRoutes)
 
 

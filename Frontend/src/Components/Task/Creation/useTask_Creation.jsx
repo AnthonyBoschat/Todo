@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useMongoDB from "../../../Utils/useMongoDB";
+import useTask_Request from "../TaskRequest";
 
 export default function useTask_Creation(){
 
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     
-    const {mongoDB_saveNewTask} = useMongoDB()
+    const {taskRequest_Create} = useTask_Request()
     const dispatch = useDispatch()
     const taskCreationRef = useRef()
 
@@ -20,7 +21,7 @@ export default function useTask_Creation(){
             completed:false,
             folderID:folderSelectedID
         }
-        mongoDB_saveNewTask(newTask)
+        taskRequest_Create(newTask)
     }
 
     // Validation de la task par le click en dehors, si le nom est rempli au moin

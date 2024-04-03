@@ -22,16 +22,7 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
             messageDebugConsole:`Le dossier a été enregistrer \n\n ${JSON.stringify(folder, null, 2)}`,
             messageDebugPopup:`Dossier enregistrer (${folder.name})`,
             messageUserPopup:`Folder created`,
-            // payload:{
-            //     finalAction:library_finalAction.createData,
-            //     target:library_target.folders,
-            //     sideEffect:library_sideEffect.createFolder,
-            //     data:folder,
-            // }
-            payload:{
-                finalAction:"folder/create",
-                data:folder
-            }
+            payload:folder
         })
     }catch(error){
         response.status(400).json({
@@ -90,16 +81,7 @@ ${JSON.stringify(folder, null, 2)}
 ${listDeletedTask}`,
             messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedTask.deletedCount}`,
             messageUserPopup:`Folder deleted`,
-            // payload:{
-            //     finalAction:library_finalAction.deleteData,
-            //     target:library_target.folders,
-            //     sideEffect:library_sideEffect.deleteFolder,
-            //     data:folder
-            // },
-            payload:{
-                finalAction:"folder/delete",
-                data:folder
-            }
+            payload:folder
         })
     }catch(error){
         response.status(400).json({
@@ -108,30 +90,6 @@ ${listDeletedTask}`,
         })
     }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -154,16 +112,7 @@ router.put("/rename/:folderID", authenticationMiddleware, async (request, respon
             messageDebugConsole:`Le dossier a bien été renommer \n\n ${JSON.stringify(updatedFolder, null, 2)}`, 
             messageDebugPopup:`Dossier renommer (${updatedFolder.name})`,
             messageUserPopup:`Folder renamed`,
-            // payload:{
-            //     finalAction:library_finalAction.changeData,
-            //     target:library_target.folders,
-            //     sideEffect:library_sideEffect.changeFolderName,
-            //     data:updatedFolder
-            // },
-            payload:{
-                finalAction:"folder/rename",
-                data:updatedFolder
-            }
+            payload:updatedFolder
         })
     }catch(error){
         response.status(400).json({

@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import useMongoDB from "../../../Utils/useMongoDB";
 import usePopup from "../../Popup/usePopup";
+import useFolder_Request from "../FolderRequest";
 
 export default function useFolder_Indicator(){
 
     const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const folderInputRef = useRef()
-    const {mongoDB_deleteFolder, mongoDB_renameFolder} = useMongoDB()
+    const {folderRequest_Delete, folderRequest_Rename} = useFolder_Request()
     const {popup} = usePopup()
 
     // Responsable de si oui ou non, on laisse l'input folderName etre accessible
@@ -26,7 +26,7 @@ export default function useFolder_Indicator(){
     const deleteFolder = () => {
         const userValidDelete = window.confirm(`Are you sure, delete ${folderSelectedName} ?`)
         if(userValidDelete){
-            mongoDB_deleteFolder(folderSelectedID)
+            folderRequest_Delete(folderSelectedID)
         }
     }
 
@@ -79,7 +79,7 @@ export default function useFolder_Indicator(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        mongoDB_renameFolder(newFolderName, folderSelectedID)
+                        folderRequest_Rename(newFolderName, folderSelectedID)
                         setFolderInputDisabled(true)
                     }
                 }
@@ -96,7 +96,7 @@ export default function useFolder_Indicator(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        mongoDB_renameFolder(newFolderName, folderSelectedID)
+                        folderRequest_Rename(newFolderName, folderSelectedID)
                         setFolderInputDisabled(true)
                     }
                 }

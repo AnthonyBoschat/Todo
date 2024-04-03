@@ -2,13 +2,19 @@ import {useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_taskOnEdition } from "../TaskSlice";
 import useMongoDB from "../../../Utils/useMongoDB";
+import useTask_Request from "../TaskRequest";
 
 export default function useTask_One(task){
 
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
     const tasksList = useSelector(store => store.task.tasksList)
     const [taskEditable, setTaskEditable] = useState(false)
-    const {mongoDB_deleteTask, mongoDB_renameTask, mongoDB_toggleCompletedTask, mongoDB_onWorkingTask} = useMongoDB()
+    const {
+        taskRequest_Delete, 
+        taskRequest_toggleCompleted, 
+        taskRequest_toggleOnWorking,
+        taskRequest_rename
+    } = useTask_Request()
     
     const taskRef = useRef()
     const taskNameRef = useRef()
@@ -20,7 +26,7 @@ export default function useTask_One(task){
     const deleteTask = (taskID) => {
         const confirmation = window.confirm("Delete this task ?")
         if(confirmation){
-            mongoDB_deleteTask(taskID)
+            taskRequest_Delete(taskID)
         }
     }
 
@@ -33,7 +39,7 @@ export default function useTask_One(task){
     // Bouton de validation pour valider l'edit de task
     const valideRenameTask = (taskID) => {
         const newTaskTitle = taskNameRef.current.innerText
-        mongoDB_renameTask(taskID, newTaskTitle)
+        taskRequest_rename(taskID, newTaskTitle)
         setTaskEditable(false)
     }
 
@@ -42,12 +48,12 @@ export default function useTask_One(task){
         if(!newValueTaskCompleted){
             toggleCoverRef.current.classList.add("coverReturn")
             setTimeout(async() => {
-                await mongoDB_toggleCompletedTask(taskID, newValueTaskCompleted)
+                taskRequest_toggleCompleted(taskID, newValueTaskCompleted)
                 toggleCoverRef.current.classList.remove("coverReturn")
             }, 100);
         }
         if(newValueTaskCompleted){
-            mongoDB_toggleCompletedTask(taskID, newValueTaskCompleted)
+            taskRequest_toggleCompleted(taskID, newValueTaskCompleted)
         }
     }
 
@@ -67,12 +73,12 @@ export default function useTask_One(task){
         if(!newValueTaskonWorking){
             toggleCoverRef.current.classList.add("coverReturn")
             setTimeout(async() => {
-                await mongoDB_onWorkingTask(taskID, newValueTaskonWorking)
+                await taskRequest_toggleOnWorking(taskID, newValueTaskonWorking)
                 toggleCoverRef.current.classList.remove("coverReturn")
             }, 250);
         }
         if(newValueTaskonWorking){
-            mongoDB_onWorkingTask(taskID, newValueTaskonWorking)
+            taskRequest_toggleOnWorking(taskID, newValueTaskonWorking)
         }
         
     }

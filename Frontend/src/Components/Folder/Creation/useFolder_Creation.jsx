@@ -2,20 +2,21 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_folderOnCreation } from "../FolderSlice";
 import useMongoDB from "../../../Utils/useMongoDB";
+import useFolder_Request from "../FolderRequest";
 
 export default function useFolder_Creation(){
 
     const inputRef = useRef()
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
     const userID = useSelector(store => store.connection.connectedUser._id)
-    const {mongoDB_saveNewFolder} = useMongoDB()
+    const {folderRequest_Create} = useFolder_Request()
     const dispatch = useDispatch()
 
     // Check la validité du dossier qui souhaite etre enregistrer
-    const saveNewFolder = async() => {
+    const saveNewFolder = () => {
         if(inputRef.current.value !== ""){ // S'il n'a pas un nom vide
             const newFolderName = inputRef.current.value
-            await mongoDB_saveNewFolder({name:newFolderName}) // On l'enregistre dans la base de donnée
+            folderRequest_Create({name:newFolderName}) // On l'enregistre dans la base de donnée
         }
         dispatch(update_folderOnCreation(false)) // Dans tout les cas, on annule le mode creation
     }
