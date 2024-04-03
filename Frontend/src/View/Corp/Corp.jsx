@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Header_Task from "../Task/Header/Task";
-import List_Task from "../Task/List/Task";
+import List_Task from "../../Components/Task/List/List_Task";
+import Header from "../Header/Header";
 
 
-export default function Render(){
+export default function Corp(){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
@@ -17,7 +17,7 @@ export default function Render(){
 
             {folderSelectedID && (
                 <div className="taskRender_Display">
-                    <Header_Task/>
+                    <Header/>
                     <List_Task/>
                 </div>
             )}

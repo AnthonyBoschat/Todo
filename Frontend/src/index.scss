@@ -9,9 +9,13 @@
 
 
 
-@use "Components/Render/Render.scss";
+@use "View/Corp/Corp.scss";
+@use "View/Pannel/Pannel.scss";
+@use "View/Header/Header.scss";
 
-@use "Components/Pannel/Pannel.scss";
+
+
+
 
 @use "Components/Connection/Connection.scss";
 
@@ -19,15 +23,16 @@
 
 @use "Components/User/User.scss";
 
-@use "Components/Folder/Add/Folder.scss" as Add_Folder;
-@use "Components/Folder/Buttons/Folder.scss" as Button_Folder;
-@use "Components/Folder/List/Folder.scss" as List_Folder;
-@use "Components/Folder/Creation/Folder.scss" as Creation_Folder;
+@use "Components/Folder/Add/Add_Folder.scss";
+@use "Components/Folder/List/List_Folder.scss";
+@use "Components/Folder/Creation/Creation_Folder.scss";
+@use "Components/Folder/Button/Button_Folder.scss";
+@use "Components/Folder/Indicator/Indicator_Folder.scss";
 
-@use "Components/Task/Header/Task.scss" as Header_Task;
-@use "Components/Task/List/Task.scss" as List_Task;
-@use "Components/Task/Creation/Task.scss" as Creation_Task;
-@use "Components/Task/Task/Task.scss" as One_Task;
+@use "Components/Task/Add/Add_Task.scss";
+@use "Components/Task/List/List_Task.scss";
+@use "Components/Task/Creation/Creation_Task.scss";
+@use "Components/Task/One_Task/One_Task.scss";
 
 
 @use "Components/DevTools/DevTools.scss";

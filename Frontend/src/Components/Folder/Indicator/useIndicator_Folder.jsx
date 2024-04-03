@@ -1,48 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
-import { update_taskOnCreation } from "../TaskSlice";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import useMongoDB from "../../../Utils/useMongoDB";
-import { useEffect, useRef, useState } from "react";
 import usePopup from "../../Popup/usePopup";
 
-export default function useHeaderTask(){
+export default function useIndicator_Folder(){
 
-    const taskOnCreation = useSelector(store => store.task.taskOnCreation)
-    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
-    const {mongoDB_renameFolder, mongoDB_deleteFolder} = useMongoDB()
-    const {popup} = usePopup()
-
-    const dispatch = useDispatch()
+    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const folderInputRef = useRef()
+    const {mongoDB_deleteFolder, mongoDB_renameFolder} = useMongoDB()
+    const {popup} = usePopup()
 
     // Responsable de si oui ou non, on laisse l'input folderName etre accessible
     const [folderInputDisabled, setFolderInputDisabled] = useState(true)
     const [folderName, setFolderName] = useState(null)
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Reponsable du premier chargement du nom du dossier dans l'input
-    useEffect(() => {
-        if(folderSelectedName){
-            setFolderName(folderSelectedName)
-        }
-    }, [folderSelectedName])
-
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // FONCTION
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Signale qu'on souhaite ajouter une tâche
-    const addTask = () => {
-        dispatch(update_taskOnCreation(!taskOnCreation))
+    // Permet de rendre l'inputFolderName Accessible ou non
+    const lockUnlockFolder = () => {
+        setFolderInputDisabled(!folderInputDisabled)
     }
 
-    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Signale qu'on souhaite supprimer ce dossier
     const deleteFolder = () => {
@@ -53,15 +31,9 @@ export default function useHeaderTask(){
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Permet de rendre l'inputFolderName Accessible ou non
-    const lockUnlockFolder = () => {
-        setFolderInputDisabled(!folderInputDisabled)
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Controle pour verifier que le nom du dossier n'est pas vide
-    const controlFolderNameNotEmpty = (folderName) => {
-        return /\S/.test(folderName)
+    // Quand on modifie le nom du dossier
+    const handleChangeInputFolder = (e) => {
+        setFolderName(e.target.value)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,21 +45,19 @@ export default function useHeaderTask(){
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Quand on modifie le nom du dossier
-    const handleChangeInputFolder = (e) => {
-        setFolderName(e.target.value)
+    // Controle pour verifier que le nom du dossier n'est pas vide
+    const controlFolderNameNotEmpty = (folderName) => {
+        return /\S/.test(folderName)
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Reponsable du premier chargement du nom du dossier dans l'input
+    useEffect(() => {
+        if(folderSelectedName){
+            setFolderName(folderSelectedName)
+        }
+    }, [folderSelectedName])
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // USE EFFECT
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,14 +112,14 @@ export default function useHeaderTask(){
         } 
     }, [folderInputDisabled])
 
+
     return{
-        addTask,
-        deleteFolder,
-        folderSelectedName,
         folderInputRef,
         folderInputDisabled,
-        lockUnlockFolder,
+        folderSelectedName,
         folderName,
-        handleChangeInputFolder
+        handleChangeInputFolder,
+        lockUnlockFolder,
+        deleteFolder
     }
 }

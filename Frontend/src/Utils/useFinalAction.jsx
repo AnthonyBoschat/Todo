@@ -133,11 +133,17 @@ export default function useFinalAction(){
 
 
 
-            // FOLDER
-            case "folder/create":
-                dispatch(update_addData({listName:"userFoldersList", newData:payload.data}))
-                dispatch(update_folderSelectedID(payload.data._id))
-                break
+
+
+
+
+
+
+
+
+
+
+
 
 
             case "folder/delete":
@@ -145,6 +151,47 @@ export default function useFinalAction(){
                 dispatch(update_deleteData({listName:"userFoldersList", dataIndex:dataIndex}))
                 dispatch(update_folderSelectedID(null))
                 break
+
+            case "task/delete":
+                dataIndex = userTasksList.findIndex(folder => folder._id === payload.data._id)
+                dispatch(update_deleteData({listName:"userTasksList", dataIndex:dataIndex}))
+                break
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // FOLDER
+            case "folder/create":
+                dispatch(update_addData({listName:"userFoldersList", newData:payload.data}))
+                dispatch(update_folderSelectedID(payload.data._id))
+                break
+
+
+            
 
             case "folder/rename":
                 dataIndex = userFoldersList.findIndex(folder => folder._id === payload.data._id)
@@ -163,10 +210,7 @@ export default function useFinalAction(){
                 break
 
 
-            case "task/delete":
-                dataIndex = userTasksList.findIndex(folder => folder._id === payload.data._id)
-                dispatch(update_deleteData({listName:"userTasksList", dataIndex:dataIndex}))
-                break
+            
 
             case "task/update":
                 if(Array.isArray(payload.data)){

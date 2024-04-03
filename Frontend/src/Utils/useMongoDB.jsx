@@ -99,6 +99,7 @@ export default function useMongoDB(){
         fetchRequest("DELETE", {
             route:`/folders/delete/${folderSelectedID}`,
         })
+        
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

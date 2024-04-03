@@ -1,7 +1,7 @@
 import React from "react";
-import Add_Folder from "../Folder/Add/Folder";
-import List_Folder from "../Folder/List/Folder";
-import User from "../User/User";
+import Add_Folder from "../../Components/Folder/Add/Add_Folder";
+import List_Folder from "../../Components/Folder/List/List_Folder";
+import User from "../../Components/User/User";
 import { useSelector } from "react-redux";
 
 export default function Pannel(){

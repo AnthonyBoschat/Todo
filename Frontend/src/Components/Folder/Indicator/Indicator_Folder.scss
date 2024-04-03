@@ -1,0 +1,62 @@
+div.folderIndicator_Box{
+    position: absolute;
+    left: 0;
+    // outline: 1px solid white; //
+    color: white;
+    font-size: 2rem;
+    margin-left: 2vw;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: fit-content;
+
+    i.deleteFolder{
+        opacity: 0.6;
+        color: rgb(255, 33, 33);
+        font-size: 1.5rem;
+        transition: opacity 0.1s linear;
+
+        &:hover{
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+
+    i.lockFolder{
+        opacity: 0.6;
+        color: white;
+        font-size: 1.2rem;
+        transition: opacity 0.1s linear;
+
+        &:hover{
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+
+    i.unlockFolder{
+        opacity: 1;
+        color: white;
+        font-size: 1.2rem;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    
+    input{
+        font-size: 1.5rem;
+        padding: 0.2rem;
+        background-color: transparent;
+        border: none;
+        outline: 1px solid rgb(169, 169, 169);
+        border-radius: 10px;
+        padding-left: 0.5rem;
+        color: white;
+
+        &:focus{
+            outline: 1px solid white;
+        }
+    }
+}

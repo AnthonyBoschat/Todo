@@ -1,25 +1,21 @@
 import React from "react";
-import useHeaderTask from "./useTask";
+import { useSelector } from "react-redux";
+import useIndicator_Folder from "./useIndicator_Folder";
 
-export default function Header_Task(){
-
-    
+export default function Indicator_Folder(){
 
     const {
-        addTask, 
-        deleteFolder, 
         folderInputRef,
         folderInputDisabled,
         folderSelectedName,
-        lockUnlockFolder,
         folderName,
-        handleChangeInputFolder
-    } = useHeaderTask()
-    
-    return(
-        
-        <div className="addTask_Display">
+        handleChangeInputFolder,
+        lockUnlockFolder,
+        deleteFolder
+    } = useIndicator_Folder()
 
+    return(
+        <>
             {folderSelectedName && (
                 <div className="folderIndicator_Box">
                     <i onClick={deleteFolder} className="deleteFolder fa-solid fa-trash"></i>
@@ -29,13 +25,6 @@ export default function Header_Task(){
                     {!folderInputDisabled && (<i onClick={lockUnlockFolder} className="unlockFolder fa-solid fa-unlock"></i>)}
                 </div>
             )}
-
-            <div onClick={addTask} className="addTask_Box">
-                <i className="fa-solid fa-plus"></i>
-                <span >Add Task</span>
-            </div>
-
-            
-        </div>
+        </>
     )
 }

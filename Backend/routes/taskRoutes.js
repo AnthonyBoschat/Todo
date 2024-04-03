@@ -41,6 +41,23 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime une task
 router.delete("/delete/:taskID", authenticationMiddleware, async (request, response) => {
@@ -73,6 +90,24 @@ router.delete("/delete/:taskID", authenticationMiddleware, async (request, respo
         })
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

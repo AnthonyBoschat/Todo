@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import DevTools from "./Components/DevTools/DevTools";
-import Pannel from "./Components/Pannel/Pannel";
-import Render from "./Components/Render/Render";
+import Pannel from "./View/Pannel/Pannel";
+import Corp from "./View/Corp/Corp";
 import "./Css/main.css"
 import useMongoDB from "./Utils/useMongoDB";
 import Connection from "./Components/Connection/Connection";
@@ -16,7 +16,7 @@ function App() {
   const {mongoDB_reconnectUser, mongoDB_getAllData} = useMongoDB()
   const [reconnectionControle, setReconnectionControle] = useState(false)
 
-  console.log("APP")
+  
   // Tentative de reconnection par le cookie
   useEffect(() => {
     // Hein ?
@@ -50,7 +50,7 @@ function App() {
           {connected && (
             <>
               <Pannel/>
-              <Render/>
+              <Corp/>
             </>
           )}
 

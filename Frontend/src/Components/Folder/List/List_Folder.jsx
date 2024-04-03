@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Button_Folder from "../Buttons/Folder";
-import Creation_Folder from "../Creation/Folder";
+import Button_Folder from "../Button/Button_Folder";
+import Creation_Folder from "../Creation/Creation_Folder";
 
 export default function List_Folder(){
 

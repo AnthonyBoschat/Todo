@@ -1,7 +1,7 @@
 import React from "react";
-import useTask_List from "./useTask";
-import Creation_Task from "../Creation/Task";
-import One_Task from "../Task/Task";
+import useTask_List from "./useList_Task";
+import Creation_Task from "../Creation/Creation_Task";
+import One_Task from "../One_Task/One_Task";
 
 export default function List_Task(){
 
