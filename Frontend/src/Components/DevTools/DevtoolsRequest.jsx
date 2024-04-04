@@ -16,7 +16,7 @@ export default function useDevtoolsRequest(){
     const devtoolsRequest_DELETE_ALL_TASKS = async(folderSelectedID) => {
         try{
             const {ok, data} = await fetchRequest("DELETE", {
-                route: `/task/DELETE_ALL_TASKS/${folderSelectedID}`
+                route: `/devtool/DELETE_ALL_TASKS/${folderSelectedID}`
             })
             if(ok){
                 dispatch(update_dataList({listName:"userTasksList", newList:data}))
@@ -33,7 +33,7 @@ export default function useDevtoolsRequest(){
     const devtoolsRequest_DELETE_ALL_FOLDERS = async(userID) => {
         try{
             const {ok} = await fetchRequest("DELETE", {
-                route: `/folder/DELETE_ALL_FOLDERS/${userID}`
+                route: `/devtool/DELETE_ALL_FOLDERS/${userID}`
             })
             if(ok){
                 dispatch(update_DELETE_ALL_DATAS())
@@ -51,7 +51,7 @@ export default function useDevtoolsRequest(){
     const devtoolsRequest_DELETE_ALL_USERS = async() => {
         try{
             const {ok} = await fetchRequest("DELETE", {
-                route: `/user/DELETE_ALL_USERS`
+                route: `/devtool/DELETE_ALL_USERS`
             })
             if(ok){
                 dispatch(update_DELETE_ALL_DATAS())
@@ -71,7 +71,7 @@ export default function useDevtoolsRequest(){
     const devtoolsRequest_DELETE_THIS_USER = async(userID) => {
         try{
             const {ok} = await fetchRequest("DELETE", {
-                route: `/user/DELETE_THIS_USER/${userID}`
+                route: `/devtool/DELETE_THIS_USER/${userID}`
             })
             if(ok){
                 dispatch(update_DELETE_ALL_DATAS())

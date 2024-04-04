@@ -36,21 +36,6 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime un dossier
 router.delete("/delete/:folderID", authenticationMiddleware, async (request, response) => {
@@ -92,6 +77,7 @@ ${listDeletedTask}`,
 })
 
 
+
 //////////////////////////////////////////////////////////////////////////////////////
 // Modifie le nom d'un dossier
 router.put("/rename/:folderID", authenticationMiddleware, async (request, response) => {
@@ -121,39 +107,6 @@ router.put("/rename/:folderID", authenticationMiddleware, async (request, respon
         })
     }
 })
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-// DEVTOOLS
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////
-// Supprime tout les dossiers de cette utilisateur
-router.delete("/DELETE_ALL_FOLDERS/:userID", async (request, response) => {
-    const userID = request.params.userID
-    try{
-        const foldersDeleted = await Folder.deleteMany({userID:userID})
-        const tasksDeleted = await Task.deleteMany({userID:userID})
-        response.status(200).json({
-            messageDebugConsole:`Tout les dossier et toutes les tâches ont été supprimer \n\nDossier : ${foldersDeleted.deletedCount}\nTâches : ${tasksDeleted.deletedCount} `,
-            messageDebugPopup:`Tout les dossier et toutes les tâches supprimer`,
-            // payload:{
-            //     finalAction:library_finalAction.DEVTOOLS_DELETE_ALL_FOLDERS
-            // }
-            payload:"DELETE_ALL_FOLDERS"
-        })
-    }catch(error){
-        response.status(400).json({
-            messageDebugConsole:`Echec lors de la suppression de tout les dossier et toutes les tâches de cet utilisateur`,
-            messageDebugPopup:`Echec de la suppression des dossier et des tâches`,
-        })
-    }
-})
-
 
 
 
