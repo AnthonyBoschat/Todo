@@ -8,7 +8,9 @@ const ConnectionSlice = createSlice({
             name:null,
             _id:null
         },
-        onDisconnection:false
+        onDisconnection:false,
+        signInSelected:true,
+        signUpSelected:false
     },
     reducers:{
         update_connected:(state,action) => {
@@ -29,6 +31,16 @@ const ConnectionSlice = createSlice({
         },
         update_onDisconnection:(state,action) => {
             state.onDisconnection = action.payload
+        },
+        update_updateSignSelected:(state,action) => {
+            if(action.payload === "signin"){
+                state.signInSelected = true
+                state.signUpSelected = false
+            }else if(action.payload === "signup"){
+                console.log("here")
+                state.signInSelected = false
+                state.signUpSelected = true
+            }
         }
     },
 })
@@ -38,5 +50,6 @@ export const {
     update_connected,
     update_connectedUser,
     update_closeConnection,
-    update_onDisconnection
+    update_onDisconnection,
+    update_updateSignSelected
 } = ConnectionSlice.actions

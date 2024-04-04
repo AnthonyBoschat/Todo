@@ -1,0 +1,28 @@
+@use "../../Sass/Variable.scss" as v;
+
+div.connection_Display{
+    // background-color: rgba(255, 0, 0, 0.209);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+
+    div.connection_Box{
+        width: 80rem;
+        height: 50rem;
+        // background-color: rgba(0, 191, 255, 0.359); //
+        // outline: 1px solid white; //
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 1px 1fr ;
+
+        div.separator{
+            align-self: center;
+            background-color: v.$blue;
+            opacity: 0.8;
+            height: 80%;
+        }
+    }
+}

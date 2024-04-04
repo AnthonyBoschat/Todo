@@ -7,6 +7,7 @@ import Connection from "./Components/Connection/Connection";
 import Popup from "./Components/Popup/Popup";
 import { useEffect, useState } from "react";
 import useUser_Request from "./Components/User/UserRequest";
+import Connectionview from "./View/Connection/Connectionview";
 
 function App() {
 
@@ -41,7 +42,10 @@ function App() {
         <div className="app">
           <Popup/>
           
-          {!connected && (<Connection/>)}
+          {!connected && (
+            // <Connection/>
+            <Connectionview/>
+          )}
 
           {connected && (
             <>
