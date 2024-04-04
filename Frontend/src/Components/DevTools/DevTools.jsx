@@ -6,6 +6,7 @@ import { update_debugConsole, update_debugPopup } from "./DevToolsSlice";
 import usePopup from "../Popup/usePopup";
 import useDevtoolsRequest from "./DevtoolsRequest";
 import useTask_Request from "../Task/TaskRequest";
+import useUser_Request from "../User/UserRequest";
 
 export default function DevTools(){
     
@@ -22,6 +23,11 @@ export default function DevTools(){
         devtoolsRequest_DELETE_ALL_USERS,
         devtoolsRequest_DELETE_THIS_USER
     } = useDevtoolsRequest()
+
+    const {
+        userRequest_Connect,
+        userRequest_Disconnect,
+    } = useUser_Request()
 
     const {
         taskRequest_Create
@@ -88,7 +94,18 @@ export default function DevTools(){
     // Active ou non les message dans la console ou dans les popups
     const toggleConsoleMessage = () => {dispatch(update_debugConsole(!debugConsole))}
     const togglePopupMessage = () => {dispatch(update_debugPopup(!debugPopup))}
-    const toggleConnected = () => {dispatch(update_connected(!connected))}
+    const toggleConnected = () => {
+        if(!connected){
+            const userAdmin = {
+                userEmail:"anthony.kaos@hotmail.fr",
+                userPassword:"sudo"
+            }
+            userRequest_Connect(userAdmin)
+        }else{
+            userRequest_Disconnect()
+        }
+        // dispatch(update_connected(!connected))
+    }
 
     return(
         <div className="devtools_Box">
@@ -99,7 +116,7 @@ export default function DevTools(){
             <button onClick={addForceTask}>Force une task</button>
             <button onClick={toggleConsoleMessage} style={debugConsole ? {backgroundColor:"white"} : null}>Debug console</button>
             <button onClick={togglePopupMessage} style={debugPopup ? {backgroundColor:"white"} : null}>Debug Popup</button>
-            <button onClick={toggleConnected} style={connected ? {backgroundColor:"white"} : null}>Connected</button>
+            <button onClick={toggleConnected} style={connected ? {backgroundColor:"white"} : null}>Admin Connected</button>
         </div>
     )
 }

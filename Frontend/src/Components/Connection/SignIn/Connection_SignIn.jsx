@@ -5,7 +5,10 @@ export default function Connection_SignIn(){
 
     const {
         signInSelected,
-        handleChangePart
+        handleChangePart,
+        handleConnect,
+        emailInputRef_signIn,
+        passwordInputRef_signIn,
     } = useConnection_SignIn()
 
     return(
@@ -15,19 +18,18 @@ export default function Connection_SignIn(){
                     Sign in
                     <span className={!signInSelected ? "underline underlineOut_signIn" : "underline underlineIn_signIn"}></span>
                 </span>
-                
             </div>
 
-            <form style={!signInSelected ? {pointerEvents:"none"} : null} action="" className={!signInSelected ? "formOpacityOut" : "formOpacityIn"}>
+            <form onSubmit={handleConnect} style={!signInSelected ? {pointerEvents:"none"} : null} action="" className={!signInSelected ? "formOpacityOut" : "formOpacityIn"}>
 
                 <div className="form_section">
-                    <label htmlFor="usernameSignin">Username</label>
-                    <input type="text" id="usernameSignin" />
+                    <label htmlFor="emailSignin">Email</label>
+                    <input ref={emailInputRef_signIn} type="email" id="emailSignin" />
                 </div>
 
                 <div className="form_section">
                     <label htmlFor="passwordSignin">Password</label>
-                    <input type="password" id="passwordSignin" />
+                    <input ref={passwordInputRef_signIn} type="password" id="passwordSignin" />
                     <div className="forgetPassword_Box">
                         password forgot ?
                     </div>

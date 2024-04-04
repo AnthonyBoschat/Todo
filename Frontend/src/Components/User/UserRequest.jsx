@@ -1,6 +1,6 @@
 import React, {} from "react";
 import { useDispatch } from "react-redux";
-import { update_closeConnection, update_connected, update_connectedUser } from "../Connection/ConnectionSlice";
+import { update_closeConnection, update_connected, update_connectedUser, update_updateSignSelected } from "../Connection/ConnectionSlice";
 import useFetchRequest from "../../Utils/useFetchRequest";
 import { update_allDatasLoad, update_dataList, update_loadAllDatas } from "./UserSlice";
 import { update_folderSelectedID } from "../Folder/FolderSlice";
@@ -57,6 +57,7 @@ export default function useUser_Request(){
                 dispatch(update_folderSelectedID(null))
                 dispatch(update_allDatasLoad(false))
                 dispatch(update_closeConnection())
+                dispatch(update_updateSignSelected("signin"))
             }
         }catch(error) {
             console.error("Une erreur est survenue lors de la deconnection de l'utilisateur:", error)

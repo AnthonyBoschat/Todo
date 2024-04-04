@@ -5,7 +5,13 @@ export default function Connection_SignUp(){
 
     const {
         signUpSelected,
-        handleChangePart
+        handleChangePart,
+        emailInputRef_signUp,
+        usernameInputRef_signUp,
+        passwordInputRef_signUp,
+        passwordConfirmInputRef_signUp,
+        handleInscription,
+        resetValidity
     } = useConnection_SignUp()
 
     return(
@@ -18,31 +24,31 @@ export default function Connection_SignUp(){
                 </span>
             </div>
 
-            <form style={!signUpSelected ? {pointerEvents:"none"} : null} action="" className={!signUpSelected ? "formOpacityOut" : "formOpacityIn"}>
+            <form onSubmit={handleInscription} style={!signUpSelected ? {pointerEvents:"none"} : null} action="" className={!signUpSelected ? "formOpacityOut" : "formOpacityIn"}>
 
                 <div className="form_section">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" />
+                    <input required ref={emailInputRef_signUp} type="email" id="email" />
                 </div>
 
                 <div className="form_section">
                     <label htmlFor="usernameSignup">Username</label>
-                    <input type="text" id="usernameSignup" />
+                    <input required ref={usernameInputRef_signUp} type="text" id="usernameSignup" />
                 </div>
 
 
                 <div className="form_section">
                     <label htmlFor="passwordSignup">Password</label>
-                    <input type="password" id="passwordSignup" />
+                    <input onChange={resetValidity} required ref={passwordInputRef_signUp} type="password" id="passwordSignup" />
                 </div>
 
                 <div className="form_section">
                     <label htmlFor="confirmPassword">Password confirm</label>
-                    <input type="password" id="confirmPassword" />
+                    <input onChange={resetValidity} required ref={passwordConfirmInputRef_signUp} type="password" id="confirmPassword" />
                 </div>
 
                 <div className="form_section">
-                    <input type="submit" value={"Inscription"} />
+                    <input type="submit" value="Inscription" />
                 </div>
 
             </form>

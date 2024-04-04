@@ -26,7 +26,9 @@ const ConnectionSlice = createSlice({
                     name:null,
                     _id:null
                 },
-                onDisconnection:false
+                onDisconnection:false,
+                signInSelected:true,
+                signUpSelected:false
             }
         },
         update_onDisconnection:(state,action) => {
@@ -37,7 +39,6 @@ const ConnectionSlice = createSlice({
                 state.signInSelected = true
                 state.signUpSelected = false
             }else if(action.payload === "signup"){
-                console.log("here")
                 state.signInSelected = false
                 state.signUpSelected = true
             }

@@ -23,7 +23,8 @@ export default function useConnection(){
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Inscrit l'utilisateur
-    const handleInscription = () => {
+    const handleInscription = (e) => {
+        e.preventDefault()
         const formulaireValid = formRef.current.checkValidity() // Verification de la validité du formulaire
         if(!formulaireValid){
             return formRef.current.reportValidity() // Retour de ce qu'il manque (required)

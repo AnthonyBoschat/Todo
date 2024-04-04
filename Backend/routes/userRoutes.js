@@ -22,20 +22,24 @@ router.use(express.json())
 //////////////////////////////////////////////////////////////////////////////////////
 // Ajouter un utilisateur
 router.post("/create", async(request, response) => {
-    const {userName, userPassword} = request.body
+    const {userName, userPassword, userEmail} = request.body
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(userPassword, salt)
     const userToSave = {
         userName:userName,
-        userPassword:hashedPassword
+        userPassword:hashedPassword,
+        userEmail:userEmail,
     }
     const newUser = new User(userToSave)
     
 
     try{
-        const userAlreadyExist = await User.findOne({userName:newUser.userName})
+        const userAlreadyExist = await User.findOne({userEmail:newUser.userEmail})
         if(userAlreadyExist){
-            const error = new Error("Nom d'utilisateur déjà existant dans la base de donnée")
+            const error = new Error()
+            error.messageUserPopup = "Email already in use, please try another one"
+            error.messageDebugConsole = `Email déjà existant dans la base de donnée \n\n ${JSON.stringify(userEmail, null, 2)}`
+            error.messageDebugPopup = `${userEmail} déjà dans la base de donnée`
             error.status = 400
             throw error
         }else{
@@ -59,9 +63,9 @@ router.post("/create", async(request, response) => {
     }catch(error){
         console.log(error)
         response.status(400).json({
-            messageDebugConsole:`Nom d'utilisateur déjà existant dans la base de donnée (${userName})`,
-            messageDebugPopup:`Nom d'utilisateur existe déjà (${userName})`,
-            messageUserPopup:`This username is already used. Please try another one`,
+            messageDebugConsole:error.messageDebugConsole,
+            messageDebugPopup:error.messageDebugPopup,
+            messageUserPopup:error.messageUserPopup,
             errorAction:"/users/create"
         })
     }
@@ -72,20 +76,23 @@ router.post("/create", async(request, response) => {
 //////////////////////////////////////////////////////////////////////////////////////
 // Connecte un utilisateur
 router.post("/connect", async(request, response) => {
-    const {userName, userPassword} = request.body
+    const {userEmail, userPassword} = request.body
     try{
-        const user = await User.findOne({userName:userName})
+        const user = await User.findOne({userEmail:userEmail})
         if(!user){
-            const error = new Error("Nom d'utilisateur incorrecte")
+            const error = new Error()
+            error.messageDebugConsole=`Email inconnu dans la base de donnée \n\n ${userEmail}`,
+            error.messageDebugPopup=`${userEmail} introuvable`,
             error.status = 400
             error.payload = userName
             throw error
         }else{
             const correctPassword = await bcrypt.compare(userPassword, user.userPassword)
             if(!correctPassword){
-                const error = new Error("Mot de passe incorrecte")
+                const error = new Error()
+                error.messageDebugConsole=`Le mot de passe ne correspond pas au compte associé à cet email \n\n Email : ${userEmail} \n\n Password : ${userPassword}`,
+                error.messageDebugPopup=`${userPassword} ne correspond pas`,
                 error.status = 400
-                error.payload = userPassword
                 throw error
             }else{
                 const token = jwt.sign({userID:user._id}, "secretKey", {expiresIn:"1h"})
@@ -104,9 +111,9 @@ router.post("/connect", async(request, response) => {
         }
     }catch(error){
         response.status(400).json({
-            messageDebugConsole:`${error.message} (${error.payload})`,
-            messageDebugPopup:`${error.message} (${error.payload})`,
-            messageUserPopup:`userName or Password incorrect`,
+            messageDebugConsole:error.messageDebugConsole,
+            messageDebugPopup:error.messageDebugPopup,
+            messageUserPopup:`Email or Password incorrect`,
             errorAction:"/users/connect"
         })
     }
