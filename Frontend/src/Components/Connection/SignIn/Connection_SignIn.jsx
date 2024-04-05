@@ -9,6 +9,8 @@ export default function Connection_SignIn(){
         handleConnect,
         emailInputRef_signIn,
         passwordInputRef_signIn,
+        recoverPassword,
+        resetValidity
     } = useConnection_SignIn()
 
     return(
@@ -24,15 +26,16 @@ export default function Connection_SignIn(){
 
                 <div className="form_section">
                     <label htmlFor="emailSignin">Email</label>
-                    <input ref={emailInputRef_signIn} type="email" id="emailSignin" />
+                    <input onChange={resetValidity} required ref={emailInputRef_signIn} type="email" id="emailSignin" />
+                    <div onClick={recoverPassword} className="forgetPassword_Box">
+                        Recover password
+                    </div>
                 </div>
 
                 <div className="form_section">
                     <label htmlFor="passwordSignin">Password</label>
-                    <input ref={passwordInputRef_signIn} type="password" id="passwordSignin" />
-                    <div className="forgetPassword_Box">
-                        password forgot ?
-                    </div>
+                    <input required ref={passwordInputRef_signIn} type="password" id="passwordSignin" />
+                    
                 </div>
 
                 <div className="form_section">

@@ -92,7 +92,20 @@ export default function useUser_Request(){
                 dispatch(update_allDatasLoad(true))
             }
         }catch(error) {
-            console.error("Une erreur est survenue lors de la récup^ération des données de l'utilisateur:", error)
+            console.error("Une erreur est survenue lors de la récupération des données de l'utilisateur:", error)
+        }
+    }
+
+    const userRequest_SendEmail_ResetPasswordCode = async(userEmail) => {
+        try{
+            const {ok} = await fetchRequest("POST", {
+                route:`/user/SendEmail_ResetPasswordCode/${userEmail}`
+            })
+            if(ok){
+                console.log("Email envoyer")
+            }
+        }catch(error){
+            console.error("Une erreur est survenue lors de l'envoie de l'email de récupération du mot de passe")
         }
     }
 
@@ -101,6 +114,7 @@ export default function useUser_Request(){
         userRequest_LoadDatas,
         userRequest_Create,
         userRequest_Connect,
-        userRequest_Disconnect
+        userRequest_Disconnect,
+        userRequest_SendEmail_ResetPasswordCode
     }
 }

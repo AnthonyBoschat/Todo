@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt")
@@ -5,11 +6,17 @@ const jwt = require("jsonwebtoken")
 const User = require("../models/user")
 const Task = require("../models/task")
 const Folder = require("../models/folder")
-const library_finalAction = require("../Library/finalAction")
+const Recover = require("../models/recover")
 const authenticationMiddleware = require("../middleware/authentication")
-
+const nodemailer = require("nodemailer")
+const crypto = require("crypto")
+const env = process.env
 // middleware pour parser le JSON
 router.use(express.json())
+
+const generateRandomCode = (length) => {
+    return crypto.randomBytes(Math.ceil(length / 2)).toString("hex").slice(0, length)
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -178,6 +185,56 @@ router.get("/loadDatas", authenticationMiddleware, async(request, response) => {
         response.status(400).json({
             messageDebugConsole:`Echec lors de la récupération des données de l'utilisateur ${userID}`,
             messageDebugPopup:`Echec récupération données utilisateur (${userID})`,
+        })
+    }
+})
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Permet de récupérer un mot de passe
+router.post("/SendEmail_ResetPasswordCode/:userEmail", async(request,response) => {
+    const {userEmail} = request.params
+    try{
+        const user = await User.findOne({userEmail:userEmail})
+        if(!user){
+            const error = new Error()
+            error.messageDebugConsole = `Aucun utilisateur de connu dans la base de donnée avec cette adresse email \n\n ${userEmail}`,
+            error.messageDebugPopup = `${userEmail} aucun utilisateur connu` 
+            throw error
+        }
+        const revoveryCode = generateRandomCode(6)
+        const newRecoveryDocument = new Recover({
+            recoveryCode:revoveryCode
+        })
+        await newRecoveryDocument.save()
+        
+        // Envoie de l'email
+        const transporter = nodemailer.createTransport({
+            service:"hotmail",
+            auth:{
+                user:env.recoverMail,
+                pass:env.recoverMailpassword
+            }
+        })
+
+        const mailOptions = {
+            from: `"Gestionnaire de tâche" <${env.recoverMail}>`,
+            to:userEmail,
+            subject:"Password recovery",
+            text:`<br/><br/>Here is your password reset code to enter in the application : <b>${revoveryCode}</b> <br/><br/> This code will only work for the next <b>15 minutes</b>`,
+            html:`<br/><br/>Here is your password reset code to enter in the application : <b>${revoveryCode}</b> <br/><br/> This code will only work for the next <b>15 minutes</b>`
+        }
+        const emailSend = await transporter.sendMail(mailOptions)
+        response.status(201).json({
+            messageDebugConsole:"Code d'authentification correctement envoyer",
+            messageDebugPopup:"Email envoyer",
+            messageUserPopup:"An email has been sent at your email adress",
+        })
+
+    }catch(error){
+        response.status(201).json({
+            messageDebugConsole:error.messageDebugConsole,
+            messageDebugPopup:error.messageDebugPopup,
+            messageUserPopup:"An error occurred, please try again later",
         })
     }
 })
