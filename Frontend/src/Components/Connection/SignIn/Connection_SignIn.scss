@@ -70,18 +70,74 @@ div.signIn_Box{
         flex-direction: column;
         gap: 3rem;
         // background-color: red; //
-        width: 100%;
+        width: 101%;
         align-items: center;
         transition: opacity 0.15s linear;
+        overflow-x: hidden;
+
+
+        div.slideContainer{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+            gap: 3rem;
+            transform: translateX(0%);
+            transition: transform 0.5s ease;
+        }
+
+        div.slideContainer.slideLeft{
+            transform: translateX(-119%);
+        }
+
+        div.form_section.test{
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            transform: translateX(200%);
+        }
 
 
 
         div.form_section{
             // background-color: green; //
             display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
             width: 60%;
+            position: relative;
+            overflow: hidden;
+            padding: 1px;
+            gap: 1rem;
+
+            div.slideContainer{
+                // background-color: red;
+                display: flex;
+                transform: translateX(0%);
+                transition: transform 0.5s ease;
+            }
+
+            div.slideContainer.slideLeft{
+                transform: translateX(-202%);
+            }
+
+            div{
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+                // background-color: red; //
+            }
+            
+            
+            div.noRecover{
+                transform: translateX(0%);
+
+            }
+
+            div.recover{
+                position: absolute;
+                transform: translateX(202%);
+            }
 
             label{
                 font-size: 1.6rem;
@@ -90,6 +146,7 @@ div.signIn_Box{
             input{
                 font-size: 1.4rem;
                 padding: 0.3rem;
+                margin-right: 1px;
                 background-color: rgba(171, 228, 255, 0.12);
                 outline: 1px solid v.$blue;
                 color: white;
@@ -119,12 +176,13 @@ div.signIn_Box{
                 }
             }
 
-            input[type="submit"]{
+            input[type="submit"], input[type="button"]{
+                width: 30%;
                 outline: 1px solid v.$blue;
                 padding: 0.5rem;
                 border-radius: 5px;
                 position: relative;
-                font-size: 1.4rem;
+                font-size: 1.2rem;
                 background-color: transparent;
                 border: none;
                 color: v.$blue;
@@ -138,4 +196,27 @@ div.signIn_Box{
             }
         }
     }
+}
+
+
+
+
+input.recoverButton{
+    opacity: 0 !important;
+    transition: opacity 0.2s linear;
+    pointer-events: none;
+}
+
+input.recoverButtonOn{
+    opacity: 0.6 !important;
+    pointer-events: all;
+
+    &:hover{
+        opacity: 1 !important;
+        cursor: pointer;
+    }
+}
+
+input.backButton{
+    background-color: rgb(40, 40, 40) !important;
 }

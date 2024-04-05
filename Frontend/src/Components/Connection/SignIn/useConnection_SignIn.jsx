@@ -1,16 +1,23 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { update_updateSignSelected } from "../ConnectionSlice";
+import { update_codeValide, update_emailSend, update_updateSignSelected, update_userWantRecover } from "../ConnectionSlice";
 import useUser_Request from "../../User/UserRequest";
 
 export default function useConnection_SignIn(){
 
+    const userWantRecover = useSelector(store => store.connection.recover.userWantRecover)
+    const emailSend = useSelector(store => store.connection.recover.emailSend)
+    const codeValide = useSelector(store => store.connection.recover.codeValide)
     const signInSelected = useSelector(store => store.connection.signInSelected)
     const dispatch = useDispatch()
-    const {userRequest_Connect, userRequest_SendEmail_ResetPasswordCode} = useUser_Request()
+    const {userRequest_Connect, userRequest_SendEmail_ResetPasswordCode, userRequest_checkCode} = useUser_Request()
     const emailInputRef_signIn = useRef()
     const passwordInputRef_signIn = useRef()
+    const recoverCodeInputRef = useRef()
+    const newPasswordInputRef = useRef()
+    const confirmNewPasswordInputRef = useRef()
+    
 
     const handleChangePart = () => {
         dispatch(update_updateSignSelected("signin"))
@@ -31,6 +38,18 @@ export default function useConnection_SignIn(){
         userRequest_Connect(user)
     }
 
+    const switchRecoverPassword = () => {
+        setTimeout(() => {
+            recoverCodeInputRef.current.value = ""
+            dispatch(update_emailSend(false))
+            dispatch(update_userWantRecover(!userWantRecover))
+            dispatch(update_codeValide(false))
+        }, 1);
+    }
+
+
+
+
     const recoverPassword = () => {
         const email = emailInputRef_signIn.current.value.toLowerCase()
         const emailInput = emailInputRef_signIn.current
@@ -38,7 +57,7 @@ export default function useConnection_SignIn(){
         if(!emailInput.checkValidity()){
 
             if(emailInput.validity.valueMissing){
-                emailInput.setCustomValidity("To recover your password, this field is required")
+                emailInput.setCustomValidity("To reset your password, this field is required")
             }else if(emailInput.validity.typeMismatch){
                 emailInput.setCustomValidity("Please provide a valid email")
             }
@@ -46,8 +65,21 @@ export default function useConnection_SignIn(){
         }else{
             userRequest_SendEmail_ResetPasswordCode(email)
         }
+    }
 
-        
+    const checkCode = () => {
+        const userResetCode = recoverCodeInputRef.current.value
+        const userEmail = emailInputRef_signIn.current.value.toLowerCase()
+        const codeInput = recoverCodeInputRef.current
+        if(!codeInput.checkValidity()){
+
+            if(codeInput.validity.valueMissing){
+                codeInput.setCustomValidity("To reset your password, this field is required")
+            }
+            codeInput.reportValidity()
+        }else{
+            userRequest_checkCode(userResetCode, userEmail)
+        }
     }
 
     return{
@@ -56,7 +88,15 @@ export default function useConnection_SignIn(){
         handleConnect,
         passwordInputRef_signIn,
         emailInputRef_signIn,
+        recoverCodeInputRef,
         recoverPassword,
-        resetValidity
+        resetValidity,
+        switchRecoverPassword,
+        userWantRecover,
+        emailSend,
+        checkCode,
+        codeValide,
+        newPasswordInputRef,
+        confirmNewPasswordInputRef
     }
 }

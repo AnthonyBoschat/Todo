@@ -1,6 +1,6 @@
 import React, {} from "react";
 import { useDispatch } from "react-redux";
-import { update_closeConnection, update_connected, update_connectedUser, update_updateSignSelected } from "../Connection/ConnectionSlice";
+import { update_closeConnection, update_codeValide, update_connected, update_connectedUser, update_emailSend, update_updateSignSelected, update_userWantRecover } from "../Connection/ConnectionSlice";
 import useFetchRequest from "../../Utils/useFetchRequest";
 import { update_allDatasLoad, update_dataList, update_loadAllDatas } from "./UserSlice";
 import { update_folderSelectedID } from "../Folder/FolderSlice";
@@ -46,7 +46,7 @@ export default function useUser_Request(){
         }
     }
 
-    const userRequest_Disconnect = async(newTask) => {
+    const userRequest_Disconnect = async() => {
         try{
             const {ok} = await fetchRequest("GET", {
                 route: "/user/disconnect",
@@ -64,7 +64,7 @@ export default function useUser_Request(){
         }
     }
 
-    const userRequest_Reconnect = async(newTask) => {
+    const userRequest_Reconnect = async() => {
         try{
             const {ok, data} = await fetchRequest("GET", {
                 route: "/user/reconnect"
@@ -81,7 +81,7 @@ export default function useUser_Request(){
         }
     }
 
-    const userRequest_LoadDatas = async(newTask) => {
+    const userRequest_LoadDatas = async() => {
         try{
             const {ok, data} = await fetchRequest("GET", {
                 route: "/user/loadDatas"
@@ -102,10 +102,25 @@ export default function useUser_Request(){
                 route:`/user/SendEmail_ResetPasswordCode/${userEmail}`
             })
             if(ok){
-                console.log("Email envoyer")
+                dispatch(update_emailSend(true))
             }
         }catch(error){
             console.error("Une erreur est survenue lors de l'envoie de l'email de récupération du mot de passe")
+        }
+    }
+
+    const userRequest_checkCode = async(userResetCode, userEmail) => {
+        try{
+            const{ok} = await fetchRequest("POST", {
+                route:`/user/checkResetPasswordCode/${userResetCode}/${userEmail}`
+            })
+            if(ok){
+                dispatch(update_codeValide(true))
+                // dispatch(update_userWantRecover(false))
+                // dispatch(update_emailSend(false))
+            }
+        }catch(error){
+            console.error("Une erreur est survenue lors de la vérification du code de réinitialisation du mot de passe")
         }
     }
 
@@ -115,6 +130,7 @@ export default function useUser_Request(){
         userRequest_Create,
         userRequest_Connect,
         userRequest_Disconnect,
-        userRequest_SendEmail_ResetPasswordCode
+        userRequest_SendEmail_ResetPasswordCode,
+        userRequest_checkCode
     }
 }

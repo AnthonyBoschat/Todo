@@ -10,7 +10,12 @@ const ConnectionSlice = createSlice({
         },
         onDisconnection:false,
         signInSelected:true,
-        signUpSelected:false
+        signUpSelected:false,
+        recover:{
+            userWantRecover:false,
+            emailSend:false,
+            codeValide:false
+        }
     },
     reducers:{
         update_connected:(state,action) => {
@@ -28,7 +33,12 @@ const ConnectionSlice = createSlice({
                 },
                 onDisconnection:false,
                 signInSelected:true,
-                signUpSelected:false
+                signUpSelected:false,
+                recover:{
+                    userWantRecover:false,
+                    emailSend:false,
+                    codeValide:false
+                }
             }
         },
         update_onDisconnection:(state,action) => {
@@ -42,6 +52,15 @@ const ConnectionSlice = createSlice({
                 state.signInSelected = false
                 state.signUpSelected = true
             }
+        },
+        update_userWantRecover:(state,action) => {
+            state.recover.userWantRecover = action.payload
+        },
+        update_emailSend:(state,action) => {
+            state.recover.emailSend = action.payload
+        },
+        update_codeValide:(state,action) => {
+            state.recover.codeValide = action.payload
         }
     },
 })
@@ -52,5 +71,8 @@ export const {
     update_connectedUser,
     update_closeConnection,
     update_onDisconnection,
-    update_updateSignSelected
+    update_updateSignSelected,
+    update_userWantRecover,
+    update_emailSend,
+    update_codeValide
 } = ConnectionSlice.actions

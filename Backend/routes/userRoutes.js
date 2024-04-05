@@ -194,6 +194,7 @@ router.get("/loadDatas", authenticationMiddleware, async(request, response) => {
 router.post("/SendEmail_ResetPasswordCode/:userEmail", async(request,response) => {
     const {userEmail} = request.params
     try{
+        // Verification que l'utilisateur existe dans la base de donnée, sinon, on envoie pas le mail
         const user = await User.findOne({userEmail:userEmail})
         if(!user){
             const error = new Error()
@@ -201,8 +202,13 @@ router.post("/SendEmail_ResetPasswordCode/:userEmail", async(request,response) =
             error.messageDebugPopup = `${userEmail} aucun utilisateur connu` 
             throw error
         }
+        // On supprime l'éventuel ancien code qui était associé à cet adresse email
+        await Recover.findOneAndDelete({userEmail:userEmail})
+        // On génère un nouveau code
         const revoveryCode = generateRandomCode(6)
+        // On sauvegarde un document Rcover avec le code généré, et l'email associé
         const newRecoveryDocument = new Recover({
+            userEmail:userEmail,
             recoveryCode:revoveryCode
         })
         await newRecoveryDocument.save()
@@ -223,18 +229,49 @@ router.post("/SendEmail_ResetPasswordCode/:userEmail", async(request,response) =
             text:`<br/><br/>Here is your password reset code to enter in the application : <b>${revoveryCode}</b> <br/><br/> This code will only work for the next <b>15 minutes</b>`,
             html:`<br/><br/>Here is your password reset code to enter in the application : <b>${revoveryCode}</b> <br/><br/> This code will only work for the next <b>15 minutes</b>`
         }
-        const emailSend = await transporter.sendMail(mailOptions)
+        await transporter.sendMail(mailOptions)
+
+        // réponse
         response.status(201).json({
             messageDebugConsole:"Code d'authentification correctement envoyer",
             messageDebugPopup:"Email envoyer",
-            messageUserPopup:"An email has been sent at your email adress",
+            messageUserPopup:"A reset code has been sent at this email adress",
         })
 
     }catch(error){
-        response.status(201).json({
+        response.status(400).json({
             messageDebugConsole:error.messageDebugConsole,
             messageDebugPopup:error.messageDebugPopup,
-            messageUserPopup:"An error occurred, please try again later",
+            messageUserPopup:"A reset code has been sent at this email adress",
+        })
+    }
+})
+
+
+router.post("/checkResetPasswordCode/:userResetCode/:userEmail", async(request, response) => {
+    const {userResetCode, userEmail} = request.params
+    console.log(userResetCode)
+    console.log(userEmail)
+    try{
+        const validCode = await Recover.findOne({recoveryCode:userResetCode, userEmail:userEmail})
+        console.log(validCode)
+        if(!validCode){
+            const error = new Error()
+            error.messageDebugConsole = `Le code d'authentification n'est pas valide, ou ne correspond à aucune adresse email \n\n ${userResetCode} \n\n ${userEmail}`,
+            error.messageDebugPopup = `${userResetCode} Code incorrecte` 
+            throw error
+        }
+        await Recover.findOneAndDelete({_id:validCode._id})
+        response.status(201).json({
+            messageDebugConsole:`Code de réinitialisation valide \n\n ${userResetCode} \n\n ${userEmail}`,
+            messageDebugPopup:"Code de réinitialisation valide",
+            messageUserPopup:"Your password have been changed",
+        })
+    }catch(error){
+        response.status(400).json({
+            messageDebugConsole:error.messageDebugConsole,
+            messageDebugPopup:error.messageDebugPopup,
+            messageUserPopup:"This code is incorrect, please retry",
         })
     }
 })
