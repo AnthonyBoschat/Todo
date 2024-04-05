@@ -13,7 +13,7 @@ export default function Popup(){
     return(
         <>
             {!popupHidden && (
-                <div style={{backgroundColor:popup.color}} className={!connected ? "popup_Box popupDisconnected" : "popup_Box popupConnected" }>
+                <div style={{backgroundColor:popup.color}} className="popup_Box">
                     {popup.message}
                 </div>
             )}

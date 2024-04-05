@@ -18,6 +18,11 @@ div.signUp_Box{
         position: relative;
         left: 3rem;
 
+        // Quand le formulaire n'est pas focus, on grise le bouton Sign
+        span.partIndicatorUnfocus{
+            opacity: 0.5;
+        }
+
         span.partIndicator{
             overflow: hidden;
             width: fit-content;
@@ -28,6 +33,7 @@ div.signUp_Box{
             display: flex;
             flex-direction: column;
             gap: 0.2rem;
+            transition: opacity 0.15s linear;
 
             &:hover{
                 cursor: pointer;
@@ -35,31 +41,33 @@ div.signUp_Box{
             }
 
             span.underline{
-                position: relative;
-                left: -110%;
+                transform: translateX(-110%);
                 background-color: v.$blue;
                 height: 2px;
                 width: 100%;
+                transition: transform 0.15s ease;
+            }
+            span.underlineFocus{
+                transform: translateX(0);
             }
         }
     }
 
-    // @keyframes animationRight{
-    //     from{left:-110%}
-    //     to{left: 0%}
-    // }
-
+    // Formulaire quand il n'est pas selectionner
+    form.formUnfocus{
+        pointer-events: none;
+        opacity: 0.2 !important;
+    }
 
     form{
-        // pointer-events: none;
-        // opacity: 0.3;
+        opacity: 1;
         display: flex;
         flex-direction: column;
         gap: 3rem;
         // background-color: red; //
         width: 100%;
         align-items: center;
-        // align-items: flex-start;
+        transition: opacity 0.15s linear;
 
         div.form_section{
             // background-color: green; //
@@ -111,3 +119,4 @@ div.signUp_Box{
         }
     }
 }
+

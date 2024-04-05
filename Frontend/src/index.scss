@@ -12,13 +12,10 @@
 @use "View/Corp/Corp.scss";
 @use "View/Pannel/Pannel.scss";
 @use "View/Header/Header.scss";
-@use "View/Connection/Connectionview.scss";
-// 
+@use "View/Connection/Connection.scss";
 
 
 
-// 
-// @use "Components/Connection/Connection.scss";
 @use "Components/Connection/SignIn/Connection_SignIn.scss";
 @use "Components/Connection/SignUp/Connection_SignUp.scss";
 

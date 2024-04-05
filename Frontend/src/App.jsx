@@ -3,11 +3,10 @@ import DevTools from "./Components/DevTools/DevTools";
 import Pannel from "./View/Pannel/Pannel";
 import Corp from "./View/Corp/Corp";
 import "./Css/main.css"
-import Connection from "./Components/Connection/Connection";
 import Popup from "./Components/Popup/Popup";
 import { useEffect, useState } from "react";
 import useUser_Request from "./Components/User/UserRequest";
-import Connectionview from "./View/Connection/Connectionview";
+import Connection from "./View/Connection/Connection";
 
 function App() {
 
@@ -43,8 +42,7 @@ function App() {
           <Popup/>
           
           {!connected && (
-            // <Connection/>
-            <Connectionview/>
+            <Connection/>
           )}
 
           {connected && (

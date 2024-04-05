@@ -10,12 +10,18 @@ div.signIn_Box{
     gap: 6rem;
 
 
+    
     div.partIndicator_Box{
         // background-color: green; //
         width: 100%;
         position: relative;
         left: 3rem;
 
+
+        // Quand le formulaire n'est pas focus, on grise le bouton Sign
+        span.partIndicatorUnfocus{
+            opacity: 0.5;
+        }
         span.partIndicator{
             overflow: hidden;
             width: fit-content;
@@ -26,6 +32,7 @@ div.signIn_Box{
             display: flex;
             flex-direction: column;
             gap: 0.2rem;
+            transition: opacity 0.15s linear;
 
             &:hover{
                 opacity: 1 !important;
@@ -33,11 +40,14 @@ div.signIn_Box{
             }
 
             span.underline{
-                position: relative;
-                right: -110%;
+                transform: translateX(110%);
                 background-color: v.$blue;
                 height: 2px;
                 width: 100%;
+                transition: transform 0.15s ease;
+            }
+            span.underlineFocus{
+                transform: translateX(0);
             }
         }
     }
@@ -47,15 +57,24 @@ div.signIn_Box{
         to{right: 0%}
     }
 
+    //////Formulaire quand il n'est pas selectionner
+    form.formUnfocus{
+        pointer-events: none;
+        opacity: 0.2;
+    }
+    
     
     form{
+        opacity: 1;
         display: flex;
         flex-direction: column;
         gap: 3rem;
         // background-color: red; //
         width: 100%;
         align-items: center;
-        // align-items: flex-start;
+        transition: opacity 0.15s linear;
+
+
 
         div.form_section{
             // background-color: green; //

@@ -14,13 +14,13 @@ export default function Connection_SignIn(){
     return(
         <div className="signIn_Box">
             <div className="partIndicator_Box">
-                <span onClick={handleChangePart} style={!signInSelected ? {opacity:0.5} : null} className="partIndicator">
+                <span onClick={handleChangePart} className={!signInSelected ? "partIndicator partIndicatorUnfocus" : "partIndicator"}>
                     Sign in
-                    <span className={!signInSelected ? "underline underlineOut_signIn" : "underline underlineIn_signIn"}></span>
+                    <span className={signInSelected ? "underline underlineFocus" : "underline"}></span>
                 </span>
             </div>
 
-            <form onSubmit={handleConnect} style={!signInSelected ? {pointerEvents:"none"} : null} action="" className={!signInSelected ? "formOpacityOut" : "formOpacityIn"}>
+            <form onSubmit={handleConnect} action="" className={!signInSelected ? "formUnfocus" : null}>
 
                 <div className="form_section">
                     <label htmlFor="emailSignin">Email</label>
