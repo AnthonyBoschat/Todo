@@ -46,7 +46,7 @@ export default function Connection_SignIn(){
                         <div className={!userWantRecover ? "slideContainer" : "slideContainer slideLeft"}>
                             <div className="noRecover">
                                 <label htmlFor="passwordSignin">Password</label>
-                                <input onChange={resetValidityNewPasswordConfirmInput} required ref={passwordInputRef_signIn} type="password" id="passwordSignin" />
+                                <input onChange={resetValidityNewPasswordConfirmInput} required={!userWantRecover} ref={passwordInputRef_signIn} type="password" id="passwordSignin" />
                                 <div onClick={switchRecoverPassword} className="forgetPassword_Box">
                                     Password forget ?
                                 </div>

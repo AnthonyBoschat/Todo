@@ -116,6 +116,7 @@ export default function useUser_Request(){
             })
             if(ok){
                 dispatch(update_codeValide(true))
+                dispatch(update_emailSend(false))
             }
         }catch(error){
             console.error("Une erreur est survenue lors de la vérification du code de réinitialisation du mot de passe")
