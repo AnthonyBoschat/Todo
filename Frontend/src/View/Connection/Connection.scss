@@ -10,6 +10,7 @@ div.connection_Display{
     position: absolute;
 
     div.connection_Box{
+        
         width: 80rem;
         height: 50rem;
         // background-color: rgba(0, 191, 255, 0.359); //
@@ -20,7 +21,7 @@ div.connection_Display{
 
         div.separator{
             align-self: center;
-            background-color: v.$blue;
+            background-color: v.$blueConnection;
             opacity: 0.8;
             height: 80%;
         }

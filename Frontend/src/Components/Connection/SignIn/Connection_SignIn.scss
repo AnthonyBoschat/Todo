@@ -27,7 +27,7 @@ div.signIn_Box{
             width: fit-content;
             // background-color: green; //
             font-size: 2.5rem;
-            color: v.$blue;
+            color: v.$blueConnection;
             padding: 0.5rem;
             display: flex;
             flex-direction: column;
@@ -41,7 +41,7 @@ div.signIn_Box{
 
             span.underline{
                 transform: translateX(110%);
-                background-color: v.$blue;
+                background-color: v.$blueConnection;
                 height: 2px;
                 width: 100%;
                 transition: transform 0.15s ease;
@@ -147,26 +147,25 @@ div.signIn_Box{
                 font-size: 1.4rem;
                 padding: 0.3rem;
                 margin-right: 1px;
-                background-color: rgba(171, 228, 255, 0.12);
-                outline: 1px solid v.$blue;
+                background-color: rgba(0, 0, 0, 0.494);
+                outline: 1px solid v.$blueConnection;
                 color: white;
                 border: none;
                 padding-left: 0.5rem;
                 transition: all 0.15s linear;
-                opacity: 0.6;
                 border-radius: 5px;
 
                 &:focus{
-                    opacity: 1;
                     border: none;
-                    outline: 1px solid v.$blue;
+                    outline: 1px solid v.$blueConnection;
+                    background-color: rgba(0, 0, 0, 0.244);
                 }
             }
 
             div.forgetPassword_Box{
                 position: relative;
                 // outline: 1px solid white; //
-                color: v.$blue;
+                color: v.$blueConnection;
                 opacity: 0.7;
                 transition: opacity 0.15s linear;
                 width: fit-content;
@@ -177,21 +176,23 @@ div.signIn_Box{
             }
 
             input[type="submit"], input[type="button"]{
+                backdrop-filter: blur(10px);
                 width: 30%;
-                outline: 1px solid v.$blue;
+                outline: 1px solid v.$blueConnection;
                 padding: 0.5rem;
                 border-radius: 5px;
                 position: relative;
                 font-size: 1.2rem;
                 background-color: transparent;
                 border: none;
-                color: v.$blue;
+                color: v.$blueConnection;
                 opacity: 0.7;
-                transition: opacity 0.15s linear;
+                transition: all 0.15s linear;
 
                 &:hover{
                     opacity: 1;
                     cursor: pointer;
+                    background-color: rgba(225, 225, 225, 0.148);
                 }
             }
         }
