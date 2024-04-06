@@ -79,7 +79,7 @@ export default function Connection_SignIn(){
                     {!codeValide && (
                         <>
                             <input onClick={recoverPassword} className={!userWantRecover ? "recoverButton" : "recoverButton recoverButtonOn"} type="button" value={"Send email"} />
-                            <input onClick={checkCode} className={!emailSend ? "recoverButton" : "recoverButton recoverButtonOn"} type="submit" value={"submit code"} />
+                            <input onClick={checkCode} className={!emailSend ? "recoverButton" : "recoverButton recoverButtonOn"} type="button" value={"submit code"} />
                         </>
                     )}
                     {codeValide && (<input onClick={validNewPassword} type="button" value={"Confirm"}/>)}
