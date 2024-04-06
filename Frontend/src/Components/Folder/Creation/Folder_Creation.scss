@@ -1,19 +1,32 @@
+@use "../../../Sass/Variable.scss" as v;
+
 li.folderOnCreation_Box{
     // outline: 1px solid white; //
     position: relative;
-    z-index: 2;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    input{
-        
+    
+    textarea{
+        overflow: hidden;
         width: 100%;
+        height: auto;
+        padding: 4%;
+        border-radius: 5px;
         background-color: transparent;
         border: none;
-        color: rgb(0, 191, 255);
+        color: v.$blue;
         outline: none;
         font-size: 1.3rem;
-        // outline: 1px solid red; // 
+        outline: 1px solid red; // 
         text-align: center;
-        
+        font-family: Arial, Helvetica, sans-serif;
+        resize: none;
+        box-sizing:border-box;
     }
+
+    
+    
 }

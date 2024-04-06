@@ -4,26 +4,28 @@ li.folderButton_Box{
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     width: 100%;
     justify-content: center;
     // background-color: red; //
 
     button{
-        // outline: 1px solid red; //
+        outline: 1px solid v.$blue; //
+        // background-color: transparent;
+
+        background-color: v.$buttonBackgroundBlue;
+        border-radius: 5px;
+
         width: fit-content;
         font-size: 1.3rem;
-        color: v.$blue;
+        color: v.$buttonTextColorBlue;
         border: none;
-        background-color: transparent;
-        padding: 2%;
-        opacity: 0.7;
-        transition: opacity 0.05s linear;
+        padding: 4%;
+        opacity: 1;
+        transition: all 0.05s linear;
 
         &:hover{
-            // text-decoration: underline;
             cursor: pointer;
-            opacity: 1;
+            background-color: v.$buttonBackgroundBlueHover;
         }
     }
 

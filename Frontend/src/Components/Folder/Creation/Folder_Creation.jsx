@@ -3,11 +3,14 @@ import useFolder_Creation from "./useFolder_Creation";
 
 export default function Folder_Creation(){
 
-    const {inputRef} = useFolder_Creation()
+    const {
+        autoResize,
+        textareaRef
+    } = useFolder_Creation()
 
     return(
         <li className="folderOnCreation_Box">
-            <input ref={inputRef} autoFocus type="text"/>
+            <textarea onInput={autoResize} ref={textareaRef} autoFocus/>
         </li>
     )
 }
