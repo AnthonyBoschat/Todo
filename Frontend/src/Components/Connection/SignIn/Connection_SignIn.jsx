@@ -11,14 +11,16 @@ export default function Connection_SignIn(){
         passwordInputRef_signIn,
         recoverCodeInputRef,
         recoverPassword,
-        resetValidity,
+        resetValidityEmailInput,
         switchRecoverPassword,
         userWantRecover,
         emailSend,
         checkCode,
         codeValide,
         newPasswordInputRef,
-        confirmNewPasswordInputRef
+        confirmNewPasswordInputRef,
+        validNewPassword,
+        resetValidityNewPasswordConfirmInput
     } = useConnection_SignIn()
 
     return(
@@ -36,7 +38,7 @@ export default function Connection_SignIn(){
                     <div className="form_section">
                         <div>
                             <label htmlFor="emailSignin">Email</label>
-                            <input style={emailSend ? {pointerEvents:"none", opacity:"0.3"} : null} onChange={resetValidity} required ref={emailInputRef_signIn} type="email" id="emailSignin" />
+                            <input style={emailSend ? {pointerEvents:"none", opacity:"0.3"} : null} onChange={resetValidityEmailInput} required ref={emailInputRef_signIn} type="email" id="emailSignin" />
                         </div>
                     </div>
 
@@ -44,7 +46,7 @@ export default function Connection_SignIn(){
                         <div className={!userWantRecover ? "slideContainer" : "slideContainer slideLeft"}>
                             <div className="noRecover">
                                 <label htmlFor="passwordSignin">Password</label>
-                                <input required ref={passwordInputRef_signIn} type="password" id="passwordSignin" />
+                                <input onChange={resetValidityNewPasswordConfirmInput} required ref={passwordInputRef_signIn} type="password" id="passwordSignin" />
                                 <div onClick={switchRecoverPassword} className="forgetPassword_Box">
                                     Password forget ?
                                 </div>
@@ -65,7 +67,7 @@ export default function Connection_SignIn(){
                             </div>
                             <div>
                                 <label  htmlFor="newPasswordConfirm">New password confirm</label>
-                                <input ref={confirmNewPasswordInputRef} required={codeValide} type="password" id="newPasswordConfirm" />
+                                <input onChange={resetValidityNewPasswordConfirmInput} ref={confirmNewPasswordInputRef} required={codeValide} type="password" id="newPasswordConfirm" />
                             </div>
                     </div>
                 </div>
@@ -80,7 +82,7 @@ export default function Connection_SignIn(){
                             <input onClick={checkCode} className={!emailSend ? "recoverButton" : "recoverButton recoverButtonOn"} type="submit" value={"submit code"} />
                         </>
                     )}
-                    {codeValide && (<input  type="button" value={"Confirm"}/>)}
+                    {codeValide && (<input onClick={validNewPassword} type="button" value={"Confirm"}/>)}
                 </div>
 
             </form>
@@ -88,6 +90,6 @@ export default function Connection_SignIn(){
     )
 } 
 
-/* GERER LE PROBLEME DE MAIL */
+/* GERER LE PROBLEME DE MAIL ? Mailhog */
 /* VERIFIER LE SLIDE JUSQUA CONFIRM MOT DE PASSE */
 /* METTRE EN PLACE LA LOGIQUE DE REINITIALISATION DE MOT DE PASSE */

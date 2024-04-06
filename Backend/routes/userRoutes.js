@@ -1,5 +1,5 @@
 require("dotenv").config()
-const express = require("express");
+const express = require("express")
 const router = express.Router();
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
@@ -215,18 +215,15 @@ router.post("/SendEmail_ResetPasswordCode/:userEmail", async(request,response) =
         
         // Envoie de l'email
         const transporter = nodemailer.createTransport({
-            service:"hotmail",
-            auth:{
-                user:env.recoverMail,
-                pass:env.recoverMailpassword
-            }
+            host:"localhost",
+            port:1025, // Par défaut, mailHog écoute ce port
+            secure:false,
         })
-
         const mailOptions = {
-            from: `"Gestionnaire de tâche" <${env.recoverMail}>`,
+            from: `TaskNest <noreply@tasknest.example>`,
             to:userEmail,
             subject:"Password recovery",
-            text:`<br/><br/>Here is your password reset code to enter in the application : <b>${revoveryCode}</b> <br/><br/> This code will only work for the next <b>15 minutes</b>`,
+            text:`Here is your password reset code to enter in the application : ${revoveryCode}  This code will only work for the next 15 minutes`,
             html:`<br/><br/>Here is your password reset code to enter in the application : <b>${revoveryCode}</b> <br/><br/> This code will only work for the next <b>15 minutes</b>`
         }
         await transporter.sendMail(mailOptions)
@@ -235,14 +232,14 @@ router.post("/SendEmail_ResetPasswordCode/:userEmail", async(request,response) =
         response.status(201).json({
             messageDebugConsole:"Code d'authentification correctement envoyer",
             messageDebugPopup:"Email envoyer",
-            messageUserPopup:"A reset code has been sent at this email adress",
+            messageUserPopup:"A reset code has been sent at this email adress ",
         })
 
     }catch(error){
         response.status(400).json({
             messageDebugConsole:error.messageDebugConsole,
             messageDebugPopup:error.messageDebugPopup,
-            messageUserPopup:"A reset code has been sent at this email adress",
+            messageUserPopup:"Unknown email address",
         })
     }
 })
@@ -250,11 +247,8 @@ router.post("/SendEmail_ResetPasswordCode/:userEmail", async(request,response) =
 
 router.post("/checkResetPasswordCode/:userResetCode/:userEmail", async(request, response) => {
     const {userResetCode, userEmail} = request.params
-    console.log(userResetCode)
-    console.log(userEmail)
     try{
         const validCode = await Recover.findOne({recoveryCode:userResetCode, userEmail:userEmail})
-        console.log(validCode)
         if(!validCode){
             const error = new Error()
             error.messageDebugConsole = `Le code d'authentification n'est pas valide, ou ne correspond à aucune adresse email \n\n ${userResetCode} \n\n ${userEmail}`,
@@ -265,7 +259,7 @@ router.post("/checkResetPasswordCode/:userResetCode/:userEmail", async(request, 
         response.status(201).json({
             messageDebugConsole:`Code de réinitialisation valide \n\n ${userResetCode} \n\n ${userEmail}`,
             messageDebugPopup:"Code de réinitialisation valide",
-            messageUserPopup:"Your password have been changed",
+            messageUserPopup:"Code valid",
         })
     }catch(error){
         response.status(400).json({
@@ -276,6 +270,38 @@ router.post("/checkResetPasswordCode/:userResetCode/:userEmail", async(request, 
     }
 })
 
+router.put("/changePassword/:userEmail", async(request, response) => {
+    try{
+        const {userEmail} = request.params
+        const {userNewPassword} = request.body
+        const thisUser = await User.findOne({userEmail:userEmail})
+        if(!thisUser){
+            const error = new Error()
+            error.messageDebugConsole = `Aucune utilisateur de trouver associé avec cette adresse email dans la base de donnée \n\n ${userEmail}`,
+            error.messageDebugPopup = `${userEmail} inexistant dans la base de donnée`
+            throw error
+        }
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(userNewPassword, salt)
+        const updatedUser = await User.findOneAndUpdate(
+            {_id:thisUser._id},
+            {$set: {userPassword:hashedPassword}},
+            {new:true}
+        )
+        response.status(200).json({
+            messageDebugConsole:`Le mot de passe de l'utilisateur a été correctement modifier \n\n Mail : ${updatedUser.userEmail} \n ID : ${updatedUser._id}`,
+            messageDebugPopup:"Mot de passe correctement modifier",
+            messageUserPopup:"Your new password have been saved"
+        })
+    }catch(error){
+        response.status(400).json({
+            messageDebugConsole:error.messageDebugConsole,
+            messageDebugPopup:error.messageDebugPopup,
+            messageUserPopup:"An erro have been occured, please retry",
+        })
+    }
+})
 
 
-module.exports = router;
+
+module.exports = router

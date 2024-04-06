@@ -116,11 +116,25 @@ export default function useUser_Request(){
             })
             if(ok){
                 dispatch(update_codeValide(true))
-                // dispatch(update_userWantRecover(false))
-                // dispatch(update_emailSend(false))
             }
         }catch(error){
             console.error("Une erreur est survenue lors de la vérification du code de réinitialisation du mot de passe")
+        }
+    }
+
+    const userRequest_changePassword = async(userNewPassword, userEmail) => {
+        try{
+            const {ok} = await fetchRequest("PUT", {
+                route:`/user/changePassword/${userEmail}`,
+                body:{userNewPassword}
+            })
+            if(ok){
+                dispatch(update_userWantRecover(false))
+                dispatch(update_codeValide(false))
+                dispatch(update_emailSend(false))
+            }
+        }catch(error){
+            console.error("Une erreur est survenue lors de la modification du mot de passe de l'utilisateur")
         }
     }
 
@@ -131,6 +145,7 @@ export default function useUser_Request(){
         userRequest_Connect,
         userRequest_Disconnect,
         userRequest_SendEmail_ResetPasswordCode,
-        userRequest_checkCode
+        userRequest_checkCode,
+        userRequest_changePassword
     }
 }

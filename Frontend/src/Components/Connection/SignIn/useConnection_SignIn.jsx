@@ -11,7 +11,12 @@ export default function useConnection_SignIn(){
     const codeValide = useSelector(store => store.connection.recover.codeValide)
     const signInSelected = useSelector(store => store.connection.signInSelected)
     const dispatch = useDispatch()
-    const {userRequest_Connect, userRequest_SendEmail_ResetPasswordCode, userRequest_checkCode} = useUser_Request()
+    const {
+        userRequest_Connect, 
+        userRequest_changePassword, 
+        userRequest_SendEmail_ResetPasswordCode, 
+        userRequest_checkCode
+    } = useUser_Request()
     const emailInputRef_signIn = useRef()
     const passwordInputRef_signIn = useRef()
     const recoverCodeInputRef = useRef()
@@ -23,8 +28,11 @@ export default function useConnection_SignIn(){
         dispatch(update_updateSignSelected("signin"))
     }
 
-    const resetValidity = () => {
+    const resetValidityEmailInput = () => {
         emailInputRef_signIn.current.setCustomValidity("")
+    }
+    const resetValidityNewPasswordConfirmInput = () => {
+        confirmNewPasswordInputRef.current.setCustomValidity("")
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,6 +49,8 @@ export default function useConnection_SignIn(){
     const switchRecoverPassword = () => {
         setTimeout(() => {
             recoverCodeInputRef.current.value = ""
+            newPasswordInputRef.current.value = ""
+            confirmNewPasswordInputRef.current.value = ""
             dispatch(update_emailSend(false))
             dispatch(update_userWantRecover(!userWantRecover))
             dispatch(update_codeValide(false))
@@ -82,6 +92,18 @@ export default function useConnection_SignIn(){
         }
     }
 
+    const validNewPassword = (e) => {
+        const newPassword = newPasswordInputRef.current.value
+        const newPasswordConfirm = confirmNewPasswordInputRef.current.value
+        const userEmail = emailInputRef_signIn.current.value.toLowerCase()
+        if(newPassword !== newPasswordConfirm){
+            confirmNewPasswordInputRef.current.setCustomValidity("Password are not the same")
+            confirmNewPasswordInputRef.current.reportValidity()
+            return
+        }
+        userRequest_changePassword(newPasswordConfirm, userEmail)
+    }
+
     return{
         signInSelected,
         handleChangePart,
@@ -90,13 +112,15 @@ export default function useConnection_SignIn(){
         emailInputRef_signIn,
         recoverCodeInputRef,
         recoverPassword,
-        resetValidity,
+        resetValidityEmailInput,
         switchRecoverPassword,
         userWantRecover,
         emailSend,
         checkCode,
         codeValide,
         newPasswordInputRef,
-        confirmNewPasswordInputRef
+        confirmNewPasswordInputRef,
+        validNewPassword,
+        resetValidityNewPasswordConfirmInput
     }
 }
