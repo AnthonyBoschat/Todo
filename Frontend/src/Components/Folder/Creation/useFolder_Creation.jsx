@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import useFolder_Request from "../FolderRequest";
+import { update_folderOnCreation } from "../FolderSlice";
 
 export default function useFolder_Creation(){
 
     const textareaRef = useRef()
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
     const {folderRequest_Create} = useFolder_Request()
+    const dispatch = useDispatch()
 
     // Check la validité du dossier qui souhaite etre enregistrer
     const saveNewFolder = () => {
@@ -22,12 +25,25 @@ export default function useFolder_Creation(){
 
     // Appuie sur la touche entrée
     const handleValidFolder = useCallback((event) => {
-         if(event.key === "Enter" && textareaRef.current){
+         if(event.key === "Enter"){
             event.preventDefault()
-            saveNewFolder()
-        }}, [folderOnCreation])
+             if(textareaRef.current.value !== ""){
+                saveNewFolder()
+            }else{
+                dispatch(update_folderOnCreation(false))
+             }
+        }
+    }, [folderOnCreation])
+
+
     // Si l'utilisateur clique ailleurs
-    const handleClickOutside = useCallback(() => { if(textareaRef.current){saveNewFolder()} }, [folderOnCreation])
+    const handleClickOutside = useCallback(() => { 
+        if(textareaRef.current.value !== ""){
+            saveNewFolder()
+        }else{
+            dispatch(update_folderOnCreation(false))
+        }
+    }, [folderOnCreation])
     
     // Quand folderOnCreation passe en true ( qu'on est en train de créé un dossier )
     useEffect(() => {
