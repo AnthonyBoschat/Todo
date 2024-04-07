@@ -16,16 +16,17 @@ div.folderIndicator_Box{
         outline: 1px solid red; //
         font-size: 1.5rem;
         padding: 3%;
-        background-color: v.$buttonBackgroundBlue;
+        background-color: v.$buttonBackgroundBlueHover;
         border: none;
         outline: 1px solid v.$blue;
         border-radius: 10px;
         padding-left: 0.5rem;
         color: v.$buttonTextColorBlue;
-
-        &:focus{
-            outline: 1px solid white;
-        }
+        text-shadow: 1px 1px 1px black;
+    }
+    input.inputDisabled{
+        outline: 2px solid white;
+        caret-color: white;
     }
 
     i.deleteFolder{

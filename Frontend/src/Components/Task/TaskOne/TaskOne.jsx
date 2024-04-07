@@ -49,7 +49,7 @@ export default function TaskOne({task, folderIndex}){
                 ref={toggleCoverRef} 
                 style={
                     task.completed ?
-                    {backgroundColor:"rgba(97, 255, 147, 0.308)", outline:"1px solid rgba(97, 255, 147, 0.308)"}
+                    {backgroundColor:"rgba(87, 255, 244, 0.296)", outline:"1px solid rgba(87, 255, 244, 0.296)"}
                     :task.onWorking ?
                     {backgroundColor:"rgba(255, 167, 34, 0.399)", outline:"1px solid rgba(255, 167, 34, 0.399)"}
                     :null

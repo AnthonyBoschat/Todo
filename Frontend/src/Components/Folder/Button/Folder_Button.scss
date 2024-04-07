@@ -22,26 +22,17 @@ li.folderButton_Box{
         padding: 4%;
         opacity: 1;
         transition: all 0.05s linear;
-
+        box-shadow: 3px 2px 5px 1px v.$buttonBackgroundBlueHover, 3px 2px 5px 1px rgba(0, 0, 0, 0.661);
+        text-shadow: 1px 1px 1px black;
         &:hover{
             cursor: pointer;
             background-color: v.$buttonBackgroundBlueHover;
+            // box-shadow: 4px 4px 4px black;
         }
     }
 
     button.folderSelected{
         background-color: v.$buttonBackgroundBlueHover;
     }
-
-    // i{
-    //     color: white;
-    //     font-size: 0.8rem;
-    //     transition: opacity 0.05s linear;
-    //     opacity: 0.7;
-    //     &:hover{
-    //         cursor: pointer;
-    //         opacity: 1;
-    //     }
-    // }
     
 }

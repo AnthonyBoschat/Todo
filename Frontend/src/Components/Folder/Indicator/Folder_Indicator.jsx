@@ -18,7 +18,7 @@ export default function Folder_Indicator(){
             {folderSelectedName && (
                 <div className="folderIndicator_Box">
                     
-                    <input onChange={handleChangeInputFolder} ref={folderInputRef} style={!folderInputDisabled ? {outline:"1px solid white"} : null} disabled={folderInputDisabled} type="text" value={folderName ? folderName : ""} />
+                    <input className={folderInputDisabled ? null : "inputDisabled"} onChange={handleChangeInputFolder} ref={folderInputRef} disabled={folderInputDisabled} type="text" value={folderName ? folderName : ""} />
                     <i onClick={lockUnlockFolder} className={folderInputDisabled ? "lockFolder fa-solid fa-lock" : "unlockFolder fa-solid fa-unlock"}></i>
                     <i onClick={deleteFolder} className="deleteFolder fa-solid fa-trash"></i>
                 </div>
