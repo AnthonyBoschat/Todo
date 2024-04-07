@@ -6,13 +6,16 @@ $blueConnection:rgb(167, 252, 247);
 
 
 $buttonBackgroundBlue:rgba(167, 252, 246, 0.031);
-$buttonBackgroundBlueHover:rgba(167, 252, 246, 0.13);
+$buttonBackgroundBlueHover:rgba(94, 255, 244, 0.13);
+// $buttonBackgroundBlueHover:rgba(255, 167, 34, 0.399);
 $buttonTextColorBlue:rgb(176, 255, 254);
 
-$folderButtonTextColor:rgb(176, 255, 254);
+$redButton:rgb(183, 0, 0);
+
+$taskBackground:rgba(82, 93, 93, 0.371);
+$taskShadowInset:rgba(167, 252, 246, 0.031);
+$taskOutline:rgba(214, 255, 254, 0.632);
+$taskOutlineHover:rgb(214, 255, 254);
+$taskConfirmTask:rgb(193, 255, 254);
 
 
-
-// // Popup color:
-// $popup_neutral:rgb(205, 205, 205);
-// $popup_good:rgb(115, 179, 115)

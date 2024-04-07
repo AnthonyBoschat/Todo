@@ -1,3 +1,5 @@
+@use "../../../Sass/Variable.scss" as v;
+
 div.folderIndicator_Box{
     position: absolute;
     left: 0;
@@ -10,9 +12,25 @@ div.folderIndicator_Box{
     align-items: center;
     width: fit-content;
 
+    input{
+        outline: 1px solid red; //
+        font-size: 1.5rem;
+        padding: 3%;
+        background-color: v.$buttonBackgroundBlue;
+        border: none;
+        outline: 1px solid v.$blue;
+        border-radius: 10px;
+        padding-left: 0.5rem;
+        color: v.$buttonTextColorBlue;
+
+        &:focus{
+            outline: 1px solid white;
+        }
+    }
+
     i.deleteFolder{
         opacity: 0.6;
-        color: rgb(255, 33, 33);
+        color: v.$redButton;
         font-size: 1.5rem;
         transition: opacity 0.1s linear;
 
@@ -45,18 +63,5 @@ div.folderIndicator_Box{
     }
 
     
-    input{
-        font-size: 1.5rem;
-        padding: 0.2rem;
-        background-color: transparent;
-        border: none;
-        outline: 1px solid rgb(169, 169, 169);
-        border-radius: 10px;
-        padding-left: 0.5rem;
-        color: white;
-
-        &:focus{
-            outline: 1px solid white;
-        }
-    }
+    
 }

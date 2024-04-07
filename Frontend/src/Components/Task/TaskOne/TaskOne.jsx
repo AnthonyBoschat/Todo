@@ -22,8 +22,9 @@ export default function TaskOne({task, folderIndex}){
 
             {/* Button */}
             <div className="check_Box">
-                <i style={task.completed ? {visibility:"hidden"} : task.onWorking ? {opacity:"1"} : null} onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className="fa-regular fa-circle-dot"></i>
-                <i  style={task.completed ? {opacity:"1"} : null} onClick={() => toggle_completedTask(task._id, !task.completed)} className="fa-solid fa-square-check"></i>
+                <i onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className={task.completed ? "fa-regular fa-circle-dot onWorkingButton hidden" : task.onWorking ? "fa-regular fa-circle-dot onWorkingButton onWork" : "fa-regular fa-circle-dot onWorkingButton"}></i>
+                {/* <i style={task.completed ? {visibility:"hidden"} : task.onWorking ? {opacity:"1"} : null} onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className="fa-regular fa-circle-dot onWorkingButton"></i> */}
+                <i onClick={() => toggle_completedTask(task._id, !task.completed)} className={!task.completed ? "fa-solid fa-square-check confirmTaskButton" : "fa-solid fa-square-check confirmTaskButton taskConfirmed"}></i>
             </div>
 
             {/* Task */}
@@ -48,9 +49,9 @@ export default function TaskOne({task, folderIndex}){
                 ref={toggleCoverRef} 
                 style={
                     task.completed ?
-                    {backgroundColor:"rgba(0, 141, 176, 0.5)", outline:"1px solid rgba(0, 141, 176, 0.461)"}
+                    {backgroundColor:"rgba(97, 255, 147, 0.308)", outline:"1px solid rgba(97, 255, 147, 0.308)"}
                     :task.onWorking ?
-                    {backgroundColor:"rgb(252, 160, 26, 0.5)", outline:"1px solid rgb(252, 180, 26)"}
+                    {backgroundColor:"rgba(255, 167, 34, 0.399)", outline:"1px solid rgba(255, 167, 34, 0.399)"}
                     :null
                 } 
                 className={

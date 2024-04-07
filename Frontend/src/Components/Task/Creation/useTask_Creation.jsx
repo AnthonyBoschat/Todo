@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useTask_Request from "../TaskRequest";
+import { update_taskOnCreation } from "../TaskSlice";
 
 export default function useTask_Creation(){
 
     const taskOnCreation = useSelector(store => store.task.taskOnCreation)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
+    const dispatch = useDispatch()
     
     const {taskRequest_Create} = useTask_Request()
     const taskCreationRef = useRef()
@@ -26,16 +28,22 @@ export default function useTask_Creation(){
     const handleValidTaskKeydownClick = useCallback(() => {
         if(taskCreationRef.current.innerHTML !== ""){
             saveNewTask()
+        }else{
+            dispatch(update_taskOnCreation(false))
         }
     }, [])
 
 
-    // Validation de la task par le click en dehors, si le nom est rempli au moin
+    // Validation de la task par la touche entrée, si le nom est rempli au moin
     const handleValidTaskKeydown = useCallback( async(event) => {
         if(event.key === "Enter"){
             if(!event.shiftKey){
-                event.preventDefault()
-                saveNewTask()
+                if(taskCreationRef.current.innerHTML !== ""){
+                    event.preventDefault()
+                    saveNewTask()
+                }else{
+                    dispatch(update_taskOnCreation(false))
+                }
             }
         }
     }, [])
