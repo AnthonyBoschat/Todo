@@ -7,10 +7,10 @@ div.taskCreation{
     animation: taskCreation_SlideRight 0.1s linear forwards;
     max-width: 50%;
     width: fit-content;
-    outline: 1px solid v.$blue;
-    box-shadow: 0px 0px 10px black inset,
-                0px 0px 10px v.$blue !important;
-    background-color: rgb(32, 32, 32);
+    outline: 1px solid v.$taskOutline;
+    box-shadow: 2px 2px 2px 1px black;
+    text-shadow: 1px 1px 1px black;
+    background-color: v.$taskBackground;
 
     div.taskName{
         // outline: 1px solid green; //

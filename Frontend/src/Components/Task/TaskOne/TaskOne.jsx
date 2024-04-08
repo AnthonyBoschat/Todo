@@ -28,7 +28,7 @@ export default function TaskOne({task, folderIndex}){
             </div>
 
             {/* Task */}
-            <div style={(taskEditable && taskOnEdition) ? {outline:"1px solid rgb(0, 182, 227)", boxShadow:"0px 0px 10px rgb(0, 182, 227)"} : null} ref={taskRef} className="task_Box">
+            <div ref={taskRef} className={(taskEditable && taskOnEdition) ? "task_Box onEdition" : "task_Box"}>
 
                 <div ref={leftSideRef} style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
                     <span ref={taskNameRef} contentEditable={taskEditable} suppressContentEditableWarning={taskEditable} className="taskName">{task.content}</span>
@@ -51,7 +51,7 @@ export default function TaskOne({task, folderIndex}){
                     task.completed ?
                     {backgroundColor:"rgba(87, 255, 244, 0.296)", outline:"1px solid rgba(87, 255, 244, 0.296)"}
                     :task.onWorking ?
-                    {backgroundColor:"rgba(255, 167, 34, 0.399)", outline:"1px solid rgba(255, 167, 34, 0.399)"}
+                    {backgroundColor:"rgba(255, 167, 20, 0.550)", outline:"1px solid rgba(255, 167, 20, 0.550)"}
                     :null
                 } 
                 className={

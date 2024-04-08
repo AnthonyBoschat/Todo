@@ -10,16 +10,16 @@ export default function usePopup(){
         newPopupConfiguration.hidden = false
         switch(newPopupConfiguration.color){
             case "neutral":
-                newPopupConfiguration.color = "rgb(205, 205, 205)"
+                newPopupConfiguration.color = "rgb(237, 237, 237)"
                 break
             case "good":
-                newPopupConfiguration.color = "rgb(115, 179, 115)"
+                newPopupConfiguration.color = "rgb(201, 250, 254)"
                 break
             case "bad" :
-                newPopupConfiguration.color = "rgb(214, 165, 165)"
+                newPopupConfiguration.color = "rgb(255, 216, 216)"
                 break
             case "debug":
-                newPopupConfiguration.color = "rgb(207, 165, 217)"
+                newPopupConfiguration.color = "rgb(205, 148, 255)"
                 break
         }
         dispatch(update_popup(newPopupConfiguration))

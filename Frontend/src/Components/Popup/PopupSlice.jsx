@@ -5,7 +5,7 @@ const PopupSlice = createSlice({
     initialState:{
         hidden:true,
         message:null,
-        color:"rgb(205, 205, 205)",
+        color:"rgb(201, 250, 254)",
     },
     reducers:{
         update_popup:(state,action) => {

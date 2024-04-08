@@ -101,6 +101,9 @@ div.task_Display{
     }
     
 
+    div.task_Box.onEdition{
+        outline: 2px solid white !important;
+    }
     div.task_Box{
         background-color: v.$taskBackground;
         outline: 1px solid v.$taskOutline;
@@ -186,4 +189,5 @@ div.task_Display{
         }
     }
 }
+
 
