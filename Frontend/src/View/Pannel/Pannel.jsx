@@ -15,7 +15,7 @@ export default function Pannel(){
     return(
         
         <div className="pannel_display">
-            <div style={!connected ? {display:"none"} : null} className={!onDisconnection ? "pannel_Box apparition" : "pannel_Box disparition" }>
+            <div style={!connected ? {display:"none"} : null} className={`pannel_Box ${onDisconnection ? "disparition" : "apparition"}`}>
 
                 {allDatasLoad && ( // Seulement quand tout les dossiers ont été chargé, on charge les autres composants
                     <>

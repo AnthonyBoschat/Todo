@@ -22,13 +22,12 @@ export default function TaskOne({task, folderIndex}){
 
             {/* Button */}
             <div className="check_Box">
-                <i onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className={task.completed ? "fa-regular fa-circle-dot onWorkingButton hidden" : task.onWorking ? "fa-regular fa-circle-dot onWorkingButton onWork" : "fa-regular fa-circle-dot onWorkingButton"}></i>
-                {/* <i style={task.completed ? {visibility:"hidden"} : task.onWorking ? {opacity:"1"} : null} onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className="fa-regular fa-circle-dot onWorkingButton"></i> */}
-                <i onClick={() => toggle_completedTask(task._id, !task.completed)} className={!task.completed ? "fa-solid fa-square-check confirmTaskButton" : "fa-solid fa-square-check confirmTaskButton taskConfirmed"}></i>
+                <i onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className={`fa-regular fa-circle-dot onWorkingButton ${task.completed && "hidden" } ${task.onWorking && "onWork"}`}></i>
+                <i onClick={() => toggle_completedTask(task._id, !task.completed)} className={`fa-solid fa-square-check confirmTaskButton ${task.completed && "taskConfirmed"}`}></i>
             </div>
 
             {/* Task */}
-            <div ref={taskRef} className={(taskEditable && taskOnEdition) ? "task_Box onEdition" : "task_Box"}>
+            <div ref={taskRef} className={`task_Box ${(taskEditable && taskOnEdition) && "onEdition"}`}>
 
                 <div ref={leftSideRef} style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
                     <span ref={taskNameRef} contentEditable={taskEditable} suppressContentEditableWarning={taskEditable} className="taskName">{task.content}</span>
@@ -54,11 +53,7 @@ export default function TaskOne({task, folderIndex}){
                     {backgroundColor:"rgba(255, 167, 20, 0.550)", outline:"1px solid rgba(255, 167, 20, 0.550)"}
                     :null
                 } 
-                className={
-                    task.completed || task.onWorking ?
-                     "toggleCover cover" 
-                     : "toggleCover"
-                }></div>
+                className={`toggleCover ${(task.completed || task.onWorking) && "cover"}`}></div>
 
 
             </div>

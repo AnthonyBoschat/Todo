@@ -11,7 +11,8 @@ export default function Corp(){
 
     
     return(
-        <div className={!onDisconnection ? "renderDisplay apparition" : "renderDisplay disparition"}>
+        // <div className={!onDisconnection ? "renderDisplay apparition" : "renderDisplay disparition"}>
+        <div className={`renderDisplay ${onDisconnection ? "disparition" : "apparition"}`}>
 
             {!folderSelectedID && (<i className="logo fa-solid fa-layer-group"></i>)}
 

@@ -14,7 +14,7 @@ export default function Folder_Button({folder}){
     return(
         <li className="folderButton_Box">
             <button 
-                className={folderSelectedID === folder._id ? "folderSelected" : null} 
+                className={folderSelectedID === folder._id && "folderSelected"} 
                 onClick={handleClickFolder} 
                 ref={buttonFolderRef}
             >

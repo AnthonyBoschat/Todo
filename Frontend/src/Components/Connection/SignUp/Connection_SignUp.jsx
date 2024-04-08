@@ -18,13 +18,13 @@ export default function Connection_SignUp(){
         <div className="signUp_Box">
 
             <div className="partIndicator_Box">
-                <span onClick={handleChangePart} className={!signUpSelected ? "partIndicator partIndicatorUnfocus" : "partIndicator"}>
+                <span onClick={handleChangePart} className={`partIndicator ${!signUpSelected && "partIndicatorUnfocus"}`}>
                     Sign up
-                    <span className={signUpSelected ? "underline underlineFocus" : "underline"}></span>
+                    <span className={`underline ${signUpSelected && "underlineFocus"}`}></span>
                 </span>
             </div>
 
-            <form onSubmit={handleInscription} action="" className={!signUpSelected ? "formUnfocus" : null}>
+            <form onSubmit={handleInscription} action="" className={!signUpSelected && "formUnfocus"}>
 
                 <div className="form_section">
                     <label htmlFor="email">Email</label>
