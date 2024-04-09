@@ -19,6 +19,7 @@ export default function useTask_One(task){
     const leftSideRef = useRef()
     const toggleCoverRef = useRef()
     const dispatch = useDispatch()
+    
 
     // Pour supprimer cette task
     const deleteTask = (taskID) => {

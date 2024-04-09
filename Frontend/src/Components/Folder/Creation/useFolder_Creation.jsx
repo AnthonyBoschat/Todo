@@ -6,28 +6,35 @@ import { update_folderOnCreation } from "../FolderSlice";
 
 export default function useFolder_Creation(){
 
-    const textareaRef = useRef()
+    const folderCreationRef = useRef()
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
     const {folderRequest_Create} = useFolder_Request()
     const dispatch = useDispatch()
 
+    useEffect(() => { 
+        if(folderOnCreation && folderCreationRef.current){
+            folderCreationRef.current.focus()
+        }
+    }, [folderOnCreation])
+
     // Check la validité du dossier qui souhaite etre enregistrer
     const saveNewFolder = () => {
-        if(textareaRef.current.value !== ""){ // S'il n'a pas un nom vide
-            const newFolderName = textareaRef.current.value
+        if(folderCreationRef.current.innerText !== ""){ // S'il n'a pas un nom vide
+            const newFolderName = folderCreationRef.current.innerText
             folderRequest_Create({name:newFolderName}) // On l'enregistre dans la base de donnée
         }
     }
 
     const autoResize = () => {
-        textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'; // Ajuster la hauteur
+        folderCreationRef.current.style.height = folderCreationRef.current.scrollHeight + 'px'; // Ajuster la hauteur
     }
 
     // Appuie sur la touche entrée
     const handleValidFolder = useCallback((event) => {
+        console.log("controle")
          if(event.key === "Enter"){
             event.preventDefault()
-             if(textareaRef.current.value !== ""){
+             if(folderCreationRef.current.innerText !== ""){
                 saveNewFolder()
             }else{
                 dispatch(update_folderOnCreation(false))
@@ -38,7 +45,7 @@ export default function useFolder_Creation(){
 
     // Si l'utilisateur clique ailleurs
     const handleClickOutside = useCallback(() => { 
-        if(textareaRef.current.value !== ""){
+        if(folderCreationRef.current.innerText !== ""){
             saveNewFolder()
         }else{
             dispatch(update_folderOnCreation(false))
@@ -47,8 +54,8 @@ export default function useFolder_Creation(){
     
     // Quand folderOnCreation passe en true ( qu'on est en train de créé un dossier )
     useEffect(() => {
-        if(textareaRef.current && folderOnCreation){
-            textareaRef.current.addEventListener("keydown", handleValidFolder)
+        if(folderCreationRef.current && folderOnCreation){
+            folderCreationRef.current.addEventListener("keydown", handleValidFolder)
             setTimeout(() => {window.addEventListener("click", handleClickOutside)}, 1);
             
             return () => window.removeEventListener("click", handleClickOutside)
@@ -58,6 +65,6 @@ export default function useFolder_Creation(){
 
     return{
         autoResize,
-        textareaRef
+        folderCreationRef
     }
 }

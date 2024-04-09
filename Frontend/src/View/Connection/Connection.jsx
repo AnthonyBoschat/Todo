@@ -4,6 +4,9 @@ import Connection_SignUp from "../../Components/Connection/SignUp/Connection_Sig
 
 export default function Connection(){
 
+
+
+
     return(
         <div className="connection_Display">
             <div className="connection_Box">
@@ -14,10 +17,8 @@ export default function Connection(){
                 <div className="separator">
                 </div>
 
-                <Connection_SignUp/>
-
-
                 {/* SignUp */}
+                <Connection_SignUp/>
 
             </div>
         </div>

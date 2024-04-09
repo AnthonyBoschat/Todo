@@ -9,16 +9,17 @@ li.folderOnCreation_Box{
     align-items: center;
 
     
-    textarea{
+    div{
         overflow: hidden;
-        width: 100%;
-        height: auto;
+        width: fit-content;
         padding: 4%;
         border-radius: 5px;
-        background-color: transparent;
+        background-color: v.$buttonBackgroundBlue;
         border: none;
-        color: v.$blue;
-        outline: none;
+        color: v.$buttonTextColorBlue;
+        box-shadow: 3px 2px 5px 1px v.$buttonBackgroundBlueHover, 3px 2px 5px 1px rgba(0, 0, 0, 0.661);
+        text-shadow: 1px 1px 1px black;
+        outline: 1px solid v.$blue; //
         font-size: 1.3rem;
         // outline: 1px solid red; // 
         text-align: center;

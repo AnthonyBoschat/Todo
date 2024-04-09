@@ -5,12 +5,12 @@ export default function Folder_Creation(){
 
     const {
         autoResize,
-        textareaRef
+        folderCreationRef
     } = useFolder_Creation()
 
     return(
         <li className="folderOnCreation_Box">
-            <textarea onInput={autoResize} ref={textareaRef} autoFocus/>
+            <div contentEditable onInput={autoResize} ref={folderCreationRef} autoFocus></div>
         </li>
     )
 }

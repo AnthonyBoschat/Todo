@@ -15,7 +15,6 @@ function App() {
   const allDatasLoad = useSelector(store => store.user.allDatasLoad)
   const [reconnectionControle, setReconnectionControle] = useState(false)
   const {userRequest_Reconnect, userRequest_LoadDatas} = useUser_Request()
-
   
   // Tentative de reconnection par le cookie
   useEffect(() => {
@@ -31,6 +30,9 @@ function App() {
         userRequest_LoadDatas()
       }
   }, [userID])
+
+
+
 
   
 
