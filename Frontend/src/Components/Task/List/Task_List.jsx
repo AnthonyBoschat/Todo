@@ -10,14 +10,12 @@ export default function Task_List(){
         taskOnCreation,
         displayTaskListRef,
         taskToShow,
-        handleOnDragEnd
     } = useTask_List()
 
 
     return(
         <>
             {taskToShow && (
-                <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId="tasks">
                         {(provided) => (
                             <div ref={displayTaskListRef} className="listTask_Display">
@@ -45,8 +43,6 @@ export default function Task_List(){
                             
                         )}
                     </Droppable>   
-                </DragDropContext>
-                
             )}
         </>
         

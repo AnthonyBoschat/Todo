@@ -23,10 +23,10 @@ export default function useTask_One(task){
 
     // Pour supprimer cette task
     const deleteTask = (taskID) => {
-        const confirmation = window.confirm("Delete this task ?")
-        if(confirmation){
+        // const confirmation = window.confirm("Delete this task ?")
+        // if(confirmation){
             taskRequest_Delete(taskID)
-        }
+        // }
     }
 
     // Click pour rendre le task editable

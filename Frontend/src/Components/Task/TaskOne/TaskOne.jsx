@@ -19,7 +19,6 @@ export default function TaskOne({task, folderIndex, index}){
     } = useTask_One(task)
 
 
-
     return(
         <Draggable draggableId={task._id} index={index}>
             {(provided) => (
@@ -42,7 +41,7 @@ export default function TaskOne({task, folderIndex, index}){
                             {!taskEditable && (<i onClick={toggleRenameTask} className="fa-solid fa-pen"></i>)}
                             {(taskEditable && taskOnEdition) && (<i onClick={() => valideRenameTask(task._id)} className="valideTask fa-solid fa-pen"></i>)}
                             
-                            <i onClick={() => deleteTask(task._id)} className="deleteTask fa-solid fa-trash"></i>
+                            {/* <i onClick={() => deleteTask(task._id)} className="deleteTask fa-solid fa-trash"></i> */}
                         </div>
         
         

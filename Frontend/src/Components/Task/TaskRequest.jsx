@@ -27,15 +27,14 @@ export default function useTask_Request(){
 
 
 
-
     const taskRequest_Delete = async (taskID) => {
         try{
             const {ok, data} = await fetchRequest("DELETE", {
                 route: `/task/delete/${taskID}`,
             })
             if(ok){
-                const dataIndex = userTasksList.findIndex(task => task._id === data._id)
-                dispatch(update_deleteData({listName:"userTasksList", dataIndex:dataIndex}))
+                // const dataIndex = userTasksList.findIndex(task => task._id === data._id)
+                // dispatch(update_deleteData({listName:"userTasksList", dataIndex:dataIndex}))
             }
         }catch(error) {
             console.error("Une erreur est survenue lors de la suppression de la task:", error)

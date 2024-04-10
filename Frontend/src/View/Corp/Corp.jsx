@@ -1,14 +1,42 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import List_Task from "../../Components/Task/List/Task_List";
 import Header from "../Header/Header";
+import { DragDropContext } from "react-beautiful-dnd";
+import { update_reorderList } from "../../Components/User/UserSlice";
+import useTask_One from "../../Components/Task/TaskOne/useTaskOne";
 
 
 export default function Corp(){
 
+    const userTasksList = useSelector(store => store.user.datas.userTasksList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
+    const dispatch = useDispatch()
+    const {deleteTask} = useTask_One()
 
+    const handleOnDragEnd = (result) => {
+        const {source, destination} = result
+        if(!destination) return
+        if(destination.droppableId === source.droppableId && destination.index === source.index)return
+        if(destination.droppableId === "trash"){
+            const confirmation = window.confirm("Delete this task ?")
+            if(confirmation){
+                const taskID = userTasksList[source.index]._id
+                const items = Array.from(userTasksList)
+                items.splice(source.index, 1)
+                dispatch(update_reorderList({listName:"userTasksList", newList:items}))
+                deleteTask(taskID)
+            }
+            return
+        }else{
+            const items = Array.from(userTasksList)
+            const [reorderedItem] = items.splice(result.source.index, 1)
+            items.splice(destination.index, 0, reorderedItem)
+            dispatch(update_reorderList({listName:"userTasksList", newList:items}))
+        }
+        
+    }
     
     return(
         // <div className={!onDisconnection ? "renderDisplay apparition" : "renderDisplay disparition"}>
@@ -18,8 +46,10 @@ export default function Corp(){
 
             {folderSelectedID && (
                 <div className="taskRender_Display">
-                    <Header/>
-                    <List_Task/>
+                    <DragDropContext onDragEnd={handleOnDragEnd}>
+                        <Header/>
+                        <List_Task/>
+                    </DragDropContext>
                 </div>
             )}
             
