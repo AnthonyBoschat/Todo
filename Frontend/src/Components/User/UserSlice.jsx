@@ -32,12 +32,15 @@ const UserSlice = createSlice({
         update_allDatasLoad:(state,action) => {
             state.allDatasLoad = action.payload
         },
+        update_reorderList:(state,action) => {
+            state.datas[action.payload.listName] = action.payload.newList
+        },
         update_DELETE_ALL_DATAS:(state,action) => {
             state.datas = {
                 userFoldersList:[],
                 userTasksList:[],
             }
-        }
+        },
     },
 })
 
@@ -49,5 +52,6 @@ export const {
     update_addData,
     update_changeData,
     update_deleteData,
+    update_reorderList,
     update_DELETE_ALL_DATAS
 } = UserSlice.actions

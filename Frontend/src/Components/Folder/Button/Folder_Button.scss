@@ -1,37 +1,37 @@
 @use "../../../Sass/Variable.scss" as v;
 
 li.folderButton_Box{
-    list-style: none;
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: center;
     // background-color: red; //
 
-    button{
+    div{
         outline: 1px solid v.$blue; //
         // background-color: transparent;
 
         background-color: v.$buttonBackgroundBlue;
         border-radius: 5px;
-
+        height: fit-content;
         width: fit-content;
         font-size: 1.3rem;
         color: v.$buttonTextColorBlue;
         border: none;
-        padding: 4%;
+        padding: 12px;
         opacity: 1;
+        margin: 1rem;
         transition: all 0.05s linear;
         box-shadow: 3px 2px 5px 1px v.$buttonBackgroundBlueHover, 3px 2px 5px 1px rgba(0, 0, 0, 0.661);
         text-shadow: 1px 1px 1px black;
+        
         &:hover{
             cursor: pointer;
             background-color: v.$buttonBackgroundBlueHover;
-            // box-shadow: 4px 4px 4px black;
         }
     }
 
-    button.folderSelected{
+    div.folderSelected{
         background-color: v.$buttonBackgroundBlueHover;
     }
     

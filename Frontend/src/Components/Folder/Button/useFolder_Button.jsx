@@ -5,7 +5,7 @@ import { update_taskOnEdition } from "../../Task/TaskSlice";
 
 export default function useFolder_Button(folder){
 
-    const buttonFolderRef = useRef()
+    
     const dispatch = useDispatch()
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
 
@@ -21,7 +21,6 @@ export default function useFolder_Button(folder){
     }
 
     return{
-        buttonFolderRef,
         folderSelectedID,
         handleClickFolder,
     }
