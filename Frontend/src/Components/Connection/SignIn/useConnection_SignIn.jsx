@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { update_codeValide, update_emailSend, update_updateSignSelected, update_userWantRecover } from "../ConnectionSlice";
-import useUser_Request from "../../User/UserRequest";
+import useFetchRequest from "../../../Utils/useFetchRequest";
 
 export default function useConnection_SignIn(){
 
@@ -11,12 +11,7 @@ export default function useConnection_SignIn(){
     const codeValide = useSelector(store => store.connection.recover.codeValide)
     const signInSelected = useSelector(store => store.connection.signInSelected)
     const dispatch = useDispatch()
-    const {
-        userRequest_Connect, 
-        userRequest_changePassword, 
-        userRequest_SendEmail_ResetPasswordCode, 
-        userRequest_checkCode
-    } = useUser_Request()
+    const {fetchRequest} = useFetchRequest()
     const emailInputRef_signIn = useRef()
     const passwordInputRef_signIn = useRef()
     const recoverCodeInputRef = useRef()
@@ -43,7 +38,7 @@ export default function useConnection_SignIn(){
             userEmail:emailInputRef_signIn.current.value.toLowerCase(),
             userPassword:passwordInputRef_signIn.current.value
         }
-        userRequest_Connect(user)
+        fetchRequest("POST", "user/connect", user)
     }
 
     const switchRecoverPassword = () => {
@@ -73,7 +68,7 @@ export default function useConnection_SignIn(){
             }
             emailInput.reportValidity()
         }else{
-            userRequest_SendEmail_ResetPasswordCode(email)
+            fetchRequest("POST", `user/sendRecoverPasswordEmail`, {userEmail:email})
         }
     }
 
@@ -88,7 +83,7 @@ export default function useConnection_SignIn(){
             }
             codeInput.reportValidity()
         }else{
-            userRequest_checkCode(userResetCode, userEmail)
+            fetchRequest("POST", `user/checkResetPasswordCode`, {userResetCode, userEmail})
         }
     }
 
@@ -101,7 +96,7 @@ export default function useConnection_SignIn(){
             confirmNewPasswordInputRef.current.reportValidity()
             return
         }
-        userRequest_changePassword(newPasswordConfirm, userEmail)
+        fetchRequest("PUT", `user/changePassword/${userEmail}`, {userNewPassword:newPasswordConfirm})
     }
 
     return{

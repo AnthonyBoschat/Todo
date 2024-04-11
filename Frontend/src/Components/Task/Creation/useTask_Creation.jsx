@@ -11,7 +11,7 @@ export default function useTask_Creation(){
     const dispatch = useDispatch()
     
     const {taskRequest_Create} = useTask_Request()
-    const {customFetchRequest} = useFetchRequest()
+    const {fetchRequest} = useFetchRequest()
     const taskCreationRef = useRef()
 
 
@@ -23,7 +23,7 @@ export default function useTask_Creation(){
             completed:false,
             folderID:folderSelectedID
         }
-        customFetchRequest("POST", "task/create", newTask)
+        fetchRequest("POST", "task/create", newTask)
     }
 
     // Validation de la task par le click en dehors, si le nom est rempli au moin

@@ -1,17 +1,17 @@
 import { useDispatch } from "react-redux";
 import {update_onDisconnection } from "../Connection/ConnectionSlice";
-import useUser_Request from "./UserRequest";
+import useFetchRequest from "../../Utils/useFetchRequest";
 
 export default function useUser(){
 
     const dispatch = useDispatch()
-    const {userRequest_Disconnect} = useUser_Request()
+    const {fetchRequest} = useFetchRequest()
 
     const handleClickDisconnection = () => {
         dispatch(update_onDisconnection(true))
         
         setTimeout(() => {
-            userRequest_Disconnect()
+            fetchRequest("GET", "user/disconnect")
         }, 350);
     }
 

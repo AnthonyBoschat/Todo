@@ -10,7 +10,7 @@ export default function useFolder_Creation(){
     const folderCreationRef = useRef()
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
     const dispatch = useDispatch()
-    const {customFetchRequest} = useFetchRequest()
+    const {fetchRequest} = useFetchRequest()
 
     useEffect(() => { 
         if(folderOnCreation && folderCreationRef.current){
@@ -22,7 +22,7 @@ export default function useFolder_Creation(){
     const saveNewFolder = () => {
         if(folderCreationRef.current.innerText !== ""){ // S'il n'a pas un nom vide
             const newFolderName = folderCreationRef.current.innerText
-            customFetchRequest("POST", "folder/create", {name:newFolderName})
+            fetchRequest("POST", "folder/create", {name:newFolderName})
         }
     }
 

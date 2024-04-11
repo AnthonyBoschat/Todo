@@ -5,8 +5,8 @@ import Corp from "./View/Corp/Corp";
 import "./Css/main.css"
 import Popup from "./Components/Popup/Popup";
 import { useEffect, useState } from "react";
-import useUser_Request from "./Components/User/UserRequest";
 import Connection from "./View/Connection/Connection";
+import useFetchRequest from "./Utils/useFetchRequest";
 
 function App() {
 
@@ -14,12 +14,12 @@ function App() {
   const userID = useSelector(store => store.connection.connectedUser._id)
   const allDatasLoad = useSelector(store => store.user.allDatasLoad)
   const [reconnectionControle, setReconnectionControle] = useState(false)
-  const {userRequest_Reconnect, userRequest_LoadDatas} = useUser_Request()
+  const {fetchRequest} = useFetchRequest()
   
   // Tentative de reconnection par le cookie
   useEffect(() => {
     (async () => {
-      await userRequest_Reconnect()
+      await fetchRequest("GET", "user/reconnect")
       setReconnectionControle(true)
     })()
   }, [])
@@ -27,7 +27,7 @@ function App() {
   // Après la connection, va récupérer toutes les datas de l'utilisateur
   useEffect(() => {
     if(!allDatasLoad && userID){
-        userRequest_LoadDatas()
+        fetchRequest("GET", "user/loadDatas")
       }
   }, [userID])
 

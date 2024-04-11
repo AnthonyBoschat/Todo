@@ -10,7 +10,7 @@ export default function useFolder_Indicator(){
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const folderInputRef = useRef()
     const {popup} = usePopup()
-    const {customFetchRequest} = useFetchRequest()
+    const {fetchRequest} = useFetchRequest()
 
     // Responsable de si oui ou non, on laisse l'input folderName etre accessible
     const [folderInputDisabled, setFolderInputDisabled] = useState(true)
@@ -27,7 +27,7 @@ export default function useFolder_Indicator(){
     const deleteFolder = () => {
         const userValidDelete = window.confirm(`Are you sure, delete ${folderSelectedName} ?`)
         if(userValidDelete){
-            customFetchRequest("DELETE", `folder/delete/${folderSelectedID}`)
+            fetchRequest("DELETE", `folder/delete/${folderSelectedID}`)
         }
     }
 
@@ -80,7 +80,7 @@ export default function useFolder_Indicator(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        customFetchRequest(newFolderName, folderSelectedID)
+                        fetchRequest(newFolderName, folderSelectedID)
                         setFolderInputDisabled(true)
                     }
                 }
@@ -97,7 +97,7 @@ export default function useFolder_Indicator(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        customFetchRequest("PUT", `folder/rename/${folderSelectedID}`, {newFolderName})
+                        fetchRequest("PUT", `folder/rename/${folderSelectedID}`, {newFolderName})
                         setFolderInputDisabled(true)
                     }
                 }

@@ -32,14 +32,14 @@ export default function Connection_SignIn(){
         <div className="signIn_Box">
             <div className="partIndicator_Box">
                 {/* <span onClick={handleChangePart} className={!signInSelected ? "partIndicator partIndicatorUnfocus" : "partIndicator"}> */}
-                <span onClick={handleChangePart} className={`partIndicator ${!signInSelected && "partIndicatorUnfocus"}`}>
+                <span onClick={handleChangePart} className={`partIndicator ${!signInSelected ? "partIndicatorUnfocus" : undefined}`}>
                     Sign in
-                    <span className={`underline ${signInSelected && "underlineFocus"}`}></span>
+                    <span className={`underline ${signInSelected ? "underlineFocus" : undefined}`}></span>
                 </span>
             </div>
 
             <form onSubmit={handleConnect} action="" className={!signInSelected ? "formUnfocus" : null}>
-                <div className={`slideContainer ${codeValide && "slideLeft"}`}>
+                <div className={`slideContainer ${codeValide ? "slideLeft" : undefined}`}>
 
                     <div className="form_section">
                         <div>
@@ -49,7 +49,7 @@ export default function Connection_SignIn(){
                     </div>
 
                     <div className="form_section">
-                        <div className={`slideContainer ${userWantRecover && "slideLeft"}`}>
+                        <div className={`slideContainer ${userWantRecover ? "slideLeft" : undefined}`}>
                             <div className="noRecover">
                                 <label htmlFor="passwordSignin">Password</label>
                                 <input onChange={resetValidityNewPasswordConfirmInput} required={!userWantRecover} ref={passwordInputRef_signIn} type="password" id="passwordSignin" />
@@ -80,12 +80,12 @@ export default function Connection_SignIn(){
 
 
                 <div className="form_section">
-                    <input className={userWantRecover && "backButton"} type={!userWantRecover ? "submit" : "button"} value={!userWantRecover ? "Connection" : "Back"} onClick={!userWantRecover ? null : switchRecoverPassword}/>
+                    <input className={userWantRecover ? "backButton" : undefined} type={!userWantRecover ? "submit" : "button"} value={!userWantRecover ? "Connection" : "Back"} onClick={!userWantRecover ? null : switchRecoverPassword}/>
 
                     {!codeValide && (
                         <>
-                            <input onClick={recoverPassword} className={`recoverButton ${userWantRecover && "recoverButtonOn"}`} type="button" value="Send email" />
-                            <input onClick={checkCode} className={`recoverButton ${emailSend && "recoverButtonOn"}`} type="button" value="Submit code" />
+                            <input onClick={recoverPassword} className={`recoverButton ${userWantRecover ? "recoverButtonOn" : undefined}`} type="button" value="Send email" />
+                            <input onClick={checkCode} className={`recoverButton ${emailSend ? "recoverButtonOn" : undefined}`} type="button" value="Submit code" />
                         </>
                     )}
                     {codeValide && (<input onClick={validNewPassword} type="button" value={"Confirm"}/>)}

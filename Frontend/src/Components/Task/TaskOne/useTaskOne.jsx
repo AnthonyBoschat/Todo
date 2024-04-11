@@ -7,7 +7,7 @@ export default function useTask_One(task){
 
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
     const [taskEditable, setTaskEditable] = useState(false)
-    const {customFetchRequest} = useFetchRequest()
+    const {fetchRequest} = useFetchRequest()
     
     const taskRef = useRef()
     const taskNameRef = useRef()
@@ -25,7 +25,7 @@ export default function useTask_One(task){
     // Bouton de validation pour valider l'edit de task
     const valideRenameTask = (taskID) => {
         const newTaskContent = taskNameRef.current.innerText
-        customFetchRequest("PUT", `task/rename/${taskID}`, {newTaskContent})
+        fetchRequest("PUT", `task/rename/${taskID}`, {newTaskContent})
         setTaskEditable(false)
     }
 
@@ -34,12 +34,12 @@ export default function useTask_One(task){
         if(!newValueTaskCompleted){
             toggleCoverRef.current.classList.add("coverReturn")
             setTimeout(async() => {
-                await customFetchRequest("PUT", `task/toggleCompleted/${taskID}`, {completed:newValueTaskCompleted})
+                await fetchRequest("PUT", `task/toggleCompleted/${taskID}`, {completed:newValueTaskCompleted})
                 toggleCoverRef.current.classList.remove("coverReturn")
             }, 100);
         }
         if(newValueTaskCompleted){
-            customFetchRequest("PUT", `task/toggleCompleted/${taskID}`, {completed:newValueTaskCompleted})
+            fetchRequest("PUT", `task/toggleCompleted/${taskID}`, {completed:newValueTaskCompleted})
         }
     }
 
@@ -48,12 +48,12 @@ export default function useTask_One(task){
         if(!newValueTaskOnWorking){
             toggleCoverRef.current.classList.add("coverReturn")
             setTimeout(async() => {
-                await customFetchRequest("PUT", `task/toggleOnWorking/${taskID}`, {onWorking:newValueTaskOnWorking})
+                await fetchRequest("PUT", `task/toggleOnWorking/${taskID}`, {onWorking:newValueTaskOnWorking})
                 toggleCoverRef.current.classList.remove("coverReturn")
             }, 250);
         }
         if(newValueTaskOnWorking){
-            customFetchRequest("PUT", `task/toggleOnWorking/${taskID}`, {onWorking:newValueTaskOnWorking})
+            fetchRequest("PUT", `task/toggleOnWorking/${taskID}`, {onWorking:newValueTaskOnWorking})
         }
         
     }

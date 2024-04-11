@@ -3,12 +3,13 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { update_updateSignSelected } from "../ConnectionSlice";
 import useUser_Request from "../../User/UserRequest";
+import useFetchRequest from "../../../Utils/useFetchRequest";
 
 export default function useConnection_SignUp(){
 
     const signUpSelected = useSelector(store => store.connection.signUpSelected)
     const dispatch = useDispatch()
-    const {userRequest_Create} = useUser_Request()
+    const {fetchRequest} = useFetchRequest()
     const emailInputRef_signUp = useRef()
     const usernameInputRef_signUp = useRef()
     const passwordInputRef_signUp = useRef()
@@ -25,7 +26,6 @@ export default function useConnection_SignUp(){
 
     const handleInscription = (e) => {
         e.preventDefault()
-        console.log("0")
         const email = emailInputRef_signUp.current.value.toLowerCase()
         const userName = usernameInputRef_signUp.current.value
         const password = passwordInputRef_signUp.current.value
@@ -42,7 +42,7 @@ export default function useConnection_SignUp(){
             userPassword:password,
             userEmail:email
         }
-        userRequest_Create(newUser)
+        fetchRequest("POST", "user/create", newUser)
     }
 
 

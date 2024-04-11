@@ -12,7 +12,7 @@ export default function Folder_List(){
     const userFoldersList = useSelector(store => store.user.datas.userFoldersList)
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
     const dispatch = useDispatch()
-    const {customFetchRequest} = useFetchRequest()
+    const {fetchRequest} = useFetchRequest()
 
     const handleOnDragEnd = (result) => {
         if(!result.destination) return
@@ -20,7 +20,7 @@ export default function Folder_List(){
         const [reorderedItem] = items.splice(result.source.index, 1)
         items.splice(result.destination.index, 0, reorderedItem)
         dispatch(update_reorderList({listName:"userFoldersList", newList:items}))
-        customFetchRequest("POST", "folder/sort", {newFoldersList:items})
+        fetchRequest("POST", "folder/sort", {newFoldersList:items})
     }
 
 

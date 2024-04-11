@@ -187,8 +187,8 @@ router.get("/loadDatas", authenticationMiddleware, async(request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Permet de récupérer un mot de passe
-router.post("/SendEmail_ResetPasswordCode/:userEmail", async(request,response) => {
-    const {userEmail} = request.params
+router.post("/sendRecoverPasswordEmail", async(request,response) => {
+    const {userEmail} = request.body
     try{
         // Verification que l'utilisateur existe dans la base de donnée, sinon, on envoie pas le mail
         const user = await User.findOne({userEmail:userEmail})
@@ -241,8 +241,8 @@ router.post("/SendEmail_ResetPasswordCode/:userEmail", async(request,response) =
 })
 
 
-router.post("/checkResetPasswordCode/:userResetCode/:userEmail", async(request, response) => {
-    const {userResetCode, userEmail} = request.params
+router.post("/checkResetPasswordCode", async(request, response) => {
+    const {userResetCode, userEmail} = request.body
     try{
         const validCode = await Recover.findOne({recoveryCode:userResetCode, userEmail:userEmail})
         if(!validCode){

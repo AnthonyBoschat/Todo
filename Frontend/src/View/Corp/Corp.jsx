@@ -13,7 +13,7 @@ export default function Corp(){
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
     const dispatch = useDispatch()
-    const {customFetchRequest} = useFetchRequest()
+    const {fetchRequest} = useFetchRequest()
 
     const handleOnDragEnd = (result) => {
         const {source, destination} = result
@@ -26,7 +26,7 @@ export default function Corp(){
                 const items = Array.from(userTasksList)
                 items.splice(source.index, 1)
                 dispatch(update_reorderList({listName:"userTasksList", newList:items}))
-                customFetchRequest("DELETE", `task/delete/${taskID}`)
+                fetchRequest("DELETE", `task/delete/${taskID}`)
             }
             return
         }else{
@@ -34,7 +34,7 @@ export default function Corp(){
             const [reorderedItem] = items.splice(result.source.index, 1)
             items.splice(destination.index, 0, reorderedItem)
             dispatch(update_reorderList({listName:"userTasksList", newList:items}))
-            customFetchRequest("PUT", `task/sort`, items)
+            fetchRequest("PUT", `task/sort`, items)
         }
         
     }
