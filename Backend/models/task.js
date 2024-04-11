@@ -5,7 +5,8 @@ const taskSchema = new mongoose.Schema({
   completed: { type: Boolean, default: false },
   onWorking: {type:Boolean, default: false},
   folderID: {type: String, required: true},
-  userID:{type:String, required:true}
+  userID:{type:String, required:true},
+  position:{type:Number, required:true}
 });
 
 const Task = mongoose.model('Task', taskSchema);

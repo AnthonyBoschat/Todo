@@ -101,11 +101,28 @@ export default function useTask_Request(){
         }
     }
 
+
+    const taskRequest_Sort = async(newTasksList) => {
+        try{
+            const {ok, data} = await fetchRequest("POST", {
+                route:"/task/sort",
+                body:newTasksList
+            })
+            if(ok){
+                console.log("Requette de réorganisation des tâches effectuer")
+            }
+        }catch(error){
+            console.error("Une erreur est survenue lors de la réorganisation de la position des tâches:", error)
+
+        }
+    }
+
     return{
         taskRequest_Create,
         taskRequest_Delete,
         taskRequest_toggleCompleted,
         taskRequest_toggleOnWorking,
-        taskRequest_rename
+        taskRequest_rename,
+        taskRequest_Sort
     }
 }

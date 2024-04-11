@@ -88,6 +88,8 @@ export default function useUser_Request(){
             })
             if(ok){
                 const {newUserFoldersList, newUserTasksList} = data
+                newUserFoldersList.sort((a,b) => a.position - b.position)
+                newUserTasksList.sort((a,b) => a.position - b.position)
                 dispatch(update_loadAllDatas({newUserFoldersList, newUserTasksList}))
                 dispatch(update_allDatasLoad(true))
             }

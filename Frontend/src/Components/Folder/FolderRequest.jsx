@@ -11,6 +11,9 @@ export default function useFolder_Request(){
     const dispatch = useDispatch()
     const {fetchRequest} = useFetchRequest()
 
+
+
+
     const folderRequest_Create = async (newFolder) => {
         try{
             const {ok, data} = await fetchRequest("POST", {
@@ -28,6 +31,11 @@ export default function useFolder_Request(){
         }
     }
 
+
+
+
+
+    
     const folderRequest_Delete = async(folderSelectedID) => {
         try{
             const {ok, data} = await fetchRequest("DELETE", {
@@ -60,9 +68,25 @@ export default function useFolder_Request(){
         }
     }
 
+    const folderRequest_Sort = async(newFoldersList) => {
+        try{
+            const {ok, data} = await fetchRequest("POST", {
+                route:"/folder/sort",
+                body:newFoldersList
+            })
+            if(ok){
+                console.log("Requette de réorganisation des dossiers effectuer")
+            }
+        }catch(error){
+            console.error("Une erreur est survenue lors de la réorganisation de la position des dossier:", error)
+
+        }
+    }
+
     return{
         folderRequest_Create,
         folderRequest_Delete,
-        folderRequest_Rename
+        folderRequest_Rename,
+        folderRequest_Sort
     }
 }

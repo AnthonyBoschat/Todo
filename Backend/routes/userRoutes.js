@@ -175,10 +175,6 @@ router.get("/loadDatas", authenticationMiddleware, async(request, response) => {
         response.status(201).json({
             messageDebugConsole:`Récupération des données de l'utilisateur réussi \n\n ${JSON.stringify(user, null, 2)}`,
             messageDebugPopup:"Récupération des données de l'utilisateur réussi",
-            // payload:{
-            //     finalAction:"user/loadDatas",
-            //     data:{newUserFoldersList, newUserTasksList}
-            // }
             payload:{newUserFoldersList, newUserTasksList}
         })
     }catch(error){

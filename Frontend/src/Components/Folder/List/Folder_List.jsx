@@ -5,19 +5,23 @@ import Button_Folder from "../Button/Folder_Button";
 import Creation_Folder from "../Creation/Folder_Creation";
 import { update_reorderList } from "../../User/UserSlice";
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import useFolder_Request from "../FolderRequest";
 
 export default function Folder_List(){
 
     const userFoldersList = useSelector(store => store.user.datas.userFoldersList)
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
     const dispatch = useDispatch()
+    const {folderRequest_Sort} = useFolder_Request()
 
     const handleOnDragEnd = (result) => {
         if(!result.destination) return
         const items = Array.from(userFoldersList)
         const [reorderedItem] = items.splice(result.source.index, 1)
         items.splice(result.destination.index, 0, reorderedItem)
+        console.log(items)
         dispatch(update_reorderList({listName:"userFoldersList", newList:items}))
+        folderRequest_Sort({newFoldersList:items})
     }
 
 

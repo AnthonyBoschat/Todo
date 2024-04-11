@@ -12,7 +12,11 @@ router.use(express.json())
 router.post("/create", authenticationMiddleware, async (request, response) => {
     try{
         const {userID} = request.token
+        const {folderID} = request.body
+        const userTasks = await Task.find({userID:userID, folderID:folderID})
+        const position = userTasks.length
         request.body.userID = userID
+        request.body.position = position
         const newTask = new Task(request.body);
         await newTask.save();
         response.status(200).json({
@@ -150,6 +154,34 @@ router.put("/rename/:taskID", authenticationMiddleware, async (request, response
             messageDebugPopup:"Echec mise à jour du contenu de la tâche",
         })
     }
+})
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Réorganise la position des tâches
+router.post("/sort", authenticationMiddleware, async(request, response) => {
+    try{
+        const {userID} = request.token
+        const {newTasksList} = request.body
+        for(let i = 0; i<newTasksList.length; i++){
+            await Task.findOneAndUpdate(
+                {_id:newTasksList[i]._id},
+                {$set:{position:i}}
+            )
+        }
+        const tasksListUpdated = await Task.find({userID:userID, folderID:newTasksList[0].folderID})
+        response.status(200).json({
+            messageDebugConsole:`Ordre des tâches mis à jour \n\n ${JSON.stringify(tasksListUpdated, null, 2)}`, 
+            messageDebugPopup:`Ordre des tâches mis à jour`,
+        })
+    }catch(error){
+        response.status(400).json({
+            message:`Echec lors de la suppression de la réorganisation de l'ordre des tâches`,
+            payload:error.message
+        })
+    }
+    
 })
 
 

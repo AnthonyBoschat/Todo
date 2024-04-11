@@ -20,7 +20,7 @@ export default function Folder_Indicator(){
                     
                     <input className={!folderInputDisabled && "inputDisabled"} onChange={handleChangeInputFolder} ref={folderInputRef} disabled={folderInputDisabled} type="text" value={folderName ? folderName : ""} />
                     <i onClick={lockUnlockFolder} className={folderInputDisabled ? "lockFolder fa-solid fa-lock" : "unlockFolder fa-solid fa-unlock"}></i>
-                    <i onClick={deleteFolder} className="deleteFolder fa-solid fa-trash"></i>
+                    {/* <i onClick={deleteFolder} className="deleteFolder fa-solid fa-trash"></i> */}
                 </div>
             )}
         </>

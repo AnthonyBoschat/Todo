@@ -5,6 +5,7 @@ import Header from "../Header/Header";
 import { DragDropContext } from "react-beautiful-dnd";
 import { update_reorderList } from "../../Components/User/UserSlice";
 import useTask_One from "../../Components/Task/TaskOne/useTaskOne";
+import useTask_Request from "../../Components/Task/TaskRequest";
 
 
 export default function Corp(){
@@ -14,6 +15,7 @@ export default function Corp(){
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
     const dispatch = useDispatch()
     const {deleteTask} = useTask_One()
+    const {taskRequest_Sort} = useTask_Request()
 
     const handleOnDragEnd = (result) => {
         const {source, destination} = result
@@ -34,6 +36,7 @@ export default function Corp(){
             const [reorderedItem] = items.splice(result.source.index, 1)
             items.splice(destination.index, 0, reorderedItem)
             dispatch(update_reorderList({listName:"userTasksList", newList:items}))
+            taskRequest_Sort({newTasksList:items})
         }
         
     }
