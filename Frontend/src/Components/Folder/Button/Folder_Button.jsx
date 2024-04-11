@@ -16,7 +16,7 @@ export default function Folder_Button({folder, index}){
             {(provided) => (
                 <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="folderButton_Box">
                     <div 
-                        className={folderSelectedID === folder._id && "folderSelected"} 
+                        className={folderSelectedID === folder._id ? "folderSelected" : undefined} 
                         onClick={handleClickFolder} 
                     >
                         {folder.name}

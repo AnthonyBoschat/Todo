@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import useFolder_Request from "../FolderRequest";
+import useFolder_Request from "../FolderAction";
 import { update_folderOnCreation } from "../FolderSlice";
+import useFetchRequest from "../../../Utils/useFetchRequest";
 
 export default function useFolder_Creation(){
 
     const folderCreationRef = useRef()
     const folderOnCreation = useSelector(store => store.folder.folderOnCreation)
-    const {folderRequest_Create} = useFolder_Request()
     const dispatch = useDispatch()
+    const {customFetchRequest} = useFetchRequest()
 
     useEffect(() => { 
         if(folderOnCreation && folderCreationRef.current){
@@ -21,7 +22,7 @@ export default function useFolder_Creation(){
     const saveNewFolder = () => {
         if(folderCreationRef.current.innerText !== ""){ // S'il n'a pas un nom vide
             const newFolderName = folderCreationRef.current.innerText
-            folderRequest_Create({name:newFolderName}) // On l'enregistre dans la base de donnée
+            customFetchRequest("POST", "folder/create", {name:newFolderName})
         }
     }
 

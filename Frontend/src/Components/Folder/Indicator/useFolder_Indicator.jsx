@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import usePopup from "../../Popup/usePopup";
-import useFolder_Request from "../FolderRequest";
+import useFolder_Request from "../FolderAction";
+import useFetchRequest from "../../../Utils/useFetchRequest";
 
 export default function useFolder_Indicator(){
 
     const folderSelectedName = useSelector(store => store.folder.folderSelectedName)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const folderInputRef = useRef()
-    const {folderRequest_Delete, folderRequest_Rename} = useFolder_Request()
     const {popup} = usePopup()
+    const {customFetchRequest} = useFetchRequest()
 
     // Responsable de si oui ou non, on laisse l'input folderName etre accessible
     const [folderInputDisabled, setFolderInputDisabled] = useState(true)
@@ -26,7 +27,7 @@ export default function useFolder_Indicator(){
     const deleteFolder = () => {
         const userValidDelete = window.confirm(`Are you sure, delete ${folderSelectedName} ?`)
         if(userValidDelete){
-            folderRequest_Delete(folderSelectedID)
+            customFetchRequest("DELETE", `folder/delete/${folderSelectedID}`)
         }
     }
 
@@ -79,7 +80,7 @@ export default function useFolder_Indicator(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        folderRequest_Rename(newFolderName, folderSelectedID)
+                        customFetchRequest(newFolderName, folderSelectedID)
                         setFolderInputDisabled(true)
                     }
                 }
@@ -96,7 +97,7 @@ export default function useFolder_Indicator(){
                         setFolderInputDisabled(true)
                     }else{
                         const newFolderName = folderInputRef.current.value
-                        folderRequest_Rename(newFolderName, folderSelectedID)
+                        customFetchRequest("PUT", `folder/rename/${folderSelectedID}`, {newFolderName})
                         setFolderInputDisabled(true)
                     }
                 }

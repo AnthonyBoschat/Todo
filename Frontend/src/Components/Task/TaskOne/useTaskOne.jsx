@@ -1,18 +1,13 @@
 import {useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_taskOnEdition } from "../TaskSlice";
-import useTask_Request from "../TaskRequest";
+import useFetchRequest from "../../../Utils/useFetchRequest";
 
 export default function useTask_One(task){
 
     const taskOnEdition = useSelector(store => store.task.taskOnEdition)
     const [taskEditable, setTaskEditable] = useState(false)
-    const {
-        taskRequest_Delete, 
-        taskRequest_toggleCompleted, 
-        taskRequest_toggleOnWorking,
-        taskRequest_rename
-    } = useTask_Request()
+    const {customFetchRequest} = useFetchRequest()
     
     const taskRef = useRef()
     const taskNameRef = useRef()
@@ -20,14 +15,6 @@ export default function useTask_One(task){
     const toggleCoverRef = useRef()
     const dispatch = useDispatch()
     
-
-    // Pour supprimer cette task
-    const deleteTask = (taskID) => {
-        // const confirmation = window.confirm("Delete this task ?")
-        // if(confirmation){
-            taskRequest_Delete(taskID)
-        // }
-    }
 
     // Click pour rendre le task editable
     const toggleRenameTask = () => {
@@ -37,8 +24,8 @@ export default function useTask_One(task){
 
     // Bouton de validation pour valider l'edit de task
     const valideRenameTask = (taskID) => {
-        const newTaskTitle = taskNameRef.current.innerText
-        taskRequest_rename(taskID, newTaskTitle)
+        const newTaskContent = taskNameRef.current.innerText
+        customFetchRequest("PUT", `task/rename/${taskID}`, {newTaskContent})
         setTaskEditable(false)
     }
 
@@ -47,57 +34,29 @@ export default function useTask_One(task){
         if(!newValueTaskCompleted){
             toggleCoverRef.current.classList.add("coverReturn")
             setTimeout(async() => {
-                taskRequest_toggleCompleted(taskID, newValueTaskCompleted)
+                await customFetchRequest("PUT", `task/toggleCompleted/${taskID}`, {completed:newValueTaskCompleted})
                 toggleCoverRef.current.classList.remove("coverReturn")
             }, 100);
         }
         if(newValueTaskCompleted){
-            taskRequest_toggleCompleted(taskID, newValueTaskCompleted)
+            customFetchRequest("PUT", `task/toggleCompleted/${taskID}`, {completed:newValueTaskCompleted})
         }
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    const toggle_onWorkingTask = (taskID, newValueTaskonWorking) => {
-        if(!newValueTaskonWorking){
+    const toggle_onWorkingTask = (taskID, newValueTaskOnWorking) => {
+        if(!newValueTaskOnWorking){
             toggleCoverRef.current.classList.add("coverReturn")
             setTimeout(async() => {
-                await taskRequest_toggleOnWorking(taskID, newValueTaskonWorking)
+                await customFetchRequest("PUT", `task/toggleOnWorking/${taskID}`, {onWorking:newValueTaskOnWorking})
                 toggleCoverRef.current.classList.remove("coverReturn")
             }, 250);
         }
-        if(newValueTaskonWorking){
-            taskRequest_toggleOnWorking(taskID, newValueTaskonWorking)
+        if(newValueTaskOnWorking){
+            customFetchRequest("PUT", `task/toggleOnWorking/${taskID}`, {onWorking:newValueTaskOnWorking})
         }
         
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // Afin de placer le focus et le curseur sur la task qu'on souhaite modifier
@@ -150,7 +109,6 @@ export default function useTask_One(task){
     }, [leftSideRef])
 
     return{
-        deleteTask, 
         taskEditable,
         taskRef,
         toggleRenameTask,

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useTask_Request from "../TaskRequest";
 import { update_taskOnCreation } from "../TaskSlice";
+import useFetchRequest from "../../../Utils/useFetchRequest";
 
 export default function useTask_Creation(){
 
@@ -10,6 +11,7 @@ export default function useTask_Creation(){
     const dispatch = useDispatch()
     
     const {taskRequest_Create} = useTask_Request()
+    const {customFetchRequest} = useFetchRequest()
     const taskCreationRef = useRef()
 
 
@@ -21,7 +23,7 @@ export default function useTask_Creation(){
             completed:false,
             folderID:folderSelectedID
         }
-        taskRequest_Create(newTask)
+        customFetchRequest("POST", "task/create", newTask)
     }
 
     // Validation de la task par le click en dehors, si le nom est rempli au moin

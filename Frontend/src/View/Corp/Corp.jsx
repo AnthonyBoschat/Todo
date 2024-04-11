@@ -4,8 +4,7 @@ import List_Task from "../../Components/Task/List/Task_List";
 import Header from "../Header/Header";
 import { DragDropContext } from "react-beautiful-dnd";
 import { update_reorderList } from "../../Components/User/UserSlice";
-import useTask_One from "../../Components/Task/TaskOne/useTaskOne";
-import useTask_Request from "../../Components/Task/TaskRequest";
+import useFetchRequest from "../../Utils/useFetchRequest";
 
 
 export default function Corp(){
@@ -14,8 +13,7 @@ export default function Corp(){
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
     const dispatch = useDispatch()
-    const {deleteTask} = useTask_One()
-    const {taskRequest_Sort} = useTask_Request()
+    const {customFetchRequest} = useFetchRequest()
 
     const handleOnDragEnd = (result) => {
         const {source, destination} = result
@@ -28,7 +26,7 @@ export default function Corp(){
                 const items = Array.from(userTasksList)
                 items.splice(source.index, 1)
                 dispatch(update_reorderList({listName:"userTasksList", newList:items}))
-                deleteTask(taskID)
+                customFetchRequest("DELETE", `task/delete/${taskID}`)
             }
             return
         }else{
@@ -36,7 +34,7 @@ export default function Corp(){
             const [reorderedItem] = items.splice(result.source.index, 1)
             items.splice(destination.index, 0, reorderedItem)
             dispatch(update_reorderList({listName:"userTasksList", newList:items}))
-            taskRequest_Sort({newTasksList:items})
+            customFetchRequest("PUT", `task/sort`, items)
         }
         
     }

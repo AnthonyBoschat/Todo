@@ -99,6 +99,7 @@ router.put("/toggleOnWorking/:taskID", authenticationMiddleware, async(request, 
     const {userID} = request.token
     const {taskID} = request.params
     const {onWorking} = request.body
+    console.log(onWorking)
     try{
         const resetTask = await Task.findOneAndUpdate(
             {userID:userID, onWorking:true},

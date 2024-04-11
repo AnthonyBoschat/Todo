@@ -2,9 +2,10 @@ const express = require("express")
 const router = express.Router()
 const Folder = require("../models/folder")
 const Task = require("../models/task")
-const { ObjectId } = require('mongodb');
 const authenticationMiddleware = require("../middleware/authentication")
 router.use(express.json())
+
+
 
 
 
@@ -17,7 +18,6 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         const userFolders = await Folder.find({userID:userID})
         const position = userFolders.length
         
-        console.log(userFolders)
         request.body.position = position
         request.body.userID = userID
         const folder = new Folder(request.body)
