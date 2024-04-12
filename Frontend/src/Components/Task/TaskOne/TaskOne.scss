@@ -104,7 +104,11 @@ div.task_Display{
     
 
     div.task_Box.onEdition{
-        outline: 2px solid white !important;
+        outline: 3px solid black !important;
+        box-shadow: 4px 4px 6px 1px black;
+        &:hover{
+            outline: 3px solid black !important;
+        }
     }
     div.task_Box{
         background-color: v.$taskBackground;
@@ -186,7 +190,7 @@ div.task_Display{
                 }
             }
     
-            i.valideTask{color: v.$blue;}
+            i.valideTask{opacity: 1; color:rgb(33, 33, 33);}
             i.deleteTask{color: v.$redButton;}
         }
     }

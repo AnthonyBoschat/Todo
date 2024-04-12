@@ -34,7 +34,7 @@ export default function Corp(){
             const [reorderedItem] = items.splice(result.source.index, 1)
             items.splice(destination.index, 0, reorderedItem)
             dispatch(update_reorderList({listName:"userTasksList", newList:items}))
-            fetchRequest("PUT", `task/sort`, items)
+            fetchRequest("POST", `task/sort`, {newTasksList:items})
         }
         
     }

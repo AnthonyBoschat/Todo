@@ -9,9 +9,7 @@ li.folderButton_Box{
 
     div{
         outline: 1px solid black; //
-        // background-color: transparent;
-
-        background-color: v.$taskBackground;
+        background-color: v.$folderBackgroundButton;
         border-radius: 5px;
         height: fit-content;
         width: fit-content;
@@ -34,7 +32,7 @@ li.folderButton_Box{
     }
 
     div.folderSelected{
-        background-color: rgb(206, 206, 206);
+        background-color: v.$folderBackgroundButtonSelected;
         box-shadow: 5px 4px 5px 3px rgba(0, 0, 0, 0.688), 3px 2px 5px 1px rgba(0, 0, 0, 0.661);
         outline: 2px solid black;
         transform: translateX(1rem);
