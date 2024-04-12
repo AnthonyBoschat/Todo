@@ -3,6 +3,7 @@ import usePopup from "../Components/Popup/usePopup";
 import useFolder_Request from "../Components/Folder/FolderAction";
 import useTask_Request from "../Components/Task/TaskRequest";
 import useUser_Request from "../Components/User/UserRequest";
+import useDevtoolsRequest from "../Components/DevTools/DevtoolsRequest";
 
 export default function useFetchRequest(){
 
@@ -13,6 +14,7 @@ export default function useFetchRequest(){
     const {folderAction} = useFolder_Request()
     const {taskAction} = useTask_Request()
     const {userAction} = useUser_Request()
+    const {devtoolAction} = useDevtoolsRequest()
 
 
     const determineTarget = (route, data) => {
@@ -30,6 +32,12 @@ export default function useFetchRequest(){
 
             case "user":
                 userAction[action](data)
+                break
+
+            case "devtool":
+                devtoolAction[action](data)
+                break
+
         }
     }
 

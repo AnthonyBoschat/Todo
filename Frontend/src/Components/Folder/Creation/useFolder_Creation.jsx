@@ -32,7 +32,6 @@ export default function useFolder_Creation(){
 
     // Appuie sur la touche entrée
     const handleValidFolder = useCallback((event) => {
-        console.log("controle")
          if(event.key === "Enter"){
             event.preventDefault()
              if(folderCreationRef.current.innerText !== ""){

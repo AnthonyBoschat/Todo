@@ -16,6 +16,7 @@ export default function DevTools(){
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const connected = useSelector(store => store.connection.connected)
     const userID = useSelector(store => store.connection.connectedUser._id)
+    const {fetchRequest} = useFetchRequest()
     
     const {
         devtoolsRequest_DELETE_ALL_TASKS,
@@ -48,7 +49,7 @@ export default function DevTools(){
     const deleteFolders = () => {
         const confirmation = window.confirm("Supprimer TOUT les DOSSIERS de cette utilisateur ?")
         if(confirmation){
-            devtoolsRequest_DELETE_ALL_FOLDERS(userID)
+            fetchRequest("DELETE", `devtool/DELETE_ALL_FOLDERS/${userID}`)
         }
     }
 
@@ -57,7 +58,7 @@ export default function DevTools(){
     const deleteTask = () => {
         const confirmation = window.confirm("Supprimer TOUTES les TACHES ?")
         if(confirmation){
-            devtoolsRequest_DELETE_ALL_TASKS(folderSelectedID)
+            fetchRequest("DELETE", `devtool/DELETE_ALL_TASKS/${folderSelectedID}`)
         }
     }
 
@@ -69,21 +70,21 @@ export default function DevTools(){
             folderID:folderSelectedID,
             userID:userID
         }
-        taskRequest_Create(taskForce)
+        fetchRequest("POST", `task/create`, taskForce)
         setTaskForceNumber(current => current + 1)
     }
 
     const deleteAllUsers = () => {
         const confirmation = window.confirm("Supprimer TOUT les UTILISATEURS ?")
         if(confirmation){
-            devtoolsRequest_DELETE_ALL_USERS()
+            fetchRequest("DELETE", `devtool/DELETE_ALL_USERS`)
         }
     }
 
     const deleteThisUser = () => {
         const confirmation = window.confirm("Supprimer CET UTILISATEUR ?")
         if(confirmation){
-            devtoolsRequest_DELETE_THIS_USER(userID)
+            fetchRequest("DELETE", `devtool/DELETE_THIS_USER/${userID}`)
         }
         
     }
@@ -97,14 +98,13 @@ export default function DevTools(){
     const toggleConnected = () => {
         if(!connected){
             const userAdmin = {
-                userEmail:"anthony.kaos@hotmail.fr",
+                userEmail:"anthonyboschat.dev@hotmail.com",
                 userPassword:"sudo"
             }
-            userRequest_Connect(userAdmin)
+            fetchRequest("POST", `user/connect`, userAdmin)
         }else{
-            userRequest_Disconnect()
+            fetchRequest("GET", `user/disconnect`)
         }
-        // dispatch(update_connected(!connected))
     }
 
     return(
