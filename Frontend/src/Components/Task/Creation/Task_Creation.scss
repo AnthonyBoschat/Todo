@@ -2,15 +2,17 @@
 
 div.taskCreation{
     
-    padding-left: 1rem;
-    padding-right: 1rem;
-    animation: taskCreation_SlideRight 0.1s linear forwards;
-    max-width: 50%;
-    width: fit-content;
-    outline: 1px solid v.$taskOutline;
-    box-shadow: 2px 2px 2px 1px black;
+    
+    // animation: taskCreation_SlideRight 0.1s linear forwards;
+    // max-width: 90%;
+    width: 90%;
+    // width: fit-content;
+    outline: 1px solid black;
+    // box-shadow: 2px 2px 2px 1px black;
     text-shadow: 1px 1px 1px black;
     background-color: v.$taskBackground;
+    border-radius: 5px;
+    margin: 0.5rem;
 
     div.taskName{
         // outline: 1px solid green; //
@@ -18,7 +20,8 @@ div.taskCreation{
         background:none;
         border: none;
         font-size: 1.3rem;
-        color: white;
+        color: black;
+        text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.207);
 
         &:focus{
             outline: none;

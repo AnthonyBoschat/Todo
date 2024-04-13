@@ -20,6 +20,14 @@
         display: grid;
         grid-template-columns: 100%;
         grid-template-rows: 10% 90%;
+
+        .Items_Lists_Box{
+            // background-color: rgba(255, 0, 0, 0.216); //
+            padding: 2rem;
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 15% 85%;
+        }
     }
 }
 

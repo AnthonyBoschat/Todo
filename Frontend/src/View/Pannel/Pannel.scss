@@ -6,7 +6,7 @@
 
     .pannel_Box{
         // background-color: rgb(22, 22, 22);
-        outline: 1px solid rgb(199, 255, 254);
+        border-right: 1px solid rgb(199, 255, 254);
         background: transparent;
         backdrop-filter: blur(20px);
         width: 100%;
@@ -15,7 +15,7 @@
         grid-template-columns: 1fr;
         grid-template-rows: 10% 80% 10%;
         transform: translateX(-100%);
-        
+        position: relative;
     }
 
     .apparition{

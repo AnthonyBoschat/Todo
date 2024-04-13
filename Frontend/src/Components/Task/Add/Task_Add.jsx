@@ -8,7 +8,7 @@ export default function Task_Add(){
     return(
         <div onClick={addTask} className="addTask_Box">
             <i className="fa-solid fa-plus"></i>
-            <span >Add Task</span>
+            <span >New items</span>
         </div>
     )
 }

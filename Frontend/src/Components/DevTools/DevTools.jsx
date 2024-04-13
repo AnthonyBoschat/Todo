@@ -65,7 +65,7 @@ export default function DevTools(){
     // Ajoute de force une task au dossier selectionner
     const addForceTask = () => {
         const taskForce = {
-            content:`Tâche forcé depuis le devTools numéro --> ${taskForceNumber} `,
+            content:`Tâche ${taskForceNumber} `,
             completed:false,
             folderID:folderSelectedID,
             userID:userID

@@ -4,13 +4,15 @@ div.addTask_Box{
     display: flex;
     align-items: center;
     // outline: 1px solid white; //
+    margin-top: 1rem;
     opacity: 0.7;
     gap: 0.7rem;
-    transition: opacity 0.15s linear;
+    transition: all 0.15s linear;
 
     &:hover{
         cursor: pointer;
         opacity: 1;
+        text-shadow: 2px 2px 1px black;
     }
 
     i{
@@ -19,7 +21,9 @@ div.addTask_Box{
     }
 
     span{
-        font-size: 1.3rem;
+        font-size: 1.8rem;
         color: white;
+        text-shadow: 1px 1px 1px black;
+        
     }
 }

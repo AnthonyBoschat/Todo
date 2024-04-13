@@ -66,7 +66,6 @@ export default function TaskOne({task, folderIndex, index}){
                         setTaskEditable={setTaskEditable}
                         toggleCoverRef={toggleCoverRef}
                     />
-                    
                 </div>
             )}
         </Draggable>
