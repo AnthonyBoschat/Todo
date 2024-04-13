@@ -11,5 +11,9 @@ div.List_List_Display{
         width: 95%;
         height: 95%;
         // outline: 1px solid white; //
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
     }
 }

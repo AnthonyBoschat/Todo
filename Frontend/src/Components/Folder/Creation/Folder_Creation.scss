@@ -1,19 +1,21 @@
 @use "../../../Sass/Variable.scss" as v;
 
 li.folderOnCreation_Box{
-    // outline: 1px solid white; //
-    position: relative;
+    outline: 1px solid white; //
+    // position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    // align-items: center;
 
     
     div{
         margin: 1rem;
         overflow: hidden;
-        width: fit-content;
+        width: 90%;
+        height: fit-content;
         padding: 12px;
+        margin: 1rem;
         border-radius: 5px;
         background-color: v.$folderBackgroundCreation;
         border: none;

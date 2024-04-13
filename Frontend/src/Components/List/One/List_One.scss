@@ -1,7 +1,8 @@
 @use "../../../Sass/Variable.scss" as v;
 
 div.listOne_Box{
-    width: 100%;
+    width: 95%;
+    height: fit-content;
     outline: 1px solid white;
     margin-top: 0.5rem;
     padding: 0.5rem;
