@@ -41,18 +41,6 @@ export default function Corp(){
         }
     }
 
-    
-    const handleDragUpdate = (update) => {
-        console.log(update)
-        const {destination} = update
-        if(destination){
-            if(destination.droppableId === "trash"){
-                dispatch(update_hoverTrash(true))
-            }else{
-                dispatch(update_hoverTrash(false))
-            }
-        }
-    }
 
 
     return(
@@ -62,7 +50,7 @@ export default function Corp(){
 
             {folderSelectedID && (
                 <div className="taskRender_Display">
-                    <DragDropContext onDragUpdate={handleDragUpdate} onDragEnd={handleOnDragEnd}>
+                    <DragDropContext onDragEnd={handleOnDragEnd}>
                         <Header/>
                         <List_Task/>
                     </DragDropContext>

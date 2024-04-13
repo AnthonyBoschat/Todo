@@ -11,9 +11,7 @@ export default function TaskOne({task, folderIndex, index}){
         deleteTask,
         taskEditable,
         setTaskEditable,
-        toggleRenameTask,
         taskNameRef,
-        valideRenameTask,
         taskOnEdition,
         toggle_completedTask,
         leftSideRef,
@@ -39,22 +37,11 @@ export default function TaskOne({task, folderIndex, index}){
 
         
                     {/* Task */}
-                    <div  ref={taskRef} {...provided.dragHandleProps} className={`task_Box ${(taskEditable && taskOnEdition) && "onEdition"}`}>
+                    <div onClick={() => setOptionsView(!optionsView)} ref={taskRef} {...provided.dragHandleProps} className={`task_Box ${(taskEditable && taskOnEdition) && "onEdition"}`}>
         
                         <div ref={leftSideRef} style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
                             <span ref={taskNameRef} contentEditable={taskEditable} suppressContentEditableWarning={taskEditable} className="taskName">{task.content}</span>
                         </div>
-        
-                        <div className="rightSideTask">
-                            <i onClick={() => setOptionsView(!optionsView)} className="fa-solid fa-sliders"></i>
-                            {/* {!taskEditable && (<i onClick={toggleRenameTask} className="fa-solid fa-pen"></i>)}
-                            {(taskEditable && taskOnEdition) && (<i onClick={() => valideRenameTask(task._id)} className="valideTask fa-solid fa-pen"></i>)} */}
-                            
-                            {/* <i onClick={() => deleteTask(task._id)} className="deleteTask fa-solid fa-trash"></i> */}
-                        </div>
-        
-        
-        
         
                         {/* Cover */}
                         <div 
@@ -69,13 +56,16 @@ export default function TaskOne({task, folderIndex, index}){
                         className={`toggleCover ${(task.completed || task.onWorking) && "cover"}`}></div>
                     </div>
         
-                    {optionsView && (
-                    <Task_Option 
+                    
+                    <Task_Option
+                        leftSideRef={leftSideRef}
+                        optionsView={optionsView}
                         task={task} 
                         taskNameRef={taskNameRef} 
                         taskEditable={taskEditable}
                         setTaskEditable={setTaskEditable}
-                    />)}
+                        toggleCoverRef={toggleCoverRef}
+                    />
                     
                 </div>
             )}
