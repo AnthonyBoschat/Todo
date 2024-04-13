@@ -1,7 +1,7 @@
 import React from "react";
 import useItem_List from "./useItem_List";
 import Creation_Item from "../Creation/Item_Creation";
-import One_Item from "../ItemOne/ItemOne";
+import Item_One from "../One/Item_One";
 import { Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -55,7 +55,7 @@ export default function Item_List(){
 
                                     {/* Si au moin une Item d'enregistrer pour ce dossier, la liste de toutes les Item*/}
                                     {(ItemToShow.length > 0) && (ItemToShow.map((Item, index) => (
-                                        <One_Item index={index} key={Item._id} Item={Item}/>
+                                        <Item_One index={index} key={Item._id} Item={Item}/>
                                     ) ))}
 
                                     {/* Nouvelle Item en cours de création */}

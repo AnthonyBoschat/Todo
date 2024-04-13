@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetchRequest from "../../../../Utils/useFetchRequest";
-import { update_ItemOnEdition } from "../../ItemSlice";
+import { update_Item_Onedition } from "../../ItemSlice";
 
 export default function useItemOption_Rename(ItemNameRef,ItemEditable,setItemEditable,leftSideRef,Item){
 
-    const ItemOnEdition = useSelector(store => store.item.ItemOnEdition)
+    const Item_Onedition = useSelector(store => store.item.Item_Onedition)
     const [optionSelected, setOptionSelected] = useState(false)
     const dispatch = useDispatch()
     const {fetchRequest} = useFetchRequest()
@@ -16,9 +16,9 @@ export default function useItemOption_Rename(ItemNameRef,ItemEditable,setItemEdi
         setOptionSelected(!optionSelected)
         if(!ItemEditable){
             setItemEditable(true)
-            dispatch(update_ItemOnEdition(true))
+            dispatch(update_Item_Onedition(true))
         }
-        if(ItemEditable && ItemOnEdition){
+        if(ItemEditable && Item_Onedition){
             const newItemContent = ItemNameRef.current.innerText
             fetchRequest("PUT", `Item/rename/${ItemID}`, {newItemContent})
             setItemEditable(false)

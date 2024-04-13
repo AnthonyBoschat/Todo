@@ -8,7 +8,7 @@ export default function Item_Add(){
     return(
         <div onClick={addItem} className="addItem_Box">
             <i className="fa-solid fa-plus"></i>
-            <span >New items</span>
+            <span >New item</span>
         </div>
     )
 }
