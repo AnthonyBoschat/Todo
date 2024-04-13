@@ -169,34 +169,6 @@ div.Item_Display{
                 }
             }
         }
-    
-        div.rightSideItem{
-            width: 10%;
-            // background-color: red; //
-            padding-right: 1rem;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            position: relative;
-            z-index: 2;
-    
-            i{
-                color:rgb(96, 96, 96);
-                display: flex;
-                align-items: center;
-                // outline: 1px solid white;
-                height: 2.5rem;
-                font-size: 1.1rem;
-                opacity: 0.6;
-    
-                &:hover{
-                    opacity: 1;
-                }
-            }
-    
-            i.valideItem{opacity: 1; color:rgb(33, 33, 33);}
-            i.deleteItem{color: v.$redButton;}
-        }
     }
 }
 

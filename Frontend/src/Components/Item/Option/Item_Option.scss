@@ -7,10 +7,10 @@ div.ItemOption_Display.hidden{
     height: 0rem;
 }
 div.ItemOption_Display{
-    background-color: rgb(83, 83, 83);
+    background-color: v.$ItemOptionBackground;
     width: 100%;
     max-width: 100%;
-    border-radius: 4px;
+    border-radius: 6px;
     display: flex;
     justify-content: center;
     transition: height 0.10s linear;
@@ -42,12 +42,11 @@ div.ItemOption_Display{
                 }
             }
             span.optionSelected{
-                text-decoration: underline;
                 opacity: 1;
             }
-            span.delete{color: rgb(255, 162, 162);}
-            span.undone{color: v.$ItemFinish;}
-            span.done{color: v.$ItemFinish; opacity: 1;}
+            span.delete{color: v.$ItemOptionColorDelete;}
+            span.undone{color: v.$ItemOptionColorDone;}
+            span.done{color: v.$ItemOptionColorDone; opacity: 1;}
         }
     }
 }

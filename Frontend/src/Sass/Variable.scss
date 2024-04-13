@@ -1,8 +1,8 @@
 $blue: rgb(163, 255, 253);
 $orange: rgb(255, 198, 76);
-$ItemFinish: rgb(163, 255, 253);
 
 $blueConnection:rgb(167, 252, 247);
+$redButton:rgb(183, 0, 0);
 
 
 $folderBackground:rgba(244, 244, 244, 0.893);
@@ -10,11 +10,10 @@ $folderBackgroundSelected:rgb(206, 206, 206);
 $folderBackgroundCreation:rgba(161, 209, 206, 0.893);
 $folderBackgroundHover:rgb(255, 255, 255);;
 
-$buttonBackgroundBlue:rgba(109, 138, 135, 0.259);
-$buttonBackgroundBlueHover:rgba(96, 122, 120, 0.636);
-$buttonTextColorBlue:rgb(176, 255, 254);
-
-$redButton:rgb(183, 0, 0);
+$connectionButtonBackground:rgba(109, 138, 135, 0.259);
+$connectionButtonBackgroundHover:rgba(96, 122, 120, 0.636);
+$connectionButtonTextColor:rgb(176, 255, 254);
+$connectionLine:rgb(167, 252, 247);;
 
 $ItemBackground:rgba(244, 244, 244, 0.893);
 $ItemBackgroundCreation:rgba(161, 209, 206, 0.893);
@@ -23,7 +22,9 @@ $ItemShadowInset:rgba(167, 252, 246, 0.031);
 $ItemOutline:rgb(176, 176, 176);
 $ItemOutlineHover:rgb(214, 255, 254);
 $ItemConfirmItem:rgba(175, 255, 250, 0.749);
-
+$ItemOptionBackground:rgb(44, 44, 44);
+$ItemOptionColorDone:rgb(0, 255, 251);
+$ItemOptionColorDelete:rgb(255, 148, 148);
 
 $listBackground:rgba(244, 244, 244, 0.893);
 $listBackgroundCreation:rgba(161, 209, 206, 0.893);

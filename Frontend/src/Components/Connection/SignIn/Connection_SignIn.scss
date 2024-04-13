@@ -27,7 +27,7 @@ div.signIn_Box{
             width: fit-content;
             // background-color: green; //
             font-size: 2.5rem;
-            color: v.$blueConnection;
+            color: v.$connectionLine;
             padding: 0.5rem;
             display: flex;
             flex-direction: column;
@@ -41,7 +41,7 @@ div.signIn_Box{
 
             span.underline{
                 transform: translateX(110%);
-                background-color: v.$blueConnection;
+                background-color: v.$connectionLine;
                 height: 2px;
                 width: 100%;
                 transition: transform 0.15s ease;
@@ -148,7 +148,7 @@ div.signIn_Box{
                 padding: 0.3rem;
                 margin-right: 1px;
                 background-color: rgba(0, 0, 0, 0.494);
-                outline: 1px solid v.$blueConnection;
+                outline: 1px solid v.$connectionLine;
                 color: white;
                 border: none;
                 padding-left: 0.5rem;
@@ -157,7 +157,7 @@ div.signIn_Box{
 
                 &:focus{
                     border: none;
-                    outline: 1px solid v.$blueConnection;
+                    outline: 1px solid v.$connectionLine;
                     background-color: rgba(0, 0, 0, 0.244);
                 }
             }
@@ -165,7 +165,7 @@ div.signIn_Box{
             div.forgetPassword_Box{
                 position: relative;
                 // outline: 1px solid white; //
-                color: v.$blueConnection;
+                color: v.$connectionLine;
                 opacity: 0.7;
                 transition: opacity 0.15s linear;
                 width: fit-content;
@@ -178,21 +178,21 @@ div.signIn_Box{
             input[type="submit"], input[type="button"]{
                 backdrop-filter: blur(10px);
                 width: 30%;
-                outline: 1px solid v.$blueConnection;
+                outline: 1px solid v.$connectionLine;
                 padding: 0.5rem;
                 border-radius: 5px;
                 position: relative;
                 font-size: 1.2rem;
-                background-color: v.$buttonBackgroundBlue;
+                background-color: v.$connectionButtonBackground;
                 border: none;
-                color: v.$buttonTextColorBlue;
+                color: v.$connectionButtonTextColor;
                 opacity: 0.7;
                 transition: all 0.15s linear;
 
                 &:hover{
                     opacity: 1;
                     cursor: pointer;
-                    background-color: v.$buttonBackgroundBlueHover;
+                    background-color: v.$connectionButtonBackgroundHover;
                 }
             }
         }
