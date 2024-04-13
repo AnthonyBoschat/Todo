@@ -1,10 +1,24 @@
 import React from "react";
+import useList_List from "./useList_List";
+import List_Creation from "../Creation/List_Creation";
 
 export default function List_List(){
 
+    const {
+        listOnCreation,
+    } = useList_List()
+
+    
+
     return(
-        <>
-            <h1>Bonjour</h1>
-        </>
+        <div className="List_List_Display">
+            <div className="List_List_Box">
+
+
+                {listOnCreation && (<List_Creation/>)}
+
+
+            </div>
+        </div>
     )
 }

@@ -12,7 +12,7 @@ export default function useFetchRequest(){
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const {popup} = usePopup()
     const {folderAction} = useFolder_Request()
-    const {ItemAction} = useItem_Request()
+    const {itemAction} = useItem_Request()
     const {userAction} = useUser_Request()
     const {devtoolAction} = useDevtoolsRequest()
 
@@ -26,8 +26,8 @@ export default function useFetchRequest(){
                 folderAction[action](data)
                 break
 
-            case "Item":
-                ItemAction[action](data)
+            case "item":
+                itemAction[action](data)
                 break
 
             case "user":

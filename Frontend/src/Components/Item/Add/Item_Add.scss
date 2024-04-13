@@ -8,6 +8,7 @@ div.addItem_Box{
     opacity: 0.7;
     gap: 0.7rem;
     transition: all 0.15s linear;
+    text-shadow: 1px 1px 1px black;
 
     &:hover{
         cursor: pointer;
@@ -23,7 +24,6 @@ div.addItem_Box{
     span{
         font-size: 1.8rem;
         color: white;
-        text-shadow: 1px 1px 1px black;
         
     }
 }

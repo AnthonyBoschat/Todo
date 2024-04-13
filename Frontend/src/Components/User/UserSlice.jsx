@@ -25,6 +25,7 @@ const UserSlice = createSlice({
         },
         update_deleteData:(state,action) => {
             state.datas[action.payload.listName].splice(action.payload.dataIndex, 1)
+            console.log("0")
         },
         update_changeData:(state,action) => {
             state.datas[action.payload.listName][action.payload.dataIndex] = action.payload.newData

@@ -8,6 +8,7 @@ const itemRoutes = require("./routes/itemRoutes")
 const folderRoutes = require("./routes/folderRoutes")
 const userRoutes = require("./routes/userRoutes")
 const devtoolRoutes = require("./routes/devtoolRoutes")
+const listRoutes = require("./routes/listRoutes")
 const app = express() // app => nouvelle application express pour configurer le serveur
 const PORT = process.env.PORT || 5000 // Port sur lequel le serveur va écouter (Inutile pour le moment ?)
 const databaseURL = process.env.Mongo_URL // url de la base de donnée
@@ -38,9 +39,10 @@ mongoose.connect(databaseURL, { useNewUrlParser: true, useUnifiedTopology: true 
 
 
 // Utilisation des routes
-app.use("/Item", itemRoutes)
+app.use("/item", itemRoutes)
 app.use("/folder", folderRoutes)
 app.use("/user", userRoutes)
+app.use("/list", listRoutes)
 app.use("/devtool", devtoolRoutes)
 
 

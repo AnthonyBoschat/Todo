@@ -41,16 +41,16 @@ router.delete("/delete/:ItemID", authenticationMiddleware, async (request, respo
     const {userID} = request.token
     const ItemID = request.params.ItemID
     try{
-        const Item = await Item.findById(ItemID)
+        const thisItem = await Item.findById(ItemID)
         const ItemDeleted = await Item.deleteOne({_id:ItemID, userID:userID})
         if(!ItemDeleted){
             throw Error()
         }
         response.status(200).json({
-            messageDebugConsole:`La tâche a correctement été supprimer \n\n ${JSON.stringify(Item, null, 2)}`,
-            messageDebugPopup:`Tâche supprimer (${Item._id})`,
+            messageDebugConsole:`La tâche a correctement été supprimer \n\n ${JSON.stringify(thisItem, null, 2)}`,
+            messageDebugPopup:`Tâche supprimer (${thisItem._id})`,
             messageUserPopup:`Item deleted`,
-            payload:Item
+            payload:thisItem
         })
     }catch(error){
         response.status(400).json({

@@ -1,14 +1,8 @@
 @use "../../../Sass/Variable.scss" as v;
 
 div.ItemCreation{
-    
-    
-    // animation: ItemCreation_SlideRight 0.1s linear forwards;
-    // max-width: 90%;
     width: 90%;
-    // width: fit-content;
     outline: 1px solid black;
-    // box-shadow: 2px 2px 2px 1px black;
     text-shadow: 1px 1px 1px black;
     background-color: v.$ItemBackgroundCreation;
     border-radius: 5px;

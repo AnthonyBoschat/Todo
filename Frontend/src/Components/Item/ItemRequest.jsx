@@ -9,14 +9,17 @@ export default function useItem_Request(){
     const dispatch = useDispatch()
 
 
-    const ItemAction = {
+    const itemAction = {
         create:(data) => {
             dispatch(update_addData({listName:"userItemsList", newData:data}))
             dispatch(update_ItemOnCreation(false))
         },
 
         delete:(data) => {
+            console.log(data)
+            console.log(userItemsList)
             const dataIndex = userItemsList.findIndex(Item => Item._id === data._id)
+            console.log(dataIndex)
             dispatch(update_deleteData({listName:"userItemsList", dataIndex:dataIndex}))
         },
 
@@ -45,6 +48,6 @@ export default function useItem_Request(){
     }
 
     return{
-        ItemAction
+        itemAction
     }
 }

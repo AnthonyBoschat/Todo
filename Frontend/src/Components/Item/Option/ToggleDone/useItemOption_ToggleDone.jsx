@@ -11,12 +11,12 @@ export default function useItemOption_ToggleDone(Item, toggleCoverRef){
         if(!doneValue){
             toggleCoverRef.current.classList.add("coverReturn")
             setTimeout(async() => {
-                await fetchRequest("PUT", `Item/toggleCompleted/${ItemID}`, {completed:doneValue})
+                await fetchRequest("PUT", `item/toggleCompleted/${ItemID}`, {completed:doneValue})
                 toggleCoverRef.current.classList.remove("coverReturn")
             }, 100);
         }
         if(doneValue){
-            fetchRequest("PUT", `Item/toggleCompleted/${ItemID}`, {completed:doneValue})
+            fetchRequest("PUT", `item/toggleCompleted/${ItemID}`, {completed:doneValue})
         }
     }
 

@@ -20,7 +20,7 @@ export default function useItemOption_Rename(ItemNameRef,ItemEditable,setItemEdi
         }
         if(ItemEditable && Item_Onedition){
             const newItemContent = ItemNameRef.current.innerText
-            fetchRequest("PUT", `Item/rename/${ItemID}`, {newItemContent})
+            fetchRequest("PUT", `item/rename/${ItemID}`, {newItemContent})
             setItemEditable(false)
         }
     }
