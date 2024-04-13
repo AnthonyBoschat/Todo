@@ -5,6 +5,7 @@ const TaskSlice = createSlice({
     initialState:{
         taskOnCreation:false,
         taskOnEdition:false,
+        hoverTrash:null
     },
     reducers:{
         update_taskOnCreation:(state,action) => {
@@ -13,6 +14,9 @@ const TaskSlice = createSlice({
         update_taskOnEdition:(state,action) => {
             state.taskOnEdition = action.payload
         },
+        update_hoverTrash:(state,action) => {
+            state.hoverTrash = action.payload
+        }
     },
 })
 
@@ -20,4 +24,5 @@ export const TaskSliceReducer = TaskSlice.reducer
 export const {
     update_taskOnCreation,
     update_taskOnEdition,
+    update_hoverTrash
 } = TaskSlice.actions

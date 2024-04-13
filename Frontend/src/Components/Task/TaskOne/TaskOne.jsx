@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import useTask_One from "./useTaskOne";
 import { Draggable } from "react-beautiful-dnd";
+import { useSelector } from "react-redux";
+import Task_Option from "../Option/Task_Option";
 
 export default function TaskOne({task, folderIndex, index}){
 
@@ -8,6 +10,7 @@ export default function TaskOne({task, folderIndex, index}){
         taskRef,
         deleteTask,
         taskEditable,
+        setTaskEditable,
         toggleRenameTask,
         taskNameRef,
         valideRenameTask,
@@ -18,28 +21,34 @@ export default function TaskOne({task, folderIndex, index}){
         toggle_onWorkingTask
     } = useTask_One(task)
 
+    const [optionsView, setOptionsView] = useState(false)
 
+    
     return(
         <Draggable draggableId={task._id} index={index}>
             {(provided) => (
-                <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="task_Display">
+                <div ref={provided.innerRef}  {...provided.draggableProps}  className="task_Display">
 
                     {/* Button */}
-                    <div className="check_Box">
+                    {/* <div className="check_Box">
                         <i onClick={() => toggle_onWorkingTask(task._id, !task.onWorking)} className={`fa-regular fa-circle-dot onWorkingButton ${task.completed && "hidden" } ${task.onWorking && "onWork"}`}></i>
                         <i onClick={() => toggle_completedTask(task._id, !task.completed)} className={`fa-solid fa-square-check confirmTaskButton ${task.completed && "taskConfirmed"}`}></i>
-                    </div>
+                    </div> */}
+                    
+                    
+
         
                     {/* Task */}
-                    <div ref={taskRef} className={`task_Box ${(taskEditable && taskOnEdition) && "onEdition"}`}>
+                    <div  ref={taskRef} {...provided.dragHandleProps} className={`task_Box ${(taskEditable && taskOnEdition) && "onEdition"}`}>
         
                         <div ref={leftSideRef} style={(taskEditable && taskOnEdition) ? {cursor:"text"} : null} className="leftSideTask">
                             <span ref={taskNameRef} contentEditable={taskEditable} suppressContentEditableWarning={taskEditable} className="taskName">{task.content}</span>
                         </div>
         
                         <div className="rightSideTask">
-                            {!taskEditable && (<i onClick={toggleRenameTask} className="fa-solid fa-pen"></i>)}
-                            {(taskEditable && taskOnEdition) && (<i onClick={() => valideRenameTask(task._id)} className="valideTask fa-solid fa-pen"></i>)}
+                            <i onClick={() => setOptionsView(!optionsView)} className="fa-solid fa-sliders"></i>
+                            {/* {!taskEditable && (<i onClick={toggleRenameTask} className="fa-solid fa-pen"></i>)}
+                            {(taskEditable && taskOnEdition) && (<i onClick={() => valideRenameTask(task._id)} className="valideTask fa-solid fa-pen"></i>)} */}
                             
                             {/* <i onClick={() => deleteTask(task._id)} className="deleteTask fa-solid fa-trash"></i> */}
                         </div>
@@ -58,15 +67,18 @@ export default function TaskOne({task, folderIndex, index}){
                             :null
                         } 
                         className={`toggleCover ${(task.completed || task.onWorking) && "cover"}`}></div>
-        
-        
                     </div>
         
+                    {optionsView && (
+                    <Task_Option 
+                        task={task} 
+                        taskNameRef={taskNameRef} 
+                        taskEditable={taskEditable}
+                        setTaskEditable={setTaskEditable}
+                    />)}
                     
                 </div>
             )}
         </Draggable>
-        
-        
     )
 }

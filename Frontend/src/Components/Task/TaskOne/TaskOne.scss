@@ -4,12 +4,14 @@ div.task_Display{
     // background-color: rgba(255, 0, 0, 0.419); //
     margin: 0.5rem;
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    // justify-content: center;
+    flex-direction: column; //
     position: relative;
+    width:40%;
 
 
     div.check_Box{
+        
         height: 100%;
         // outline: 1px solid red; //
         display: flex;
@@ -115,14 +117,13 @@ div.task_Display{
         outline: 1px solid black;
         box-shadow: 2px 2px 2px 1px black;
         backdrop-filter: blur(3px);
-        width: fit-content;
-        max-width: 50%;
+        width: 100%;
+        max-width: 100%;
         height: fit-content;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        padding-left: 1rem;
+        // gap: 1rem;
+        // padding-left: 1rem;
         transition: all 0.1s linear;
         position: relative;
         border-radius: 5px;
@@ -141,7 +142,8 @@ div.task_Display{
     
     
         div.leftSideTask{
-            // background-color: red; //
+            width: 90%;
+            // background-color: blue; //
             display: flex;
             gap: 1.5rem;
             align-items: center;
@@ -170,8 +172,11 @@ div.task_Display{
         }
     
         div.rightSideTask{
+            width: 10%;
+            // background-color: red; //
             padding-right: 1rem;
             display: flex;
+            justify-content: center;
             gap: 1rem;
             position: relative;
             z-index: 2;

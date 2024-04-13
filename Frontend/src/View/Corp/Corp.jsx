@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import List_Task from "../../Components/Task/List/Task_List";
 import Header from "../Header/Header";
 import { DragDropContext } from "react-beautiful-dnd";
 import { update_reorderList } from "../../Components/User/UserSlice";
 import useFetchRequest from "../../Utils/useFetchRequest";
+import { update_hoverTrash } from "../../Components/Task/TaskSlice";
 
 
 export default function Corp(){
@@ -14,6 +15,8 @@ export default function Corp(){
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
     const dispatch = useDispatch()
     const {fetchRequest} = useFetchRequest()
+
+    
 
     const handleOnDragEnd = (result) => {
         const {source, destination} = result
@@ -36,18 +39,30 @@ export default function Corp(){
             dispatch(update_reorderList({listName:"userTasksList", newList:items}))
             fetchRequest("POST", `task/sort`, {newTasksList:items})
         }
-        
     }
+
     
+    const handleDragUpdate = (update) => {
+        console.log(update)
+        const {destination} = update
+        if(destination){
+            if(destination.droppableId === "trash"){
+                dispatch(update_hoverTrash(true))
+            }else{
+                dispatch(update_hoverTrash(false))
+            }
+        }
+    }
+
+
     return(
-        // <div className={!onDisconnection ? "renderDisplay apparition" : "renderDisplay disparition"}>
         <div className={`renderDisplay ${onDisconnection ? "disparition" : "apparition"}`}>
 
             {!folderSelectedID && (<i className="logo fa-solid fa-layer-group"></i>)}
 
             {folderSelectedID && (
                 <div className="taskRender_Display">
-                    <DragDropContext onDragEnd={handleOnDragEnd}>
+                    <DragDropContext onDragUpdate={handleDragUpdate} onDragEnd={handleOnDragEnd}>
                         <Header/>
                         <List_Task/>
                     </DragDropContext>

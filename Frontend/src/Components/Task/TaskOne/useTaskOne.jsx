@@ -118,6 +118,7 @@ export default function useTask_One(task){
         toggle_completedTask,
         leftSideRef,
         toggleCoverRef,
-        toggle_onWorkingTask
+        toggle_onWorkingTask,
+        setTaskEditable
     }
 }
