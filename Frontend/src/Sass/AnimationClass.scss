@@ -1,14 +1,14 @@
-@keyframes taskCreation_SlideRight{
+@keyframes ItemCreation_SlideRight{
     from{transform: translateX(0);}
     to{transform: translateX(1rem);}
 }
 
-@keyframes taskToggleFinish{
+@keyframes ItemToggleFinish{
     from{width: 0%;}
     to{width: 100%;}
 }
 
-@keyframes taskToggleFinishReturn{
+@keyframes ItemToggleFinishReturn{
     from{width: 100%;}
     to{width: 0%;}
 }

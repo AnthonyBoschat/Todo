@@ -5,7 +5,7 @@ import { update_connected } from "../Connection/ConnectionSlice";
 import { update_debugConsole, update_debugPopup } from "./DevToolsSlice";
 import usePopup from "../Popup/usePopup";
 import useDevtoolsRequest from "./DevtoolsRequest";
-import useTask_Request from "../Task/TaskRequest";
+import useItem_Request from "../Item/ItemRequest";
 import useUser_Request from "../User/UserRequest";
 
 export default function DevTools(){
@@ -19,7 +19,7 @@ export default function DevTools(){
     const {fetchRequest} = useFetchRequest()
     
     const {
-        devtoolsRequest_DELETE_ALL_TASKS,
+        devtoolsRequest_DELETE_ALL_ItemS,
         devtoolsRequest_DELETE_ALL_FOLDERS,
         devtoolsRequest_DELETE_ALL_USERS,
         devtoolsRequest_DELETE_THIS_USER
@@ -31,10 +31,10 @@ export default function DevTools(){
     } = useUser_Request()
 
     const {
-        taskRequest_Create
-    } = useTask_Request()
+        ItemRequest_Create
+    } = useItem_Request()
 
-    const [taskForceNumber, setTaskForceNumber] = useState(1)
+    const [ItemForceNumber, setItemForceNumber] = useState(1)
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,24 +54,24 @@ export default function DevTools(){
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Supprime toutes les tasks d'un dossier
-    const deleteTask = () => {
+    // Supprime toutes les Items d'un dossier
+    const deleteItem = () => {
         const confirmation = window.confirm("Supprimer TOUTES les TACHES ?")
         if(confirmation){
-            fetchRequest("DELETE", `devtool/DELETE_ALL_TASKS/${folderSelectedID}`)
+            fetchRequest("DELETE", `devtool/DELETE_ALL_ItemS/${folderSelectedID}`)
         }
     }
 
-    // Ajoute de force une task au dossier selectionner
-    const addForceTask = () => {
-        const taskForce = {
-            content:`Tâche ${taskForceNumber} `,
+    // Ajoute de force une Item au dossier selectionner
+    const addForceItem = () => {
+        const ItemForce = {
+            content:`Tâche ${ItemForceNumber} `,
             completed:false,
             folderID:folderSelectedID,
             userID:userID
         }
-        fetchRequest("POST", `task/create`, taskForce)
-        setTaskForceNumber(current => current + 1)
+        fetchRequest("POST", `Item/create`, ItemForce)
+        setItemForceNumber(current => current + 1)
     }
 
     const deleteAllUsers = () => {
@@ -110,10 +110,10 @@ export default function DevTools(){
     return(
         <div className="devtools_Box">
             <button onClick={deleteFolders}>Delete All Folder</button>
-            <button onClick={deleteTask}>Delete all Task</button>
+            <button onClick={deleteItem}>Delete all Item</button>
             <button onClick={deleteAllUsers}>Delete All Users</button>
             <button onClick={deleteThisUser}>Delete This Users</button>
-            <button onClick={addForceTask}>Force une task</button>
+            <button onClick={addForceItem}>Force une Item</button>
             <button onClick={toggleConsoleMessage} style={debugConsole ? {backgroundColor:"white"} : null}>Debug console</button>
             <button onClick={togglePopupMessage} style={debugPopup ? {backgroundColor:"white"} : null}>Debug Popup</button>
             <button onClick={toggleConnected} style={connected ? {backgroundColor:"white"} : null}>Admin Connected</button>

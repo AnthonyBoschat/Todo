@@ -4,7 +4,7 @@ const express = require("express") // Créé serveur http
 const mongoose = require("mongoose") // Intéragi avec mongoDB
 const cors = require("cors") // Active la politique de partage de ressource entre origine
 const cookieParser = require("cookie-parser")
-const taskRoutes = require("./routes/taskRoutes")
+const itemRoutes = require("./routes/itemRoutes")
 const folderRoutes = require("./routes/folderRoutes")
 const userRoutes = require("./routes/userRoutes")
 const devtoolRoutes = require("./routes/devtoolRoutes")
@@ -38,7 +38,7 @@ mongoose.connect(databaseURL, { useNewUrlParser: true, useUnifiedTopology: true 
 
 
 // Utilisation des routes
-app.use("/task", taskRoutes)
+app.use("/Item", itemRoutes)
 app.use("/folder", folderRoutes)
 app.use("/user", userRoutes)
 app.use("/devtool", devtoolRoutes)

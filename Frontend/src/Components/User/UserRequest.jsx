@@ -36,7 +36,7 @@ export default function useUser_Request(){
 
         disconnect:() => {
             dispatch(update_dataList({listName:"userFoldersList", newList:[]}))
-            dispatch(update_dataList({listName:"userTasksList", newList:[]}))
+            dispatch(update_dataList({listName:"userItemsList", newList:[]}))
             dispatch(update_folderSelectedID(null))
             dispatch(update_allDatasLoad(false))
             dispatch(update_closeConnection())
@@ -59,10 +59,10 @@ export default function useUser_Request(){
         },
 
         loadDatas:(data) => {
-            const {newUserFoldersList, newUserTasksList} = data
+            const {newUserFoldersList, newUserItemsList} = data
             newUserFoldersList.sort((a,b) => a.position - b.position)
-            newUserTasksList.sort((a,b) => a.position - b.position)
-            dispatch(update_loadAllDatas({newUserFoldersList, newUserTasksList}))
+            newUserItemsList.sort((a,b) => a.position - b.position)
+            dispatch(update_loadAllDatas({newUserFoldersList, newUserItemsList}))
             dispatch(update_allDatasLoad(true))
         }
     }

@@ -1,0 +1,53 @@
+@use "../../../Sass/Variable.scss" as v;
+
+div.ItemOption_Display.visible{
+    height: 50px;
+}
+div.ItemOption_Display.hidden{
+    height: 0rem;
+}
+div.ItemOption_Display{
+    background-color: rgb(83, 83, 83);
+    width: 100%;
+    max-width: 100%;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    transition: height 0.10s linear;
+    transform: translateY(-0.1rem);
+    z-index: -1;
+    // animation: ItemOptionIn 0.15s linear forwards;
+
+    .ItemOption_Box{
+        width: 95%;
+        // background-color: rgba(255, 162, 0, 0.735); //
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .option{
+            span{
+                cursor: pointer;
+                color:rgb(255, 255, 255);
+                display: flex;
+                align-items: center;
+                // outline: 1px solid white;
+                height: 2.5rem;
+                font-size: 1.1rem;
+                opacity: 0.7;
+                text-shadow: 1px 1px 2px black;
+        
+                &:hover{
+                    opacity: 1 !important;
+                }
+            }
+            span.optionSelected{
+                text-decoration: underline;
+                opacity: 1;
+            }
+            span.delete{color: rgb(255, 162, 162);}
+            span.undone{color: v.$ItemFinish;}
+            span.done{color: v.$ItemFinish; opacity: 1;}
+        }
+    }
+}

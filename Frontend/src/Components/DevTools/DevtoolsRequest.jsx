@@ -10,8 +10,8 @@ export default function useDevtoolsRequest(){
     const dispatch = useDispatch()
 
     const devtoolAction = {
-        DELETE_ALL_TASKS:(data) => {
-            dispatch(update_dataList({listName:"userTasksList", newList:data}))
+        DELETE_ALL_ItemS:(data) => {
+            dispatch(update_dataList({listName:"userItemsList", newList:data}))
         },
         DELETE_ALL_FOLDERS:() => {
             dispatch(update_DELETE_ALL_DATAS())

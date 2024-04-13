@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("../models/user")
-const Task = require("../models/task")
+const Item = require("../models/item")
 const Folder = require("../models/folder")
 const Recover = require("../models/recover")
 const authenticationMiddleware = require("../middleware/authentication")
@@ -171,11 +171,11 @@ router.get("/loadDatas", authenticationMiddleware, async(request, response) => {
     try{
         const user = await User.findOne({_id: userID})
         const newUserFoldersList = await Folder.find({userID:userID})
-        const newUserTasksList = await Task.find({userID:userID})
+        const newUserItemsList = await Item.find({userID:userID})
         response.status(201).json({
             messageDebugConsole:`Récupération des données de l'utilisateur réussi \n\n ${JSON.stringify(user, null, 2)}`,
             messageDebugPopup:"Récupération des données de l'utilisateur réussi",
-            payload:{newUserFoldersList, newUserTasksList}
+            payload:{newUserFoldersList, newUserItemsList}
         })
     }catch(error){
         response.status(400).json({
@@ -216,7 +216,7 @@ router.post("/sendRecoverPasswordEmail", async(request,response) => {
             secure:false,
         })
         const mailOptions = {
-            from: `TaskNest <noreply@tasknest.example>`,
+            from: `ItemNest <noreply@Itemnest.example>`,
             to:userEmail,
             subject:"Password recovery",
             text:`Here is your password reset code to enter in the application : ${revoveryCode}  This code will only work for the next 15 minutes`,

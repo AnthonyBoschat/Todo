@@ -5,7 +5,7 @@ const UserSlice = createSlice({
     initialState:{
         datas:{
             userFoldersList:[],
-            userTasksList:[],
+            userItemsList:[],
         },
         allDatasLoad:false
     },
@@ -13,7 +13,7 @@ const UserSlice = createSlice({
         update_loadAllDatas:(state,action) => {
             const newDatas = {
                 userFoldersList:action.payload.newUserFoldersList,
-                userTasksList:action.payload.newUserTasksList,
+                userItemsList:action.payload.newUserItemsList,
             }
             state.datas = newDatas
         },
@@ -38,7 +38,7 @@ const UserSlice = createSlice({
         update_DELETE_ALL_DATAS:(state,action) => {
             state.datas = {
                 userFoldersList:[],
-                userTasksList:[],
+                userItemsList:[],
             }
         },
     },

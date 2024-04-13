@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_folderSelectedID, update_folderSelectedName } from "../FolderSlice";
-import { update_taskOnEdition } from "../../Task/TaskSlice";
+import { update_ItemOnEdition } from "../../Item/ItemSlice";
 
 export default function useFolder_Button(folder){
 
@@ -17,7 +17,7 @@ export default function useFolder_Button(folder){
             dispatch(update_folderSelectedID(null))
             dispatch(update_folderSelectedName(null))
         }
-        dispatch(update_taskOnEdition(false)) // Dans tout les cas, on coupe le mode edition des tasks
+        dispatch(update_ItemOnEdition(false)) // Dans tout les cas, on coupe le mode edition des Items
     }
 
     return{

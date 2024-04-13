@@ -1,6 +1,6 @@
 import React from "react";
-import Task_Add from "../../Components/Task/Add/Task_Add";
-import List_Task from "../../Components/Task/List/Task_List";
+import Item_Add from "../../Components/Item/Add/Item_Add";
+import List_Item from "../../Components/Item/List/Item_List";
 
 
 export default function Items(){
@@ -9,9 +9,9 @@ export default function Items(){
 
     return(
         <div className="Items_Display">
-            <Task_Add/>
+            <Item_Add/>
             
-                <List_Task/>
+                <List_Item/>
         </div>
     )
 }

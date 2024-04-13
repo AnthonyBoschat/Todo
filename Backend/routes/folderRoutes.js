@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const Folder = require("../models/folder")
-const Task = require("../models/task")
+const Item = require("../models/item")
 const authenticationMiddleware = require("../middleware/authentication")
 router.use(express.json())
 
@@ -53,22 +53,22 @@ router.delete("/delete/:folderID", authenticationMiddleware, async (request, res
         }
         await Folder.deleteMany({_id:folderID, userID:userID})
         // Récupération de la liste des tâche associés
-        const getListTask = await Task.find({folderID}).lean()
-        const listDeletedTask = getListTask.map(task => `${JSON.stringify(task, null, 2)}`).join("\n")
+        const getListItem = await Item.find({folderID}).lean()
+        const listDeletedItem = getListItem.map(Item => `${JSON.stringify(Item, null, 2)}`).join("\n")
 
 
         // Suppression des tâches associés
-        const deletedTask = await Task.deleteMany({folderID:folderID, userID:userID})
+        const deletedItem = await Item.deleteMany({folderID:folderID, userID:userID})
         response.status(200).json({
             messageDebugConsole:`
 ------------------- Dossier supprimé : 
 
 ${JSON.stringify(folder, null, 2)}
 
-------------------- Tâche supprimé (${deletedTask.deletedCount}) : 
+------------------- Tâche supprimé (${deletedItem.deletedCount}) : 
 
-${listDeletedTask}`,
-            messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedTask.deletedCount}`,
+${listDeletedItem}`,
+            messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedItem.deletedCount}`,
             messageUserPopup:`Folder deleted`,
             payload:folder
         })

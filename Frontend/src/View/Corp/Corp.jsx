@@ -22,7 +22,7 @@ export default function Corp(){
             {!folderSelectedID && (<i className="logo fa-solid fa-layer-group"></i>)}
 
             {folderSelectedID && (
-                <div className="taskRender_Display">
+                <div className="ItemRender_Display">
                         <Header/>
                         <div className="Items_Lists_Box">
                             <Items/>

@@ -8,7 +8,7 @@ const library_finalAction = {
 
 
     DEVTOOLS_DELETE_ALL_FOLDERS:"DEVTOOLS_DELETE_ALL_FOLDERS",
-    DEVTOOLS_DELETE_ALL_TASKS:"DEVTOOLS_DELETE_ALL_TASKS",
+    DEVTOOLS_DELETE_ALL_ItemS:"DEVTOOLS_DELETE_ALL_ItemS",
 }
 
 module.exports = library_finalAction
