@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {update_listOnCreation} from "../ListSlice"
+import useFetchRequest from "../../../Utils/useFetchRequest"
 
 export default function useList_Creation(){
 
@@ -8,6 +9,7 @@ export default function useList_Creation(){
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const listOnCreationRef = useRef()
     const dispatch = useDispatch()
+    const {fetchRequest} = useFetchRequest()
 
     useEffect(() => { 
         if(listOnCreation && listOnCreationRef.current){
@@ -15,12 +17,17 @@ export default function useList_Creation(){
         }
     }, [listOnCreation])
 
-    const handleClickOutside = () => {
+    const handleClickOutside = (event) => {
+        if(event.target === listOnCreationRef.current){
+            event.preventDefault()
+            return
+        }
         if(listOnCreationRef.current.innerText !== ""){
             const newList = {
                 name:listOnCreationRef.current.innerText,
                 folderID:folderSelectedID,
             }
+            fetchRequest("POST", "list/create", newList)
             return
         }else{
             dispatch(update_listOnCreation(false))
@@ -36,7 +43,7 @@ export default function useList_Creation(){
                         name:listOnCreationRef.current.innerText,
                         folderID:folderSelectedID,
                     }
-                    
+                    fetchRequest("POST", "list/create", newList)
                     return
                 }else{
                     dispatch(update_listOnCreation(false))

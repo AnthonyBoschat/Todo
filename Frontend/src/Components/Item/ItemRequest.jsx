@@ -16,10 +16,7 @@ export default function useItem_Request(){
         },
 
         delete:(data) => {
-            console.log(data)
-            console.log(userItemsList)
             const dataIndex = userItemsList.findIndex(Item => Item._id === data._id)
-            console.log(dataIndex)
             dispatch(update_deleteData({listName:"userItemsList", dataIndex:dataIndex}))
         },
 

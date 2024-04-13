@@ -59,10 +59,12 @@ export default function useUser_Request(){
         },
 
         loadDatas:(data) => {
-            const {newUserFoldersList, newUserItemsList} = data
+            const {newUserFoldersList, newUserItemsList, newUserListsList} = data
             newUserFoldersList.sort((a,b) => a.position - b.position)
             newUserItemsList.sort((a,b) => a.position - b.position)
-            dispatch(update_loadAllDatas({newUserFoldersList, newUserItemsList}))
+            newUserListsList.sort((a,b) => a.position - b.position)
+
+            dispatch(update_loadAllDatas({newUserFoldersList, newUserItemsList, newUserListsList}))
             dispatch(update_allDatasLoad(true))
         }
     }

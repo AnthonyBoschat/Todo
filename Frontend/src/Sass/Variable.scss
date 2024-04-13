@@ -5,19 +5,20 @@ $ItemFinish: rgb(163, 255, 253);
 $blueConnection:rgb(167, 252, 247);
 
 
-$folderBackgroundButton:rgba(244, 244, 244, 0.893);
-$folderBackgroundButtonSelected:rgb(206, 206, 206);
+$folderBackground:rgba(244, 244, 244, 0.893);
+$folderBackgroundSelected:rgb(206, 206, 206);
 $folderBackgroundCreation:rgba(161, 209, 206, 0.893);
+$folderBackgroundHover:rgb(255, 255, 255);;
 
 $buttonBackgroundBlue:rgba(109, 138, 135, 0.259);
 $buttonBackgroundBlueHover:rgba(96, 122, 120, 0.636);
-// $buttonBackgroundBlueHover:rgba(255, 167, 34, 0.399);
 $buttonTextColorBlue:rgb(176, 255, 254);
 
 $redButton:rgb(183, 0, 0);
 
 $ItemBackground:rgba(244, 244, 244, 0.893);
 $ItemBackgroundCreation:rgba(161, 209, 206, 0.893);
+$ItemBackgroundHover:rgb(255, 255, 255);
 $ItemShadowInset:rgba(167, 252, 246, 0.031);
 $ItemOutline:rgb(176, 176, 176);
 $ItemOutlineHover:rgb(214, 255, 254);
@@ -25,5 +26,6 @@ $ItemConfirmItem:rgba(175, 255, 250, 0.749);
 
 
 $listBackground:rgba(244, 244, 244, 0.893);
-$listBackgroundCreation:rgba(161, 209, 206, 0.893)
+$listBackgroundCreation:rgba(161, 209, 206, 0.893);
+$listBackgroundHover:rgb(255, 255, 255);
 

@@ -6,6 +6,7 @@ const UserSlice = createSlice({
         datas:{
             userFoldersList:[],
             userItemsList:[],
+            userListsList:[]
         },
         allDatasLoad:false
     },
@@ -14,6 +15,7 @@ const UserSlice = createSlice({
             const newDatas = {
                 userFoldersList:action.payload.newUserFoldersList,
                 userItemsList:action.payload.newUserItemsList,
+                userListsList:action.payload.newUserListsList
             }
             state.datas = newDatas
         },
@@ -25,7 +27,6 @@ const UserSlice = createSlice({
         },
         update_deleteData:(state,action) => {
             state.datas[action.payload.listName].splice(action.payload.dataIndex, 1)
-            console.log("0")
         },
         update_changeData:(state,action) => {
             state.datas[action.payload.listName][action.payload.dataIndex] = action.payload.newData

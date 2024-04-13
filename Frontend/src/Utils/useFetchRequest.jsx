@@ -4,6 +4,7 @@ import useFolder_Request from "../Components/Folder/FolderAction";
 import useItem_Request from "../Components/Item/ItemRequest";
 import useUser_Request from "../Components/User/UserRequest";
 import useDevtoolsRequest from "../Components/DevTools/DevtoolsRequest";
+import useList_Action from "../Components/List/ListAction";
 
 export default function useFetchRequest(){
 
@@ -15,6 +16,7 @@ export default function useFetchRequest(){
     const {itemAction} = useItem_Request()
     const {userAction} = useUser_Request()
     const {devtoolAction} = useDevtoolsRequest()
+    const {listAction} = useList_Action()
 
 
     const determineTarget = (route, data) => {
@@ -32,6 +34,10 @@ export default function useFetchRequest(){
 
             case "user":
                 userAction[action](data)
+                break
+
+            case "list":
+                listAction[action](data)
                 break
 
             case "devtool":

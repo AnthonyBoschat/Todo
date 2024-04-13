@@ -16,7 +16,11 @@ export default function useItem_Creation(){
     // Prépare la sauvegarde dans le mongoDB de la nouvelle tâche
 
     // Validation de la Item par le click en dehors, si le nom est rempli au moin
-    const handleValidItemKeydownClick = useCallback(() => {
+    const handleValidItemKeydownClick = useCallback((event) => {
+        if(event.target === ItemCreationRef.current){
+            event.preventDefault()
+            return
+        }
         if(ItemCreationRef.current.innerHTML !== ""){
             const newItem = {
                 content:ItemCreationRef.current.innerText, 

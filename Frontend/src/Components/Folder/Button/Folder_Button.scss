@@ -9,10 +9,11 @@ li.folderButton_Box{
 
     div{
         outline: 1px solid black; //
-        background-color: v.$folderBackgroundButton;
+        background-color: v.$folderBackground;
         border-radius: 5px;
         height: fit-content;
-        width: fit-content;
+        text-align: center;
+        width: 80%;
         font-size: 1.5rem;
         color: black;
         border: none;
@@ -28,14 +29,18 @@ li.folderButton_Box{
             // background-color: rgba(212, 212, 212, 0.772);
             box-shadow: 5px 4px 5px 3px rgba(0, 0, 0, 0.688), 3px 2px 5px 1px rgba(0, 0, 0, 0.661);
             outline: 2px solid black;
+            background: v.$folderBackgroundHover;
         }
     }
 
     div.folderSelected{
-        background-color: v.$folderBackgroundButtonSelected;
+        background-color: v.$folderBackgroundHover;
         box-shadow: 5px 4px 5px 3px rgba(0, 0, 0, 0.688), 3px 2px 5px 1px rgba(0, 0, 0, 0.661);
         outline: 2px solid black;
         transform: translateX(1rem);
+    }
+    div.folderUnselected{
+        transform: translateX(-1rem);
     }
     
 }
