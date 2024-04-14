@@ -3,6 +3,7 @@ import useItem_One from "./useItem_One";
 import { Draggable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import Item_Option from "../Option/Item_Option";
+import Item_Properties from "../Properties/Item_Properties";
 
 export default function Item_One({Item, folderIndex, index}){
 
@@ -47,7 +48,11 @@ export default function Item_One({Item, folderIndex, index}){
                     </div>
         
                     
-                    <Item_Option
+                    <Item_Properties
+                        optionsView={optionsView}
+                        item={Item}
+                    />
+                    {/* <Item_Option
                         leftSideRef={leftSideRef}
                         optionsView={optionsView}
                         Item={Item} 
@@ -55,7 +60,7 @@ export default function Item_One({Item, folderIndex, index}){
                         ItemEditable={ItemEditable}
                         setItemEditable={setItemEditable}
                         toggleCoverRef={toggleCoverRef}
-                    />
+                    /> */}
                 </div>
             )}
         </Draggable>
