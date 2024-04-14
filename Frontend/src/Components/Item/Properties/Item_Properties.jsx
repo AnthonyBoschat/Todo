@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
-import Item_PropertiesOne from "./One/Item_PropertiesOne";
+import Properties_One from "./One/Properties_One";
 
 export default function Item_Properties({optionsView, item}){
 
     const listProperties = [
-        // {propertie:"Anniversaire", value:"22/10/1994"},
-        // {propertie:"Age", value:"29"},
-        // {propertie:"Téléphone", value:"06 01 29 50 80 "},
-        // {propertie:"Autre", value:null}
+        {propertie:"Anniversaire", value:"22/10/1994"},
+        {propertie:"Age", value:"29"},
+        {propertie:"Téléphone", value:"06 01 29 50 80 "},
+        {propertie:"Autre", value:null}
     ]
 
     return(
@@ -15,7 +15,7 @@ export default function Item_Properties({optionsView, item}){
             {optionsView && (
                 <div className="itemProperties_Box">
                     {listProperties.map((propertie, index) => (
-                        <Item_PropertiesOne key={index} propertie={propertie}/>
+                        <Properties_One key={index} propertie={propertie}/>
                     ))}
                 </div>
             )}

@@ -3,22 +3,36 @@ import {createSlice} from "@reduxjs/toolkit"
 const ItemSlice = createSlice({
     name:"item",
     initialState:{
+        itemToShow:[],
         ItemOnCreation:false,
-        Item_Onedition:false,
-        hoverTrash:null
+        ItemOnEdition:false,
+        propertiesVisible:false,
+
     },
     reducers:{
         update_ItemOnCreation:(state,action) => {
             state.ItemOnCreation = action.payload
         },
-        update_Item_Onedition:(state,action) => {
-            state.Item_Onedition = action.payload
+        update_ItemOnEdition:(state,action) => {
+            state.ItemOnEdition = action.payload
         },
+        update_propertiesVisible:(state,action) => {
+            state.propertiesVisible = action.payload
+        },
+        update_itemToShow:(state,action) => {
+            state.itemToShow = action.payload
+        },
+        update_addItemToShow:(state,action) => {
+            state.itemToShow.push(action.payload)
+        }
     },
 })
 
 export const ItemSliceReducer = ItemSlice.reducer
 export const {
     update_ItemOnCreation,
-    update_Item_Onedition,
+    update_ItemOnEdition,
+    update_propertiesVisible,
+    update_itemToShow,
+    update_addItemToShow
 } = ItemSlice.actions

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { update_addData, update_changeData, update_deleteData } from "../User/UserSlice";
-import { update_ItemOnCreation } from "./ItemSlice";
+import { update_ItemOnCreation, update_addItemToShow } from "./ItemSlice";
 import { useSelector } from "react-redux";
 
 export default function useItem_Request(){
@@ -12,6 +12,7 @@ export default function useItem_Request(){
     const itemAction = {
         create:(data) => {
             dispatch(update_addData({listName:"userItemsList", newData:data}))
+            dispatch(update_addItemToShow(data))
             dispatch(update_ItemOnCreation(false))
         },
 

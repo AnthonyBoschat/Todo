@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 export default function useItem_One(Item){
 
-    const Item_Onedition = useSelector(store => store.item.Item_Onedition)
+    const ItemOnEdition = useSelector(store => store.item.ItemOnEdition)
     const [ItemEditable, setItemEditable] = useState(false)
     
     const ItemRef = useRef()
@@ -15,7 +15,7 @@ export default function useItem_One(Item){
         ItemEditable,
         ItemRef,
         ItemNameRef,
-        Item_Onedition,
+        ItemOnEdition,
         leftSideRef,
         toggleCoverRef,
         setItemEditable

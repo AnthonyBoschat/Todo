@@ -12,7 +12,7 @@ export default function Item_One({Item, folderIndex, index}){
         ItemEditable,
         setItemEditable,
         ItemNameRef,
-        Item_Onedition,
+        ItemOnEdition,
         leftSideRef,
         toggleCoverRef,
     } = useItem_One(Item)
@@ -28,9 +28,9 @@ export default function Item_One({Item, folderIndex, index}){
                     
         
                     {/* Item */}
-                    <div onClick={() => setOptionsView(!optionsView)} ref={ItemRef} {...provided.dragHandleProps} className={`Item_Box ${(ItemEditable && Item_Onedition) && "onEdition"}`}>
+                    <div onClick={() => setOptionsView(!optionsView)} ref={ItemRef} {...provided.dragHandleProps} className={`Item_Box ${(ItemEditable && ItemOnEdition) && "onEdition"}`}>
         
-                        <div ref={leftSideRef} style={(ItemEditable && Item_Onedition) ? {cursor:"text"} : null} className="leftSideItem">
+                        <div ref={leftSideRef} style={(ItemEditable && ItemOnEdition) ? {cursor:"text"} : null} className="leftSideItem">
                             <span ref={ItemNameRef} contentEditable={ItemEditable} suppressContentEditableWarning={ItemEditable} className="ItemName">{Item.content}</span>
                         </div>
         
@@ -48,10 +48,7 @@ export default function Item_One({Item, folderIndex, index}){
                     </div>
         
                     
-                    <Item_Properties
-                        optionsView={optionsView}
-                        item={Item}
-                    />
+
                     {/* <Item_Option
                         leftSideRef={leftSideRef}
                         optionsView={optionsView}
@@ -61,6 +58,11 @@ export default function Item_One({Item, folderIndex, index}){
                         setItemEditable={setItemEditable}
                         toggleCoverRef={toggleCoverRef}
                     /> */}
+                    <Item_Properties
+                        optionsView={optionsView}
+                        item={Item}
+                    />
+                    
                 </div>
             )}
         </Draggable>

@@ -1,22 +1,23 @@
 @use "../../../Sass/Variable.scss" as v;
 
 div.addItem_Box{
+    // outline: 1px solid blue; //
+    margin-right: 1rem;
+    width: fit-content;
     display: flex;
     align-items: center;
-    // outline: 1px solid white; //
-    margin-top: 1rem;
-    opacity: 0.7;
+    justify-content: center;
     gap: 0.7rem;
+    opacity: 0.7;
     transition: all 0.15s linear;
-    text-shadow: 1px 1px 1px black;
 
     &:hover{
         cursor: pointer;
-        opacity: 1;
+        opacity: 1 !important;
         text-shadow: 2px 2px 1px black;
     }
 
-    i{
+    i.addItem{
         font-size: 2rem;
         color: v.$blue;
     }
@@ -24,6 +25,5 @@ div.addItem_Box{
     span{
         font-size: 1.8rem;
         color: white;
-        
     }
 }

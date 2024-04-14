@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Item_PropertiesOne({propertie}){
+export default function Properties_One({propertie}){
 
     return(
         <div className="propertieBox">
