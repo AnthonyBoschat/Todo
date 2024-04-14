@@ -3,16 +3,16 @@ import {createSlice} from "@reduxjs/toolkit"
 const PropertiesSlice = createSlice({
     name:"properties",
     initialState:{
-        propertiesVisible:false
+        propertyOnCreation:false
     },
     reducers:{
-        update_propertiesVisible:(state, action) => {
-            state.propertiesVisible = action.payload
+        update_propertyOnCreation:(state,action) => {
+            state.propertyOnCreation = action.payload
         }
     },
 })
 
 export const PropertiesSliceReducer = PropertiesSlice.reducer
 export const {
-    update_propertiesVisible
+    update_propertyOnCreation
 } = PropertiesSlice.actions

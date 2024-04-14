@@ -6,8 +6,12 @@ div.itemProperties_Display{
     border-radius: 6px;
     transform: translateY(-0.1rem);
     z-index: -1;
-    // overflow: hidden;
-    height: fit-content;
+    overflow: hidden;
+    height: auto;
+    transition: all 0.5s linear;
+    
+    &.visible{opacity: 1; max-height: 50rem;}
+    &.hidden{opacity: 0; max-height: 0rem;}
  
     div.itemProperties_Box{
         // outline: 1px solid white; //
@@ -16,8 +20,10 @@ div.itemProperties_Display{
         flex-direction: column;
         gap: 1rem;
         color: white;
+        padding-bottom: 1rem;
 
         div.propertiesList_Box{
+            // background-color: red; //
             // outline: 1px solid white; //
             display: flex;
             flex-direction: column;
