@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_folderSelectedID, update_folderSelectedName } from "../FolderSlice";
 import { update_ItemOnEdition, update_itemToShow } from "../../Item/ItemSlice";
+import { update_propertiesVisible } from "../../Properties/PropertiesSlice";
 
 export default function useFolder_Button(folder){
 
@@ -21,6 +22,7 @@ export default function useFolder_Button(folder){
             dispatch(update_folderSelectedName(null))
         }
         dispatch(update_ItemOnEdition(false)) // Dans tout les cas, on coupe le mode edition des Items
+        dispatch(update_propertiesVisible(false))
     }
 
     return{

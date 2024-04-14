@@ -1,11 +1,4 @@
 @use "../../../Sass/Variable.scss" as v;
-
-// div.itemProperties_Display.visible{
-//     height: fit-content;
-// }
-// div.itemProperties_Display.hidden{
-//     height: 0;
-// }
 div.itemProperties_Display{
     background-color: v.$ItemOptionBackground;
     width: 100%;
@@ -17,16 +10,19 @@ div.itemProperties_Display{
     height: fit-content;
  
     div.itemProperties_Box{
-        // outline: 1px solid white;
-        height: fit-content;
+        // outline: 1px solid white; //
         margin: 1rem;
         display: flex;
         flex-direction: column;
         gap: 1rem;
         color: white;
 
-
-
-        
+        div.propertiesList_Box{
+            // outline: 1px solid white; //
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            height: fit-content;
+        }
     }
 }

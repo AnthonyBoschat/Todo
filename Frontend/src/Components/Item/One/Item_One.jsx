@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import useItem_One from "./useItem_One";
 import { Draggable } from "react-beautiful-dnd";
-import { useSelector } from "react-redux";
-import Item_Option from "../Option/Item_Option";
-import Item_Properties from "../Properties/Item_Properties";
+import Properties_List from "../../Properties/List/Properties_List";
 
 export default function Item_One({Item, folderIndex, index}){
 
@@ -58,7 +56,7 @@ export default function Item_One({Item, folderIndex, index}){
                         setItemEditable={setItemEditable}
                         toggleCoverRef={toggleCoverRef}
                     /> */}
-                    <Item_Properties
+                    <Properties_List
                         optionsView={optionsView}
                         item={Item}
                     />

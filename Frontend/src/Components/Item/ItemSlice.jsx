@@ -6,7 +6,6 @@ const ItemSlice = createSlice({
         itemToShow:[],
         ItemOnCreation:false,
         ItemOnEdition:false,
-        propertiesVisible:false,
 
     },
     reducers:{
@@ -15,9 +14,6 @@ const ItemSlice = createSlice({
         },
         update_ItemOnEdition:(state,action) => {
             state.ItemOnEdition = action.payload
-        },
-        update_propertiesVisible:(state,action) => {
-            state.propertiesVisible = action.payload
         },
         update_itemToShow:(state,action) => {
             state.itemToShow = action.payload
@@ -32,7 +28,6 @@ export const ItemSliceReducer = ItemSlice.reducer
 export const {
     update_ItemOnCreation,
     update_ItemOnEdition,
-    update_propertiesVisible,
     update_itemToShow,
     update_addItemToShow
 } = ItemSlice.actions

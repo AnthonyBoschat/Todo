@@ -58,7 +58,7 @@ export default function DevTools(){
     const deleteItem = () => {
         const confirmation = window.confirm("Supprimer TOUTES les TACHES ?")
         if(confirmation){
-            fetchRequest("DELETE", `devtool/DELETE_ALL_ItemS/${folderSelectedID}`)
+            fetchRequest("DELETE", `devtool/DELETE_ALL_ITEMS/${folderSelectedID}`)
         }
     }
 

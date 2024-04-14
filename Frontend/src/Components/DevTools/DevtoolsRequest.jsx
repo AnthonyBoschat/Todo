@@ -4,14 +4,16 @@ import { useDispatch } from "react-redux";
 import { update_DELETE_ALL_DATAS, update_allDatasLoad, update_dataList } from "../User/UserSlice";
 import { update_folderSelectedID } from "../Folder/FolderSlice";
 import { update_closeConnection } from "../Connection/ConnectionSlice";
+import { update_itemToShow } from "../Item/ItemSlice";
 
 export default function useDevtoolsRequest(){
 
     const dispatch = useDispatch()
 
     const devtoolAction = {
-        DELETE_ALL_ItemS:(data) => {
+        DELETE_ALL_ITEMS:(data) => {
             dispatch(update_dataList({listName:"userItemsList", newList:data}))
+            dispatch(update_itemToShow([]))
         },
         DELETE_ALL_FOLDERS:() => {
             dispatch(update_DELETE_ALL_DATAS())

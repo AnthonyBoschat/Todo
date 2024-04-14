@@ -37,9 +37,9 @@
 @use "Components/Item/Creation/Item_Creation.scss";
 @use "Components/Item/Option/Item_Option.scss"; 
 @use "Components/Item/One/Item_One.scss";
-@use "Components/Item/Properties/Item_Properties.scss";
-@use "Components/Item/Properties/One/Properties_One.scss";
-@use "Components/Item/Properties/BurgerMenu/Properties_BurgerMenu.scss";
+@use "Components/Properties/List/Properties_List.scss";
+@use "Components/Properties/One/Properties_One.scss";
+@use "Components/Properties/Add/Properties_Add.scss";
 
 
 @use "Components/List/Add/List_Add.scss";

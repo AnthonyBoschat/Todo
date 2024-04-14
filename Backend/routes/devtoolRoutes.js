@@ -29,7 +29,7 @@ router.delete("/DELETE_ALL_FOLDERS/:userID", async (request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime toutes les tâches
-router.delete("/DELETE_ALL_ItemS/:folderID", authenticationMiddleware, async (request, response) => {
+router.delete("/DELETE_ALL_ITEMS/:folderID", authenticationMiddleware, async (request, response) => {
     const {userID} = request.token
     const folderID = request.params.folderID
     try{
