@@ -1,0 +1,28 @@
+@use "../../../Sass/Variable.scss" as v;
+
+div.propertieCreationBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    background-color: v.$propertyCreationBackgroundValue;
+    height: fit-content;
+    padding: 0.5rem;
+    border-radius: 4px;
+
+    span{
+        font-size: 1.3rem;
+        font-display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: v.$propertyBackgroundValue;
+        width: fit-content;
+        max-width: 45%;
+        outline: 1px solid black;
+        padding: 0.2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-radius: 10px;
+        height: fit-content;
+    }
+}

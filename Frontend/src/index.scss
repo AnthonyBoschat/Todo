@@ -15,6 +15,7 @@
 @use "View/Connection/Connection.scss";
 @use "View/Items/Items.scss";
 @use "View/Lists/Lists.scss";
+@use "View/Properties/Properties.scss";
 
 
 
@@ -42,6 +43,7 @@
 @use "Components/Properties/One/Properties_One.scss";
 @use "Components/Properties/Add/Properties_Add.scss";
 @use "Components/Properties/Creation/Properties_Creation.scss";
+@use "Components/Properties/Save/Properties_Save.scss";
 
 
 @use "Components/List/Add/List_Add.scss";

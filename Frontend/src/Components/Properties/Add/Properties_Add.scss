@@ -1,12 +1,6 @@
 @use "../../../Sass/Variable.scss" as v;
 
-div.propertiesAdd_Display{
-    // background-color: red; //
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    height: 3rem;
+
 
     div.propertiesAdd_Box{
         display: flex;
@@ -30,23 +24,3 @@ div.propertiesAdd_Display{
             color: white;
         }
     }
-
-    div.propertiesSave_Box{
-        pointer-events: none;
-        // background-color: green; //
-        display: flex;
-        align-items: center;
-        height: 100%;
-        font-size: 1.3rem;
-        color: white;
-        opacity: 0.3;
-        transition: opacity 0.15s linear;
-        &:hover{
-            cursor: pointer;
-            opacity: 1;
-        }
-    }
-
-    
-    
-}

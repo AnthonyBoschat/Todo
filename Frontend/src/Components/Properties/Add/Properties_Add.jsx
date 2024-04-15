@@ -1,6 +1,7 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
 import { update_propertyOnCreation } from "../PropertiesSlice";
+import Properties_Save from "../Save/Properties_Save";
 
 export default function Properties_Add(){
 
@@ -10,14 +11,9 @@ export default function Properties_Add(){
     
 
     return(
-        <div className="propertiesAdd_Display">
-            <div onClick={() => dispatch(update_propertyOnCreation(!propertyOnCreation))} className="propertiesAdd_Box">
-                <i className="fa-solid fa-plus addProperty"></i>
-                <span>New property</span>
-            </div>
-            <div className="propertiesSave_Box">
-                <i className="fa-solid fa-floppy-disk"></i>
-            </div>
+        <div onClick={() => dispatch(update_propertyOnCreation(!propertyOnCreation))} className="propertiesAdd_Box">
+            <i className="fa-solid fa-plus addProperty"></i>
+            <span>New property</span>
         </div>
     )
 }

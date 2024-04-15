@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useItem_One from "./useItem_One";
 import { Draggable } from "react-beautiful-dnd";
 import Properties_List from "../../Properties/List/Properties_List";
+import Properties from "../../../View/Properties/Properties";
 
 export default function Item_One({Item, folderIndex, index}){
 
@@ -32,7 +33,7 @@ export default function Item_One({Item, folderIndex, index}){
                             <span ref={ItemNameRef} contentEditable={ItemEditable} suppressContentEditableWarning={ItemEditable} className="ItemName">{Item.content}</span>
                         </div>
         
-                        {/* Cover */}
+                        {/* Cover
                         <div 
                         ref={toggleCoverRef} 
                         style={
@@ -42,21 +43,10 @@ export default function Item_One({Item, folderIndex, index}){
                             {backgroundColor:"rgba(255, 167, 20, 0.550)", outline:"1px solid rgba(255, 167, 20, 0.550)"}
                             :null
                         } 
-                        className={`toggleCover ${(Item.completed || Item.onWorking) && "cover"}`}></div>
+                        className={`toggleCover ${(Item.completed || Item.onWorking) && "cover"}`}></div> */}
                     </div>
-        
-                    
 
-                    {/* <Item_Option
-                        leftSideRef={leftSideRef}
-                        optionsView={optionsView}
-                        Item={Item} 
-                        ItemNameRef={ItemNameRef} 
-                        ItemEditable={ItemEditable}
-                        setItemEditable={setItemEditable}
-                        toggleCoverRef={toggleCoverRef}
-                    /> */}
-                    <Properties_List
+                    <Properties
                         optionsView={optionsView}
                         item={Item}
                     />
