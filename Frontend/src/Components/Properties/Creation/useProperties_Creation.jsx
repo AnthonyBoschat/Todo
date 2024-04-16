@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
-export default function useProperties_Creation(setNewPropertyName, setNewPropertyValue){
+export default function useProperties_Creation(setNewPropertyName, setNewPropertyValue, propertyOnCreation){
 
     const propertyNameRef = useRef()
     const propertyValueRed = useRef()
-    const propertyOnCreation = useSelector(store => store.properties.propertyOnCreation)
 
     const handleChange = (ref) => {
         if(ref.current === propertyNameRef.current){

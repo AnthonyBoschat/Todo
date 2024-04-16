@@ -1,13 +1,13 @@
 import React from "react";
 import useProperties_Creation from "./useProperties_Creation";
 
-export default function Properties_Creation({setNewPropertyName, setNewPropertyValue}){
+export default function Properties_Creation({setNewPropertyName, setNewPropertyValue, propertyOnCreation}){
 
     const {
         propertyNameRef,
         propertyValueRed,
         handleChange
-    } = useProperties_Creation(setNewPropertyName, setNewPropertyValue)
+    } = useProperties_Creation(setNewPropertyName, setNewPropertyValue, propertyOnCreation)
 
     return(
         <div className="propertieCreationBox">

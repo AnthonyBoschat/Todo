@@ -51,6 +51,7 @@ export default function Properties({propertiesVisible, item}){
                     
                     {(propertyOnCreation && propertyCanBeSaved) && (
                         <Properties_Creation
+                            propertyOnCreation={propertyOnCreation}
                             setNewPropertyName={setNewPropertyName}
                             setNewPropertyValue={setNewPropertyValue}
                         />
