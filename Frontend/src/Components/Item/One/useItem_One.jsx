@@ -23,19 +23,7 @@ export default function useItem_One(item){
         }
     }
 
-
-
-    const userPropertiesList = useSelector(store => store.user.datas.userPropertiesList)
-    const propertiesToShow = useSelector(store => store.properties.propertiesToShow)
-    const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-
-    useEffect(() => {
-        if(folderSelectedID){
-            const propertiesToShow = userPropertiesList.filter(property => property.folderID === folderSelectedID)
-            dispatch(update_propertiesToShow(propertiesToShow))
-        }
-    }, [folderSelectedID, userPropertiesList])
-
+    
     return{
         ItemRef,
         ItemNameRef,
@@ -43,6 +31,5 @@ export default function useItem_One(item){
         toggleCoverRef,
         propertiesVisible,
         handleClick,
-        propertiesToShow
     }
 }

@@ -5,12 +5,14 @@ import Properties_One from "../../Components/Properties/One/Properties_One";
 import Properties_Creation from "../../Components/Properties/Creation/Properties_Creation";
 import Properties_Save from "../../Components/Properties/Save/Properties_Save";
 import Properties_List from "../../Components/Properties/List/Properties_List";
+import Properties_Manager from "../../Components/Properties/PropertiesManager";
 
-export default function Properties({propertiesVisible, item, propertiesToShow}){
+export default function Properties({propertiesVisible, item}){
     const propertyOnCreation = useSelector(store => store.properties.propertyOnCreation)
 
     const [newPropertyName, setNewPropertyName] = useState("")
     const [newPropertyValue, setNewPropertyValue] = useState("")
+    Properties_Manager()
 
     return(
         <div className={`itemProperties_Display ${propertiesVisible ? "visible" : "hidden"}`}>
@@ -25,7 +27,7 @@ export default function Properties({propertiesVisible, item, propertiesToShow}){
                         />
                     </div>
 
-                    <Properties_List propertiesToShow={propertiesToShow} item={item}/>
+                    <Properties_List item={item}/>
                     
                     {propertyOnCreation && (
                         <Properties_Creation

@@ -1,8 +1,10 @@
 import React from "react";
 import Properties_One from "../One/Properties_One";
+import { useSelector } from "react-redux";
 
-export default function Properties_List({optionsView, item, propertiesToShow}){
+export default function Properties_List({optionsView, item}){
 
+    const propertiesToShow = useSelector(store => store.properties.propertiesToShow)
 
     return(
         <div className="propertiesList_Box">

@@ -13,7 +13,6 @@ export default function Item_One({Item, folderIndex, index}){
         toggleCoverRef,
         propertiesVisible,
         handleClick,
-        propertiesToShow
     } = useItem_One(Item)
     
     return(
@@ -34,7 +33,6 @@ export default function Item_One({Item, folderIndex, index}){
                     <Properties
                         propertiesVisible={propertiesVisible}
                         item={Item}
-                        propertiesToShow={propertiesToShow}
                     />
                     
                 </div>
