@@ -10,7 +10,8 @@ const Recover = require("../models/recover")
 const List = require("../models/list")
 const authenticationMiddleware = require("../middleware/authentication")
 const nodemailer = require("nodemailer")
-const crypto = require("crypto")
+const crypto = require("crypto");
+const Property = require("../models/property");
 const env = process.env
 // middleware pour parser le JSON
 router.use(express.json())
@@ -174,10 +175,11 @@ router.get("/loadDatas", authenticationMiddleware, async(request, response) => {
         const newUserFoldersList = await Folder.find({userID:userID})
         const newUserItemsList = await Item.find({userID:userID})
         const newUserListsList = await List.find({userID:userID})
+        const newUserPropertiesList = await Property.find({userID:userID})
         response.status(201).json({
             messageDebugConsole:`Récupération des données de l'utilisateur réussi \n\n ${JSON.stringify(user, null, 2)}`,
             messageDebugPopup:"Récupération des données de l'utilisateur réussi",
-            payload:{newUserFoldersList, newUserItemsList, newUserListsList}
+            payload:{newUserFoldersList, newUserItemsList, newUserListsList, newUserPropertiesList}
         })
     }catch(error){
         response.status(400).json({

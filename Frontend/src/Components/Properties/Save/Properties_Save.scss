@@ -6,10 +6,16 @@ div.propertiesSave_Box{
     height: 100%;
     font-size: 1.3rem;
     color: white;
-    opacity: 0.3;
+    opacity: 0.2;
     transition: opacity 0.15s linear;
-    &:hover{
-        cursor: pointer;
-        opacity: 1;
+    
+
+    &.active{
+        opacity: 0.8;
+        pointer-events: all;
+        &:hover{
+            cursor: pointer;
+            opacity: 1;
+        }
     }
 }

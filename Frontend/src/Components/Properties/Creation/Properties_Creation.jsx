@@ -1,17 +1,18 @@
 import React from "react";
 import useProperties_Creation from "./useProperties_Creation";
 
-export default function Properties_Creation(){
+export default function Properties_Creation({setNewPropertyName, setNewPropertyValue}){
 
     const {
         propertyNameRef,
         propertyValueRed,
-    } = useProperties_Creation()
+        handleChange
+    } = useProperties_Creation(setNewPropertyName, setNewPropertyValue)
 
     return(
         <div className="propertieCreationBox">
-            <span ref={propertyNameRef} autofocus contentEditable className="propertieCreationName"></span>
-            <span ref={propertyValueRed} autofocus contentEditable className="propertieCreationValue"></span>
+            <span onInput={() => handleChange(propertyNameRef)} ref={propertyNameRef} contentEditable className="propertieCreationName"></span>
+            <span onInput={() => handleChange(propertyValueRed)} ref={propertyValueRed} contentEditable className="propertieCreationValue"></span>
         </div>
     )
 }

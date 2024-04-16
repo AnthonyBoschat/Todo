@@ -12,7 +12,7 @@ export default function useFolder_Button(folder){
     const userItemsList = useSelector(store => store.user.datas.userItemsList)
 
     const handleClickFolder = () => {
-        if(folder._id != folderSelectedID){ // Si l'utilisateur clique sur un dossier qui n'est pas encore selectionner
+        if(folder._id !== folderSelectedID){ // Si l'utilisateur clique sur un dossier qui n'est pas encore selectionner
             dispatch(update_folderSelectedID(folder._id))
             dispatch(update_folderSelectedName(folder.name))
             const itemToShow = userItemsList.filter(item => item.folderID === folder._id)
