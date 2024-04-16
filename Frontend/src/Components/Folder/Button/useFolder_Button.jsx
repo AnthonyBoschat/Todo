@@ -22,7 +22,7 @@ export default function useFolder_Button(folder){
             dispatch(update_folderSelectedName(null))
         }
         dispatch(update_ItemOnEdition(false)) // Dans tout les cas, on coupe le mode edition des Items
-        dispatch(update_propertyOnCreation(false))
+        
     }
 
     return{

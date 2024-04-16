@@ -1,17 +1,17 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import { update_propertyOnCreation } from "../PropertiesSlice";
+import { update_propertyCanBeSaved, update_propertyOnCreation } from "../PropertiesSlice";
 import Properties_Save from "../Save/Properties_Save";
 
-export default function Properties_Add(){
+export default function Properties_Add({propertyCanBeSaved, setPropertyCanBeSaved, setPropertyOnCreation, propertyOnCreation}){
 
-    const dispatch = useDispatch()
-    const propertyOnCreation = useSelector(store => store.properties.propertyOnCreation)
-
-    
+    const handleClick = () => {
+        setPropertyOnCreation(!propertyOnCreation)
+        setPropertyCanBeSaved(!propertyCanBeSaved)
+    }
 
     return(
-        <div onClick={() => dispatch(update_propertyOnCreation(!propertyOnCreation))} className="propertiesAdd_Box">
+        <div onClick={handleClick} className="propertiesAdd_Box">
             <i className="fa-solid fa-plus addProperty"></i>
             <span>New property</span>
         </div>

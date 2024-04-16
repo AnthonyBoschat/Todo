@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_itemSelectionID } from "../ItemSlice";
+import { update_itemSelectedID } from "../ItemSlice";
 import { update_propertiesToShow } from "../../Properties/PropertiesSlice";
 
 export default function useItem_One(item){
@@ -16,10 +16,10 @@ export default function useItem_One(item){
     const handleClick = () => {
         setPropertiesVisible(!propertiesVisible)
         if(propertiesVisible === true){
-            dispatch(update_itemSelectionID(null))
+            dispatch(update_itemSelectedID(null))
         }
         if(propertiesVisible === false){
-            dispatch(update_itemSelectionID(item._id))
+            dispatch(update_itemSelectedID(item._id))
         }
     }
 
