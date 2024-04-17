@@ -9,14 +9,11 @@ export default function useFolder_Button(folder){
     
     const dispatch = useDispatch()
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const userItemsList = useSelector(store => store.user.datas.userItemsList)
 
     const handleClickFolder = () => {
         if(folder._id !== folderSelectedID){ // Si l'utilisateur clique sur un dossier qui n'est pas encore selectionner
             dispatch(update_folderSelectedID(folder._id))
             dispatch(update_folderSelectedName(folder.name))
-            const itemToShow = userItemsList.filter(item => item.folderID === folder._id)
-            dispatch(update_itemToShow(itemToShow))
         }else{ // Si l'utilisateur clique un dossier qui est déjà en cours de présentation
             dispatch(update_folderSelectedID(null))
             dispatch(update_folderSelectedName(null))

@@ -4,17 +4,16 @@ import { useSelector } from "react-redux";
 
 export default function Properties_List({optionsView, item, propertyCanBeSaved, setPropertyCanBeSaved}){
 
-    const propertiesToShow = useSelector(store => store.properties.propertiesToShow)
 
     return(
         <>
-            {propertiesToShow.length > 0 && (
+            {item.properties.length > 0 && (
                 <div className="propertiesList_Box">
-                    {propertiesToShow.map((propertie, index) => (
+                    {item.properties.map((property, index) => (
                         <Properties_One
-                            item={item} 
-                            key={index} 
-                            propertie={propertie}
+                            item={item}
+                            key={index}
+                            property={property}
                             propertyCanBeSaved={propertyCanBeSaved}
                             setPropertyCanBeSaved={setPropertyCanBeSaved}
                         />

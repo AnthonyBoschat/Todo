@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_itemSelectedID } from "../ItemSlice";
-import { update_propertiesToShow } from "../../Properties/PropertiesSlice";
 
 export default function useItem_One(item){
 

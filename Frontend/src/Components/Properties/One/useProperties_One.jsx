@@ -4,20 +4,7 @@ import { update_propertyCanBeSaved } from "../PropertiesSlice";
 
 export default function useProperties_One(propertie, item, propertyCanBeSaved, setPropertyCanBeSaved){
 
-    const dispatch = useDispatch()
-    const [propertyValue, setPropertyValue] = useState("N/A")
     const inputValueRef = useRef()
-    
-
-    useEffect(() => {
-        propertie.values.map(property => {
-            if(property.itemID === item._id){
-                if(property.value !== "" ){
-                    setPropertyValue(property.value)
-                }
-            }
-        })
-    }, [])
 
     const handleChange = (e) => {
         if(!propertyCanBeSaved){
@@ -26,7 +13,7 @@ export default function useProperties_One(propertie, item, propertyCanBeSaved, s
     }
 
     return{
-        propertyValue,
+        // propertyValue,
         inputValueRef,
         handleChange
     }

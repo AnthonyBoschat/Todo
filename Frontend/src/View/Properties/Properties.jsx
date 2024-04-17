@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import Properties_Add from "../../Components/Properties/Add/Properties_Add";
-import Properties_One from "../../Components/Properties/One/Properties_One";
 import Properties_Creation from "../../Components/Properties/Creation/Properties_Creation";
 import Properties_Save from "../../Components/Properties/Save/Properties_Save";
 import Properties_List from "../../Components/Properties/List/Properties_List";
@@ -23,6 +21,7 @@ export default function Properties({propertiesVisible, item}){
         setNewPropertyValue,
     } = Properties_Manager()
 
+    
 
     return(
         <div className={`itemProperties_Display ${propertiesVisible ? "visible" : "hidden"}`}>

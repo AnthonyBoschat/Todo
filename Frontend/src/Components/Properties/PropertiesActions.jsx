@@ -1,6 +1,6 @@
 import React, {} from "react";
 import {useDispatch} from "react-redux"
-import { update_addData } from "../User/UserSlice";
+import { update_addData, update_dataList } from "../User/UserSlice";
 
 export default function useProperties_Action(){
 
@@ -8,7 +8,7 @@ export default function useProperties_Action(){
 
     const propertiesAction = {
         create:(data) => {
-            dispatch(update_addData({listName:"userPropertiesList", newData:data}))
+            dispatch(update_dataList({listName:"userItemsList", newList:data}))
         }
     }
 

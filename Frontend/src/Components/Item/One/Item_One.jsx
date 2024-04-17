@@ -3,7 +3,7 @@ import useItem_One from "./useItem_One";
 import { Draggable } from "react-beautiful-dnd";
 import Properties from "../../../View/Properties/Properties";
 
-export default function Item_One({Item, folderIndex, index}){
+export default function Item_One({item, folderIndex, index}){
 
     const {
         ItemRef,
@@ -13,10 +13,10 @@ export default function Item_One({Item, folderIndex, index}){
         toggleCoverRef,
         propertiesVisible,
         handleClick,
-    } = useItem_One(Item)
+    } = useItem_One(item)
     
     return(
-        <Draggable draggableId={Item._id} index={index}>
+        <Draggable draggableId={item._id} index={index}>
             {(provided) => (
                 <div ref={provided.innerRef}  {...provided.draggableProps}  className="Item_Display">
 
@@ -26,13 +26,13 @@ export default function Item_One({Item, folderIndex, index}){
                     <div onClick={handleClick} ref={ItemRef} {...provided.dragHandleProps} className={`Item_Box`}>
         
                         <div ref={leftSideRef} className="leftSideItem">
-                            <span ref={ItemNameRef}  className="ItemName">{Item.content}</span>
+                            <span ref={ItemNameRef}  className="ItemName">{item.content}</span>
                         </div>
                     </div>
 
                     <Properties
                         propertiesVisible={propertiesVisible}
-                        item={Item}
+                        item={item}
                     />
                     
                 </div>

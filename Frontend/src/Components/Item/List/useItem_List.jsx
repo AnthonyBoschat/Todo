@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { update_reorderList } from "../../User/UserSlice";
@@ -8,6 +8,7 @@ import useFetchRequest from "../../../Utils/useFetchRequest";
 export default function useItem_List(){
 
     const ItemOnCreation = useSelector(store => store.item.ItemOnCreation) // Est-ce qu'une Item est en train d'etre créé
+
     const itemToShow = useSelector(store => store.item.itemToShow)
     const displayItemListRef = useRef()
     const dispatch = useDispatch()
@@ -23,7 +24,6 @@ export default function useItem_List(){
         items.splice(destination.index, 0, reorderedItem)
         dispatch(update_itemToShow(items))
         fetchRequest("POST", `item/sort`, {newItemsList:items})
-        
     }
 
 
@@ -31,6 +31,6 @@ export default function useItem_List(){
         ItemOnCreation,
         displayItemListRef,
         itemToShow,
-        handleOnDragEnd
+        handleOnDragEnd,
     }
 }

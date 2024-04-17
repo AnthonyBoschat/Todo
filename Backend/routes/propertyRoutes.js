@@ -18,19 +18,40 @@ router.post("/create", authenticationMiddleware, async(request,response) => {
             name:propertyName,
             folderID:folderID,
             userID:userID,
-            values:[
-                {
-                    itemID:itemID,
-                    value:propertyValue
-                }
-            ]
         })
         await newPropertyToSave.save()
+        const propertyID = newPropertyToSave._id
+
+        // On ajoute cette propriété à tout les items
+        const itemUpdated = await Item.updateMany(
+            {folderID:folderID},
+            {$push : {properties:{propertyID:propertyID, name:propertyName}}}
+        )
+
+        // On trouve l'item sur lequel la propriété a été ajouter
+        const thisItem = await Item.findOneAndUpdate(
+            {
+                "_id":itemID, 
+                "properties.propertyID":propertyID
+            },
+            {
+                "$set":{
+                    "properties.$.value":propertyValue,
+                },
+            },
+            {
+                new:true
+            }
+        )
+
+        // On récupère la liste de touts les items de l'utilisateur pour mettre à jour l'état redux
+        const allUserItem = await Item.find({userID:userID})
+        
         response.status(201).json({
             messageDebugConsole:`La propriété a été enregistrer \n\n ${JSON.stringify(newPropertyToSave, null, 2)}`,
             messageDebugPopup:`Propriété enregistrer "${newPropertyToSave.name}"`,
             messageUserPopup:"Property saved",
-            payload:newPropertyToSave
+            payload:allUserItem
         })
         
     }catch(error){

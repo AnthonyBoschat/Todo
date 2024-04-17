@@ -29,8 +29,8 @@ export default function Item_List(){
                                 <div {...provided.droppableProps} ref={provided.innerRef} className="listItem_Box">
 
                                     {/* Si au moin une Item d'enregistrer pour ce dossier, la liste de toutes les Item*/}
-                                    {(itemToShow.length > 0) && (itemToShow.map((Item, index) => (
-                                        <Item_One index={index} key={Item._id} Item={Item}/>
+                                    {(itemToShow.length > 0) && (itemToShow.map((item, index) => (
+                                        <Item_One index={index} key={item._id} item={item}/>
                                     ) ))}
 
                                     {/* Nouvelle Item en cours de création */}
