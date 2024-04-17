@@ -8,17 +8,8 @@ import Properties_Manager from "../../Components/Properties/PropertiesManager";
 export default function Properties({propertiesVisible, item}){
 
     const {
-        propertyCanBeSaved, 
-        setPropertyCanBeSaved,
-
-        propertyOnCreation,
-        setPropertyOnCreation,
-
-        newPropertyName,
-        setNewPropertyName,
-
-        newPropertyValue,
-        setNewPropertyValue,
+        propertyState,
+        propertyDispatch
     } = Properties_Manager()
 
     
@@ -29,30 +20,25 @@ export default function Properties({propertiesVisible, item}){
                 <div className="itemProperties_Box ">
                     <div className="propertiesAdd_Display">
                         <Properties_Add
-                            propertyOnCreation={propertyOnCreation}
-                            setPropertyOnCreation={setPropertyOnCreation}
-                            setPropertyCanBeSaved={setPropertyCanBeSaved}
-                            propertyCanBeSaved={propertyCanBeSaved}
+                            propertyState={propertyState}
+                            propertyDispatch={propertyDispatch}
                          />
                         <Properties_Save
-                            propertyCanBeSaved={propertyCanBeSaved}
+                            propertyState={propertyState}
                             item={item}
-                            newPropertyName={newPropertyName}
-                            newPropertyValue={newPropertyValue}
                         />
                     </div>
 
                     <Properties_List
-                        setPropertyCanBeSaved={setPropertyCanBeSaved}
-                        propertyCanBeSaved={propertyCanBeSaved}
+                        propertyState={propertyState}
+                        propertyDispatch={propertyDispatch}
                         item={item}
                     />
                     
-                    {(propertyOnCreation && propertyCanBeSaved) && (
+                    {(propertyState.onCreation) && (
                         <Properties_Creation
-                            propertyOnCreation={propertyOnCreation}
-                            setNewPropertyName={setNewPropertyName}
-                            setNewPropertyValue={setNewPropertyValue}
+                            propertyState={propertyState}
+                            propertyDispatch={propertyDispatch}
                         />
                     )}
 

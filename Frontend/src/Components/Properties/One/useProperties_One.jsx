@@ -1,19 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { update_propertyCanBeSaved } from "../PropertiesSlice";
+import React, { useRef } from "react";
 
-export default function useProperties_One(propertie, item, propertyCanBeSaved, setPropertyCanBeSaved){
+export default function useProperties_One(propertie, item, propertyState, propertyDispatch){
 
     const inputValueRef = useRef()
 
-    const handleChange = (e) => {
-        if(!propertyCanBeSaved){
-            setPropertyCanBeSaved(true)
+    const handleChange = () => {
+        if(!propertyState.canBeSaved){
+            propertyDispatch({type:"canBeSaved", payload:true})
         }
     }
 
     return{
-        // propertyValue,
         inputValueRef,
         handleChange
     }

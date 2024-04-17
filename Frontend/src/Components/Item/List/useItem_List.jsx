@@ -8,7 +8,6 @@ import useFetchRequest from "../../../Utils/useFetchRequest";
 export default function useItem_List(){
 
     const ItemOnCreation = useSelector(store => store.item.ItemOnCreation) // Est-ce qu'une Item est en train d'etre créé
-
     const itemToShow = useSelector(store => store.item.itemToShow)
     const displayItemListRef = useRef()
     const dispatch = useDispatch()

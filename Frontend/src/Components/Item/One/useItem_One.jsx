@@ -1,10 +1,7 @@
-import {useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { update_itemSelectedID } from "../ItemSlice";
+import {useRef, useState } from "react";
 
 export default function useItem_One(item){
 
-    const dispatch = useDispatch()
     const [propertiesVisible, setPropertiesVisible] = useState(false)
     
     const ItemRef = useRef()
@@ -12,14 +9,10 @@ export default function useItem_One(item){
     const leftSideRef = useRef()
     const toggleCoverRef = useRef()
 
+    // Lorsque l'utilisateur clique sur un item
     const handleClick = () => {
+        // On change la vu des propriété en true ou false
         setPropertiesVisible(!propertiesVisible)
-        if(propertiesVisible === true){
-            dispatch(update_itemSelectedID(null))
-        }
-        if(propertiesVisible === false){
-            dispatch(update_itemSelectedID(item._id))
-        }
     }
 
     

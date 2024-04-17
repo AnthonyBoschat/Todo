@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useProperties_One from "./useProperties_One";
 
-export default function Properties_One({property, item, propertyCanBeSaved, setPropertyCanBeSaved}){
+export default function Properties_One({property, item, propertyState, propertyDispatch}){
     
     const {
         inputValueRef,
         handleChange
-    } = useProperties_One(property, item, propertyCanBeSaved, setPropertyCanBeSaved)
+    } = useProperties_One(property, item, propertyState, propertyDispatch)
 
     return(
         <div className="propertieBox">

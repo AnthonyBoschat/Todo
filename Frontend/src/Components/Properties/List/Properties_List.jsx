@@ -2,7 +2,7 @@ import React from "react";
 import Properties_One from "../One/Properties_One";
 import { useSelector } from "react-redux";
 
-export default function Properties_List({optionsView, item, propertyCanBeSaved, setPropertyCanBeSaved}){
+export default function Properties_List({item, propertyState, propertyDispatch}){
 
 
     return(
@@ -14,8 +14,8 @@ export default function Properties_List({optionsView, item, propertyCanBeSaved, 
                             item={item}
                             key={index}
                             property={property}
-                            propertyCanBeSaved={propertyCanBeSaved}
-                            setPropertyCanBeSaved={setPropertyCanBeSaved}
+                            propertyState={propertyState}
+                            propertyDispatch={propertyDispatch}
                         />
                     ))}
                 </div>

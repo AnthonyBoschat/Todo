@@ -1,29 +1,27 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
-export default function useProperties_Creation(setNewPropertyName, setNewPropertyValue, propertyOnCreation){
+export default function useProperties_Creation(propertyState, propertyDispatch){
 
     const propertyNameRef = useRef()
-    const propertyValueRed = useRef()
+    
+    const handleChangePropertyName = (e) => {
+        propertyDispatch({type:"propertyName", payload:e.target.innerText})
+    }
 
-    const handleChange = (ref) => {
-        if(ref.current === propertyNameRef.current){
-            setNewPropertyName(ref.current.innerText)
-        }
-        if(ref.current === propertyValueRed.current){
-            setNewPropertyValue(ref.current.innerText)
-        }
+    const handleChangePropertyValue = (e) => {
+        propertyDispatch({type:"propertyValue", payload:e.target.innerText})
     }
 
     useEffect(() => {
-        if(propertyNameRef.current && propertyOnCreation){
+        if(propertyNameRef.current && propertyState.onCreation){
             propertyNameRef.current.focus()
         }
-    }, [propertyOnCreation])
+    }, [propertyState.onCreation])
 
     return{
-        propertyNameRef,
-        propertyValueRed,
-        handleChange,
+        handleChangePropertyName,
+        handleChangePropertyValue,
+        propertyNameRef
     }
 }

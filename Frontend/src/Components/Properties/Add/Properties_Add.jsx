@@ -3,11 +3,11 @@ import {useDispatch, useSelector} from "react-redux"
 import { update_propertyCanBeSaved, update_propertyOnCreation } from "../PropertiesSlice";
 import Properties_Save from "../Save/Properties_Save";
 
-export default function Properties_Add({propertyCanBeSaved, setPropertyCanBeSaved, setPropertyOnCreation, propertyOnCreation}){
+export default function Properties_Add({propertyState, propertyDispatch}){
 
     const handleClick = () => {
-        setPropertyOnCreation(!propertyOnCreation)
-        setPropertyCanBeSaved(!propertyCanBeSaved)
+        propertyDispatch({type:"onCreation", payload:!propertyState.onCreation})
+        propertyDispatch({type:"canBeSaved", payload:!propertyState.canBeSaved})
     }
 
     return(

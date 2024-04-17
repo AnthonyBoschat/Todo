@@ -2,14 +2,14 @@ import React, {} from "react";
 import { useSelector } from "react-redux";
 import useFetchRequest from "../../../Utils/useFetchRequest"
 
-export default function useProperties_Save(newPropertyName, newPropertyValue, item){
+export default function useProperties_Save(propertyState, item){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const {fetchRequest} = useFetchRequest()
     
     const handleClick = () => {
-        const propertyName = newPropertyName
-        const propertyValue = newPropertyValue
+        const propertyName = propertyState.propertyName
+        const propertyValue = propertyState.propertyValue
         const folderID = folderSelectedID
         const itemID = item._id
         const newProperty = {

@@ -5,12 +5,12 @@ import { update_itemToShow } from "./ItemSlice";
 export default function ItemsManager(){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const itemToShow = useSelector(store => store.item.itemToShow)
     const userItemsList = useSelector(store => store.user.datas.userItemsList)
     const dispatch = useDispatch()
 
 
     useEffect(() => {   
+        // Quand on clique sur le bouton d'un dossier, va charger dans la vu la liste des items correspondant à ce dossier
         const newItemsToShow = userItemsList.filter(item => item.folderID === folderSelectedID)
         const newItemsToShowSort = newItemsToShow.sort((a,b) => a.position - b.position)
         dispatch(update_itemToShow(newItemsToShowSort))
