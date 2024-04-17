@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Item = require("../models/item")
+const Property = require("../models/property")
 const authenticationMiddleware = require("../middleware/authentication");
 
 // middleware pour parser le JSON
@@ -17,6 +18,15 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         const position = userItems.length
         request.body.userID = userID
         request.body.position = position
+        request.body.properties = []
+        // On regarde s'il y a des propriétés associer à ce dossier, si oui on les ajoutes
+        const propertyList = await Property.find({folderID:folderID})
+        for(let i = 0; i<propertyList.length; i++){
+            request.body.properties.push({
+                propertyID:propertyList[i]._id,
+                name:propertyList[i].name
+            })
+        }
         const newItem = new Item(request.body);
         await newItem.save();
         response.status(200).json({
@@ -164,7 +174,6 @@ router.post("/sort", authenticationMiddleware, async(request, response) => {
     try{
         const {userID} = request.token
         const {newItemsList} = request.body
-        console.log(newItemsList)
         for(let i = 0; i<newItemsList.length; i++){
             await Item.findOneAndUpdate(
                 {_id:newItemsList[i]._id},

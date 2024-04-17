@@ -22,7 +22,7 @@ export default function useItem_List(){
         const items = Array.from(itemToShow)
         const [reorderedItem] = items.splice(result.source.index, 1)
         items.splice(destination.index, 0, reorderedItem)
-        console.log("here => ",items)
+
         dispatch(update_itemToShow(items))
         fetchRequest("POST", `item/sort`, {newItemsList:items})
     }

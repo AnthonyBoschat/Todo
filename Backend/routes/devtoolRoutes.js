@@ -4,6 +4,7 @@ router.use(express.json())
 const Folder = require("../models/folder")
 const Item = require("../models/item")
 const User = require("../models/user")
+const Property = require("../models/property")
 const authenticationMiddleware = require("../middleware/authentication")
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +36,7 @@ router.delete("/DELETE_ALL_ITEMS/:folderID", authenticationMiddleware, async (re
     try{
         const allItems = await Item.find({folderID:folderID})
         const deletedItems = await Item.deleteMany({folderID:folderID})
+        const deletedProperty = await Property.deleteMany({folderID:folderID})
         const allItemsUpdate = await Item.find({userID:userID}) // Pertinence ?
         response.status(200).json({
             messageDebugConsole:`Toutes les tâches ont été supprimés \n\n ${JSON.stringify(allItems, null, 2)}`,
