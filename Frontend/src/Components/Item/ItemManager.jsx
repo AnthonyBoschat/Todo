@@ -12,7 +12,8 @@ export default function ItemsManager(){
 
     useEffect(() => {   
         const newItemsToShow = userItemsList.filter(item => item.folderID === folderSelectedID)
-        dispatch(update_itemToShow(newItemsToShow))
+        const newItemsToShowSort = newItemsToShow.sort((a,b) => a.position - b.position)
+        dispatch(update_itemToShow(newItemsToShowSort))
     }, [userItemsList, folderSelectedID])
 
     return{}

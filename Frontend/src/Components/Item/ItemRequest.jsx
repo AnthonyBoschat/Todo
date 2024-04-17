@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { update_addData, update_changeData, update_deleteData } from "../User/UserSlice";
+import { update_addData, update_changeData, update_dataList, update_deleteData } from "../User/UserSlice";
 import { update_ItemOnCreation, update_addItemToShow } from "./ItemSlice";
 import { useSelector } from "react-redux";
 
@@ -40,7 +40,18 @@ export default function useItem_Request(){
             dispatch(update_changeData({listName:"userItemsList", dataIndex:dataIndex, newData:data}))
         },
 
-        sort:() => {
+        sort:(data) => {
+            const objectsDatas = data.reduce((acc, item) => {
+                acc[item._id] = item.position
+                return acc
+            }, {})
+            const updatedUserItemsList = userItemsList.map(item => {
+                if(objectsDatas[item._id] !== undefined){
+                    return {...item, position:objectsDatas[item._id]}
+                }
+                return item
+            })
+            dispatch(update_dataList({listName:"userItemsList", newList:updatedUserItemsList}))
             console.log("Requette de réorganisation des tâches effectuer")
         }
     }

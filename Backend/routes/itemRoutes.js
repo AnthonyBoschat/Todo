@@ -164,6 +164,7 @@ router.post("/sort", authenticationMiddleware, async(request, response) => {
     try{
         const {userID} = request.token
         const {newItemsList} = request.body
+        console.log(newItemsList)
         for(let i = 0; i<newItemsList.length; i++){
             await Item.findOneAndUpdate(
                 {_id:newItemsList[i]._id},
@@ -174,6 +175,7 @@ router.post("/sort", authenticationMiddleware, async(request, response) => {
         response.status(200).json({
             messageDebugConsole:`Ordre des tâches mis à jour \n\n ${JSON.stringify(ItemsListUpdated, null, 2)}`, 
             messageDebugPopup:`Ordre des tâches mis à jour`,
+            payload:ItemsListUpdated
         })
     }catch(error){
         response.status(400).json({
