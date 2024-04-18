@@ -6,6 +6,7 @@ export default function ItemsManager(){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const userItemsList = useSelector(store => store.user.datas.userItemsList)
+    const tabSelected = useSelector(store => store.item.tabs.tabSelected)
     const dispatch = useDispatch()
 
 
@@ -16,5 +17,7 @@ export default function ItemsManager(){
         dispatch(update_itemToShow(newItemsToShowSort))
     }, [userItemsList, folderSelectedID])
 
-    return{}
+    return{
+        tabSelected
+    }
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import Connection_SignIn from "../../Components/Connection/SignIn/Connection_SignIn";
-import Connection_SignUp from "../../Components/Connection/SignUp/Connection_SignUp";
+import Connection_SignIn from "./SignIn/Connection_SignIn";
+import Connection_SignUp from "./SignUp/Connection_SignUp";
 
 export default function Connection(){
 

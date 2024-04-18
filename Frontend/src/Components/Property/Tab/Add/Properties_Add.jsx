@@ -1,7 +1,6 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import { update_propertyCanBeSaved, update_propertyOnCreation } from "../PropertiesSlice";
-import Properties_Save from "../Save/Properties_Save";
+import { update_propertyCanBeSaved, update_propertyOnCreation } from "../../PropertiesSlice";
 
 export default function Properties_Add({propertyState, propertyDispatch}){
 

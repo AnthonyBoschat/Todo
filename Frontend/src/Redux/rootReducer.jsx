@@ -6,7 +6,7 @@ import { PopupSliceReducer } from "../Components/Popup/PopupSlice"
 import { DevToolsSliceReducer } from "../Components/DevTools/DevToolsSlice"
 import { UserSliceReducer } from "../Components/User/UserSlice"
 import { ListSliceReducer } from "../Components/List/ListSlice"
-import { PropertiesSliceReducer } from "../Components/Properties/PropertiesSlice"
+import { PropertiesSliceReducer } from "../Components/Property/PropertiesSlice"
 
 const rootReducer = combineReducers({
     folder:FolderSliceReducer,

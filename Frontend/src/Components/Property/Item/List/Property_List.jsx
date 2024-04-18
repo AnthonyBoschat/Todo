@@ -1,9 +1,11 @@
 import React from "react";
-import Properties_One from "../One/Properties_One";
 import { useSelector } from "react-redux";
+import Properties_One from "../One/Property_One";
 
 export default function Properties_List({item, propertyState, propertyDispatch}){
 
+
+    
 
     return(
         <>

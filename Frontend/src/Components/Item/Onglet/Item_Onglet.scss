@@ -1,0 +1,56 @@
+button.itemOnglet{
+    border: none;
+    background: rgba(0, 0, 0, 0.131);
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    // border: 2px solid rgb(199, 255, 254); //
+    border-bottom: none;
+    display: flex;
+    justify-content: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    margin-bottom: -2px;
+    width: fit-content;
+
+    &.active{
+        margin-left: -2px;
+        border-left: 2px solid rgb(199, 255, 254);;
+        border-top: 2px solid rgb(199, 255, 254);;
+        border-right: 2px solid rgb(199, 255, 254);;
+        border-radius: 5px 5px 0 0;
+        // border: 2px solid rgb(199, 255, 254); //
+        // border-bottom: 2px solid rgba(0, 0, 0, 0.68);
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    &.inactive{
+        border-radius: 5px 5px 0 0;
+        margin-top: 2px;
+        position: relative;
+        z-index: -5;
+        margin-left: -2px;
+        background: rgba(0, 0, 0, 0.200);
+        border-bottom: 2px solid rgb(199, 255, 254); //
+        &:hover{
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.262);
+        }
+    }
+
+    
+    
+}
+
+div.remp{
+    margin-right: -2px;
+    border-bottom: 2px solid rgb(199, 255, 254);
+    // background-color: red; //
+    width: 100%;
+    height: 100%;
+    // margin-right: 20px;
+}

@@ -4,6 +4,7 @@ import Creation_Item from "../Creation/Item_Creation";
 import Item_One from "../One/Item_One";
 import { Droppable } from 'react-beautiful-dnd';
 import { DragDropContext } from "react-beautiful-dnd";
+import Item_Add from "../Add/Item_Add";
 
 export default function Item_List(){
 
@@ -20,28 +21,35 @@ export default function Item_List(){
 
 
     return(
-            
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="Items">
-                {(provided) => (
-                    <div ref={displayItemListRef} className="listItem_Display">
-                        <div {...provided.droppableProps} ref={provided.innerRef} className="listItem_Box">
+        <>
+            <div className="headerItem_Box">
+                <Item_Add/>
+            </div>
 
-                            {/* Si au moin une Item d'enregistrer pour ce dossier, la liste de toutes les Item*/}
-                            {(itemToShow.length > 0) && (itemToShow.map((item, index) => (
-                                <Item_One index={index} key={item._id} item={item}/>
-                            ) ))}
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId="Items">
+                    {(provided) => (
+                        <div ref={displayItemListRef} className="listItem_Display">
+                            <div {...provided.droppableProps} ref={provided.innerRef} className="listItem_Box">
 
-                            {/* Nouvelle Item en cours de création */}
-                            {ItemOnCreation && ( 
-                                <Creation_Item/>
-                            )}
-                            {provided.placeholder}
+                                {/* Si au moin une Item d'enregistrer pour ce dossier, la liste de toutes les Item*/}
+                                {(itemToShow.length > 0) && (itemToShow.map((item, index) => (
+                                    <Item_One index={index} key={item._id} item={item}/>
+                                ) ))}
+
+                                {/* Nouvelle Item en cours de création */}
+                                {ItemOnCreation && ( 
+                                    <Creation_Item/>
+                                )}
+                                {provided.placeholder}
+                            </div>
                         </div>
-                    </div>
-                    
-                )}
-            </Droppable>   
-        </DragDropContext>
+                        
+                    )}
+                </Droppable>   
+            </DragDropContext>
+        </>
+            
+        
     )
 }

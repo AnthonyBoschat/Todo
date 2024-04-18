@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Header from "../Header/Header";
-import Items from "../Items/Items";
-import Lists from "../Lists/Lists";
+import Item_Layout from "../Item/Item_Layout";
+import Lists from "../List/List_Layout";
+import Indicator_Folder from "../../Components/Folder/Indicator/Folder_Indicator";
 
 
-export default function Corp(){
+export default function Corp_Layout(){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
@@ -23,9 +23,11 @@ export default function Corp(){
 
             {folderSelectedID && (
                 <div className="ItemRender_Display">
-                        <Header/>
+                        <div className="header_Display">
+                            <Indicator_Folder/>
+                        </div>
                         <div className="Items_Lists_Box">
-                            <Items/>
+                            <Item_Layout/>
                             <Lists/>
                         </div>
                 </div>

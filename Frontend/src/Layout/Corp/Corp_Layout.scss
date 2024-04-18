@@ -21,6 +21,11 @@
         grid-template-columns: 100%;
         grid-template-rows: 10% 90%;
 
+        .header_Display{
+            display: flex;
+            align-items: center;
+        }
+
         .Items_Lists_Box{
             // background-color: rgba(255, 0, 0, 0.216); //
             display: flex;

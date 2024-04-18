@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import DevTools from "./Components/DevTools/DevTools";
-import Pannel from "./View/Pannel/Pannel";
-import Corp from "./View/Corp/Corp";
+import Pannel_Layout from "./Layout/Pannel/Pannel_Layout";
+import Corp_Layout from "./Layout/Corp/Corp_Layout";
 import "./Css/main.css"
 import Popup from "./Components/Popup/Popup";
 import { useEffect, useState } from "react";
-import Connection from "./View/Connection/Connection";
 import useFetchRequest from "./Utils/useFetchRequest";
+import Connection_Layout from "./Components/Connection/Connection_Layout";
 
 function App() {
 
@@ -44,13 +44,13 @@ function App() {
           <Popup/>
           
           {!connected && (
-            <Connection/>
+            <Connection_Layout/>
           )}
 
           {connected && (
             <>
-              <Pannel/>
-              <Corp/>
+              <Pannel_Layout/>
+              <Corp_Layout/>
             </>
           )}
 

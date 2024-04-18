@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_folderSelectedID, update_folderSelectedName } from "../FolderSlice";
 import { update_ItemOnEdition, update_itemToShow } from "../../Item/ItemSlice";
-import { update_propertyOnCreation } from "../../Properties/PropertiesSlice";
+import { update_propertyOnCreation } from "../../Property/PropertiesSlice";
 
 export default function useFolder_Button(folder){
 

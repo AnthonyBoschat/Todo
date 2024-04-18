@@ -6,7 +6,12 @@ const ItemSlice = createSlice({
         itemToShow:[],
         ItemOnCreation:false,
         ItemOnEdition:false,
-        itemSelectedID:null
+        itemSelectedID:null,
+        
+        tabs:{
+            tabsList:["Items", "Property"],
+            tabSelected:"Items"
+        }
     },
     reducers:{
         update_ItemOnCreation:(state,action) => {
@@ -23,6 +28,9 @@ const ItemSlice = createSlice({
         },
         update_itemSelectedID:(state,action) => {
             state.itemSelectedID = action.payload
+        },
+        update_tabSelected:(state,action) => {
+            state.tabs.tabSelected = action.payload
         }
     },
 })
@@ -33,5 +41,6 @@ export const {
     update_ItemOnEdition,
     update_itemToShow,
     update_addItemToShow,
-    update_itemSelectedID
+    update_itemSelectedID,
+    update_tabSelected
 } = ItemSlice.actions

@@ -9,16 +9,13 @@
 
 
 
-@use "View/Corp/Corp.scss";
-@use "View/Pannel/Pannel.scss";
-@use "View/Header/Header.scss";
-@use "View/Connection/Connection.scss";
-@use "View/Items/Items.scss";
-@use "View/Lists/Lists.scss";
-@use "View/Properties/Properties.scss";
+@use "Layout/Corp/Corp_Layout.scss";
+@use "Layout/Pannel/Pannel_Layout.scss";
+@use "Layout/Item/Item_Layout.scss";
+@use "Layout/List/List_Layout.scss";
 
 
-
+@use "Components/Connection/Connection_Layout.scss";
 @use "Components/Connection/SignIn/Connection_SignIn.scss";
 @use "Components/Connection/SignUp/Connection_SignUp.scss";
 
@@ -38,12 +35,17 @@
 @use "Components/Item/Creation/Item_Creation.scss";
 @use "Components/Item/Option/Item_Option.scss"; 
 @use "Components/Item/One/Item_One.scss";
+@use "Components/Item/Onglet/Item_Onglet.scss";
 
-@use "Components/Properties/List/Properties_List.scss";
-@use "Components/Properties/One/Properties_One.scss";
-@use "Components/Properties/Add/Properties_Add.scss";
-@use "Components/Properties/Creation/Properties_Creation.scss";
-@use "Components/Properties/Save/Properties_Save.scss";
+@use "Components/Property/Item/Property_Item_Layout.scss";
+@use "Components/Property/Item/List/Property_List.scss";
+@use "Components/Property/Item/One/Property_One.scss";
+@use "Components/Property/Item/Save/Property_Save.scss";
+
+
+
+@use "Components/Property/Tab/Add/Property_Add.scss";
+@use "Components/Property/Tab/Creation/Property_Creation.scss";
 
 
 @use "Components/List/Add/List_Add.scss";
