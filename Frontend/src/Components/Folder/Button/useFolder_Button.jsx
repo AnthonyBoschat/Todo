@@ -1,8 +1,7 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_folderSelectedID, update_folderSelectedName } from "../FolderSlice";
-import { update_ItemOnEdition, update_itemToShow } from "../../Item/ItemSlice";
-import { update_propertyOnCreation } from "../../Property/PropertiesSlice";
+import { update_ItemOnEdition } from "../../Item/ItemSlice";
 
 export default function useFolder_Button(folder){
 

@@ -5,7 +5,7 @@ import useItem_Request from "../Components/Item/ItemRequest";
 import useUser_Request from "../Components/User/UserRequest";
 import useDevtoolsRequest from "../Components/DevTools/DevtoolsRequest";
 import useList_Action from "../Components/List/ListAction";
-import useProperties_Action from "../Components/Property/PropertiesActions";
+import useProperties_Action from "../Components/Property/PropertyActions";
 
 export default function useFetchRequest(){
 

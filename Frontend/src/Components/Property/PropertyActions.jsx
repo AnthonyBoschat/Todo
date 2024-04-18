@@ -1,8 +1,8 @@
 import React, {} from "react";
 import {useDispatch} from "react-redux"
-import { update_addData, update_dataList } from "../User/UserSlice";
+import { update_dataList } from "../User/UserSlice";
 
-export default function useProperties_Action(){
+export default function useProperty_Action(){
 
     const dispatch = useDispatch()
 
