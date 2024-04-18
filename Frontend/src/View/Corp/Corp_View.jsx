@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Item_Layout from "../Item/Item_Layout";
-import Lists from "../List/List_Layout";
+import Item_Layout from "../Item/Item_View";
+import Lists from "../List/List_View";
 import Indicator_Folder from "../../Components/Folder/Indicator/Folder_Indicator";
 
 

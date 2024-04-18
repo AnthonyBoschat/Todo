@@ -6,9 +6,9 @@ export default function Item_Add(){
     const {addItem} = useItem_Add()
 
     return(
-        <div onClick={addItem} className="addItem_Box">
-            <i className="fa-solid fa-plus addItem"></i>
-            <span >New item</span>
-        </div>
+        <>
+            <i onClick={addItem} className="fa-solid fa-plus addItem"></i>
+            <span onClick={addItem} >New item</span>
+        </>
     )
 }

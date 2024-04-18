@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useProperties_One from "./useProperties_One";
+import useProperties_One from "../Item_One/useProperties_One";
 
 export default function Properties_One({property, item, propertyState, propertyDispatch}){
     

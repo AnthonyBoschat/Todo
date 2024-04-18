@@ -31,13 +31,6 @@ export default function Property_Manager(){
 
     const [propertyState, propertyDispatch] = useReducer(propertyReducer, initialPropertyState)
 
-    const [propertyOnCreation, setPropertyOnCreation] = useState(false)
-    const [propertyCanBeSaved, setPropertyCanBeSaved] = useState(false)
-    const [newPropertyName, setNewPropertyName] = useState("")
-    const [newPropertyValue, setNewPropertyValue] = useState("")
-
-
-
     useEffect(() => {
         propertyDispatch({type:"canBeSaved", payload:false})
         propertyDispatch({type:"onCreation", payload:false})
@@ -45,17 +38,6 @@ export default function Property_Manager(){
 
 
     return{
-        propertyCanBeSaved,
-        setPropertyCanBeSaved,
-
-        propertyOnCreation,
-        setPropertyOnCreation,
-
-        newPropertyName,
-        setNewPropertyName,
-
-        newPropertyValue,
-        setNewPropertyValue,
 
         propertyState,
         propertyDispatch

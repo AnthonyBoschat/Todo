@@ -4,7 +4,6 @@ import Creation_Item from "../Creation/Item_Creation";
 import Item_One from "../One/Item_One";
 import { Droppable } from 'react-beautiful-dnd';
 import { DragDropContext } from "react-beautiful-dnd";
-import Item_Add from "../Add/Item_Add";
 
 export default function Item_List(){
 
@@ -22,10 +21,6 @@ export default function Item_List(){
 
     return(
         <>
-            <div className="headerItem_Box">
-                <Item_Add/>
-            </div>
-
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="Items">
                     {(provided) => (

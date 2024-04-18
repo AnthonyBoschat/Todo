@@ -9,10 +9,10 @@
 
 
 
-@use "Layout/Corp/Corp_Layout.scss";
-@use "Layout/Pannel/Pannel_Layout.scss";
-@use "Layout/Item/Item_Layout.scss";
-@use "Layout/List/List_Layout.scss";
+@use "View/Corp/Corp_View.scss";
+@use "View/Pannel/Pannel_View.scss";
+@use "View/Item/Item_View.scss";
+@use "View/List/List_View.scss";
 
 
 @use "Components/Connection/Connection_Layout.scss";
@@ -30,6 +30,7 @@
 @use "Components/Folder/Button/Folder_Button.scss";
 @use "Components/Folder/Indicator/Folder_Indicator.scss";
 
+@use "Components/Item/Layout/Item_Layout.scss";
 @use "Components/Item/Add/Item_Add.scss";
 @use "Components/Item/List/Item_List.scss";
 @use "Components/Item/Creation/Item_Creation.scss";
@@ -41,11 +42,8 @@
 @use "Components/Property/Item_List/Property_Item_List.scss";
 @use "Components/Property/Item_One/Property_Item_One.scss";
 @use "Components/Property/Item_Save/Property_Item_Save.scss";
-
-
-
-@use "Components/Property/Tab/Add/Property_Add.scss";
-@use "Components/Property/Tab/Creation/Property_Creation.scss";
+@use "Components/Property/Tab_Layout/Property_Tab_Layout.scss";
+@use "Components/Property/Tab_Creation/Property_Tab_Creation.scss";
 
 
 @use "Components/List/Add/List_Add.scss";

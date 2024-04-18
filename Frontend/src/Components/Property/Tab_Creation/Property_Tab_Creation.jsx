@@ -1,7 +1,7 @@
 import React from "react";
 import useProperties_Creation from "./useProperties_Creation";
 
-export default function Properties_Creation({propertyState, propertyDispatch}){
+export default function Property_Tab_Creation({propertyState, propertyDispatch}){
 
     const {
         propertyNameRef,

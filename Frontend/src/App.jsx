@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import DevTools from "./Components/DevTools/DevTools";
-import Pannel_Layout from "./Layout/Pannel/Pannel_Layout";
-import Corp_Layout from "./Layout/Corp/Corp_Layout";
+import Pannel_View from "./View/Pannel/Pannel_View";
+import Corp_View from "./View/Corp/Corp_View";
 import "./Css/main.css"
 import Popup from "./Components/Popup/Popup";
 import { useEffect, useState } from "react";
@@ -49,8 +49,8 @@ function App() {
 
           {connected && (
             <>
-              <Pannel_Layout/>
-              <Corp_Layout/>
+              <Pannel_View/>
+              <Corp_View/>
             </>
           )}
 

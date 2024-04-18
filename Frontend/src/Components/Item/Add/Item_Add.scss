@@ -2,8 +2,11 @@
 
 div.addItem_Box{
     // outline: 1px solid blue; //
-    margin-right: 1rem;
-    width: fit-content;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // width: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,7 +20,7 @@ div.addItem_Box{
         text-shadow: 2px 2px 1px black;
     }
 
-    i.addItem{
+    i{
         font-size: 2rem;
         color: v.$blue;
     }
