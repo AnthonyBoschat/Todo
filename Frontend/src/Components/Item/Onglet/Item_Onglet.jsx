@@ -11,8 +11,8 @@ export default function Item_Onglet(){
 
     return(
         <>
-            {tabsList.map(tab => (
-                <button onClick={() => dispatch(update_tabSelected(tab))} className={`itemOnglet ${tab === tabSelected ? "active" : "inactive"}`}>{tab}</button>
+            {tabsList.map((tab, index) => (
+                <button key={index} onClick={() => dispatch(update_tabSelected(tab))} className={`itemOnglet ${tab === tabSelected ? "active" : "inactive"}`}>{tab}</button>
             ))}
             <div className="remp"></div>
         </>

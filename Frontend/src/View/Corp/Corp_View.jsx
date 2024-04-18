@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Item_Layout from "../Item/Item_View";
-import Lists from "../List/List_View";
+import Item_View from "../Item/Item_View";
+import List_View from "../List/List_View";
 import Indicator_Folder from "../../Components/Folder/Indicator/Folder_Indicator";
 
 
@@ -27,8 +27,8 @@ export default function Corp_Layout(){
                             <Indicator_Folder/>
                         </div>
                         <div className="Items_Lists_Box">
-                            <Item_Layout/>
-                            <Lists/>
+                            <Item_View/>
+                            <List_View/>
                         </div>
                 </div>
             )}

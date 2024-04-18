@@ -175,11 +175,11 @@ router.get("/loadDatas", authenticationMiddleware, async(request, response) => {
         const newUserFoldersList = await Folder.find({userID:userID})
         const newUserItemsList = await Item.find({userID:userID})
         const newUserListsList = await List.find({userID:userID})
-        const newUserPropertiesList = await Property.find({userID:userID})
+        const newUserPropertyList = await Property.find({userID:userID})
         response.status(201).json({
             messageDebugConsole:`Récupération des données de l'utilisateur réussi \n\n ${JSON.stringify(user, null, 2)}`,
             messageDebugPopup:"Récupération des données de l'utilisateur réussi",
-            payload:{newUserFoldersList, newUserItemsList, newUserListsList, newUserPropertiesList}
+            payload:{newUserFoldersList, newUserItemsList, newUserListsList, newUserPropertyList}
         })
     }catch(error){
         response.status(400).json({

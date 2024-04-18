@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_itemToShow } from "./ItemSlice";
 
-export default function ItemsManager(){
+export default function ItemManager(){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const userItemsList = useSelector(store => store.user.datas.userItemsList)

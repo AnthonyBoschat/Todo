@@ -1,6 +1,7 @@
 import React, {} from "react";
 import {useDispatch} from "react-redux"
-import { update_dataList } from "../User/UserSlice";
+import { update_addData, update_dataList } from "../User/UserSlice";
+import { update_propertyOnCreation } from "./PropertySlice";
 
 export default function useProperty_Action(){
 
@@ -8,7 +9,8 @@ export default function useProperty_Action(){
 
     const propertiesAction = {
         create:(data) => {
-            dispatch(update_dataList({listName:"userItemsList", newList:data}))
+            dispatch(update_addData({listName:"userPropertyList", newData:data}))
+            dispatch(update_propertyOnCreation(false))
         }
     }
 

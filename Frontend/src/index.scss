@@ -30,11 +30,9 @@
 @use "Components/Folder/Button/Folder_Button.scss";
 @use "Components/Folder/Indicator/Folder_Indicator.scss";
 
-@use "Components/Item/Layout/Item_Layout.scss";
 @use "Components/Item/Add/Item_Add.scss";
 @use "Components/Item/List/Item_List.scss";
 @use "Components/Item/Creation/Item_Creation.scss";
-@use "Components/Item/Option/Item_Option.scss"; 
 @use "Components/Item/One/Item_One.scss";
 @use "Components/Item/Onglet/Item_Onglet.scss";
 
@@ -44,6 +42,7 @@
 @use "Components/Property/Item_Save/Property_Item_Save.scss";
 @use "Components/Property/Tab_Layout/Property_Tab_Layout.scss";
 @use "Components/Property/Tab_Creation/Property_Tab_Creation.scss";
+@use "Components/Property/Tab_List/Property_Tab_List.scss";
 
 
 @use "Components/List/Add/List_Add.scss";

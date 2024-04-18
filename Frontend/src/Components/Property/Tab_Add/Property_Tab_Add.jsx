@@ -1,16 +1,16 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { update_propertyOnCreation } from "../PropertySlice";
 
 export default function Property_Tab_Add({propertyState, propertyDispatch}){
 
-    const handleClick = () => {
-        propertyDispatch({type:"onCreation", payload:!propertyState.onCreation})
-        propertyDispatch({type:"canBeSaved", payload:!propertyState.canBeSaved})
-    }
+    const propertyOnCreation = useSelector(store => store.property.propertyOnCreation)
+    const dispatch = useDispatch()
 
     return(
         <>
-            <i onClick={handleClick} className="fa-solid fa-plus addProperty"></i>
-            <span onClick={handleClick}>New property</span>
+            <i onClick={() => dispatch(update_propertyOnCreation(!propertyOnCreation))} className="fa-solid fa-plus addProperty"></i>
+            <span onClick={() => dispatch(update_propertyOnCreation(!propertyOnCreation))}>New property</span>
         </>
         
     )

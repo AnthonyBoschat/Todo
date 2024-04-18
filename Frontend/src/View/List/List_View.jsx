@@ -2,7 +2,7 @@ import React from "react";
 import List_Add from "../../Components/List/Add/List_Add"
 import List_List from "../../Components/List/List/List_List";
 
-export default function Lists(){
+export default function List_View(){
 
     return(
         <div className="Lists_Display">

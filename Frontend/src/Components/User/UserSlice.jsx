@@ -7,7 +7,7 @@ const UserSlice = createSlice({
             userFoldersList:[],
             userItemsList:[],
             userListsList:[],
-            userPropertiesList:[]
+            userPropertyList:[]
         },
         allDatasLoad:false
     },
@@ -17,7 +17,7 @@ const UserSlice = createSlice({
                 userFoldersList:action.payload.newUserFoldersList,
                 userItemsList:action.payload.newUserItemsList,
                 userListsList:action.payload.newUserListsList,
-                userPropertiesList:action.payload.newUserPropertiesList
+                userPropertyList:action.payload.newUserPropertyList
             }
             state.datas = newDatas
         },

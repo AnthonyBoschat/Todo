@@ -1,45 +1,22 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { update_propertyOnCreation } from "./PropertySlice";
 
 export default function Property_Manager(){
 
-    const userItemsList = useSelector(store => store.user.datas.userItemsList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
+    const dispatch = useDispatch()
+    
 
-    const initialPropertyState = {
-        onCreation:false,
-        canBeSaved:false,
-        propertyName:"",
-        propertyValue:""
+    
 
-    }
-
-    const propertyReducer = (state,action) => {
-        switch(action.type){
-            case "onCreation":
-                return {...state, onCreation:action.payload}
-            case "canBeSaved":
-                return{...state, canBeSaved:action.payload}
-            case "propertyName":
-                return{...state, propertyName:action.payload}
-            case "propertyValue":
-                return{...state, propertyValue:action.payload}
-            default:
-                return
-        }
-    }
-
-    const [propertyState, propertyDispatch] = useReducer(propertyReducer, initialPropertyState)
 
     useEffect(() => {
-        propertyDispatch({type:"canBeSaved", payload:false})
-        propertyDispatch({type:"onCreation", payload:false})
-    }, [folderSelectedID, userItemsList])
+        dispatch(update_propertyOnCreation(false))
+    }, [folderSelectedID])
 
 
     return{
-
-        propertyState,
-        propertyDispatch
+        
     }
 }

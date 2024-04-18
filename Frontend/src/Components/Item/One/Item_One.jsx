@@ -20,8 +20,6 @@ export default function Item_One({item, folderIndex, index}){
             {(provided) => (
                 <div ref={provided.innerRef}  {...provided.draggableProps}  className="Item_Display">
 
-                    
-        
                     {/* Item */}
                     <div onClick={handleClick} ref={ItemRef} {...provided.dragHandleProps} className={`Item_Box`}>
         

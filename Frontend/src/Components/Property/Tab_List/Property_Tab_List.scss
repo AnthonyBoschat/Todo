@@ -1,0 +1,32 @@
+@use "../../../Sass/Variable.scss" as v;
+
+div.propertyList_Box{
+    // background-color: rgba(255, 255, 255, 0.367); //
+    height: 95%;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .oneProperty{
+        padding: 0.2rem;
+        border: 2px solid black;
+        width: fit-content;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        border-radius: 5px;
+        font-size: 1.5rem;
+        background-color: v.$propertyBackground;
+
+        &:hover{
+            cursor:pointer;
+        }
+    }
+
+    .oneProperty_Creation{
+        background-color: v.$propertyCreationBackgroundValue;
+
+        &:focus{outline: none;}
+    }
+}
