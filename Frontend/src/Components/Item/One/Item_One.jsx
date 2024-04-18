@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useItem_One from "./useItem_One";
 import { Draggable } from "react-beautiful-dnd";
-import Property_Item_Layout from "../../Property/Item/Property_Item_Layout"
+import Property_Item_Layout from "../../Property/Item_Layout/Property_Item_Layout"
 
 export default function Item_One({item, folderIndex, index}){
 

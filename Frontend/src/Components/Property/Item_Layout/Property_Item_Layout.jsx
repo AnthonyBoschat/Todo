@@ -1,14 +1,14 @@
 import React from "react";
-import Properties_Manager from "../PropertiesManager";
-import Properties_Save from "./Save/Property_Save";
-import Property_List from "./List/Property_List";
+import Property_Manager from "../PropertyManager";
+import Property_Item_Save from "../Item_Save/Property_Item_Save";
+import Property_Item_List from "../Item_List/Property_Item_List";
 
-export default function Properties({propertiesVisible, item}){
+export default function Property_Item_Layout({propertiesVisible, item}){
 
     const {
         propertyState,
         propertyDispatch
-    } = Properties_Manager()
+    } = Property_Manager()
 
     
 
@@ -17,13 +17,13 @@ export default function Properties({propertiesVisible, item}){
             {propertiesVisible && (
                 <div className="itemProperties_Box ">
                     <div className="propertiesAdd_Display">
-                        <Properties_Save
+                        <Property_Item_Save
                             propertyState={propertyState}
                             item={item}
                         />
                     </div>
 
-                    <Property_List
+                    <Property_Item_List
                         propertyState={propertyState}
                         propertyDispatch={propertyDispatch}
                         item={item}

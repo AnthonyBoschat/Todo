@@ -1,6 +1,6 @@
 import React, {} from "react";
 import { useSelector } from "react-redux";
-import useFetchRequest from "../../../../Utils/useFetchRequest";
+import useFetchRequest from "../../../Utils/useFetchRequest";
 
 export default function useProperty_Save(propertyState, item){
 

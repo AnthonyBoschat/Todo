@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function Properties_Manager(){
+export default function Property_Manager(){
 
     const userItemsList = useSelector(store => store.user.datas.userItemsList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
