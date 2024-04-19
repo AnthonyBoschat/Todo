@@ -14,48 +14,39 @@ router.post("/create", authenticationMiddleware, async(request,response) => {
     try{
         const {userID} = request.token
         const {propertyName, folderID} = request.body
-        const newPropertyToSave = new Property({
+
+        // On construit et sauvegarde le nouveau document property
+        const newProperty = new Property({
             name:propertyName,
             folderID:folderID,
             userID:userID,
         })
-        await newPropertyToSave.save()
+        await newProperty.save()
+        
 
-        // // On ajoute cette propriété à tout les items
-        // const itemUpdated = await Item.updateMany(
-        //     {folderID:folderID},
-        //     {$push : {properties:{propertyID:propertyID, name:propertyName}}}
-        // )
+        // On ajoute cette proprertyà tous les items
+        const itemsUpdated = await Item.updateMany(
+            {folderID:folderID},
+            {$push : {properties:{
+                propertyID:newProperty._id, 
+                name:newProperty.name,
+                value:"N/A"
+            }}},
+        )
 
-        // On trouve l'item sur lequel la propriété a été ajouter
-        // const thisItem = await Item.findOneAndUpdate(
-        //     {
-        //         "_id":itemID, 
-        //         "properties.propertyID":propertyID
-        //     },
-        //     {
-        //         "$set":{
-        //             "properties.$.value":propertyValue,
-        //         },
-        //     },
-        //     {
-        //         new:true
-        //     }
-        // )
-
-        // On récupère la liste de touts les items de l'utilisateur pour mettre à jour l'état redux
-        // const allUserItem = await Item.find({userID:userID})
+        // A ce stade, le document property a été ajouter, et la propriété a été ajouter à tout les items du dossier, avec pour valeur "N/A"
         
         response.status(201).json({
-            messageDebugConsole:`La propriété a été enregistrer \n\n ${JSON.stringify(newPropertyToSave, null, 2)}`,
-            messageDebugPopup:`Propriété enregistrer "${newPropertyToSave.name}"`,
+            messageDebugConsole:`La propriété a été enregistrer \n\n ${JSON.stringify(newProperty, null, 2)}`,
+            messageDebugPopup:`Propriété enregistrer "${newProperty.name}"`,
             messageUserPopup:"Property saved",
-            payload:newPropertyToSave
+            payload:newProperty
         })
         
     }catch(error){
         response.status(400).json({
             message:"Echec lors de l'enregistrement de la propriété",
+            messageDebugConsole:error.message,
             payload:error.message
         })
     }

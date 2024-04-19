@@ -5,10 +5,7 @@ import Property_Item_List from "../Item_List/Property_Item_List";
 
 export default function Property_Item_Layout({propertiesVisible, item}){
 
-    const {
-        propertyState,
-        propertyDispatch
-    } = Property_Manager()
+    Property_Manager(item)
 
     
 
@@ -17,15 +14,10 @@ export default function Property_Item_Layout({propertiesVisible, item}){
             {propertiesVisible && (
                 <div className="itemProperties_Box ">
                     <div className="propertiesAdd_Display">
-                        <Property_Item_Save
-                            propertyState={propertyState}
-                            item={item}
-                        />
+                        <Property_Item_Save/>
                     </div>
 
                     <Property_Item_List
-                        propertyState={propertyState}
-                        propertyDispatch={propertyDispatch}
                         item={item}
                     />
                 </div>

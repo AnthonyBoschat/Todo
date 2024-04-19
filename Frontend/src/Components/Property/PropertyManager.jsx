@@ -2,13 +2,11 @@ import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_propertyOnCreation } from "./PropertySlice";
 
-export default function Property_Manager(){
+export default function Property_Manager(item){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const dispatch = useDispatch()
-    
 
-    
 
 
     useEffect(() => {
@@ -17,6 +15,5 @@ export default function Property_Manager(){
 
 
     return{
-        
     }
 }

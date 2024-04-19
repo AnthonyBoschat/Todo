@@ -27,6 +27,6 @@ export default function Property_Tab_Creation(){
     }, [newPropertyRef])
 
     return(
-        <span ref={newPropertyRef} contentEditable autoFocus className="oneProperty oneProperty_Creation"></span>
+        <span ref={newPropertyRef} contentEditable autoFocus className="oneProperty_Creation"></span>
     )
 }

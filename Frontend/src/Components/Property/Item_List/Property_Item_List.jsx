@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Properties_One from "../Item_One/Property_Item_One";
 
-export default function Properties_List({item, propertyState, propertyDispatch}){
+export default function Properties_List({item}){
 
 
     
@@ -16,8 +16,6 @@ export default function Properties_List({item, propertyState, propertyDispatch})
                             item={item}
                             key={index}
                             property={property}
-                            propertyState={propertyState}
-                            propertyDispatch={propertyDispatch}
                         />
                     ))}
                 </div>

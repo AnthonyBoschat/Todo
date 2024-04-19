@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit"
 const PropertySlice = createSlice({
     name:"property",
     initialState:{
-        propertyOnCreation:false
+        propertyOnCreation:false,
     },
     reducers:{
         update_propertyOnCreation:(state,action) => {

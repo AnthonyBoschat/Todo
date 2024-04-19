@@ -5,7 +5,7 @@ import useItem_Request from "../Components/Item/ItemRequest";
 import useUser_Request from "../Components/User/UserRequest";
 import useDevtoolsRequest from "../Components/DevTools/DevtoolsRequest";
 import useList_Action from "../Components/List/ListAction";
-import useProperties_Action from "../Components/Property/PropertyActions";
+import useProperty_Action from "../Components/Property/PropertyActions";
 
 export default function useFetchRequest(){
 
@@ -18,7 +18,7 @@ export default function useFetchRequest(){
     const {userAction} = useUser_Request()
     const {devtoolAction} = useDevtoolsRequest()
     const {listAction} = useList_Action()
-    const {propertiesAction} = useProperties_Action()
+    const {propertyAction} = useProperty_Action()
 
 
     const determineTarget = (route, data) => {
@@ -47,7 +47,7 @@ export default function useFetchRequest(){
                 break
 
             case "property":
-                propertiesAction[action](data)
+                propertyAction[action](data)
                 break
 
         }

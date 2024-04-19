@@ -10,7 +10,7 @@ export default function ItemManager(){
     const dispatch = useDispatch()
 
 
-    useEffect(() => {   
+    useEffect(() => {
         // Quand on clique sur le bouton d'un dossier, va charger dans la vu la liste des items correspondant à ce dossier
         const newItemsToShow = userItemsList.filter(item => item.folderID === folderSelectedID)
         const newItemsToShowSort = newItemsToShow.sort((a,b) => a.position - b.position)
