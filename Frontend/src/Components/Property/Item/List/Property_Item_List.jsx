@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Properties_One from "../Item_One/Property_Item_One";
+import Properties_One from "../One/Property_Item_One";
 
 export default function Properties_List({item}){
 

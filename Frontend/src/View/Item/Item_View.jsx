@@ -3,8 +3,8 @@ import Item_List from "../../Components/Item/List/Item_List";
 import ItemManager from "../../Components/Item/ItemManager";
 import Item_Onglet from "../../Components/Item/Onglet/Item_Onglet";
 import Item_Add from "../../Components/Item/Add/Item_Add";
-import Property_Tab_List from "../../Components/Property/Tab_List/Property_Tab_List";
-import Property_Tab_Add from "../../Components/Property/Tab_Add/Property_Tab_Add";
+import Property_Tab_List from "../../Components/Property/Global/List/Property_Tab_List";
+import Property_Tab_Add from "../../Components/Property/Global/Add/Property_Tab_Add";
 import Property_Manager from "../../Components/Property/PropertyManager";
 
 

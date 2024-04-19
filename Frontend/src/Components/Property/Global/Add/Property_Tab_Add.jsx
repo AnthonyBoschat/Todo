@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_propertyOnCreation } from "../PropertySlice";
+import { update_propertyOnCreation } from "../../PropertySlice";
 
 export default function Property_Tab_Add({propertyState, propertyDispatch}){
 

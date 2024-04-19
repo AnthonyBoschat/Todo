@@ -1,5 +1,5 @@
 import React from "react";
-import useFetchRequest from "../../../Utils/useFetchRequest"
+import useFetchRequest from "../../../../Utils/useFetchRequest"
 import { useSelector } from "react-redux";
 
 export default function Property_Tab_One({property}){
@@ -8,7 +8,10 @@ export default function Property_Tab_One({property}){
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
 
     const deleteProperty = () => {
-        fetchRequest("DELETE", `property/delete/${property._id}/${folderSelectedID}`)
+        const confirmation = window.confirm("Deleting this property will also remove this property from objects in this folder. Are you sure ?")
+        if(confirmation){
+            fetchRequest("DELETE", `property/delete/${property._id}/${folderSelectedID}`)
+        }
     }
 
     return(

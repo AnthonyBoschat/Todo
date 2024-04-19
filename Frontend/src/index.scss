@@ -36,14 +36,12 @@
 @use "Components/Item/One/Item_One.scss";
 @use "Components/Item/Onglet/Item_Onglet.scss";
 
-@use "Components/Property/Item_Layout/Property_Item_Layout.scss";
-@use "Components/Property/Item_List/Property_Item_List.scss";
-@use "Components/Property/Item_One/Property_Item_One.scss";
-@use "Components/Property/Item_Save/Property_Item_Save.scss";
-@use "Components/Property/Tab_Layout/Property_Tab_Layout.scss";
-@use "Components/Property/Tab_Creation/Property_Tab_Creation.scss";
-@use "Components/Property/Tab_List/Property_Tab_List.scss";
-@use "Components/Property/Tab_One/Property_Tab_One.scss";
+@use "Components/Property/Item/_Layout/Property_Item_Layout.scss";
+@use "Components/Property/Item/One/Property_Item_One.scss";
+@use "Components/Property/Item/Save/Property_Item_Save.scss";
+@use "Components/Property/Global/Creation/Property_Tab_Creation.scss";
+@use "Components/Property/Global/List/Property_Tab_List.scss";
+@use "Components/Property/Global/One/Property_Tab_One.scss";
 
 
 @use "Components/List/Add/List_Add.scss";

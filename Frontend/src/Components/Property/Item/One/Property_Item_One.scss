@@ -1,0 +1,30 @@
+@use "../../../../Sass/Variable.scss" as v;
+
+div.propertieBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    background-color: v.$propertyBackground;
+    font-size: 1.3rem;
+    height: fit-content;
+    padding: 0.5rem;
+    border-radius: 4px;
+
+    span.property{
+        pointer-events: none;
+    }
+
+    span.value{
+        max-width: 70%;
+        outline: 1px solid black;
+        background-color: v.$propertyBackgroundValue;
+        display: flex;
+        justify-content: center;
+        // outline: 1px solid red;
+        padding: 0.2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-radius: 10px;
+    }
+}
