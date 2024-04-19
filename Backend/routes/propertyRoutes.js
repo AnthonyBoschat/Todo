@@ -53,5 +53,37 @@ router.post("/create", authenticationMiddleware, async(request,response) => {
 })
 
 
+//////////////////////////////////////////////////////////////////////////////////////
+// Supprime une propriété
+router.delete("/delete/:propertyID/:folderSelectedID", authenticationMiddleware, async(request, response) => {
+    try{
+        const {userID} = request.token
+        const {propertyID, folderSelectedID} = request.params
+        // On supprime la propriété de la collection Property
+        await Property.deleteOne({_id:propertyID, folderID:folderSelectedID})
+        // On supprime la propriété de tout les items qui ont pour properties, un objet qui match avec propertyID
+        const itemsUpdated = await Item.updateMany(
+            {folderID:folderSelectedID, userID:userID},
+            {$pull: {properties: {propertyID:propertyID}}}
+        )
+        response.status(200).json({
+            messageDebugConsole:`La propriété a été correctement supprimer \n\n ${propertyID}`,
+            messageDebugPopup:`Propriété supprimé ${propertyID}`,
+            messageUserPopup:"Property deleted",
+            payload:{
+                propertyID:propertyID,
+                folderSelectedID:folderSelectedID
+            }
+        })
+
+    }catch(error){
+        response.status(400).json({
+            message:"Echec lors de la suppression de la propriété",
+            messageDebugConsole:error.message,
+            payload:error.message
+        })
+    }
+})
+
 
 module.exports = router
