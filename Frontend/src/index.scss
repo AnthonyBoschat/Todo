@@ -39,9 +39,9 @@
 @use "Components/Property/Item/_Layout/Property_Item_Layout.scss";
 @use "Components/Property/Item/One/Property_Item_One.scss";
 @use "Components/Property/Item/Save/Property_Item_Save.scss";
-@use "Components/Property/Global/Creation/Property_Tab_Creation.scss";
-@use "Components/Property/Global/List/Property_Tab_List.scss";
-@use "Components/Property/Global/One/Property_Tab_One.scss";
+@use "Components/Property/Global/Creation/Property_Global_Creation.scss";
+@use "Components/Property/Global/List/Property_Global_List.scss";
+@use "Components/Property/Global/One/Property_Global_One.scss";
 
 
 @use "Components/List/Add/List_Add.scss";

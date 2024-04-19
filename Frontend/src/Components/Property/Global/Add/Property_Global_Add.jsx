@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_propertyOnCreation } from "../../PropertySlice";
 
-export default function Property_Tab_Add({propertyState, propertyDispatch}){
+export default function Property_Global_Add({propertyState, propertyDispatch}){
 
     const propertyOnCreation = useSelector(store => store.property.propertyOnCreation)
     const dispatch = useDispatch()

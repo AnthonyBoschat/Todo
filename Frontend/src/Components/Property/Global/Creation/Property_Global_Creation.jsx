@@ -3,7 +3,7 @@ import useFetchRequest from "../../../../Utils/useFetchRequest";
 import { useSelector } from "react-redux";
 
 
-export default function Property_Tab_Creation(){
+export default function Property_Global_Creation(){
 
     const newPropertyRef = useRef()
     const {fetchRequest} = useFetchRequest()

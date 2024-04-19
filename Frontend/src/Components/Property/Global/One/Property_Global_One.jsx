@@ -2,7 +2,7 @@ import React from "react";
 import useFetchRequest from "../../../../Utils/useFetchRequest"
 import { useSelector } from "react-redux";
 
-export default function Property_Tab_One({property}){
+export default function Property_Global_One({property}){
 
     const {fetchRequest} = useFetchRequest()
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)

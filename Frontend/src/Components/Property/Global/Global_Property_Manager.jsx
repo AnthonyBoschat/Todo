@@ -1,8 +1,8 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_propertyOnCreation, update_propertyToShow } from "./PropertySlice";
+import { update_propertyOnCreation, update_propertyToShow } from "../PropertySlice";
 
-export default function Property_Manager(item){
+export default function Global_Property_Manager(){
 
     const userPropertyList = useSelector(store => store.user.datas.userPropertyList)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)

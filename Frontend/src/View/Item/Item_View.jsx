@@ -3,9 +3,9 @@ import Item_List from "../../Components/Item/List/Item_List";
 import ItemManager from "../../Components/Item/ItemManager";
 import Item_Onglet from "../../Components/Item/Onglet/Item_Onglet";
 import Item_Add from "../../Components/Item/Add/Item_Add";
-import Property_Tab_List from "../../Components/Property/Global/List/Property_Tab_List";
-import Property_Tab_Add from "../../Components/Property/Global/Add/Property_Tab_Add";
-import Property_Manager from "../../Components/Property/PropertyManager";
+import Property_Global_List from "../../Components/Property/Global/List/Property_Global_List";
+import Property_Global_Add from "../../Components/Property/Global/Add/Property_Global_Add";
+import Global_Property_Manager from "../../Components/Property/Global/Global_Property_Manager";
 
 
 export default function Item_View(){
@@ -16,7 +16,7 @@ export default function Item_View(){
 
     const {
         propertyToShow
-    } = Property_Manager()
+    } = Global_Property_Manager()
 
 
 
@@ -35,12 +35,12 @@ export default function Item_View(){
                 {/*Ajouter un élément*/}
                 <div className="add_Box">
                     {(tabSelected === "Items") && (<Item_Add/>)}
-                    {(tabSelected === "Property") && (<Property_Tab_Add/>)}
+                    {(tabSelected === "Property") && (<Property_Global_Add/>)}
                 </div>
                 {/*List des éléments*/}
                 <div className="list_Box">
                     {(tabSelected === "Items") && (<Item_List/>)}
-                    {(tabSelected === "Property") && (<Property_Tab_List propertyToShow={propertyToShow}/>)}
+                    {(tabSelected === "Property") && (<Property_Global_List propertyToShow={propertyToShow}/>)}
                 </div>
             </div>
         </div>
