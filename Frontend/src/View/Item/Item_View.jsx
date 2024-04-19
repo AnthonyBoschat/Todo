@@ -14,7 +14,9 @@ export default function Item_View(){
         tabSelected
     } = ItemManager()
 
-    Property_Manager()
+    const {
+        propertyToShow
+    } = Property_Manager()
 
 
 
@@ -38,7 +40,7 @@ export default function Item_View(){
                 {/*List des éléments*/}
                 <div className="list_Box">
                     {(tabSelected === "Items") && (<Item_List/>)}
-                    {(tabSelected === "Property") && (<Property_Tab_List/>)}
+                    {(tabSelected === "Property") && (<Property_Tab_List propertyToShow={propertyToShow}/>)}
                 </div>
             </div>
         </div>

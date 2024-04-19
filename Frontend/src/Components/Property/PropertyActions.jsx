@@ -10,7 +10,6 @@ export default function useProperty_Action(){
 
     const propertyAction = {
         create:(newProperty) => {
-            console.log(newProperty)
             dispatch(update_addData({listName:"userPropertyList", newData:newProperty}))
             dispatch(update_propertyOnCreation(false))
             
