@@ -12,7 +12,12 @@ export default function useDevtoolsRequest(){
 
     const devtoolAction = {
         DELETE_ALL_ITEMS:(data) => {
-            dispatch(update_dataList({listName:"userItemsList", newList:data}))
+            console.log("data => ", data)
+            const {newItemsList, newPropertyList} = data
+            console.log("newItems => ", newItemsList)
+            console.log("newProperty => ", newPropertyList)
+            dispatch(update_dataList({listName:"userItemsList", newList:newItemsList}))
+            dispatch(update_dataList({listName:"userPropertyList", newList:newPropertyList}))
             dispatch(update_itemToShow([]))
         },
         DELETE_ALL_FOLDERS:() => {

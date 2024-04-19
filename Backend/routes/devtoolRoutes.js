@@ -38,10 +38,14 @@ router.delete("/DELETE_ALL_ITEMS/:folderID", authenticationMiddleware, async (re
         const deletedItems = await Item.deleteMany({folderID:folderID})
         const deletedProperty = await Property.deleteMany({folderID:folderID})
         const allItemsUpdate = await Item.find({userID:userID}) // Pertinence ?
+        const allPropertyUpdate = await Property.find({userID:userID})
         response.status(200).json({
             messageDebugConsole:`Toutes les tâches ont été supprimés \n\n ${JSON.stringify(allItems, null, 2)}`,
             messageDebugPopup:`Toutes les tâches ont été supprimer (${deletedItems.deletedCount})`,
-            payload:allItemsUpdate
+            payload:{
+                newItemsList:allItemsUpdate,
+                newPropertyList:allPropertyUpdate
+            }
         })
     }catch(error){response.status(400).json({
         messageDebugConsole:`Echec lors de la suppression des Items du dossier \n\n ${folderID}`,
