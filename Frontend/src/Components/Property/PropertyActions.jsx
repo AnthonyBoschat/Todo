@@ -1,6 +1,6 @@
 import React, {} from "react";
 import {useDispatch, useSelector} from "react-redux"
-import { update_addData, update_changeData, update_dataList, update_deleteData } from "../User/UserSlice";
+import { update_addData, update_addPropertyItem, update_changeData, update_dataList, update_deleteData, update_updatePropertyItem } from "../User/UserSlice";
 import { update_propertyOnCreation } from "./PropertySlice";
 
 export default function useProperty_Action(){
@@ -13,24 +13,7 @@ export default function useProperty_Action(){
         create:(newProperty) => {
             dispatch(update_addData({listName:"userPropertyList", newData:newProperty}))
             dispatch(update_propertyOnCreation(false))
-            
-            const newUserItemsList = userItemsList.map(item => {
-                if(item.folderID === newProperty.folderID){
-                    return {
-                        ...item,
-                        properties:[
-                            ...item.properties,
-                            {
-                                propertyID:newProperty._id,
-                                name:newProperty.name,
-                                value:"N/A"
-                            }
-                        ]
-                    }
-                }
-                return item
-            })
-            dispatch(update_dataList({listName:"userItemsList", newList:newUserItemsList}))
+            dispatch(update_addPropertyItem(newProperty))
 
         },
 
@@ -57,9 +40,8 @@ export default function useProperty_Action(){
 
 
         updateItem:(data) => {
-            const {newItem} = data
-            const itemIndex = userItemsList.findIndex(item => item._id === newItem._id)
-            dispatch(update_changeData({listName:"userItemsList", dataIndex:itemIndex, newData:newItem}))
+            const {itemID, updateList} = data
+            dispatch(update_updatePropertyItem({itemID, updateList}))
         }
     }
 

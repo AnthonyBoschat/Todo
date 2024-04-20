@@ -5,7 +5,7 @@ import { update_connected } from "../Connection/ConnectionSlice";
 import { update_debugConsole, update_debugPopup } from "./DevToolsSlice";
 import usePopup from "../Popup/usePopup";
 import useDevtoolsRequest from "./DevtoolsRequest";
-import useItem_Request from "../Item/ItemRequest";
+import useItem_Action from "../Item/ItemAction";
 import useUser_Request from "../User/UserRequest";
 
 export default function DevTools(){
@@ -31,8 +31,8 @@ export default function DevTools(){
     } = useUser_Request()
 
     const {
-        ItemRequest_Create
-    } = useItem_Request()
+        ItemAction_Create
+    } = useItem_Action()
 
     const [ItemForceNumber, setItemForceNumber] = useState(1)
 

@@ -45,6 +45,36 @@ const UserSlice = createSlice({
                 userItemsList:[],
             }
         },
+        update_addPropertyItem:(state,action) => {
+            const newProperty = action.payload
+            state.datas.userItemsList.forEach(item => {
+                if (item.folderID === newProperty.folderID) {
+                    if(!item.property){
+                        item.property = {}
+                    }
+                    // Directement mettre à jour l'item sans créer une nouvelle liste
+                    item.property[newProperty._id] = {
+                        name: newProperty.name,
+                        value: "N/A"
+                    };
+                }
+            });
+        },
+        update_updatePropertyItem:(state,action) => {
+            const {itemID, updateList} = action.payload
+            state.datas.userItemsList.forEach(item => {
+                if(item._id === itemID){
+                    updateList.forEach(update => {
+                        const propertyID = update[0]
+                        const newValue = update[1]
+                        item.property[propertyID] = {
+                            ...item.property[propertyID],
+                            value:newValue
+                        }
+                    })
+                }
+            })
+        }
     },
 })
 
@@ -57,5 +87,7 @@ export const {
     update_changeData,
     update_deleteData,
     update_reorderList,
-    update_DELETE_ALL_DATAS
+    update_DELETE_ALL_DATAS,
+    update_addPropertyItem,
+    update_updatePropertyItem
 } = UserSlice.actions

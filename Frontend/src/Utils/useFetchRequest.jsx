@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import usePopup from "../Components/Popup/usePopup";
 import useFolder_Request from "../Components/Folder/FolderAction";
-import useItem_Request from "../Components/Item/ItemRequest";
+import useItem_Action from "../Components/Item/ItemAction";
 import useUser_Request from "../Components/User/UserRequest";
 import useDevtoolsRequest from "../Components/DevTools/DevtoolsRequest";
 import useList_Action from "../Components/List/ListAction";
@@ -14,7 +14,7 @@ export default function useFetchRequest(){
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const {popup} = usePopup()
     const {folderAction} = useFolder_Request()
-    const {itemAction} = useItem_Request()
+    const {itemAction} = useItem_Action()
     const {userAction} = useUser_Request()
     const {devtoolAction} = useDevtoolsRequest()
     const {listAction} = useList_Action()

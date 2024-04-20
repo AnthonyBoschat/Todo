@@ -23,16 +23,18 @@ router.post("/create", authenticationMiddleware, async(request,response) => {
         })
         await newProperty.save()
         
-
-        // On ajoute cette proprertyà tous les items
+        // On créé un chemin de la propriété
+        const propertyPath = `property.${newProperty._id}`
+        // On ajoute cette proprerty à tous les items
         const itemsUpdated = await Item.updateMany(
             {folderID:folderID},
-            {$push : {properties:{
-                propertyID:newProperty._id, 
+            {$set : {
+                [propertyPath]:{
                 name:newProperty.name,
                 value:"N/A"
             }}},
         )
+
 
         // A ce stade, le document property a été ajouter, et la propriété a été ajouter à tout les items du dossier, avec pour valeur "N/A"
         
@@ -96,21 +98,22 @@ router.put("/updateItem", authenticationMiddleware, async(request,response) => {
         if(!thisItem){
             throw new Error(`Aucun item trouver avec cette identifiant ${itemID}`)
         }
-        // On modifie les propriété du document
-        thisItem.properties.forEach(property => {
-            if(updateList.hasOwnProperty(property.propertyID)){
-                property.value = updateList[property.propertyID]
-            }
+        const ArrayUpdateList = Object.entries(updateList)
+        ArrayUpdateList.forEach(updatedProperty => {
+            const propertyID = updatedProperty[0]
+            const newValue = updatedProperty[1]
+            thisItem.property[propertyID].value = newValue
+            thisItem.markModified('property')
         })
         // On sauvegarde le document mis à jour
-        await thisItem.save()
-
+        const savedItem = await thisItem.save()
         response.status(200).json({
             messageDebugConsole:`Mise à jour des propriétés de l'item correctement effectuer \n\n ${JSON.stringify(thisItem, null, 2)}`,
             messageDebugPopup:"Mise à jour des propriétés de l'item effectuer",
             messageUserPopup:"Item updated",
             payload:{
-                newItem:thisItem
+                itemID:itemID,
+                updateList:ArrayUpdateList
             }
         })
     }catch(error){

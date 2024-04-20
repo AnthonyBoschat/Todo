@@ -18,20 +18,35 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         const position = userItems.length
         request.body.userID = userID
         request.body.position = position
-        request.body.properties = []
+        // request.body.properties = []
+        // // On regarde s'il y a des propriétés associer à ce dossier, si oui on les ajoutes
+        // const propertyList = await Property.find({folderID:folderID})
+        // for(let i = 0; i<propertyList.length; i++){
+        //     request.body.properties.push({
+        //         propertyID:propertyList[i]._id,
+        //         name:propertyList[i].name
+        //     })
+        // }
+
+
+        request.body.property = {}
         // On regarde s'il y a des propriétés associer à ce dossier, si oui on les ajoutes
         const propertyList = await Property.find({folderID:folderID})
-        for(let i = 0; i<propertyList.length; i++){
-            request.body.properties.push({
-                propertyID:propertyList[i]._id,
-                name:propertyList[i].name
-            })
-        }
+        propertyList.forEach(property => {
+            request.body.property[property._id] = {
+                name:property.name,
+                value:"N/A"
+            }
+        })
+
+
+
+
         const newItem = new Item(request.body);
         await newItem.save();
         response.status(200).json({
-            messageDebugConsole:`La tâche a été correctement sauvegarder \n\n ${JSON.stringify(newItem, null, 2)}`,
-            messageDebugPopup:`Tâche sauvegarder`,
+            messageDebugConsole:`L'Item a été correctement sauvegarder \n\n ${JSON.stringify(newItem, null, 2)}`,
+            messageDebugPopup:`Item sauvegarder`,
             payload:newItem
         })
     }catch(error){

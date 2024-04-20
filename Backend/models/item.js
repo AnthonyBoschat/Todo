@@ -5,11 +5,7 @@ const ItemSchema = new mongoose.Schema({
   folderID: {type: String, required: true},
   userID:{type:String, required:true},
   position:{type:Number, required:true},
-  properties:[{
-    propertyID:{type:mongoose.Types.ObjectId},
-    name:{type:String},
-    value:{type:String},
-  }]
+  property:{type: Object, default: {}},
 });
 
 const Item = mongoose.model('Item', ItemSchema);
