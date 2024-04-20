@@ -5,6 +5,7 @@ const Folder = require("../models/folder")
 const Item = require("../models/item")
 const User = require("../models/user")
 const Property = require("../models/property")
+const List = require("../models/list")
 const authenticationMiddleware = require("../middleware/authentication")
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -14,8 +15,10 @@ router.delete("/DELETE_ALL_FOLDERS/:userID", async (request, response) => {
     try{
         const foldersDeleted = await Folder.deleteMany({userID:userID})
         const ItemsDeleted = await Item.deleteMany({userID:userID})
+        const PropertyDeleted = await Property.deleteMany({userID:userID})
+        const ListDeleted = await List.deleteMany({userID:userID})
         response.status(200).json({
-            messageDebugConsole:`Tout les dossier et toutes les tâches ont été supprimer \n\nDossier : ${foldersDeleted.deletedCount}\nTâches : ${ItemsDeleted.deletedCount} `,
+            messageDebugConsole:`Tout les dossier et toutes les tâches ont été supprimer \n\nDossier : ${foldersDeleted.deletedCount}\nTâches : ${ItemsDeleted.deletedCount}\nPropriétés : ${PropertyDeleted.deletedCount}\nListes : ${ListDeleted.deletedCount} `,
             messageDebugPopup:`Tout les dossier et toutes les tâches supprimer`,
             payload:"DELETE_ALL_FOLDERS"
         })
