@@ -60,7 +60,6 @@ export default function useProperty_Action(){
             const {newItem} = data
             const itemIndex = userItemsList.findIndex(item => item._id === newItem._id)
             dispatch(update_changeData({listName:"userItemsList", dataIndex:itemIndex, newData:newItem}))
-            // console.log(userItemsList[itemIndex])
         }
     }
 
