@@ -74,6 +74,14 @@ const UserSlice = createSlice({
                     })
                 }
             })
+        },
+        update_deletePropertyItem:(state,action) => {
+            const {folderID, propertyID} = action.payload
+            state.datas.userItemsList.forEach(item => {
+                if(item.folderID === folderID){
+                    delete item.property[propertyID]
+                }
+            })
         }
     },
 })
@@ -88,6 +96,8 @@ export const {
     update_deleteData,
     update_reorderList,
     update_DELETE_ALL_DATAS,
+
     update_addPropertyItem,
-    update_updatePropertyItem
+    update_updatePropertyItem,
+    update_deletePropertyItem,
 } = UserSlice.actions

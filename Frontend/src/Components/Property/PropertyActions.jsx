@@ -1,6 +1,6 @@
 import React, {} from "react";
 import {useDispatch, useSelector} from "react-redux"
-import { update_addData, update_addPropertyItem, update_changeData, update_dataList, update_deleteData, update_updatePropertyItem } from "../User/UserSlice";
+import { update_addData, update_addPropertyItem, update_changeData, update_dataList, update_deleteData, update_deletePropertyItem, update_updatePropertyItem } from "../User/UserSlice";
 import { update_propertyOnCreation } from "./PropertySlice";
 
 export default function useProperty_Action(){
@@ -19,23 +19,24 @@ export default function useProperty_Action(){
 
 
         delete:(data) => {
-            const {propertyID, folderSelectedID} = data
+            const {propertyID, folderID} = data
             // On supprime la propriété de la liste des propriété
             const propertyIndex = userPropertyList.findIndex(property => property._id === propertyID)
             dispatch(update_deleteData({listName:"userPropertyList", dataIndex:propertyIndex}))
 
-            // On supprime cette propriété des items maintenants
-            const newUserItemsList = userItemsList.map(item => {
-                if(item.folderID === folderSelectedID){
-                    const filteredProperties = item.properties.filter(property => property.propertyID !== propertyID)
-                    return {
-                        ...item,
-                        properties:filteredProperties
-                    }
-                }
-                return item
-            })
-            dispatch(update_dataList({listName:"userItemsList", newList:newUserItemsList}))
+            // // On supprime cette propriété des items maintenants
+            // const newUserItemsList = userItemsList.map(item => {
+            //     if(item.folderID === folderSelectedID){
+            //         const filteredProperties = item.properties.filter(property => property.propertyID !== propertyID)
+            //         return {
+            //             ...item,
+            //             properties:filteredProperties
+            //         }
+            //     }
+            //     return item
+            // })
+            // dispatch(update_dataList({listName:"userItemsList", newList:newUserItemsList}))
+            dispatch(update_deletePropertyItem({propertyID, folderID}))
         },
 
 

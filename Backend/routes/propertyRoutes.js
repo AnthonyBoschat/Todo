@@ -63,10 +63,11 @@ router.delete("/delete/:propertyID/:folderSelectedID", authenticationMiddleware,
         const {propertyID, folderSelectedID} = request.params
         // On supprime la propriété de la collection Property
         await Property.deleteOne({_id:propertyID, folderID:folderSelectedID})
+        const propertyPath = `property.${propertyID}`
         // On supprime la propriété de tout les items qui ont pour properties, un objet qui match avec propertyID
         const itemsUpdated = await Item.updateMany(
             {folderID:folderSelectedID, userID:userID},
-            {$pull: {properties: {propertyID:propertyID}}}
+            {$unset: {[propertyPath] : ""}}
         )
         response.status(200).json({
             messageDebugConsole:`La propriété a été correctement supprimer \n\n ${propertyID}`,
@@ -74,7 +75,7 @@ router.delete("/delete/:propertyID/:folderSelectedID", authenticationMiddleware,
             messageUserPopup:"Property deleted",
             payload:{
                 propertyID:propertyID,
-                folderSelectedID:folderSelectedID
+                folderID:folderSelectedID
             }
         })
 
