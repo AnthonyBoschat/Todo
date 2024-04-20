@@ -86,4 +86,39 @@ router.delete("/delete/:propertyID/:folderSelectedID", authenticationMiddleware,
 })
 
 
+//////////////////////////////////////////////////////////////////////////////////////
+// Met à jour les propriété d'un item
+router.put("/updateItem", authenticationMiddleware, async(request,response) => {
+    try{
+        const {itemID, updateList} = request.body
+        // On récupère l'item dans la base de donnée
+        const thisItem = await Item.findById(itemID)
+        if(!thisItem){
+            throw new Error(`Aucun item trouver avec cette identifiant ${itemID}`)
+        }
+        // On modifie les propriété du document
+        thisItem.properties.forEach(property => {
+            if(updateList.hasOwnProperty(property.propertyID)){
+                property.value = updateList[property.propertyID]
+            }
+        })
+        // On sauvegarde le document mis à jour
+        await thisItem.save()
+
+        response.status(200).json({
+            messageDebugConsole:`Mise à jour des propriétés de l'item correctement effectuer \n\n ${JSON.stringify(thisItem, null, 2)}`,
+            messageDebugPopup:"Mise à jour des propriétés de l'item effectuer",
+            messageUserPopup:"Item updated",
+            payload:{
+                newItem:thisItem
+            }
+        })
+    }catch(error){
+        response.status(400).json({
+            message:error.message
+        })
+    }
+})
+
+
 module.exports = router

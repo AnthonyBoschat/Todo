@@ -16,7 +16,7 @@ export default function Property_Item_Layout({propertiesVisible, item}){
             {propertiesVisible && (
                 <div className="itemProperties_Box ">
                     <div className="propertiesAdd_Display">
-                        <Property_Item_Save itemPropertyState={itemPropertyState}/>
+                        <Property_Item_Save disaptchItemPropertyState={disaptchItemPropertyState} itemPropertyState={itemPropertyState}/>
                     </div>
 
                     <Property_Item_List

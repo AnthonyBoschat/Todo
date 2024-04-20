@@ -27,27 +27,39 @@ export default function useFetchRequest(){
         const action = formatedRoute[1]
         switch(target){
             case "folder":
-                folderAction[action](data)
+                if(folderAction[action]){
+                    folderAction[action](data)
+                }
                 break
 
             case "item":
-                itemAction[action](data)
+                if(itemAction[action]){
+                    itemAction[action](data)
+                }
                 break
 
             case "user":
-                userAction[action](data)
+                if(userAction[action]){
+                    userAction[action](data)
+                }
                 break
 
             case "list":
-                listAction[action](data)
+                if(listAction[action]){
+                    listAction[action](data)
+                }
                 break
 
             case "devtool":
-                devtoolAction[action](data)
+                if(devtoolAction[action]){
+                    devtoolAction[action](data)
+                }
                 break
 
             case "property":
-                propertyAction[action](data)
+                if(propertyAction[action]){
+                    propertyAction[action](data)
+                }
                 break
 
         }
@@ -81,9 +93,10 @@ export default function useFetchRequest(){
             
     
         } catch (error){
+            console.log(error)
             if(error.messageUserPopup) popup({message: error.messageUserPopup, color: "bad"});
-            if(debugConsole) console.log(error.messageDebugConsole);
-            if(debugPopup) popup({message: error.messageDebugPopup, color: "debug"});
+            if(debugConsole && error.messageDebugConsole) console.log(error.messageDebugConsole);
+            if(debugPopup && error.messageDebugPopup) popup({message: error.messageDebugPopup, color: "debug"});
             // throw error; // Relance l'erreur pour la gestion d'erreur côté appelant.
         }
     }

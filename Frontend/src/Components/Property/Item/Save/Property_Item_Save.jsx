@@ -1,10 +1,14 @@
 import React from "react";
 import useProperty_Save from "./useProperty_Save";
+import useFetchRequest from "../../../../Utils/useFetchRequest";
 
-export default function Properties_Save({itemPropertyState}){
+export default function Properties_Save({itemPropertyState, disaptchItemPropertyState}){
+
+    const {fetchRequest} = useFetchRequest()
 
     const handleClick = () => {
-        console.log(itemPropertyState)
+        fetchRequest("PUT", "property/updateItem", itemPropertyState)
+        disaptchItemPropertyState({type:"updateDetected", payload:false})
     }
     
 

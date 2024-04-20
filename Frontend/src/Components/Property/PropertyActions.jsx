@@ -1,6 +1,6 @@
 import React, {} from "react";
 import {useDispatch, useSelector} from "react-redux"
-import { update_addData, update_dataList, update_deleteData } from "../User/UserSlice";
+import { update_addData, update_changeData, update_dataList, update_deleteData } from "../User/UserSlice";
 import { update_propertyOnCreation } from "./PropertySlice";
 
 export default function useProperty_Action(){
@@ -53,7 +53,14 @@ export default function useProperty_Action(){
                 return item
             })
             dispatch(update_dataList({listName:"userItemsList", newList:newUserItemsList}))
+        },
 
+
+        updateItem:(data) => {
+            const {newItem} = data
+            const itemIndex = userItemsList.findIndex(item => item._id === newItem._id)
+            dispatch(update_changeData({listName:"userItemsList", dataIndex:itemIndex, newData:newItem}))
+            // console.log(userItemsList[itemIndex])
         }
     }
 
