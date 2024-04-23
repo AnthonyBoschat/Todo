@@ -1,14 +1,32 @@
 @use "../../../Sass/Variable.scss" as v;
 
 div.listDetail_Display{
+    outline: 2px solid black;
     background: v.$listDetailBackground;
     // background-color: green; //
     width: 100%;
     transition: all 0.2s linear;
-    height: auto;
+    height: fit-content;
     z-index: -1;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    // margin-bottom: 0.2rem;
+
+    &::-webkit-scrollbar{
+        background-color: rgba(168, 168, 168, 0);
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb{
+        background-color: darken(white, 30%);
+        opacity: 0.5;
+        border-radius: 10px;
+        &:hover{
+            background-color: darken(white, 20%);
+        }
+    }
 
     &.visible{
         opacity: 1;
@@ -21,22 +39,28 @@ div.listDetail_Display{
 
     div.listDetail_Box{
         // background-color: rgba(255, 0, 0, 0.242); //
-        width: 100%;
-        height: 100%;
+        width: 98%;
+        max-width: 98%;
+        // height: 30rem;
+        height: auto;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 1rem;
+        margin-left: 1rem;
+        
 
         div.listDetail_Item{
-            height: 5rem;
-            width: 10rem;
-            margin: 1rem;
+            height: 3rem;
+            width: 40%;
+            margin-top: 1rem;
             border-radius: 5px;
             display: flex;
+            text-align: center;
             justify-content: center;
             align-items: center;
             color: black;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             background-color: v.$listDetailItem;
             transition: transform 0.1s linear;
 
@@ -44,7 +68,7 @@ div.listDetail_Display{
                 outline: 2px solid black;
                 background-color: white;
                 cursor: pointer;
-                transform: scale(1.1);
+                // transform: translateX(0.5rem);
             }
         }
     }

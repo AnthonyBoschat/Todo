@@ -6,6 +6,7 @@ div.List_List_Display{
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: hidden;
 
     .List_List_Box{
         width: 100%;
@@ -14,6 +15,23 @@ div.List_List_Display{
         display: flex;
         align-items: center;
         flex-direction: column;
+        // background-color: red; //
+        padding-bottom: 0.4rem;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar{
+            background-color: rgba(168, 168, 168, 0);
+            width: 10px;
+        }
+    
+        &::-webkit-scrollbar-thumb{
+            background-color: darken(white, 30%);
+            opacity: 0.5;
+            border-radius: 10px;
+            &:hover{
+                background-color: darken(white, 20%);
+            }
+        }
 
     }
 }

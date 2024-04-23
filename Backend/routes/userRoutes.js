@@ -57,7 +57,6 @@ router.post("/create", async(request, response) => {
                 {userID:savedUser._id}, 
                 env.secret_key, 
                 {expiresIn:"1h"})
-            console.log(token)
             response.cookie("session_token", token, {
                 httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
                 // secure:true, // Le cookie est envoyé uniquement sur HTTPS
@@ -71,7 +70,6 @@ router.post("/create", async(request, response) => {
             })  
         }
     }catch(error){
-        console.log(error)
         response.status(400).json({
             messageDebugConsole:error.messageDebugConsole,
             messageDebugPopup:error.messageDebugPopup,
@@ -145,8 +143,6 @@ router.get("/disconnect", async(request, response) => {
 // Reconnecte un utilisateur
 router.get("/reconnect", authenticationMiddleware, async(request,response) => {
     const {userID} = request.token
-    console.log("here")
-    console.log(request.token)
     try{
         const user = await User.findOne({_id:userID})
         if(!user){

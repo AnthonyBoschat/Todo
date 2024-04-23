@@ -40,15 +40,6 @@ export default function (){
         }
     }
 
-    // const handleDragUpdate = (update) => {
-    //     const {destination} = update
-    //     if(destination && destination.droppableId === "items" && update.type === "list"){
-    //         console.log("go")
-    //         return
-    //     }
-    //     console.log("gooooooo")
-    // }
-
     return{
         handleOnDragEnd,
         // handleDragUpdate

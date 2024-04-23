@@ -2,7 +2,7 @@ import React from "react";
 import useList_List from "./useList_List";
 import List_Creation from "../Creation/List_Creation";
 import List_One from "../One/List_One";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 
 export default function List_List(){
 
