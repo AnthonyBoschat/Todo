@@ -18,20 +18,7 @@ div.listItem_Display{
     justify-content: center;
     align-items: center;
 
-    ::-webkit-scrollbar{
-        background-color: rgba(168, 168, 168, 0);
-        width: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb{
-        background-color: darken(white, 30%);
-        opacity: 0.5;
-        border-radius: 10px;
-
-        &:hover{
-            background-color: darken(white, 20%);
-        }
-    }
+    
     
 
     div.listItem_Box{
@@ -45,6 +32,21 @@ div.listItem_Display{
         flex-direction: column;
         align-items: center;
         // gap: 1rem;
-        overflow-y: auto;
+        overflow-y:scroll;
+
+        &::-webkit-scrollbar{
+            
+            background-color: rgba(168, 168, 168, 0);
+            width: 10px;
+        }
+    
+        &::-webkit-scrollbar-thumb{
+            background-color: darken(white, 30%);
+            opacity: 0.5;
+            border-radius: 10px;
+            &:hover{
+                background-color: darken(white, 20%);
+            }
+        }
     }
 }
