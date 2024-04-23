@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Folder = require("../models/folder")
 const Item = require("../models/item")
+const List = require("../models/list")
 const authenticationMiddleware = require("../middleware/authentication")
 router.use(express.json())
 
@@ -52,13 +53,15 @@ router.delete("/delete/:folderID", authenticationMiddleware, async (request, res
             return response.status(404).json({message:`Impossible de trouver le dossier ${folderID}, Echec de la suppression`})
         }
         await Folder.deleteMany({_id:folderID, userID:userID})
-        // Récupération de la liste des tâche associés
+        
+        // Récupération de la liste des items associés
         const getListItem = await Item.find({folderID}).lean()
-        const listDeletedItem = getListItem.map(Item => `${JSON.stringify(Item, null, 2)}`).join("\n")
+        const getListList = await List.find({folderID})
 
-
-        // Suppression des tâches associés
+        // Suppression des items associés
         const deletedItem = await Item.deleteMany({folderID:folderID, userID:userID})
+        // Suppression des listes associés
+        const deletedList = await List.deleteMany({folderID:folderID, userID:userID})
         response.status(200).json({
             messageDebugConsole:`
 ------------------- Dossier supprimé : 
@@ -67,7 +70,12 @@ ${JSON.stringify(folder, null, 2)}
 
 ------------------- Tâche supprimé (${deletedItem.deletedCount}) : 
 
-${listDeletedItem}`,
+${JSON.stringify(getListItem, null, 2)}
+
+------------------- List supprimé (${deletedList.deletedCount}) :
+
+${JSON.stringify(getListList, null, 2)}
+`,
             messageDebugPopup:`Dossier ${folder.name} et tâche supprimer ${deletedItem.deletedCount}`,
             messageUserPopup:`Folder deleted`,
             payload:folder
