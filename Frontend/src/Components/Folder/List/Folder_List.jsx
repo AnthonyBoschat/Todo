@@ -15,7 +15,9 @@ export default function Folder_List(){
     const {fetchRequest} = useFetchRequest()
 
     const handleOnDragEnd = (result) => {
-        if(!result.destination) return
+        const {destination, source} = result
+        if(!destination) return
+        if(destination.droppableId === source.droppableId && destination.index === source.index)return
         const items = Array.from(userFoldersList)
         const [reorderedItem] = items.splice(result.source.index, 1)
         items.splice(result.destination.index, 0, reorderedItem)

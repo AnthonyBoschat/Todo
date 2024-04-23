@@ -15,7 +15,7 @@ export default function List_List(){
 
     return(
         <div className="List_List_Display">
-                <Droppable droppableId="Lists">
+                <Droppable droppableId="Lists" type="list">
                     {(provided) => (
                         <div {...provided.droppableProps} ref={provided.innerRef} className="List_List_Box">
                             {listToShow.length > 0 && (listToShow.map((list, index) => (

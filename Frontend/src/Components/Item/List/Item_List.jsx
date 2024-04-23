@@ -20,7 +20,7 @@ export default function Item_List(){
 
     return(
         <>
-            <Droppable droppableId="Items">
+            <Droppable droppableId="Items" type="item">
                 {(provided) => (
                     <div ref={displayItemListRef} className="listItem_Display">
                         <div {...provided.droppableProps} ref={provided.innerRef} className="listItem_Box">
