@@ -28,10 +28,6 @@ export default function Item_One({item, folderIndex, index}){
                         </div>
                     </div>
 
-                    {/* <Property_Item_Layout
-                        propertiesVisible={propertiesVisible}
-                        item={item}
-                    /> */}
                     <Item_Detail
                         propertiesVisible={propertiesVisible}
                         item={item}

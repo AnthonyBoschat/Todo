@@ -29,5 +29,33 @@ router.post("/create", authenticationMiddleware, async(request, response) => {
 })
 
 
+//////////////////////////////////////////////////////////////////////////////////////
+// Réorganise la position des items
+router.post("/sort", authenticationMiddleware, async(request, response) => {
+    try{
+        const {userID} = request.token
+        const {newListList} = request.body
+        for(let i = 0; i<newListList.length; i++){
+            await List.findOneAndUpdate(
+                {_id:newListList[i]._id},
+                {$set:{position:i}}
+            )
+        }
+        const ListListUpdated = await List.find({userID:userID, folderID:newListList[0].folderID})
+        response.status(200).json({
+            messageDebugConsole:`Ordre des listes mis à jour \n\n ${JSON.stringify(ListListUpdated, null, 2)}`, 
+            messageDebugPopup:`Ordre des listes mis à jour`,
+            payload:ListListUpdated
+        })
+    }catch(error){
+        response.status(400).json({
+            message:`Echec lors de la réorganisation de l'ordre des listes`,
+            payload:error.message
+        })
+    }
+    
+})
+
+
 
 module.exports = router

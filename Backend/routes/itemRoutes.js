@@ -184,7 +184,7 @@ router.put("/rename/:ItemID", authenticationMiddleware, async (request, response
 
 
 //////////////////////////////////////////////////////////////////////////////////////
-// Réorganise la position des tâches
+// Réorganise la position des items
 router.post("/sort", authenticationMiddleware, async(request, response) => {
     try{
         const {userID} = request.token

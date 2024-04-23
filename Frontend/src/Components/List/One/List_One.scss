@@ -1,15 +1,18 @@
 @use "../../../Sass/Variable.scss" as v;
 
-div.listOne_Box{
+div.listOne_Display{
     width: 95%;
+}
+div.listOne_Box{
+    width: 100%;
     height: fit-content;
-    outline: 1px solid white;
-    margin-top: 0.5rem;
+    margin-top: 15px;
     padding: 0.5rem;
     text-align: center;
     color: black;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
 
+    position: relative;
     border-radius: 4px;
     outline: 1px solid black;
     background-color: v.$listBackground;
@@ -22,6 +25,6 @@ div.listOne_Box{
         cursor: pointer;
         outline: 2px solid black;
         box-shadow: 3px 3px 4px 2px black;
-        background: v.$listBackgroundHover;
+        background-color: v.$listBackgroundHover;
     }
 }
