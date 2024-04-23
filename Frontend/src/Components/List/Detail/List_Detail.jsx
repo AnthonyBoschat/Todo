@@ -8,7 +8,7 @@ export default function List_Detail({list, listState}){
         <div className={`listDetail_Display ${listVisible ? "visible" : "hidden"}`}>
             {listVisible && (
                 <div className="listDetail_Box">
-                    <div className="listDetail_Item">
+                    {/* <div className="listDetail_Item">
                         {list.name}
                     </div>
                     <div className="listDetail_Item">
@@ -19,7 +19,7 @@ export default function List_Detail({list, listState}){
                     </div>
                     <div className="listDetail_Item">
                         {list.name}
-                    </div>
+                    </div> */}
 
                 </div>
             )}

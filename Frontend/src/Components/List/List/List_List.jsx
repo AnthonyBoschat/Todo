@@ -9,14 +9,12 @@ export default function List_List(){
     const {
         listOnCreation,
         listToShow,
-        handleOnDragEnd
     } = useList_List()
 
     
 
     return(
         <div className="List_List_Display">
-            <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="Lists">
                     {(provided) => (
                         <div {...provided.droppableProps} ref={provided.innerRef} className="List_List_Box">
@@ -29,9 +27,6 @@ export default function List_List(){
                         </div>
                     )}
                 </Droppable>
-                
-            </DragDropContext>
-            
         </div>
     )
 }
