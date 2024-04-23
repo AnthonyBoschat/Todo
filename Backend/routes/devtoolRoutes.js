@@ -67,6 +67,7 @@ router.delete("/DELETE_THIS_USER/:userID", async(request, response) => {
         const foldersDeleted = await Folder.deleteMany({userID:userID})
         const ItemsDeleted = await Item.deleteMany({userID:userID})
         const propetyDeleted = await Property.deleteMany({userID:userID})
+        const listDeleted = await List.deleteMany({userID:userID})
         response.status(200).json({
             messageDebugConsole:`Suppression de l'utilisateur terminer :\n\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${ItemsDeleted.deletedCount}`,
             messageDebugPopup:`Utilisateur correctement supprimer (ID : ${userID})`,
@@ -89,6 +90,7 @@ router.delete("/DELETE_ALL_USERS", async(request, response) => {
         const ItemsDeleted = await Item.deleteMany()
         const userDeleted = await User.deleteMany()
         const propertyDeleted = await Property.deleteMany()
+        const listDeleted = await List.deleteMany()
         response.status(200).json({
             messageDebugConsole:`Base de donnée correctement vidée \n\nUtilisateur supprimer : ${userDeleted.deletedCount}\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${ItemsDeleted.deletedCount}`,
             messageDebugPopup:"Base de donnée correctement vidée",

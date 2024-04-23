@@ -56,9 +56,9 @@ const UserSlice = createSlice({
                     item.property[newProperty._id] = {
                         name: newProperty.name,
                         value: "N/A"
-                    };
+                    }
                 }
-            });
+            })
         },
         update_updatePropertyItem:(state,action) => {
             const {itemID, updateList} = action.payload
