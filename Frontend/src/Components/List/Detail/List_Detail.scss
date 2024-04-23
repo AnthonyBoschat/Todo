@@ -1,0 +1,52 @@
+@use "../../../Sass/Variable.scss" as v;
+
+div.listDetail_Display{
+    background: v.$listDetailBackground;
+    // background-color: green; //
+    width: 100%;
+    transition: all 0.2s linear;
+    height: auto;
+    z-index: -1;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    &.visible{
+        opacity: 1;
+        max-height: 30rem;
+    }
+    &.hidden{
+        opacity: 0;
+        max-height: 0rem;
+    }
+
+    div.listDetail_Box{
+        // background-color: rgba(255, 0, 0, 0.242); //
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        div.listDetail_Item{
+            height: 5rem;
+            width: 10rem;
+            margin: 1rem;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-size: 1.5rem;
+            background-color: v.$listDetailItem;
+            transition: transform 0.1s linear;
+
+            &:hover{
+                outline: 2px solid black;
+                background-color: white;
+                cursor: pointer;
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
