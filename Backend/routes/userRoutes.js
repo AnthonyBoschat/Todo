@@ -55,8 +55,9 @@ router.post("/create", async(request, response) => {
             const savedUser = await newUser.save()
             const token = jwt.sign(
                 {userID:savedUser._id}, 
-                "secretKey", 
+                env.secret_key, 
                 {expiresIn:"1h"})
+            console.log(token)
             response.cookie("session_token", token, {
                 httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
                 // secure:true, // Le cookie est envoyé uniquement sur HTTPS
@@ -104,7 +105,7 @@ router.post("/connect", async(request, response) => {
                 error.status = 400
                 throw error
             }else{
-                const token = jwt.sign({userID:user._id}, "secretKey", {expiresIn:"1h"})
+                const token = jwt.sign({userID:user._id}, env.secret_key, {expiresIn:"1h"})
                 response.cookie("session_token", token, {
                     httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
                     // secure:true, // Le cookie est envoyé uniquement sur HTTPS
@@ -144,6 +145,8 @@ router.get("/disconnect", async(request, response) => {
 // Reconnecte un utilisateur
 router.get("/reconnect", authenticationMiddleware, async(request,response) => {
     const {userID} = request.token
+    console.log("here")
+    console.log(request.token)
     try{
         const user = await User.findOne({_id:userID})
         if(!user){
@@ -170,6 +173,7 @@ router.get("/reconnect", authenticationMiddleware, async(request,response) => {
 // Récupère toute les datas de l'utilisateur
 router.get("/loadDatas", authenticationMiddleware, async(request, response) => {
     const {userID} = request.token
+    
     try{
         const user = await User.findOne({_id: userID})
         const newUserFoldersList = await Folder.find({userID:userID})

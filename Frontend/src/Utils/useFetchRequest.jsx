@@ -6,10 +6,11 @@ import useUser_Request from "../Components/User/UserRequest";
 import useDevtoolsRequest from "../Components/DevTools/DevtoolsRequest";
 import useList_Action from "../Components/List/ListAction";
 import useProperty_Action from "../Components/Property/PropertyActions";
+const backend_url = process.env.backend_url
 
 export default function useFetchRequest(){
 
-    const backendURL = "http://localhost:4000"
+    const backendURL = `${backend_url}`
     const debugConsole = useSelector(store => store.devtools.debugConsole)
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const {popup} = usePopup()

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const User = require("../models/user")
+const env = process.env
 
 const authenticationMiddleware = async (request,response,next) => {
 
@@ -11,7 +12,7 @@ const authenticationMiddleware = async (request,response,next) => {
             error.statusCode = 403
             throw error
         }
-        const tokenDecoded = jwt.verify(tokenExist, "secretKey")
+        const tokenDecoded = jwt.verify(tokenExist, env.secret_key)
         const userExist = await User.findOne({ _id: tokenDecoded.userID })
         if (!userExist) {
             const error = new Error(`Aucun utilisateur connu dans la base de donnée avec cet ID (token) : ${tokenDecoded.userID}`)
