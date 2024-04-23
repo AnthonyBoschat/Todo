@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useItem_One from "./useItem_One";
 import { Draggable } from "react-beautiful-dnd";
-import Property_Item_Layout from "../../Property/Item/_Layout/Property_Item_Layout"
+import Item_Detail from "../Detail/Item_Detail";
 
 export default function Item_One({item, folderIndex, index}){
 
@@ -28,7 +28,11 @@ export default function Item_One({item, folderIndex, index}){
                         </div>
                     </div>
 
-                    <Property_Item_Layout
+                    {/* <Property_Item_Layout
+                        propertiesVisible={propertiesVisible}
+                        item={item}
+                    /> */}
+                    <Item_Detail
                         propertiesVisible={propertiesVisible}
                         item={item}
                     />

@@ -65,12 +65,12 @@ export default function DevTools(){
     // Ajoute de force une Item au dossier selectionner
     const addForceItem = () => {
         const ItemForce = {
-            content:`Tâche ${ItemForceNumber} `,
+            content:`Item ${ItemForceNumber} `,
             completed:false,
             folderID:folderSelectedID,
             userID:userID
         }
-        fetchRequest("POST", `Item/create`, ItemForce)
+        fetchRequest("POST", `item/create`, ItemForce)
         setItemForceNumber(current => current + 1)
     }
 

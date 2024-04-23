@@ -62,12 +62,12 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Supprime une Item
-router.delete("/delete/:ItemID", authenticationMiddleware, async (request, response) => {
+router.delete("/delete/:itemID", authenticationMiddleware, async (request, response) => {
     const {userID} = request.token
-    const ItemID = request.params.ItemID
+    const itemID = request.params.itemID
     try{
-        const thisItem = await Item.findById(ItemID)
-        const ItemDeleted = await Item.deleteOne({_id:ItemID, userID:userID})
+        const thisItem = await Item.findById(itemID)
+        const ItemDeleted = await Item.deleteOne({_id:itemID, userID:userID})
         if(!ItemDeleted){
             throw Error()
         }
@@ -75,7 +75,7 @@ router.delete("/delete/:ItemID", authenticationMiddleware, async (request, respo
             messageDebugConsole:`La tâche a correctement été supprimer \n\n ${JSON.stringify(thisItem, null, 2)}`,
             messageDebugPopup:`Tâche supprimer (${thisItem._id})`,
             messageUserPopup:`Item deleted`,
-            payload:thisItem
+            payload:itemID
         })
     }catch(error){
         response.status(400).json({

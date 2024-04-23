@@ -13,8 +13,7 @@ export default function Properties_Save({itemPropertyState, disaptchItemProperty
     
 
     return(
-        <div className={`propertiesSave_Box ${itemPropertyState.updateDetected ? "active" : "inactive"}`}>
-            <i onClick={handleClick} className="fa-solid fa-floppy-disk"></i>
-        </div>
+        <i onClick={handleClick} className={`fa-solid fa-floppy-disk ${itemPropertyState.updateDetected ? "active" : "inactive"}`}></i>
+
     )
 }

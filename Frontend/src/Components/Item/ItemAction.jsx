@@ -11,15 +11,14 @@ export default function useItem_Action(){
 
     const itemAction = {
         create:(data) => {
-            console.log(data)
             dispatch(update_addData({listName:"userItemsList", newData:data}))
             dispatch(update_addItemToShow(data))
             dispatch(update_ItemOnCreation(false))
         },
 
-        delete:(data) => {
-            const dataIndex = userItemsList.findIndex(Item => Item._id === data._id)
-            dispatch(update_deleteData({listName:"userItemsList", dataIndex:dataIndex}))
+        delete:(itemID) => {
+            const itemIndex = userItemsList.findIndex(item => item._id === itemID)
+            dispatch(update_deleteData({listName:"userItemsList", dataIndex:itemIndex}))
         },
 
         toggleCompleted:(data) => {

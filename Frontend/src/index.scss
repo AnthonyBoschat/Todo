@@ -35,10 +35,9 @@
 @use "Components/Item/Creation/Item_Creation.scss";
 @use "Components/Item/One/Item_One.scss";
 @use "Components/Item/Onglet/Item_Onglet.scss";
+@use "Components/Item/Detail/Item_Detail.scss";
 
-@use "Components/Property/Item/_Layout/Property_Item_Layout.scss";
 @use "Components/Property/Item/One/Property_Item_One.scss";
-@use "Components/Property/Item/Save/Property_Item_Save.scss";
 @use "Components/Property/Global/Creation/Property_Global_Creation.scss";
 @use "Components/Property/Global/List/Property_Global_List.scss";
 @use "Components/Property/Global/One/Property_Global_One.scss";

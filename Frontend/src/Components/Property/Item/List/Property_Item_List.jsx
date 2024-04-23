@@ -9,7 +9,7 @@ export default function Properties_List({item, disaptchItemPropertyState, itemPr
     return(
         <>
             {item.property && (
-                <div className="propertiesList_Box">
+                <>
                     {Object.entries(item.property).map((property, index) => (
                         <Properties_One
                             itemPropertyState={itemPropertyState}
@@ -18,15 +18,7 @@ export default function Properties_List({item, disaptchItemPropertyState, itemPr
                             property={property}
                         />
                     ))}
-                    {/* {item.properties.map((property, index) => (
-                        <Properties_One
-                            itemPropertyState={itemPropertyState}
-                            disaptchItemPropertyState={disaptchItemPropertyState}
-                            key={index}
-                            property={property}
-                        />
-                    ))} */}
-                </div>
+                </>
             )}
             
         </>

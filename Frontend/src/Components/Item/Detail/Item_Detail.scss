@@ -1,5 +1,5 @@
-@use "../../../../Sass/Variable.scss" as v;
-div.itemProperties_Display{
+@use "../../../Sass/Variable.scss" as v;
+div.itemDetail_Display{
     background-color: v.$ItemOptionBackground;
     width: 100%;
     max-width: 100%;
@@ -13,7 +13,7 @@ div.itemProperties_Display{
     &.visible{opacity: 1; max-height: 50rem;}
     &.hidden{opacity: 0; max-height: 0rem;}
  
-    div.itemProperties_Box{
+    div.itemDetail_Box{
         // outline: 1px solid white; //
         // background-color: red;
         margin: 1rem;
@@ -23,16 +23,38 @@ div.itemProperties_Display{
         color: white;
         padding-bottom: 1rem;
 
-        div.propertiesAdd_Display{
+        div.actions{
             // background-color: red; //
             width: 100%;
             display: flex;
             justify-content: flex-end;
             align-items: flex-start;
-            height: 3rem;
+            height: fit-content;
+            gap: 1rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+
+            i{
+                // outline: 1px solid white; 
+                font-size: 1.8rem;
+                color: white;
+                &.inactive{
+                    opacity: 0.2;
+                    pointer-events: none;
+                }
+                &.active{
+                    opacity: 0.8;
+                    pointer-events: all;
+
+                    &:hover{
+                        cursor: pointer;
+                        opacity: 1;
+                    }
+                 }
+            }
         }
 
-        div.propertiesList_Box{
+        div.property_list{
             // background-color: red; //
             // outline: 1px solid white; //
             display: flex;
