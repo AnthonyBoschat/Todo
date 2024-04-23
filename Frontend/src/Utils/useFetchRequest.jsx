@@ -6,11 +6,10 @@ import useUser_Request from "../Components/User/UserRequest";
 import useDevtoolsRequest from "../Components/DevTools/DevtoolsRequest";
 import useList_Action from "../Components/List/ListAction";
 import useProperty_Action from "../Components/Property/PropertyActions";
-const backend_url = process.env.backend_url
+const backend_url = process.env.REACT_APP_BACKEND_URL
 
 export default function useFetchRequest(){
 
-    const backendURL = `${backend_url}`
     const debugConsole = useSelector(store => store.devtools.debugConsole)
     const debugPopup = useSelector(store => store.devtools.debugPopup)
     const {popup} = usePopup()
@@ -78,7 +77,7 @@ export default function useFetchRequest(){
                 fetchOptions.body = JSON.stringify(payload);
             }
     
-            const response = await fetch(`${backendURL}/${route}`, fetchOptions);
+            const response = await fetch(`${backend_url}/${route}`, fetchOptions);
             const [ok, data] = await Promise.all([response.ok, response.json()]);
             if(!ok){
                 throw data;
