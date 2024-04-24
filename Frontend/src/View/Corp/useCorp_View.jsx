@@ -11,7 +11,7 @@ export default function (){
     const {fetchRequest} = useFetchRequest()
     const dispatch = useDispatch()
 
-    const handleOnDragEnd = (result) => {
+    const handleOnDragEnd = async(result) => {
         const {source, destination} = result
         if(!destination) return
         if(destination.droppableId === source.droppableId && destination.index === source.index)return
@@ -39,13 +39,12 @@ export default function (){
                     listID:destination.droppableId,
                     itemPosition:destination.index
                 }
-                fetchRequest("POST", "list/addItem", payload)
+                await fetchRequest("POST", "list/addItem", payload)
             }
         }
     }
 
     return{
         handleOnDragEnd,
-        // handleDragUpdate
     }
 }
