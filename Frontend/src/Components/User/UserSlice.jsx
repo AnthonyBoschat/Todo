@@ -43,6 +43,8 @@ const UserSlice = createSlice({
             state.datas = {
                 userFoldersList:[],
                 userItemsList:[],
+                userListsList:[],
+                userPropertyList:[]
             }
         },
         update_addPropertyItem:(state,action) => {
