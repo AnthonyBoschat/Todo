@@ -1,7 +1,6 @@
 const express = require("express")
 const router = express.Router()
 const Property = require("../models/property")
-const Folder = require("../models/folder")
 const Item = require("../models/item")
 const authenticationMiddleware = require("../middleware/authentication")
 router.use(express.json())

@@ -4,7 +4,7 @@ import useFolder_Request from "../Components/Folder/FolderAction";
 import useItem_Action from "../Components/Item/ItemAction";
 import useUser_Action from "../Components/User/UserAction";
 import useDevtoolsRequest from "../Components/DevTools/DevtoolsRequest";
-import useList_Action from "../Components/List/ListAction";
+import useCollection_Action from "../Components/Collection/CollectionAction";
 import useProperty_Action from "../Components/Property/PropertyActions";
 const backend_url = process.env.REACT_APP_BACKEND_URL
 
@@ -17,7 +17,7 @@ export default function useFetchRequest(){
     const {itemAction} = useItem_Action()
     const {userAction} = useUser_Action()
     const {devtoolAction} = useDevtoolsRequest()
-    const {listAction} = useList_Action()
+    const {collectionAction} = useCollection_Action()
     const {propertyAction} = useProperty_Action()
 
 
@@ -44,9 +44,9 @@ export default function useFetchRequest(){
                 }
                 break
 
-            case "list":
-                if(listAction[action]){
-                    listAction[action](data)
+            case "collection":
+                if(collectionAction[action]){
+                    collectionAction[action](data)
                 }
                 break
 

@@ -1,67 +1,67 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {update_listOnCreation} from "../ListSlice"
+import {update_collectionOnCreation} from "../CollectionSlice"
 import useFetchRequest from "../../../Utils/useFetchRequest"
 
 export default function useList_Creation(){
 
-    const listOnCreation = useSelector(store => store.list.listOnCreation)
+    const collectionOnCreation = useSelector(store => store.collection.collectionOnCreation)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
-    const listOnCreationRef = useRef()
+    const collectionOnCreationRef = useRef()
     const dispatch = useDispatch()
     const {fetchRequest} = useFetchRequest()
 
     useEffect(() => { 
-        if(listOnCreation && listOnCreationRef.current){
-            listOnCreationRef.current.focus()
+        if(collectionOnCreation && collectionOnCreationRef.current){
+            collectionOnCreationRef.current.focus()
         }
-    }, [listOnCreation])
+    }, [collectionOnCreation])
 
     const handleClickOutside = (event) => {
-        if(event.target === listOnCreationRef.current){
+        if(event.target === collectionOnCreationRef.current){
             event.preventDefault()
             return
         }
-        if(listOnCreationRef.current.innerText !== ""){
+        if(collectionOnCreationRef.current.innerText !== ""){
             const newList = {
-                name:listOnCreationRef.current.innerText,
+                name:collectionOnCreationRef.current.innerText,
                 folderID:folderSelectedID,
             }
-            fetchRequest("POST", "list/create", newList)
+            fetchRequest("POST", "collection/create", newList)
             return
         }else{
-            dispatch(update_listOnCreation(false))
+            dispatch(update_collectionOnCreation(false))
         }
     }
 
     const handleKeyDown = (event) => {
         if(event.key === "Enter"){
             if(!event.shiftKey){
-                if(listOnCreationRef.current.innerText !== ""){
+                if(collectionOnCreationRef.current.innerText !== ""){
                     event.preventDefault()
                     const newList = {
-                        name:listOnCreationRef.current.innerText,
+                        name:collectionOnCreationRef.current.innerText,
                         folderID:folderSelectedID,
                     }
-                    fetchRequest("POST", "list/create", newList)
+                    fetchRequest("POST", "collection/create", newList)
                     return
                 }else{
-                    dispatch(update_listOnCreation(false))
+                    dispatch(update_collectionOnCreation(false))
                 }
             }
         }
     }
 
     useEffect(() => {
-        if(listOnCreationRef.current && listOnCreation){
-            listOnCreationRef.current.addEventListener("keydown", handleKeyDown)
+        if(collectionOnCreationRef.current && collectionOnCreation){
+            collectionOnCreationRef.current.addEventListener("keydown", handleKeyDown)
             setTimeout(() => {window.addEventListener("click", handleClickOutside)}, 1);
 
             return () => {window.removeEventListener("click", handleClickOutside)}
         }
-    }, [listOnCreationRef])
+    }, [collectionOnCreationRef])
 
     return{
-        listOnCreationRef,
+        collectionOnCreationRef,
     }
 }

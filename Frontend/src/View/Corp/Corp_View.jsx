@@ -1,7 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Item_View from "../Item/Item_View";
-import List_View from "../List/List_View";
+import Collection_View from "../Collection/Collection_View";
 import Indicator_Folder from "../../Components/Folder/Indicator/Folder_Indicator";
 import { DragDropContext } from "react-beautiful-dnd";
 import useCorp_View from "./useCorp_View";
@@ -28,7 +28,7 @@ export default function Corp_Layout(){
                         <div className="Items_Lists_Box">
                             <DragDropContext  onDragEnd={handleOnDragEnd}>
                                 <Item_View/>
-                                <List_View/>
+                                <Collection_View/>
                             </DragDropContext>
                         </div>
                 </div>

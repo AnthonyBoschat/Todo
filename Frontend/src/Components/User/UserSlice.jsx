@@ -6,7 +6,7 @@ const UserSlice = createSlice({
         datas:{
             userFoldersList:[],
             userItemsList:[],
-            userListsList:[],
+            userCollectionsList:[],
             userPropertyList:[]
         },
         allDatasLoad:false
@@ -16,7 +16,7 @@ const UserSlice = createSlice({
             const newDatas = {
                 userFoldersList:action.payload.newUserFoldersList,
                 userItemsList:action.payload.newUserItemsList,
-                userListsList:action.payload.newUserListsList,
+                userCollectionsList:action.payload.newUserCollectionsList,
                 userPropertyList:action.payload.newUserPropertyList
             }
             state.datas = newDatas
@@ -43,7 +43,7 @@ const UserSlice = createSlice({
             state.datas = {
                 userFoldersList:[],
                 userItemsList:[],
-                userListsList:[],
+                userCollectionsList:[],
                 userPropertyList:[]
             }
         },
@@ -85,22 +85,30 @@ const UserSlice = createSlice({
                 }
             })
         },
-        update_addItemToList:(state,action) => {
+        update_addItemToCollection:(state,action) => {
             const {itemID, listID, itemContent, itemPosition} = action.payload
-            state.datas.userListsList.forEach(list => {
-                if(list._id === listID){
-                    Object.entries(list.items).map(([key,item], index) => {
-                        if(item.position >= itemPosition){
-                            list.items[key].position = list.items[key].position + 1
-                        }
-                    })
-                    list.items[itemID] = {
-                        name:itemContent,
-                        position:itemPosition
+            const collectionIndex = state.datas.userCollectionsList.findIndex(collection => collection._id === listID)
+            const itemsList = state.datas.userCollectionsList[collectionIndex].items
+            if(itemsList){
+                console.log(0)
+                Object.entries(itemsList).map(([key,item]) => {
+                    if(item.position >= itemPosition){
+                        itemsList[key].position = itemsList[key].position + 1
                     }
-                    
+                })
+                itemsList[itemID] = {
+                    name:itemContent,
+                    position:itemPosition
                 }
-            })
+            }else{
+                console.log(0.5)
+                state.datas.userCollectionsList[collectionIndex].items = {}
+                state.datas.userCollectionsList[collectionIndex].items[itemID] = {
+                    name:itemContent,
+                    position:itemPosition
+                }
+            }
+            console.log(1)
         }
     },
 })
@@ -120,5 +128,5 @@ export const {
     update_updatePropertyItem,
     update_deletePropertyItem,
 
-    update_addItemToList,
+    update_addItemToCollection,
 } = UserSlice.actions

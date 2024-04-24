@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const listSchema = new mongoose.Schema({
+const collectionSchema = new mongoose.Schema({
   name: { type: String, required: true },
   folderID: { type: String, required: true },
   userID: {type:String, required: true},
@@ -8,6 +8,6 @@ const listSchema = new mongoose.Schema({
   items:{type: Object, default: {}}
 });
 
-const List = mongoose.model('List', listSchema);
+const Collection = mongoose.model('Collection', collectionSchema);
 
-module.exports = List;
+module.exports = Collection;

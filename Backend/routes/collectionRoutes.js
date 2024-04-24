@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 router.use(express.json())
-const List = require("../models/list")
+const Collection = require("../models/collection")
 const Item = require("../models/item")
 const authenticationMiddleware = require("../middleware/authentication")
 
@@ -10,10 +10,10 @@ router.post("/create", authenticationMiddleware, async(request, response) => {
         const {userID} = request.token
         const newList = request.body
         newList.userID = userID
-        const userLists = await List.find({userID:userID})
+        const userLists = await Collection.find({userID:userID})
         const position = userLists.length
         newList.position = position
-        const savedList = new List(newList)
+        const savedList = new Collection(newList)
         await savedList.save()
         response.status(200).json({
             messageDebugConsole:`Liste correctement sauvegarder \n\n ${JSON.stringify(savedList, null, 2)}`,
@@ -42,7 +42,7 @@ router.post("/sort", authenticationMiddleware, async(request, response) => {
                 {$set:{position:i}}
             )
         }
-        const ListListUpdated = await List.find({userID:userID, folderID:newListList[0].folderID})
+        const ListListUpdated = await Collection.find({userID:userID, folderID:newListList[0].folderID})
         response.status(200).json({
             messageDebugConsole:`Ordre des listes mis à jour \n\n ${JSON.stringify(ListListUpdated, null, 2)}`, 
             messageDebugPopup:`Ordre des listes mis à jour`,
@@ -65,7 +65,7 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
         // Find the item in Item collection
         const thisItem = await Item.findById(itemID)
         // La liste concerner
-        const thisList = await List.findById(listID);
+        const thisList = await Collection.findById(listID);
 
 
 
@@ -100,12 +100,12 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
                 });
 
                 // Mise à jour des nouvelles positions dans la base de données pour les items qui était déjà présent
-                await List.updateOne({ _id: listID }, { $set: itemsToUpdatePosition });
+                await Collection.updateOne({ _id: listID }, { $set: itemsToUpdatePosition });
             }
         }
         // Enfin, on peut enregistrer le nouveau item, avec la finalPosition défini plus haut
         const itemKey = `items.${itemID}`
-        const listUpdated = await List.findByIdAndUpdate(
+        const listUpdated = await Collection.findByIdAndUpdate(
             {_id:listID},
             {$set:{[itemKey]:{
                 name:thisItem.content,

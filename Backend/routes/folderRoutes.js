@@ -2,7 +2,9 @@ const express = require("express")
 const router = express.Router()
 const Folder = require("../models/folder")
 const Item = require("../models/item")
-const List = require("../models/list")
+const Collection = require("../models/collection")
+const Property = require("../models/property")
+
 const authenticationMiddleware = require("../middleware/authentication")
 router.use(express.json())
 
@@ -56,12 +58,15 @@ router.delete("/delete/:folderID", authenticationMiddleware, async (request, res
         
         // Récupération de la liste des items associés
         const getListItem = await Item.find({folderID}).lean()
-        const getListList = await List.find({folderID})
+        const getListList = await Collection.find({folderID})
 
         // Suppression des items associés
         const deletedItem = await Item.deleteMany({folderID:folderID, userID:userID})
+        // Suppression des propriété associés
+        const deletedProperty = await Property.deleteMany({folderID:folderID, userID:userID})
         // Suppression des listes associés
-        const deletedList = await List.deleteMany({folderID:folderID, userID:userID})
+        const deletedList = await Collection.deleteMany({folderID:folderID, userID:userID})
+        
         response.status(200).json({
             messageDebugConsole:`
 ------------------- Dossier supprimé : 

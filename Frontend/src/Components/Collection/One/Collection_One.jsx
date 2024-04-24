@@ -1,15 +1,15 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import useList_One from "./useList_One";
-import List_Detail from "../Detail/List_Detail";
+import useCollection_One from "./useCollection_One";
+import List_Detail from "../Detail/Collection_Detail";
 
 export default function List_One({list, index}){
 
     const {
-        listState, 
-        dispatchListState,
+        collectionState, 
+        dispatchCollectionState,
         handleClick
-    } = useList_One()
+    } = useCollection_One()
 
     return(
         <Draggable draggableId={list._id} index={index}>
@@ -19,7 +19,7 @@ export default function List_One({list, index}){
                         <div onClick={handleClick} {...provided.dragHandleProps}  className="listOne_Box">
                             {list.name}
                         </div>
-                        <List_Detail listState={listState} list={list}/>
+                        <List_Detail collectionState={collectionState} list={list}/>
                         
                     </div>
                 </>

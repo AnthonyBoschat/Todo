@@ -5,7 +5,7 @@ import { ConnectionSliceReducer } from "../Components/Connection/ConnectionSlice
 import { PopupSliceReducer } from "../Components/Popup/PopupSlice"
 import { DevToolsSliceReducer } from "../Components/DevTools/DevToolsSlice"
 import { UserSliceReducer } from "../Components/User/UserSlice"
-import { ListSliceReducer } from "../Components/List/ListSlice"
+import { CollectionSliceReducer } from "../Components/Collection/CollectionSlice"
 import { PropertySliceReducer } from "../Components/Property/PropertySlice"
 
 const rootReducer = combineReducers({
@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
     popup:PopupSliceReducer,
     devtools:DevToolsSliceReducer,
     user:UserSliceReducer,
-    list:ListSliceReducer,
+    collection:CollectionSliceReducer,
     property:PropertySliceReducer
 })
 

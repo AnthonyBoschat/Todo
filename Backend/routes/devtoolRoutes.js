@@ -5,7 +5,7 @@ const Folder = require("../models/folder")
 const Item = require("../models/item")
 const User = require("../models/user")
 const Property = require("../models/property")
-const List = require("../models/list")
+const Collection = require("../models/collection")
 const authenticationMiddleware = require("../middleware/authentication")
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -16,7 +16,7 @@ router.delete("/DELETE_ALL_FOLDERS/:userID", async (request, response) => {
         const foldersDeleted = await Folder.deleteMany({userID:userID})
         const ItemsDeleted = await Item.deleteMany({userID:userID})
         const PropertyDeleted = await Property.deleteMany({userID:userID})
-        const ListDeleted = await List.deleteMany({userID:userID})
+        const ListDeleted = await Collection.deleteMany({userID:userID})
         response.status(200).json({
             messageDebugConsole:`Tout les dossier et toutes les tâches ont été supprimer \n\nDossier : ${foldersDeleted.deletedCount}\nTâches : ${ItemsDeleted.deletedCount}\nPropriétés : ${PropertyDeleted.deletedCount}\nListes : ${ListDeleted.deletedCount} `,
             messageDebugPopup:`Tout les dossier et toutes les tâches supprimer`,
@@ -67,7 +67,7 @@ router.delete("/DELETE_THIS_USER/:userID", async(request, response) => {
         const foldersDeleted = await Folder.deleteMany({userID:userID})
         const ItemsDeleted = await Item.deleteMany({userID:userID})
         const propetyDeleted = await Property.deleteMany({userID:userID})
-        const listDeleted = await List.deleteMany({userID:userID})
+        const listDeleted = await Collection.deleteMany({userID:userID})
         response.status(200).json({
             messageDebugConsole:`Suppression de l'utilisateur terminer :\n\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${ItemsDeleted.deletedCount}`,
             messageDebugPopup:`Utilisateur correctement supprimer (ID : ${userID})`,
@@ -90,7 +90,7 @@ router.delete("/DELETE_ALL_USERS", async(request, response) => {
         const ItemsDeleted = await Item.deleteMany()
         const userDeleted = await User.deleteMany()
         const propertyDeleted = await Property.deleteMany()
-        const listDeleted = await List.deleteMany()
+        const listDeleted = await Collection.deleteMany()
         response.status(200).json({
             messageDebugConsole:`Base de donnée correctement vidée \n\nUtilisateur supprimer : ${userDeleted.deletedCount}\nDossier supprimer : ${foldersDeleted.deletedCount}\nTâche supprimer : ${ItemsDeleted.deletedCount}`,
             messageDebugPopup:"Base de donnée correctement vidée",

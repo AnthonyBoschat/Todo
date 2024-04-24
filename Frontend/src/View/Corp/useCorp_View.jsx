@@ -2,12 +2,12 @@ import React, {} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetchRequest from "../../Utils/useFetchRequest";
 import { update_itemToShow } from "../../Components/Item/ItemSlice";
-import { update_listToShow } from "../../Components/List/ListSlice";
+import { update_collectionToShow } from "../../Components/Collection/CollectionSlice";
 
 export default function (){
 
     const itemToShow = useSelector(store => store.item.global.itemToShow)
-    const listToShow = useSelector(store => store.list.listToShow)
+    const collectionToShow = useSelector(store => store.collection.collectionToShow)
     const {fetchRequest} = useFetchRequest()
     const dispatch = useDispatch()
 
@@ -24,12 +24,12 @@ export default function (){
             fetchRequest("POST", `item/sort`, {newItemsList:items})
         }
         if(destination.droppableId === "Lists" && source.droppableId === "Lists"){
-            const lists = Array.from(listToShow)
+            const lists = Array.from(collectionToShow)
             const [reorderedList] = lists.splice(result.source.index, 1)
             lists.splice(destination.index, 0, reorderedList)
 
-            dispatch(update_listToShow(lists))
-            fetchRequest("POST", `list/sort`, {newListList:lists})
+            dispatch(update_collectionToShow(lists))
+            fetchRequest("POST", `collection/sort`, {newListList:lists})
         }
         if(destination.droppableId !== "Lists" && destination.droppableId !== "Items"){
             if(source.droppableId === "Items"){
@@ -39,7 +39,7 @@ export default function (){
                     listID:destination.droppableId,
                     itemPosition:destination.index
                 }
-                await fetchRequest("POST", "list/addItem", payload)
+                await fetchRequest("POST", "collection/addItem", payload)
             }
         }
     }

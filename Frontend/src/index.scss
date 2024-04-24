@@ -12,7 +12,7 @@
 @use "View/Corp/Corp_View.scss";
 @use "View/Pannel/Pannel_View.scss";
 @use "View/Item/Item_View.scss";
-@use "View/List/List_View.scss";
+@use "View/Collection/Collection_View.scss";
 
 
 @use "Components/Connection/Connection_Layout.scss";
@@ -30,12 +30,12 @@
 @use "Components/Folder/Button/Folder_Button.scss";
 @use "Components/Folder/Indicator/Folder_Indicator.scss";
 
-@use "Components/Item/Add/Item_Add.scss";
-@use "Components/Item/List/Item_List.scss";
-@use "Components/Item/Creation/Item_Creation.scss";
-@use "Components/Item/One/Item_One.scss";
-@use "Components/Item/Onglet/Item_Onglet.scss";
-@use "Components/Item/Detail/Item_Detail.scss";
+@use "Components/Item/Global/Add/Item_Add.scss";
+@use "Components/Item/Global/List/Item_List.scss";
+@use "Components/Item/Global/Creation/Item_Creation.scss";
+@use "Components/Item/Global/One/Item_One.scss";
+@use "Components/Item/Global/Onglet/Item_Onglet.scss";
+@use "Components/Item/Global/Detail/Item_Detail.scss";
 
 @use "Components/Property/Item/One/Property_Item_One.scss";
 @use "Components/Property/Global/Creation/Property_Global_Creation.scss";
@@ -43,11 +43,11 @@
 @use "Components/Property/Global/One/Property_Global_One.scss";
 
 
-@use "Components/List/Add/List_Add.scss";
-@use "Components/List/List/List_List.scss";
-@use "Components/List/Creation/List_Creation.scss";
-@use "Components/List/One/List_One.scss";
-@use "Components/List/Detail/List_Detail.scss";
+@use "Components/Collection/Add/Collection_Add.scss";
+@use "Components/Collection/List/Collection_List.scss";
+@use "Components/Collection/Creation/Collection_Creation.scss";
+@use "Components/Collection/One/Collection_One.scss";
+@use "Components/Collection/Detail/Collection_Detail.scss";
 
 
 @use "Components/DevTools/DevTools.scss";
