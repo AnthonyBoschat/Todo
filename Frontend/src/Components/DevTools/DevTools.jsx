@@ -6,7 +6,7 @@ import { update_debugConsole, update_debugPopup } from "./DevToolsSlice";
 import usePopup from "../Popup/usePopup";
 import useDevtoolsRequest from "./DevtoolsRequest";
 import useItem_Action from "../Item/ItemAction";
-import useUser_Request from "../User/UserRequest";
+import useUser_Action from "../User/UserAction";
 
 export default function DevTools(){
     
@@ -28,7 +28,7 @@ export default function DevTools(){
     const {
         userRequest_Connect,
         userRequest_Disconnect,
-    } = useUser_Request()
+    } = useUser_Action()
 
     const {
         ItemAction_Create

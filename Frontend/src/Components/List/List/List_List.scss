@@ -17,7 +17,7 @@ div.List_List_Display{
         flex-direction: column;
         // background-color: red; //
         padding-bottom: 0.4rem;
-        overflow-y: scroll;
+        // overflow-y: scroll;
 
         &::-webkit-scrollbar{
             background-color: rgba(168, 168, 168, 0);

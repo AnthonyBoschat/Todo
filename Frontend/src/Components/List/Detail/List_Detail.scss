@@ -7,12 +7,11 @@ div.listDetail_Display{
     width: 100%;
     transition: all 0.2s linear;
     height: fit-content;
-    z-index: -1;
+    z-index: 0;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     overflow-y: scroll;
     overflow-x: hidden;
-    // margin-bottom: 0.2rem;
 
     &::-webkit-scrollbar{
         background-color: rgba(168, 168, 168, 0);
@@ -46,8 +45,9 @@ div.listDetail_Display{
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding-bottom: 1rem;
+        padding-bottom: 2rem;
         margin-left: 1rem;
+        padding-top: 2rem;
         
 
         div.listDetail_Item{

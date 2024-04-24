@@ -8,6 +8,7 @@ div.popup_Display{
     align-items: flex-end;
 
     div.popup_Box{
+        position: relative;
         outline: 2px solid black;
         font-size: 1.2rem;
         padding: 1rem;
@@ -22,5 +23,6 @@ div.popup_Display{
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.584);
         animation: errorConnectionAppear 0.1s linear forwards,
                     errorConnectionDisappear 0.3s 2.5s linear forwards;
+        z-index: 2;
     }
 }

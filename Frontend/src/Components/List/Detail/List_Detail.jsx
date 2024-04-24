@@ -16,25 +16,25 @@ export default function List_Detail({list, listState}){
 
     return(
         <div className={`listDetail_Display ${listVisible ? "visible" : "hidden"}`}>
-            {(listVisible && itemToTheListSort.length !== 0) &&(
+            {(listVisible) &&(
                 <Droppable droppableId={list._id} type="item">
                     {(provided) => (
                         <div {...provided.droppableProps} ref={provided.innerRef} className="listDetail_Box">
 
 
-                            {itemToTheListSort.map((item, index) => {
+                            {(itemToTheListSort.length !== 0) && (itemToTheListSort.map((item, index) => {
                                 const itemID = item[0]
                                 const itemName = item[1].name
-                                return(
-                                    <Draggable key={index} draggableId={`itemList_${itemID}`} index={index}>
-                                        {(provided) => (
-                                            <div ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}  className="listDetail_Item">
-                                                {itemName}
-                                            </div>
-                                        )}
-                                    </Draggable>
-                                )
-                            }
+                                    return(
+                                        <Draggable key={index} draggableId={`itemList_${itemID}`} index={index}>
+                                            {(provided) => (
+                                                <div ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}  className="listDetail_Item">
+                                                    {itemName}
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    )
+                                })
                             )}
                             {provided.placeholder}
                         </div>
