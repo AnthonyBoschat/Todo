@@ -3,7 +3,6 @@ import useItem_List from "./useItem_List";
 import Creation_Item from "../Creation/Item_Creation";
 import Item_One from "../One/Item_One";
 import { Droppable } from 'react-beautiful-dnd';
-import { DragDropContext } from "react-beautiful-dnd";
 
 export default function Item_List(){
 

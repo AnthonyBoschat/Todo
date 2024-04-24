@@ -8,9 +8,7 @@ export default function Item_One({item, folderIndex, index}){
     const {
         ItemRef,
         ItemNameRef,
-        ItemOnEdition,
         leftSideRef,
-        toggleCoverRef,
         propertiesVisible,
         handleClick,
     } = useItem_One(item)

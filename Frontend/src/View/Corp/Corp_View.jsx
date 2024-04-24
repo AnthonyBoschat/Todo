@@ -4,10 +4,6 @@ import Item_View from "../Item/Item_View";
 import List_View from "../List/List_View";
 import Indicator_Folder from "../../Components/Folder/Indicator/Folder_Indicator";
 import { DragDropContext } from "react-beautiful-dnd";
-import useItem_List from "../../Components/Item/List/useItem_List";
-import { update_itemToShow } from "../../Components/Item/ItemSlice";
-import useFetchRequest from "../../Utils/useFetchRequest";
-import { update_listToShow } from "../../Components/List/ListSlice";
 import useCorp_View from "./useCorp_View";
 
 

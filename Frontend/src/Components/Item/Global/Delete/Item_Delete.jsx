@@ -1,5 +1,5 @@
 import React from "react";
-import useFetchRequest from "../../../Utils/useFetchRequest";
+import useFetchRequest from "../../../../Utils/useFetchRequest";
 
 export default function Item_Delete({itemID}){
 

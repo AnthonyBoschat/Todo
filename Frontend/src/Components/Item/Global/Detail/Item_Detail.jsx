@@ -1,7 +1,7 @@
 import React from "react";
-import Item_Property_Manager from "../../Property/Item/Item_Property_Manager";
-import Property_Item_Save from "../../Property/Item/Save/Property_Item_Save"
-import Property_Item_List from "../../Property/Item/List/Property_Item_List"
+import Item_Property_Manager from "../../../Property/Item/Item_Property_Manager";
+import Property_Item_Save from "../../../Property/Item/Save/Property_Item_Save"
+import Property_Item_List from "../../../Property/Item/List/Property_Item_List"
 import Item_Delete from "../Delete/Item_Delete";
 
 export default function Item_Detail({propertiesVisible, item}){

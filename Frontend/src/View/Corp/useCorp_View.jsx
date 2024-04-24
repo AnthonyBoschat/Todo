@@ -6,7 +6,7 @@ import { update_listToShow } from "../../Components/List/ListSlice";
 
 export default function (){
 
-    const itemToShow = useSelector(store => store.item.itemToShow)
+    const itemToShow = useSelector(store => store.item.global.itemToShow)
     const listToShow = useSelector(store => store.list.listToShow)
     const {fetchRequest} = useFetchRequest()
     const dispatch = useDispatch()

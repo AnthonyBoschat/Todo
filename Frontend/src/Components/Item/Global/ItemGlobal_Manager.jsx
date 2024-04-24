@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_itemToShow } from "./ItemSlice";
+import { update_itemToShow } from "../ItemSlice";
 
-export default function ItemManager(){
+export default function ItemGlobal_Manager(){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const userItemsList = useSelector(store => store.user.datas.userItemsList)
-    const tabSelected = useSelector(store => store.item.tabs.tabSelected)
+    const tabSelected = useSelector(store => store.item.global.tabs.tabSelected)
     const dispatch = useDispatch()
 
 

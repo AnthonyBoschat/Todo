@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_ItemOnCreation } from "../ItemSlice";
-import useFetchRequest from "../../../Utils/useFetchRequest";
+import { update_ItemOnCreation } from "../../ItemSlice";
+import useFetchRequest from "../../../../Utils/useFetchRequest";
 
 export default function useItem_Creation(){
 
-    const ItemOnCreation = useSelector(store => store.item.ItemOnCreation)
+    const ItemOnCreation = useSelector(store => store.item.global.itemOnCreation)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const dispatch = useDispatch()
     

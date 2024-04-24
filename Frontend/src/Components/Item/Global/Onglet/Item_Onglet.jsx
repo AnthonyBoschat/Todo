@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_tabSelected } from "../ItemSlice";
+import { update_tabSelected } from "../../ItemSlice";
 
 export default function Item_Onglet(){
 
-    const tabsList = useSelector(store => store.item.tabs.tabsList)
-    const tabSelected = useSelector(store => store.item.tabs.tabSelected)
+    const tabsList = useSelector(store => store.item.global.tabs.tabsList)
+    const tabSelected = useSelector(store => store.item.global.tabs.tabSelected)
     const dispatch = useDispatch()
+    
 
 
     return(
