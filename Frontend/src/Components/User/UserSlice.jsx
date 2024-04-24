@@ -84,16 +84,19 @@ const UserSlice = createSlice({
             })
         },
         update_addItemToList:(state,action) => {
-            const {itemID, listID, itemContent} = action.payload
+            const {itemID, listID, itemContent, itemPosition} = action.payload
             state.datas.userListsList.forEach(list => {
                 if(list._id === listID){
                     Object.entries(list.items).map(([key,item], index) => {
-                        console.log(key)
-                        console.log(item.position)
+                        if(item.position >= itemPosition){
+                            list.items[key].position = list.items[key].position + 1
+                        }
                     })
-                    // list.items[itemID] = {
-                    //     name:itemContent
-                    // }
+                    list.items[itemID] = {
+                        name:itemContent,
+                        position:itemPosition
+                    }
+                    
                 }
             })
         }

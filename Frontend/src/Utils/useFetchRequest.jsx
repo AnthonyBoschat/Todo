@@ -93,7 +93,6 @@ export default function useFetchRequest(){
             
     
         } catch (error){
-            console.log(error)
             if(error.messageUserPopup) popup({message: error.messageUserPopup, color: "bad"});
             if(debugConsole && error.messageDebugConsole) console.log(error.messageDebugConsole);
             if(debugPopup && error.messageDebugPopup) popup({message: error.messageDebugPopup, color: "debug"});

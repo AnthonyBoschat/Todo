@@ -67,25 +67,49 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
         // La liste concerner
         const thisList = await List.findById(listID);
 
-        
 
-        // Mise à jour des positions des éléments existants
-        const itemsToUpdate = {};
-        Object.entries(thisList.items).forEach(([key, item]) => {
-            if (item.position >= itemPosition) {
-                itemsToUpdate[`items.${key}.position`] = item.position + 1;
+
+        let finalPosition // Position final de l'item à ajouter
+        let itemsToUpdatePosition = {} // Initialisation d'un objet qui sert à récupérer les possibles nouvelles positions des éléments
+
+
+        // Si l'item existe déjà dans la liste
+        if(thisList.items[itemID]){
+            response.status(400).json({
+                messageUserPopup:"This object is already saved in this list"
+            })
+            return
+        }
+        // Si l'item n'existe pas encore, on peut l'enregistrer
+        else{
+
+            // On verifie la taille de cette liste, si 0, pas besoin de mettre à jours des positions, on initialise la position à 0
+            if(Object.entries(thisList.items).length === 0){
+                finalPosition = 0
             }
-        });
+            
+            // Si la liste contient déjà des items, la position du nouvel objet est bien sa position de drop
+            else{ 
+                finalPosition = itemPosition
 
-        // Mise à jour des positions dans la base de données
-        await List.updateOne({ _id: listID }, { $set: itemsToUpdate });
+                // On rempli itemsToUpdatePosition des nouvelles position des élément suivent dans la liste au augmentant de 1 leurs positions
+                Object.entries(thisList.items).forEach(([key, item]) => {
+                    if (item.position >= itemPosition) {
+                        itemsToUpdatePosition[`items.${key}.position`] = item.position + 1
+                    }
+                });
 
+                // Mise à jour des nouvelles positions dans la base de données pour les items qui était déjà présent
+                await List.updateOne({ _id: listID }, { $set: itemsToUpdatePosition });
+            }
+        }
+        // Enfin, on peut enregistrer le nouveau item, avec la finalPosition défini plus haut
         const itemKey = `items.${itemID}`
         const listUpdated = await List.findByIdAndUpdate(
             {_id:listID},
             {$set:{[itemKey]:{
                 name:thisItem.content,
-                position:itemPosition
+                position:finalPosition
             }}},
             {new:true}
         )
@@ -98,6 +122,7 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
                 itemID:thisItem._id,
                 listID:listUpdated._id,
                 itemContent:thisItem.content,
+                itemPosition:finalPosition
             }
         })
 

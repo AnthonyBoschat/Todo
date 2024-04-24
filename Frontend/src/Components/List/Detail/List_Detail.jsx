@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 
 export default function List_Detail({list, listState}){
 
     const  {listVisible} = listState
+    const [itemToTheListSort, setItemToTheListSort] = useState([])
+
+    useEffect(() => {
+        if(list.items){
+            const newItemToTheListSort = Object.entries(list.items).sort((a, b) => a[1].position - b[1].position)
+            setItemToTheListSort(newItemToTheListSort)
+        }
+    }, [list])
 
     return(
         <div className={`listDetail_Display ${listVisible ? "visible" : "hidden"}`}>
-            {listVisible && (
+            {(listVisible && itemToTheListSort.length !== 0) &&(
                 <Droppable droppableId={list._id} type="item">
                     {(provided) => (
                         <div {...provided.droppableProps} ref={provided.innerRef} className="listDetail_Box">
 
 
-                            {Object.entries(list.items).map((item, index) => {
+                            {itemToTheListSort.map((item, index) => {
                                 const itemID = item[0]
                                 const itemName = item[1].name
                                 return(
