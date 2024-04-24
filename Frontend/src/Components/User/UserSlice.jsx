@@ -82,6 +82,20 @@ const UserSlice = createSlice({
                     delete item.property[propertyID]
                 }
             })
+        },
+        update_addItemToList:(state,action) => {
+            const {itemID, listID, itemContent} = action.payload
+            state.datas.userListsList.forEach(list => {
+                if(list._id === listID){
+                    Object.entries(list.items).map(([key,item], index) => {
+                        console.log(key)
+                        console.log(item.position)
+                    })
+                    // list.items[itemID] = {
+                    //     name:itemContent
+                    // }
+                }
+            })
         }
     },
 })
@@ -100,4 +114,6 @@ export const {
     update_addPropertyItem,
     update_updatePropertyItem,
     update_deletePropertyItem,
+
+    update_addItemToList,
 } = UserSlice.actions

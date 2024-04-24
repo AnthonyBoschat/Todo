@@ -18,15 +18,6 @@ router.post("/create", authenticationMiddleware, async (request, response) => {
         const position = userItems.length
         request.body.userID = userID
         request.body.position = position
-        // request.body.properties = []
-        // // On regarde s'il y a des propriétés associer à ce dossier, si oui on les ajoutes
-        // const propertyList = await Property.find({folderID:folderID})
-        // for(let i = 0; i<propertyList.length; i++){
-        //     request.body.properties.push({
-        //         propertyID:propertyList[i]._id,
-        //         name:propertyList[i].name
-        //     })
-        // }
 
 
         request.body.property = {}

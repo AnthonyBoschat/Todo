@@ -12,11 +12,10 @@ export default function (){
     const dispatch = useDispatch()
 
     const handleOnDragEnd = (result) => {
-
+        console.log(result)
         const {source, destination} = result
         if(!destination) return
         if(destination.droppableId === source.droppableId && destination.index === source.index)return
-
         if(destination.droppableId === "Items" && source.droppableId === "Items"){
             const items = Array.from(itemToShow)
             const [reorderedItem] = items.splice(result.source.index, 1)
@@ -25,7 +24,6 @@ export default function (){
             dispatch(update_itemToShow(items))
             fetchRequest("POST", `item/sort`, {newItemsList:items})
         }
-
         if(destination.droppableId === "Lists" && source.droppableId === "Lists"){
             const lists = Array.from(listToShow)
             const [reorderedList] = lists.splice(result.source.index, 1)
@@ -34,9 +32,16 @@ export default function (){
             dispatch(update_listToShow(lists))
             fetchRequest("POST", `list/sort`, {newListList:lists})
         }
-
-        if(destination.droppableId === "Lists" && source.droppableId === "Items"){
-            console.log("dépot")
+        if(destination.droppableId !== "Lists" && destination.droppableId !== "Items"){
+            if(source.droppableId === "Items"){
+                // Code for add Item into the list
+                const payload = {
+                    itemID:result.draggableId,
+                    listID:destination.droppableId,
+                    itemPosition:destination.index
+                }
+                fetchRequest("POST", "list/addItem", payload)
+            }
         }
     }
 

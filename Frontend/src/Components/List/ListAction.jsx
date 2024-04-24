@@ -1,7 +1,7 @@
 import React, {} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_listOnCreation } from "./ListSlice";
-import { update_addData, update_dataList } from "../User/UserSlice";
+import { update_addData, update_addItemToList, update_dataList } from "../User/UserSlice";
 
 export default function useList_Action(){
 
@@ -10,6 +10,7 @@ export default function useList_Action(){
 
     const listAction = {
         create:(data) => {
+            data.items = {}
             dispatch(update_addData({listName:"userListsList", newData:data}))
             dispatch(update_listOnCreation(false))
         },
@@ -27,6 +28,10 @@ export default function useList_Action(){
             })
             dispatch(update_dataList({listName:"userListsList", newList:updatedUserListList}))
             console.log("Requette de réorganisation des listes effectuer")
+        },
+
+        addItem:(data) => {
+            dispatch(update_addItemToList(data))
         }
     }
 
