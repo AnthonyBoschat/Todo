@@ -35,18 +35,18 @@ router.post("/create", authenticationMiddleware, async(request, response) => {
 router.post("/sort", authenticationMiddleware, async(request, response) => {
     try{
         const {userID} = request.token
-        const {newListList} = request.body
-        for(let i = 0; i<newListList.length; i++){
-            await List.findOneAndUpdate(
-                {_id:newListList[i]._id},
+        const {newCollectionsList} = request.body
+        for(let i = 0; i<newCollectionsList.length; i++){
+            await Collection.findOneAndUpdate(
+                {_id:newCollectionsList[i]._id},
                 {$set:{position:i}}
             )
         }
-        const ListListUpdated = await Collection.find({userID:userID, folderID:newListList[0].folderID})
+        const CollectionListUpdated = await Collection.find({userID:userID, folderID:newCollectionsList[0].folderID})
         response.status(200).json({
-            messageDebugConsole:`Ordre des listes mis à jour \n\n ${JSON.stringify(ListListUpdated, null, 2)}`, 
+            messageDebugConsole:`Ordre des listes mis à jour \n\n ${JSON.stringify(CollectionListUpdated, null, 2)}`, 
             messageDebugPopup:`Ordre des listes mis à jour`,
-            payload:ListListUpdated
+            payload:CollectionListUpdated
         })
     }catch(error){
         response.status(400).json({

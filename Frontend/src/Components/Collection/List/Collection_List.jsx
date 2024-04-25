@@ -15,7 +15,7 @@ export default function Collection_List(){
 
     return(
         <div className="Collection_List_Display">
-                <Droppable droppableId="Lists" type="list">
+                <Droppable droppableId="Collections" type="collection">
                     {(provided) => (
                         <div {...provided.droppableProps} ref={provided.innerRef} className="Collection_List_Box">
                             {collectionToShow.length > 0 && (collectionToShow.map((collection, index) => (

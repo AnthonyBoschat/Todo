@@ -21,13 +21,13 @@ export default function useCollection_Action(){
                 acc[list._id] = list.position
                 return acc
             }, {})
-            const updatedUserListList = userCollectionsList.map(list => {
+            const updatedUserCollectionList = userCollectionsList.map(list => {
                 if(objectsDatas[list._id] !== undefined){
                     return {...list, position:objectsDatas[list._id]}
                 }
                 return list
             })
-            dispatch(update_dataList({listName:"userCollectionsList", newList:updatedUserListList}))
+            dispatch(update_dataList({listName:"userCollectionsList", newList:updatedUserCollectionList}))
             console.log("Requette de réorganisation des listes effectuer")
         },
 

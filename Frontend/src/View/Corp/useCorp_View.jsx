@@ -23,15 +23,16 @@ export default function (){
             dispatch(update_itemToShow(items))
             fetchRequest("POST", `item/sort`, {newItemsList:items})
         }
-        if(destination.droppableId === "Lists" && source.droppableId === "Lists"){
-            const lists = Array.from(collectionToShow)
-            const [reorderedList] = lists.splice(result.source.index, 1)
-            lists.splice(destination.index, 0, reorderedList)
+        if(destination.droppableId === "Collections" && source.droppableId === "Collections"){
+            console.log("here")
+            const collections = Array.from(collectionToShow)
+            const [reorderedList] = collections.splice(result.source.index, 1)
+            collections.splice(destination.index, 0, reorderedList)
 
-            dispatch(update_collectionToShow(lists))
-            fetchRequest("POST", `collection/sort`, {newListList:lists})
+            dispatch(update_collectionToShow(collections))
+            fetchRequest("POST", `collection/sort`, {newCollectionsList:collections})
         }
-        if(destination.droppableId !== "Lists" && destination.droppableId !== "Items"){
+        if(destination.droppableId !== "Collections" && destination.droppableId !== "Items"){
             if(source.droppableId === "Items"){
                 // Code for add Item into the list
                 const payload = {
