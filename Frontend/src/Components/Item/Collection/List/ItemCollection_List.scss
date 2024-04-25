@@ -1,6 +1,6 @@
-@use "../../../Sass/Variable.scss" as v;
+@use "../../../../Sass/Variable.scss" as v;
 
-div.listDetail_Display{
+div.itemCollectionList_Display{
     outline: 2px solid black;
     background: v.$listDetailBackground;
     // background-color: green; //
@@ -36,7 +36,7 @@ div.listDetail_Display{
         max-height: 0rem;
     }
 
-    div.listDetail_Box{
+    div.itemCollectionList_Box{
         // background-color: rgba(255, 0, 0, 0.242); //
         width: 98%;
         max-width: 98%;
@@ -48,29 +48,6 @@ div.listDetail_Display{
         padding-bottom: 2rem;
         margin-left: 1rem;
         padding-top: 2rem;
-        
-
-        div.listDetail_Item{
-            height: 3rem;
-            width: 40%;
-            margin-top: 1rem;
-            border-radius: 5px;
-            display: flex;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            color: black;
-            font-size: 1.3rem;
-            background-color: v.$listDetailItem;
-            transition: transform 0.1s linear;
-
-            &:hover{
-                outline: 2px solid black;
-                background-color: white;
-                cursor: pointer;
-                // transform: translateX(0.5rem);
-            }
-        }
     }
 }
 

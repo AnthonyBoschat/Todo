@@ -18,8 +18,8 @@ export default function Collection_List(){
                 <Droppable droppableId="Lists" type="list">
                     {(provided) => (
                         <div {...provided.droppableProps} ref={provided.innerRef} className="Collection_List_Box">
-                            {collectionToShow.length > 0 && (collectionToShow.map((list, index) => (
-                                <Collection_One index={index} key={list._id} list={list}/>
+                            {collectionToShow.length > 0 && (collectionToShow.map((collection, index) => (
+                                <Collection_One index={index} key={collection._id} collection={collection}/>
                             )))}
 
                             {collectionOnCreation && (<Collection_Creation/>)}

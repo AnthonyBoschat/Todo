@@ -1,0 +1,23 @@
+@use "../../../../Sass/Variable.scss" as v;
+
+div.itemCollection_One{
+    height: 3rem;
+    width: 40%;
+    margin-top: 1rem;
+    border-radius: 5px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 1.3rem;
+    background-color: v.$listDetailItem;
+    transition: transform 0.1s linear;
+
+    &:hover{
+        outline: 2px solid black;
+        background-color: white;
+        cursor: pointer;
+        // transform: translateX(0.5rem);
+    }
+}

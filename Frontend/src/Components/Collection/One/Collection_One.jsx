@@ -1,9 +1,9 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import useCollection_One from "./useCollection_One";
-import List_Detail from "../Detail/Collection_Detail";
+import ItemCollection_List from "../../Item/Collection/List/ItemCollection_List";
 
-export default function List_One({list, index}){
+export default function List_One({collection, index}){
 
     const {
         collectionState, 
@@ -12,14 +12,15 @@ export default function List_One({list, index}){
     } = useCollection_One()
 
     return(
-        <Draggable draggableId={list._id} index={index}>
+        <Draggable draggableId={collection._id} index={index}>
             {(provided) => (
                 <>
                     <div  ref={provided.innerRef} {...provided.draggableProps} className="listOne_Display">
                         <div onClick={handleClick} {...provided.dragHandleProps}  className="listOne_Box">
-                            {list.name}
+                            {collection.name}
                         </div>
-                        <List_Detail collectionState={collectionState} list={list}/>
+
+                        <ItemCollection_List collectionState={collectionState} collection={collection}/>
                         
                     </div>
                 </>
