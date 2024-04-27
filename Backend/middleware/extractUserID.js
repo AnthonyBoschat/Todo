@@ -10,7 +10,7 @@ const extractUserID = async(request, response, next) => {
             throw error
         }
         const decodedUserID = jwt.verify(userID_Token, env.userIDCrypt_secret_key)
-        request.token = decodedUserID
+        request.token_userID = decodedUserID
         next()
     }catch(error){
         response.status(error.statusCode || 500).json({

@@ -14,11 +14,12 @@ const recoveryCodeVerify = async(request, response, next) => {
         // Si un cookie a été trouver
         // On décode le token qui contient l'ID du document recovery
         const recoveryTokenDecoded = jwt.verify(recoveryTokenExist, env.recovery_secret_key)
-        request.token = recoveryTokenDecoded
+        request.token_recoveryID = recoveryTokenDecoded
         next()
     }catch(error){
         response.status(error.statusCode || 500).json({
-            message:error.message
+            message:error.message,
+            messageDebugConsole:error.message
         })
     }
 }

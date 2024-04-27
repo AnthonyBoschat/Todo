@@ -20,11 +20,10 @@ const generateRandomCode = (length) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Envoi un meil a de récupération de mot de passe
-router.post("/sendRecoverPasswordEmail", recoveryCodeVerify, async(request,response) => {
+router.post("/sendRecoverPasswordEmail", async(request,response) => {
     
     try{
         const {userEmail} = request.body
-        const {recoveryID} = request.token
         // Verification que l'utilisateur existe dans la base de donnée, sinon, on envoie pas le mail
         const user = await User.findOne({userEmail:userEmail})
         if(!user){
@@ -32,10 +31,6 @@ router.post("/sendRecoverPasswordEmail", recoveryCodeVerify, async(request,respo
             error.messageDebugConsole = `Aucun utilisateur de connu dans la base de donnée avec cette adresse email \n\n ${userEmail}`,
             error.messageDebugPopup = `${userEmail} aucun utilisateur connu` 
             throw error
-        }
-        if(recoveryID){
-            // On supprime l'éventuel ancien code qui était associé à cet adresse email
-            await Recovery.findOneAndDelete({_id:recoveryID})
         }
         // On génère un nouveau code
         const recoveryCode = generateRandomCode(6)
@@ -84,8 +79,8 @@ router.post("/sendRecoverPasswordEmail", recoveryCodeVerify, async(request,respo
 
     }catch(error){
         response.status(400).json({
-            messageDebugConsole:error.messageDebugConsole,
-            messageDebugPopup:error.messageDebugPopup,
+            messageDebugConsole:error.message,
+            messageDebugPopup:error.message,
             messageUserPopup:"Unknown email address",
         })
     }
@@ -95,7 +90,7 @@ router.post("/sendRecoverPasswordEmail", recoveryCodeVerify, async(request,respo
 router.post("/checkResetPasswordCode",recoveryCodeVerify, async(request, response) => {
     try{
         const {userResetCode, userEmail} = request.body
-        const {recoveryID} = request.token
+        const {recoveryID} = request.token_recoveryID
         const recoveryDocument = await Recovery.findById(recoveryID)
         const validCode = await bcrypt.compare(userResetCode, recoveryDocument.recoveryCode)
         if(!validCode){
@@ -123,8 +118,8 @@ router.post("/checkResetPasswordCode",recoveryCodeVerify, async(request, respons
         })
     }catch(error){
         response.status(400).json({
-            messageDebugConsole:error.messageDebugConsole,
-            messageDebugPopup:error.messageDebugPopup,
+            messageDebugConsole:error.message,
+            messageDebugPopup:error.message,
             messageUserPopup:"This code is incorrect, please retry",
         })
     }
@@ -133,13 +128,12 @@ router.post("/checkResetPasswordCode",recoveryCodeVerify, async(request, respons
 // Change le mot de passe de l'utilisateur par un nouveau mot de passe
 router.put("/changePassword/:userEmail", extractUserID, async(request, response) => {
     try{
-        const {userID} = request.token
-        // const {userEmail} = request.params
         const {userNewPassword} = request.body
+        const {userID} = request.token_userID
         const thisUser = await User.findOne({_id:userID})
         if(!thisUser){
             const error = new Error()
-            error.messageDebugConsole = `Aucune utilisateur de trouver associé avec cette adresse email dans la base de donnée \n\n ${userEmail}`,
+            error.messageDebugConsole = `Aucune utilisateur de trouver associé avec cette adresse email dans la base de donnée`,
             error.messageDebugPopup = `Utilisateur inexistant dans la base de donnée`
             throw error
         }

@@ -56,7 +56,7 @@ export default function useConnection_SignIn(){
 
 
     const recoverPassword = () => {
-        const email = emailInputRef_signIn.current.value.toLowerCase()
+        const userEmail = emailInputRef_signIn.current.value.toLowerCase()
         const emailInput = emailInputRef_signIn.current
         // Je vérifie la validity de l'input email
         if(!emailInput.checkValidity()){
@@ -68,7 +68,7 @@ export default function useConnection_SignIn(){
             }
             emailInput.reportValidity()
         }else{
-            fetchRequest("POST", `recovery/sendRecoverPasswordEmail`, {userEmail:email})
+            fetchRequest("POST", `recovery/sendRecoverPasswordEmail`, {userEmail})
         }
     }
 
