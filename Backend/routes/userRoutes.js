@@ -6,19 +6,12 @@ const jwt = require("jsonwebtoken")
 const User = require("../models/user")
 const Item = require("../models/item")
 const Folder = require("../models/folder")
-const Recovery = require("../models/recovery")
 const Collection = require("../models/collection")
 const authenticationMiddleware = require("../middleware/authentication")
-const nodemailer = require("nodemailer")
-const crypto = require("crypto");
 const Property = require("../models/property");
 const env = process.env
 // middleware pour parser le JSON
 router.use(express.json())
-
-const generateRandomCode = (length) => {
-    return crypto.randomBytes(Math.ceil(length / 2)).toString("hex").slice(0, length)
-}
 
 
 //////////////////////////////////////////////////////////////////////////////////////

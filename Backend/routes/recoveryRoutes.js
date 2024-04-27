@@ -4,16 +4,11 @@ const router = express.Router();
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("../models/user")
-const Item = require("../models/item")
-const Folder = require("../models/folder")
 const Recovery = require("../models/recovery")
-const Collection = require("../models/collection")
-const authenticationMiddleware = require("../middleware/authentication")
 const recoveryCodeVerify = require("../middleware/recoveryCodeVerify")
 const extractUserID = require("../middleware/extractUserID")
 const nodemailer = require("nodemailer")
 const crypto = require("crypto");
-const Property = require("../models/property");
 const env = process.env
 // middleware pour parser le JSON
 router.use(express.json())
@@ -112,7 +107,6 @@ router.post("/checkResetPasswordCode",recoveryCodeVerify, async(request, respons
         await Recovery.findOneAndDelete({_id:recoveryID})
         const userDocument = await User.findOne({userEmail:userEmail})
         const userID = userDocument._id
-        console.log(userID)
         const token = jwt.sign(
             {userID:userID},
             env.userIDCrypt_secret_key,
