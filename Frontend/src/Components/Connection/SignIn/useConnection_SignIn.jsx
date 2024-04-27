@@ -68,7 +68,7 @@ export default function useConnection_SignIn(){
             }
             emailInput.reportValidity()
         }else{
-            fetchRequest("POST", `user/sendRecoverPasswordEmail`, {userEmail:email})
+            fetchRequest("POST", `recovery/sendRecoverPasswordEmail`, {userEmail:email})
         }
     }
 
@@ -83,7 +83,7 @@ export default function useConnection_SignIn(){
             }
             codeInput.reportValidity()
         }else{
-            fetchRequest("POST", `user/checkResetPasswordCode`, {userResetCode, userEmail})
+            fetchRequest("POST", `recovery/checkResetPasswordCode`, {userResetCode, userEmail})
         }
     }
 
@@ -96,7 +96,7 @@ export default function useConnection_SignIn(){
             confirmNewPasswordInputRef.current.reportValidity()
             return
         }
-        fetchRequest("PUT", `user/changePassword/${userEmail}`, {userNewPassword:newPasswordConfirm})
+        fetchRequest("PUT", `recovery/changePassword/${userEmail}`, {userNewPassword:newPasswordConfirm})
     }
 
     return{

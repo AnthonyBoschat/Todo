@@ -43,21 +43,6 @@ export default function useUser_Action(){
             dispatch(update_updateSignSelected("signin"))
         },
 
-        checkResetPasswordCode:() => {
-            dispatch(update_codeValide(true))
-            dispatch(update_emailSend(false))
-        },
-
-        sendRecoverPasswordEmail:() => {
-            dispatch(update_emailSend(true))
-        },
-
-        changePassword:() => {
-            dispatch(update_userWantRecover(false))
-            dispatch(update_codeValide(false))
-            dispatch(update_emailSend(false))
-        },
-
         loadDatas:(data) => {
             const {newUserFoldersList, newUserItemsList, newUserCollectionsList, newUserPropertyList} = data
             newUserFoldersList.sort((a,b) => a.position - b.position)
@@ -69,7 +54,25 @@ export default function useUser_Action(){
         }
     }
 
+    const recoveryAction = {
+
+        sendRecoverPasswordEmail:() => {
+            dispatch(update_emailSend(true))
+        },
+
+        checkResetPasswordCode:() => {
+            dispatch(update_codeValide(true))
+            dispatch(update_emailSend(false))
+        },
+
+        changePassword:() => {
+            dispatch(update_userWantRecover(false))
+            dispatch(update_codeValide(false))
+            dispatch(update_emailSend(false))
+        },
+    }
     return{
-        userAction
+        userAction,
+        recoveryAction
     }
 }

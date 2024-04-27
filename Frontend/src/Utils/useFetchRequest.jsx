@@ -15,7 +15,7 @@ export default function useFetchRequest(){
     const {popup} = usePopup()
     const {folderAction} = useFolder_Request()
     const {itemAction} = useItem_Action()
-    const {userAction} = useUser_Action()
+    const {userAction, recoveryAction} = useUser_Action()
     const {devtoolAction} = useDevtoolsRequest()
     const {collectionAction} = useCollection_Action()
     const {propertyAction} = useProperty_Action()
@@ -43,6 +43,11 @@ export default function useFetchRequest(){
                     userAction[action](data)
                 }
                 break
+
+            case "recovery":
+                if(recoveryAction[action]){
+                    recoveryAction[action](data)
+                }
 
             case "collection":
                 if(collectionAction[action]){

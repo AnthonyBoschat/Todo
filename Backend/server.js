@@ -10,6 +10,7 @@ const userRoutes = require("./routes/userRoutes")
 const devtoolRoutes = require("./routes/devtoolRoutes")
 const collectionRoutes = require("./routes/collectionRoutes")
 const propertyRoutes = require("./routes/propertyRoutes")
+const recoveryRoutes = require("./routes/recoveryRoutes")
 const app = express() // app => nouvelle application express pour configurer le serveur
 const PORT = process.env.PORT || 5000 // Port sur lequel le serveur va écouter (Inutile pour le moment ?)
 const databaseURL = process.env.Mongo_URL // url de la base de donnée
@@ -46,6 +47,7 @@ app.use("/user", userRoutes)
 app.use("/collection", collectionRoutes)
 app.use("/devtool", devtoolRoutes)
 app.use("/property", propertyRoutes)
+app.use("/recovery", recoveryRoutes)
 
 
 
