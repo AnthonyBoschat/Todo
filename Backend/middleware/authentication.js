@@ -7,6 +7,7 @@ const authenticationMiddleware = async (request,response,next) => {
 
     try {
         const tokenExist = request.cookies.session_token // On récupère un possible cookie session
+        
         if (!tokenExist) { // S'il n'y a pas de cookie de session
             const error = new Error("Aucune session. ( Aucun token trouvé )")
             error.statusCode = 403

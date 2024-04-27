@@ -9,6 +9,8 @@ const Folder = require("../models/folder")
 const Recovery = require("../models/recovery")
 const Collection = require("../models/collection")
 const authenticationMiddleware = require("../middleware/authentication")
+const recoveryCodeVerify = require("../middleware/recoveryCodeVerify")
+const extractUserID = require("../middleware/extractUserID")
 const nodemailer = require("nodemailer")
 const crypto = require("crypto");
 const Property = require("../models/property");
@@ -23,10 +25,11 @@ const generateRandomCode = (length) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Envoi un meil a de récupération de mot de passe
-router.post("/sendRecoverPasswordEmail", async(request,response) => {
-    const {userEmail} = request.body
-    console.log(userEmail)
+router.post("/sendRecoverPasswordEmail", recoveryCodeVerify, async(request,response) => {
+    
     try{
+        const {userEmail} = request.body
+        const {recoveryID} = request.token
         // Verification que l'utilisateur existe dans la base de donnée, sinon, on envoie pas le mail
         const user = await User.findOne({userEmail:userEmail})
         if(!user){
@@ -35,14 +38,19 @@ router.post("/sendRecoverPasswordEmail", async(request,response) => {
             error.messageDebugPopup = `${userEmail} aucun utilisateur connu` 
             throw error
         }
-        // On supprime l'éventuel ancien code qui était associé à cet adresse email
-        await Recovery.findOneAndDelete({userEmail:userEmail})
+        if(recoveryID){
+            // On supprime l'éventuel ancien code qui était associé à cet adresse email
+            await Recovery.findOneAndDelete({_id:recoveryID})
+        }
         // On génère un nouveau code
-        const revoveryCode = generateRandomCode(6)
+        const recoveryCode = generateRandomCode(6)
+        // On le code générer
+        const salt = await bcrypt.genSalt(10)
+        const hachedRecoveryCode = await bcrypt.hash(recoveryCode, salt)
         // On sauvegarde un document Rcover avec le code généré, et l'email associé
         const newRecoveryDocument = new Recovery({
             userEmail:userEmail,
-            recoveryCode:revoveryCode
+            recoveryCode:hachedRecoveryCode
         })
         await newRecoveryDocument.save()
         
@@ -56,12 +64,23 @@ router.post("/sendRecoverPasswordEmail", async(request,response) => {
             from: `ItemNest <noreply@Itemnest.example>`,
             to:userEmail,
             subject:"Password recovery",
-            text:`Here is your password reset code to enter in the application : ${revoveryCode}  This code will only work for the next 15 minutes`,
-            html:`<br/><br/>Here is your password reset code to enter in the application : <b>${revoveryCode}</b> <br/><br/> This code will only work for the next <b>15 minutes</b>`
+            text:`Here is your password reset code to enter in the application : ${recoveryCode}  This code will only work for the next 15 minutes`,
+            html:`<br/><br/>Here is your password reset code to enter in the application : <b>${recoveryCode}</b> <br/><br/> This code will only work for the next <b>15 minutes</b>`
         }
         await transporter.sendMail(mailOptions)
 
-        // réponse
+        // On enregistre un token pour permettre l'identification de document recovery grâce à sont ID
+        const recoveryDocumentID = newRecoveryDocument._id
+        const recoveryToken = jwt.sign(
+            {recoveryID:recoveryDocumentID},
+            env.recovery_secret_key,
+            {expiresIn:"15m"}
+        )
+        response.cookie("recovery_token", recoveryToken, {
+            httpOnly:true,
+            maxAge:900000
+        })
+        // réponse status
         response.status(201).json({
             messageDebugConsole:"Code d'authentification correctement envoyer",
             messageDebugPopup:"Email envoyer",
@@ -78,17 +97,31 @@ router.post("/sendRecoverPasswordEmail", async(request,response) => {
 })
 
 // Vérifie que le code renseigner est cohérent avec celui stocker dans la base de donnée
-router.post("/checkResetPasswordCode", async(request, response) => {
-    const {userResetCode, userEmail} = request.body
+router.post("/checkResetPasswordCode",recoveryCodeVerify, async(request, response) => {
     try{
-        const validCode = await Recovery.findOne({recoveryCode:userResetCode, userEmail:userEmail})
+        const {userResetCode, userEmail} = request.body
+        const {recoveryID} = request.token
+        const recoveryDocument = await Recovery.findById(recoveryID)
+        const validCode = await bcrypt.compare(userResetCode, recoveryDocument.recoveryCode)
         if(!validCode){
             const error = new Error()
             error.messageDebugConsole = `Le code d'authentification n'est pas valide, ou ne correspond à aucune adresse email \n\n ${userResetCode} \n\n ${userEmail}`,
             error.messageDebugPopup = `${userResetCode} Code incorrecte` 
             throw error
         }
-        await Recovery.findOneAndDelete({_id:validCode._id})
+        await Recovery.findOneAndDelete({_id:recoveryID})
+        const userDocument = await User.findOne({userEmail:userEmail})
+        const userID = userDocument._id
+        console.log(userID)
+        const token = jwt.sign(
+            {userID:userID},
+            env.userIDCrypt_secret_key,
+            {expiresIn:"15m"}
+        )
+        response.cookie("recovery_userID", token, {
+            httpOnly:true,
+            maxAge:900000
+        })
         response.status(201).json({
             messageDebugConsole:`Code de réinitialisation valide \n\n ${userResetCode} \n\n ${userEmail}`,
             messageDebugPopup:"Code de réinitialisation valide",
@@ -104,15 +137,16 @@ router.post("/checkResetPasswordCode", async(request, response) => {
 })
 
 // Change le mot de passe de l'utilisateur par un nouveau mot de passe
-router.put("/changePassword/:userEmail", async(request, response) => {
+router.put("/changePassword/:userEmail", extractUserID, async(request, response) => {
     try{
-        const {userEmail} = request.params
+        const {userID} = request.token
+        // const {userEmail} = request.params
         const {userNewPassword} = request.body
-        const thisUser = await User.findOne({userEmail:userEmail})
+        const thisUser = await User.findOne({_id:userID})
         if(!thisUser){
             const error = new Error()
             error.messageDebugConsole = `Aucune utilisateur de trouver associé avec cette adresse email dans la base de donnée \n\n ${userEmail}`,
-            error.messageDebugPopup = `${userEmail} inexistant dans la base de donnée`
+            error.messageDebugPopup = `Utilisateur inexistant dans la base de donnée`
             throw error
         }
         const salt = await bcrypt.genSalt(10)
