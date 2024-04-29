@@ -120,7 +120,7 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
             messageDebugPopup:"Ajout de l'item dans la liste réussi",
             payload:{
                 itemID:thisItem._id,
-                listID:listUpdated._id,
+                collectionID:listUpdated._id,
                 itemContent:thisItem.content,
                 itemPosition:finalPosition
             }
@@ -132,8 +132,39 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
             payload:error.message
         })
     }
-    
+})
 
+router.delete("/deleteItem/:collectionID/:itemID", authenticationMiddleware, async(request, response) => {
+    const {itemID, collectionID} = request.params
+    try{
+        // On créé le chemin dynamique
+        const itemsPath = `items.${itemID}`
+        const updatedCollection = await Collection.findByIdAndUpdate(collectionID, {
+            $unset: {[itemsPath] : ""},
+        }, {new:true})
+        // On trouve la collection correspondante à l'identifiant
+        if(!updatedCollection){
+            const error = new Error()
+            error.messageDebugConsole = `La collection n'a pas été trouver \n\n collection_ID : ${collectionID}`
+            throw error
+        }
+        if(Object.keys(updatedCollection.items).length === 0){
+            await Collection.findByIdAndUpdate(collectionID, { $unset: { items: "" } });
+        }
+        response.status(201).json({
+            messageDebugConsole:`Suppression de l'item correctement effectuer \n\n Nouvelle collection : ${JSON.stringify(updatedCollection, null, 2)}`,
+            messageDebugPopup:"Item supprimer de la collection",
+            payload:{
+                itemID,
+                collectionID
+            }
+        })
+    }catch(error){
+        response.status(400).json({
+            messageDebugConsole:error.messageDebugConsole || "Une erreur est survenue dans la route collection/deleteItem",
+            payload:error.message
+        })
+    }
 })
 
 

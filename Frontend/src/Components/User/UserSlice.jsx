@@ -86,11 +86,10 @@ const UserSlice = createSlice({
             })
         },
         update_addItemToCollection:(state,action) => {
-            const {itemID, listID, itemContent, itemPosition} = action.payload
-            const collectionIndex = state.datas.userCollectionsList.findIndex(collection => collection._id === listID)
+            const {itemID, collectionID, itemContent, itemPosition} = action.payload
+            const collectionIndex = state.datas.userCollectionsList.findIndex(collection => collection._id === collectionID)
             const itemsList = state.datas.userCollectionsList[collectionIndex].items
             if(itemsList){
-                console.log(0)
                 Object.entries(itemsList).map(([key,item]) => {
                     if(item.position >= itemPosition){
                         itemsList[key].position = itemsList[key].position + 1
@@ -101,14 +100,23 @@ const UserSlice = createSlice({
                     position:itemPosition
                 }
             }else{
-                console.log(0.5)
                 state.datas.userCollectionsList[collectionIndex].items = {}
                 state.datas.userCollectionsList[collectionIndex].items[itemID] = {
                     name:itemContent,
                     position:itemPosition
                 }
             }
-            console.log(1)
+        },
+
+        update_deleteItemToCollection:(state,action) => {
+            const {itemID, collectionID} = action.payload
+            const collectionIndex = state.datas.userCollectionsList.findIndex(collection => collection._id === collectionID)
+            const itemsList = state.datas.userCollectionsList[collectionIndex].items
+            if(itemsList){
+                delete itemsList[itemID]
+            }else{
+                console.error("Une erreur a été lever dans le slice User : update_deleteItemToCollection")
+            }
         }
     },
 })
@@ -129,4 +137,5 @@ export const {
     update_deletePropertyItem,
 
     update_addItemToCollection,
+    update_deleteItemToCollection
 } = UserSlice.actions

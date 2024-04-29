@@ -1,6 +1,14 @@
 @use "../../../../Sass/Variable.scss" as v;
 
 div.itemCollection_One{
+    &:hover{
+        outline: 2px solid black;
+        background-color: white;
+        cursor: grab;
+    }
+    div.deleteItemBox:hover ~ &{
+        background-color: v.$collectionBackgroundItemDelete;
+    }
     height: 3rem;
     width: 40%;
     margin-top: 1rem;
@@ -11,13 +19,34 @@ div.itemCollection_One{
     align-items: center;
     color: black;
     font-size: 1.3rem;
-    background-color: v.$listDetailItem;
+    background-color: v.$collectionBackgroundItem;
     transition: transform 0.1s linear;
+    position: relative;
 
-    &:hover{
+    div.deleteItem_Box{
+        &:hover{
+            cursor: pointer;
+            background-color: v.$collectionBackgroundItemDeleteHover;
+        }
+        outline: 1px solid white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+        border-radius: 100%;
+        background-color: v.$collectionBackgroundItemDelete;
         outline: 2px solid black;
-        background-color: white;
-        cursor: pointer;
-        // transform: translateX(0.5rem);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1.3rem;
+        height: 1.3rem;
+        padding: 1px;
+        i{
+            font-size: 1rem;
+        }
+
     }
+    
+    
 }

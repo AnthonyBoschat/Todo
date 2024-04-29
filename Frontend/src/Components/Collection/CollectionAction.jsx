@@ -1,7 +1,7 @@
 import React, {} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_collectionOnCreation } from "./CollectionSlice";
-import { update_addData, update_addItemToCollection, update_dataList } from "../User/UserSlice";
+import { update_addData, update_addItemToCollection, update_dataList, update_deleteItemToCollection } from "../User/UserSlice";
 
 export default function useCollection_Action(){
 
@@ -10,7 +10,6 @@ export default function useCollection_Action(){
 
     const collectionAction = {
         create:(data) => {
-            console.log("hello")
             data.items = {}
             dispatch(update_addData({listName:"userCollectionsList", newData:data}))
             dispatch(update_collectionOnCreation(false))
@@ -32,8 +31,11 @@ export default function useCollection_Action(){
         },
 
         addItem:(data) => {
-            console.log("hello")
             dispatch(update_addItemToCollection(data))
+        },
+
+        deleteItem:(data) => {
+            dispatch(update_deleteItemToCollection(data))
         }
     }
 

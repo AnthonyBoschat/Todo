@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit"
 const DevToolsSlice = createSlice({
     name:"devtools",
     initialState:{
-        debugConsole:false,
+        debugConsole:true,
         debugPopup:false,
     },
     reducers:{

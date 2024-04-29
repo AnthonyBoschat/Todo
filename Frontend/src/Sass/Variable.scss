@@ -31,10 +31,12 @@ $propertyBackgroundValue:rgb(255, 255, 255);
 $propertyCreationBackgroundValue:rgba(198, 254, 255, 0.893);
 
 
-$listBackground:rgba(244, 244, 244, 0.893);
-$listBackgroundCreation:rgba(161, 209, 206, 0.893);
-$listBackgroundHover:rgb(255, 255, 255);
+$collectionBackground:rgba(244, 244, 244, 0.893);
+$collectionBackgroundCreation:rgba(161, 209, 206, 0.893);
+$collectionBackgroundHover:rgb(255, 255, 255);
+$collectionBackgroundListItem:rgb(44, 44, 44);
 
-$listDetailBackground:rgb(44, 44, 44);
-$listDetailItem:rgba(244, 244, 244, 0.893);
+$collectionBackgroundItem:rgba(244, 244, 244, 0.893);
+$collectionBackgroundItemDelete:rgb(255, 199, 175);
+$collectionBackgroundItemDeleteHover:rgb(255, 166, 131);
 

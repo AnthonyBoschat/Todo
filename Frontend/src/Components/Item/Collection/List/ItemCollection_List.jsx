@@ -27,6 +27,7 @@ export default function ItemCollection_List({collection, collectionState}){
                                             key={index}
                                             item={item}
                                             index={index}
+                                            collectionID={collection._id}
                                         />
                                     ))
                             )}
