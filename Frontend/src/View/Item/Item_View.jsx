@@ -8,7 +8,7 @@ import Property_Global_Add from "../../Components/Property/Global/Add/Property_G
 import Global_Property_Manager from "../../Components/Property/Global/Global_Property_Manager";
 
 
-export default function Item_View(){
+export default function Item_View({cloneID, cloneStyle}){
 
     const {
         tabSelected
@@ -39,7 +39,7 @@ export default function Item_View(){
                 </div>
                 {/*List des éléments*/}
                 <div className="list_Box">
-                    {(tabSelected === "Items") && (<Item_List/>)}
+                    {(tabSelected === "Items") && (<Item_List cloneID={cloneID} cloneStyle={cloneStyle}/>)}
                     {(tabSelected === "Property") && (<Property_Global_List propertyToShow={propertyToShow}/>)}
                 </div>
             </div>

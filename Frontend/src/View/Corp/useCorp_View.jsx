@@ -1,4 +1,4 @@
-import React, {} from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetchRequest from "../../Utils/useFetchRequest";
 import { update_itemToShow } from "../../Components/Item/ItemSlice";
@@ -11,7 +11,8 @@ export default function (){
     const {fetchRequest} = useFetchRequest()
     const dispatch = useDispatch()
 
-    const handleOnDragEnd = async(result) => {
+
+    const handleDragEnd = async(result) => {
         const {source, destination} = result
         if(!destination) return
         if(destination.droppableId === source.droppableId && destination.index === source.index)return
@@ -46,6 +47,6 @@ export default function (){
     }
 
     return{
-        handleOnDragEnd,
+        handleDragEnd,
     }
 }

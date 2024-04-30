@@ -11,7 +11,10 @@ export default function Corp_Layout(){
 
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const onDisconnection = useSelector(store => store.connection.onDisconnection)
-    const {handleOnDragEnd} = useCorp_View()
+    const {
+        handleDragEnd,
+        handleDragStart,
+    } = useCorp_View()
 
 
 
@@ -26,7 +29,7 @@ export default function Corp_Layout(){
                             <Indicator_Folder/>
                         </div>
                         <div className="Items_Lists_Box">
-                            <DragDropContext  onDragEnd={handleOnDragEnd}>
+                            <DragDropContext onDragEnd={handleDragEnd}>
                                 <Item_View/>
                                 <Collection_View/>
                             </DragDropContext>
