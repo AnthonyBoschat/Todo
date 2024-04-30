@@ -17,7 +17,7 @@ export default function ItemCollection_List({collection, collectionState}){
     return(
         <div className={`itemCollectionList_Display ${collectionVisible ? "visible" : "hidden"}`}>
             {collectionVisible && (
-                <Droppable droppableId={collection._id} type="item">
+                <Droppable droppableId={`collection_${collection._id}`} type="item">
                     {(provided) => (
                         <div className="itemCollectionList_Box" {...provided.droppableProps} ref={provided.innerRef} >
 

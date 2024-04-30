@@ -13,6 +13,7 @@ export default function (){
 
 
     const handleDragEnd = async(result) => {
+        console.log(0)
         const {source, destination} = result
         if(!destination) return
         if(destination.droppableId === source.droppableId && destination.index === source.index)return
@@ -38,10 +39,10 @@ export default function (){
                 // Code for add Item into the list
                 const payload = {
                     itemID:result.draggableId,
-                    listID:destination.droppableId,
+                    listID:destination.droppableId.split("_")[1],
                     itemPosition:destination.index
                 }
-                await fetchRequest("POST", "collection/addItem", payload)
+                fetchRequest("POST", "collection/addItem", payload)
             }
         }
     }

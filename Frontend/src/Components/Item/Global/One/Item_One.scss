@@ -4,29 +4,28 @@
 div.Item_Display{
     // background-color: rgba(255, 0, 0, 0.419); //
     margin: 0.5rem;
-    padding-left: 10px;
-    display: flex;
-    flex-direction: column; //
-    position: relative;
-    width:90%;    
+    // padding-left: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    width:90%;   
 
     
     div.Item_Box{
         &.dragging{
-            opacity: 0.7;
+            opacity: 0.75;
         }
         background-color: v.$ItemBackground;
+        // background-color: blue; //
         outline: 1px solid black;
         box-shadow: 2px 2px 2px 1px black;
         width: 100%;
         max-width: 100%;
-        height: fit-content;
+        height: 100%;
         display: flex;
         align-items: center;
         // gap: 1rem;
         // padding-left: 1rem;
         transition: all 0.1s linear;
-        position: relative;
         border-radius: 5px;
         
     

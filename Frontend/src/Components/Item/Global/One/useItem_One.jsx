@@ -4,7 +4,6 @@ export default function useItem_One(item){
 
     const [propertiesVisible, setPropertiesVisible] = useState(false)
     
-    const ItemRef = useRef()
     const ItemNameRef = useRef()
     const leftSideRef = useRef()
     const toggleCoverRef = useRef()
@@ -17,7 +16,6 @@ export default function useItem_One(item){
 
     
     return{
-        ItemRef,
         ItemNameRef,
         leftSideRef,
         toggleCoverRef,

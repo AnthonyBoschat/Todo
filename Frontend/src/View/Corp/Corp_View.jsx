@@ -16,6 +16,7 @@ export default function Corp_Layout(){
         handleDragStart,
     } = useCorp_View()
 
+    
 
 
     return(
