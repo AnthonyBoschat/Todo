@@ -10,7 +10,7 @@ export default function Folder_Creation(){
 
     return(
         <li className="folderOnCreation_Box">
-            <div contentEditable onInput={autoResize} ref={folderCreationRef} autoFocus></div>
+            <div aria-label="newFolderCreation" contentEditable onInput={autoResize} ref={folderCreationRef} autoFocus></div>
         </li>
     )
 }
