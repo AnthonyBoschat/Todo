@@ -40,7 +40,7 @@ export default function Folder_List(){
                                     )}
                 
                                     {(userFoldersList.length === 0 && !folderOnCreation) && ( // Si aucun dossier ( length === 0), et qu'on est pas en train d'en créer un, indication No folders
-                                        <div className="noFolders_Box">
+                                        <div aria-label="noFolder_sign" className="noFolders_Box">
                                             <span>( No folders )</span>
                                         </div>
                                     )}
