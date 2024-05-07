@@ -11,10 +11,10 @@ const devtoolRoutes = require("./routes/devtoolRoutes")
 const collectionRoutes = require("./routes/collectionRoutes")
 const propertyRoutes = require("./routes/propertyRoutes")
 const recoveryRoutes = require("./routes/recoveryRoutes")
+const { gql, ApolloServer } = require("apollo-server-express")
 const app = express() // app => nouvelle application express pour configurer le serveur
 const PORT = process.env.PORT || 5000 // Port sur lequel le serveur va écouter (Inutile pour le moment ?)
 const databaseURL = process.env.Mongo_URL // url de la base de donnée
-
 
 
 
@@ -51,8 +51,32 @@ app.use("/recovery", recoveryRoutes)
 
 
 
+// Configuration de graphQL
+const typeDefs = gql`
+  type Query {
+    message: String
+  }
+`
 
-// Mise en place de l'écoute sur le port : 3000
-app.listen(PORT, () => {
-  console.log(`Serveur lancé sur le port : ${PORT}`)
-})
+const resolvers = {
+  Query:{
+    message: () => "Hello depuis GraphQL"
+  }
+}
+const graphQLserver = new ApolloServer({typeDefs, resolvers})
+
+async function startServer(){
+  await graphQLserver.start()
+  graphQLserver.applyMiddleware({app, path:"/graphql"})
+  // Mise en place de l'écoute sur le port : 3000
+  app.listen(PORT, () => {
+    console.log(`Serveur lancé sur le port : ${PORT}`)
+  })
+
+}
+
+startServer().catch(error => {
+  console.error('Erreur lors du démarrage du serveur:', error);
+});
+
+

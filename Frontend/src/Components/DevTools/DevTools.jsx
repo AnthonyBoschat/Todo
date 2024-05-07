@@ -7,6 +7,8 @@ import usePopup from "../Popup/usePopup";
 import useDevtoolsRequest from "./DevtoolsRequest";
 import useItem_Action from "../Item/ItemAction";
 import useUser_Action from "../User/UserAction";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import graphQLQuery from "../../GraphQL/Query";
 
 export default function DevTools(){
     
@@ -106,6 +108,13 @@ export default function DevTools(){
             fetchRequest("GET", `user/disconnect`)
         }
     }
+    const [getMessage, { loading, data, error }] = useLazyQuery(graphQLQuery.GET_MESSAGE);
+    const testGraphQL = () => {
+        getMessage()
+        if(data){
+            console.log(data)
+        }
+    }
 
     return(
         <div className="devtools_Box">
@@ -117,6 +126,7 @@ export default function DevTools(){
             <button onClick={toggleConsoleMessage} style={debugConsole ? {backgroundColor:"white"} : null}>Debug console</button>
             <button onClick={togglePopupMessage} style={debugPopup ? {backgroundColor:"white"} : null}>Debug Popup</button>
             <button onClick={toggleConnected} style={connected ? {backgroundColor:"white"} : null}>Admin Connected</button>
+            <button onClick={testGraphQL}>Test graphQL</button>
         </div>
     )
 }
