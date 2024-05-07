@@ -51,32 +51,11 @@ app.use("/recovery", recoveryRoutes)
 
 
 
-// Configuration de graphQL
-const typeDefs = gql`
-  type Query {
-    message: String
-  }
-`
 
-const resolvers = {
-  Query:{
-    message: () => "Hello depuis GraphQL"
-  }
-}
-const graphQLserver = new ApolloServer({typeDefs, resolvers})
+// Mise en place de l'écoute sur le port : 3000
+app.listen(PORT, () => {
+  console.log(`Serveur lancé sur le port : ${PORT}`)
+})
 
-async function startServer(){
-  await graphQLserver.start()
-  graphQLserver.applyMiddleware({app, path:"/graphql"})
-  // Mise en place de l'écoute sur le port : 3000
-  app.listen(PORT, () => {
-    console.log(`Serveur lancé sur le port : ${PORT}`)
-  })
-
-}
-
-startServer().catch(error => {
-  console.error('Erreur lors du démarrage du serveur:', error);
-});
 
 
