@@ -17,13 +17,19 @@ export default function useList_One(){
 
     const [collectionState, dispatchCollectionState] = useReducer(initialStateReducer, initialState)
 
-    const handleClick = () => {
-        dispatchCollectionState({type:"collectionVisible", payload:!collectionState.collectionVisible})
+    const handleClick = (e) => {
+        if(e.target.localName !== "i"){
+            dispatchCollectionState({type:"collectionVisible", payload:!collectionState.collectionVisible})
+        }
+    }
+
+    const addItem = () => {
+        console.log("addItem")
     }
 
     return{
         collectionState,
-        dispatchCollectionState,
-        handleClick
+        handleClick,
+        addItem
     }
 }
