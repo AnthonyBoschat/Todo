@@ -20,7 +20,19 @@ const authenticationMiddleware = async (request,response,next) => {
             error.statusCode = 404
             throw error
         }else{
-            request.token = tokenDecoded
+            let newToken
+            const currentTime = Date.now() / 1000
+            if(tokenDecoded.exp){
+                if(tokenDecoded.exp - currentTime < 600){
+                    newToken = jwt.sign({userID:tokenDecoded.userID}, env.secret_key, {expiresIn:"1h"})
+                    response.cookie("session_token", newToken, {
+                        httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
+                        // secure:true, // Le cookie est envoyé uniquement sur HTTPS
+                        maxAge:3600000 // Durée de vie du cookie en millisecondes (1h minutes ici)
+                    })
+                }
+            }
+            request.token = newToken ? { userID: tokenDecoded.userID, iat: tokenDecoded.iat, exp: jwt.decode(newToken).exp } : tokenDecoded
             next()
         }
     }catch(error) {

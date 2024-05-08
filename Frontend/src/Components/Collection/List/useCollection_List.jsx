@@ -10,6 +10,7 @@ export default function useCollection_List(){
     const collectionOnCreation = useSelector(store => store.collection.collectionOnCreation)
     const folderSelectedID = useSelector(store => store.folder.folderSelectedID)
     const collectionToShow = useSelector(store => store.collection.collectionToShow)
+    const {fetchRequest} = useFetchRequest()
 
     useEffect(() => {
         if(folderSelectedID){
@@ -19,9 +20,24 @@ export default function useCollection_List(){
         }
     }, [folderSelectedID, userCollectionsList])
 
+    const dragEndCollections = async(result) => {
+        const {source, destination} = result
+        if(!destination) return
+        if(destination.droppableId === source.droppableId && destination.index === source.index)return
+        if(destination.droppableId === "Collections" && source.droppableId === "Collections"){
+            const collections = Array.from(collectionToShow)
+            const [reorderedCollection] = collections.splice(result.source.index, 1)
+            collections.splice(destination.index, 0, reorderedCollection)
+            dispatch(update_collectionToShow(collections))
+            fetchRequest("POST", `collection/sort`, {newCollectionsList:collections})
+        }
+
+    }
+
 
     return{
         collectionOnCreation,
         collectionToShow,
+        dragEndCollections
     }
 }

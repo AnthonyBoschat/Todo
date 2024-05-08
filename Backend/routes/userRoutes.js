@@ -77,7 +77,7 @@ router.post("/create", async(request, response) => {
 //////////////////////////////////////////////////////////////////////////////////////
 // Connecte un utilisateur
 router.post("/connect", async(request, response) => {
-    const {userEmail, userPassword} = request.body
+    const {userEmail, userPassword, remember} = request.body
     try{
         const user = await User.findOne({userEmail:userEmail})
         if(!user){
@@ -96,7 +96,13 @@ router.post("/connect", async(request, response) => {
                 error.status = 400
                 throw error
             }else{
-                const token = jwt.sign({userID:user._id}, env.secret_key, {expiresIn:"1h"})
+                let token
+                if(remember){
+                    token = jwt.sign({userID:user._id}, env.secret_key)
+                }
+                if(!remember){
+                    token = jwt.sign({userID:user._id}, env.secret_key, {expiresIn:"1h"})
+                }
                 response.cookie("session_token", token, {
                     httpOnly:true, // Le cookie n'est pas accessible via JavaScript côté client
                     // secure:true, // Le cookie est envoyé uniquement sur HTTPS
@@ -135,6 +141,7 @@ router.get("/disconnect", async(request, response) => {
 //////////////////////////////////////////////////////////////////////////////////////
 // Reconnecte un utilisateur
 router.get("/reconnect", authenticationMiddleware, async(request,response) => {
+    console.log(request.token)
     const {userID} = request.token
     try{
         const user = await User.findOne({_id:userID})

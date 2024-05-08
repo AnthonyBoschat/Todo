@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { update_codeValide, update_emailSend, update_updateSignSelected, update_userWantRecover } from "../ConnectionSlice";
@@ -6,6 +6,7 @@ import useFetchRequest from "../../../Utils/useFetchRequest";
 
 export default function useConnection_SignIn(){
 
+    const rememberUserPreference = JSON.parse(localStorage.getItem("remember"))
     const userWantRecover = useSelector(store => store.connection.recover.userWantRecover)
     const emailSend = useSelector(store => store.connection.recover.emailSend)
     const codeValide = useSelector(store => store.connection.recover.codeValide)
@@ -17,7 +18,7 @@ export default function useConnection_SignIn(){
     const recoverCodeInputRef = useRef()
     const newPasswordInputRef = useRef()
     const confirmNewPasswordInputRef = useRef()
-    
+    const [remember, setRemember] = useState(rememberUserPreference ? rememberUserPreference : false)
 
     const handleChangePart = () => {
         dispatch(update_updateSignSelected("signin"))
@@ -35,10 +36,12 @@ export default function useConnection_SignIn(){
     const handleConnect = (e) => {
         e.preventDefault()
         const user = {
+            remember,
             userEmail:emailInputRef_signIn.current.value.toLowerCase(),
             userPassword:passwordInputRef_signIn.current.value
         }
         fetchRequest("POST", "user/connect", user)
+        localStorage.setItem("remember", JSON.stringify(remember))
     }
 
     const switchRecoverPassword = () => {
@@ -116,6 +119,8 @@ export default function useConnection_SignIn(){
         newPasswordInputRef,
         confirmNewPasswordInputRef,
         validNewPassword,
-        resetValidityNewPasswordConfirmInput
+        resetValidityNewPasswordConfirmInput,
+        remember,
+        setRemember
     }
 }

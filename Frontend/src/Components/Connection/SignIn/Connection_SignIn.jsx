@@ -20,7 +20,9 @@ export default function Connection_SignIn(){
         newPasswordInputRef,
         confirmNewPasswordInputRef,
         validNewPassword,
-        resetValidityNewPasswordConfirmInput
+        resetValidityNewPasswordConfirmInput,
+        remember,
+        setRemember
     } = useConnection_SignIn()
 
 
@@ -53,8 +55,12 @@ export default function Connection_SignIn(){
                             <div className="noRecover">
                                 <label htmlFor="passwordSignin">Password</label>
                                 <input onChange={resetValidityNewPasswordConfirmInput} required={!userWantRecover} ref={passwordInputRef_signIn} type="password" id="passwordSignin" />
-                                <div onClick={switchRecoverPassword} className="forgetPassword_Box">
-                                    Password forget ?
+                                <div className="forgetPassword_Box">
+                                    <span  onClick={switchRecoverPassword} className="passwordForget">Password forget ?</span>
+                                    <span onClick={() => setRemember(!remember)} className="rememberMe"> 
+                                        <input type="checkbox" defaultChecked={remember} />
+                                        Remember me
+                                    </span>
                                 </div>
                             </div>
                             <div style={!emailSend ? {opacity:0.3} : null} className="recover">

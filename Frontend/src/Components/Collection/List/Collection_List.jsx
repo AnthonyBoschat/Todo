@@ -2,19 +2,21 @@ import React from "react";
 import useCollection_List from "./useCollection_List";
 import Collection_Creation from "../Creation/Collection_Creation";
 import Collection_One from "../One/Collection_One";
-import { Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 export default function Collection_List(){
 
     const {
         collectionOnCreation,
         collectionToShow,
+        dragEndCollections
     } = useCollection_List()
 
     
 
     return(
         <div className="Collection_List_Display">
+            <DragDropContext onDragEnd={dragEndCollections}>
                 <Droppable droppableId="Collections" type="collection">
                     {(provided) => (
                         <div {...provided.droppableProps} ref={provided.innerRef} className="Collection_List_Box">
@@ -27,6 +29,7 @@ export default function Collection_List(){
                         </div>
                     )}
                 </Droppable>
+            </DragDropContext>
         </div>
     )
 }

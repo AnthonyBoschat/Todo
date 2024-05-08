@@ -2,7 +2,7 @@ import React from "react";
 import useItem_List from "./useItem_List";
 import Creation_Item from "../Creation/Item_Creation";
 import Item_One from "../One/Item_One";
-import { Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 export default function Item_List(){
 
@@ -10,6 +10,7 @@ export default function Item_List(){
         ItemOnCreation,
         displayItemListRef,
         itemToShow,
+        dragEndItems
     } = useItem_List()
 
     
@@ -18,7 +19,8 @@ export default function Item_List(){
 
 
     return(
-        <>
+        <DragDropContext onDragEnd={dragEndItems}>
+
             <Droppable droppableId="Items" type="item">
                 {(provided) => (
                     <div ref={displayItemListRef} className="listItem_Display">
@@ -34,13 +36,13 @@ export default function Item_List(){
                                 <Creation_Item/>
                             )}
                             {provided.placeholder}
-                            
                         </div>
                     </div>
                     
                 )}
-            </Droppable>   
-        </>
+            </Droppable> 
+
+        </DragDropContext>
             
         
     )
