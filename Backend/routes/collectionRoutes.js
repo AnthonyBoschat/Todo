@@ -61,11 +61,11 @@ router.post("/sort", authenticationMiddleware, async(request, response) => {
 router.post("/addItem", authenticationMiddleware, async(request, response) => {
     try{
         const {userID} = request.token
-        const {itemID, listID, itemPosition} = request.body
+        const {itemID, collectionID} = request.body
         // Find the item in Item collection
         const thisItem = await Item.findById(itemID)
         // La liste concerner
-        const thisList = await Collection.findById(listID);
+        const thisCollection = await Collection.findById(collectionID);
 
 
 
@@ -74,7 +74,7 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
 
 
         // Si l'item existe déjà dans la liste
-        if(thisList.items[itemID]){
+        if(thisCollection.items[itemID]){
             response.status(400).json({
                 messageUserPopup:"This object is already saved in this list"
             })
@@ -84,29 +84,32 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
         else{
 
             // On verifie la taille de cette liste, si 0, pas besoin de mettre à jours des positions, on initialise la position à 0
-            if(Object.entries(thisList.items).length === 0){
+            if(Object.entries(thisCollection.items).length === 0){
                 finalPosition = 0
             }
-            
-            // Si la liste contient déjà des items, la position du nouvel objet est bien sa position de drop
-            else{ 
-                finalPosition = itemPosition
-
-                // On rempli itemsToUpdatePosition des nouvelles position des élément suivent dans la liste au augmentant de 1 leurs positions
-                Object.entries(thisList.items).forEach(([key, item]) => {
-                    if (item.position >= itemPosition) {
-                        itemsToUpdatePosition[`items.${key}.position`] = item.position + 1
-                    }
-                });
-
-                // Mise à jour des nouvelles positions dans la base de données pour les items qui était déjà présent
-                await Collection.updateOne({ _id: listID }, { $set: itemsToUpdatePosition });
+            else{
+                finalPosition = Object.entries(thisCollection.items).length
             }
+            // Si la liste contient déjà des items, la position du nouvel objet est bien sa position de drop
+
+            // else{ 
+            //     finalPosition = itemPosition
+
+            //     // On rempli itemsToUpdatePosition des nouvelles position des élément suivent dans la liste au augmentant de 1 leurs positions
+            //     Object.entries(thisCollection.items).forEach(([key, item]) => {
+            //         if (item.position >= itemPosition) {
+            //             itemsToUpdatePosition[`items.${key}.position`] = item.position + 1
+            //         }
+            //     });
+
+            //     // Mise à jour des nouvelles positions dans la base de données pour les items qui était déjà présent
+            //     await Collection.updateOne({ _id: collectionID }, { $set: itemsToUpdatePosition });
+            // }
         }
         // Enfin, on peut enregistrer le nouveau item, avec la finalPosition défini plus haut
         const itemKey = `items.${itemID}`
         const listUpdated = await Collection.findByIdAndUpdate(
-            {_id:listID},
+            {_id:collectionID},
             {$set:{[itemKey]:{
                 name:thisItem.content,
                 position:finalPosition

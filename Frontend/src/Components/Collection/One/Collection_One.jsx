@@ -8,7 +8,8 @@ export default function List_One({collection, index}){
     const {
         collectionState, 
         handleClick,
-        addItem
+        addItem,
+        collectionWhoWhantItems
     } = useCollection_One()
 
     return(
@@ -19,7 +20,7 @@ export default function List_One({collection, index}){
                         <div onClick={handleClick} {...provided.dragHandleProps}  className="collectionOne_Box">
                             {collection.name}
                             <div className="collectionAction_Box">
-                                <i onClick={addItem} className="fa-solid fa-square-plus"></i>
+                                <i onClick={() => addItem(collection)} className={`fa-solid fa-square-plus ${collectionWhoWhantItems.some(collec => collec._id === collection._id) ? "focus" : ""}`}></i>
                             </div>
                         </div>
 

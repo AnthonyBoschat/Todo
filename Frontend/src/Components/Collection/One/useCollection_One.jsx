@@ -1,6 +1,11 @@
 import React, { useReducer } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { update_collectionWhoWhantItems } from "../CollectionSlice";
 
 export default function useList_One(){
+
+    const dispatch = useDispatch()
+    const collectionWhoWhantItems = useSelector(store => store.collection.collectionWhoWhantItems)
 
     const initialState = {
         collectionVisible:false
@@ -23,13 +28,19 @@ export default function useList_One(){
         }
     }
 
-    const addItem = () => {
-        console.log("addItem")
+    const addItem = (collection) => {
+        if(!collectionWhoWhantItems.includes(collection)){
+            dispatch(update_collectionWhoWhantItems({type:"push", collection}))
+        }
+        if(collectionWhoWhantItems.includes(collection)){
+            dispatch(update_collectionWhoWhantItems({type:"delete", collection}))
+        }
     }
 
     return{
         collectionState,
         handleClick,
-        addItem
+        addItem,
+        collectionWhoWhantItems
     }
 }

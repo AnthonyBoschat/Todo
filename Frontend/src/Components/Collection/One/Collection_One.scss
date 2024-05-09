@@ -43,6 +43,9 @@ div.collectionOne_Display{
             align-items: center;
 
             i{
+                &.focus{
+                    color: black;
+                }
                 position: relative;
                 color: rgba(125, 125, 125, 0.56);
                 transition: color 0.1s linear;

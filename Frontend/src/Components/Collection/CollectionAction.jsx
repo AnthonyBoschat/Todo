@@ -1,6 +1,6 @@
 import React, {} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_collectionOnCreation } from "./CollectionSlice";
+import { update_collectionOnCreation, update_collectionWhoWhantItems } from "./CollectionSlice";
 import { update_addData, update_addItemToCollection, update_dataList, update_deleteItemToCollection } from "../User/UserSlice";
 
 export default function useCollection_Action(){

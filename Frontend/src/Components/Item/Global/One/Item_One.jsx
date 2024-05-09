@@ -11,6 +11,10 @@ export default function Item_One({item, index}){
         leftSideRef,
         propertiesVisible,
         handleClick,
+        canBeManaged,
+        canBeAdd,
+        canBeDelete,
+        addItem
     } = useItem_One(item)
 
 
@@ -43,6 +47,14 @@ export default function Item_One({item, index}){
                     >
                         <div ref={leftSideRef} className="leftSideItem">
                             <span ref={ItemNameRef}  className="ItemName">{item.content}</span>
+                            
+                            {canBeManaged && (
+                                <>
+                                    <button disabled={!canBeAdd} onClick={addItem}>Add</button>
+                                    <button disabled={!canBeDelete}>Delete</button>
+                                </>
+                            )}
+                            
                         </div>
                     </div>
 
