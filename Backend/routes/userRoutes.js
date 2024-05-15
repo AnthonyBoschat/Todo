@@ -99,8 +99,7 @@ router.post("/connect", async(request, response) => {
                 let token
                 if(remember){
                     token = jwt.sign({userID:user._id}, env.secret_key)
-                }
-                if(!remember){
+                }else{
                     token = jwt.sign({userID:user._id}, env.secret_key, {expiresIn:"1h"})
                 }
                 response.cookie("session_token", token, {

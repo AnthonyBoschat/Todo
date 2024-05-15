@@ -29,10 +29,10 @@ export default function useList_One(){
     }
 
     const addItem = (collection) => {
-        if(!collectionWhoWhantItems.includes(collection)){
+        if(!collectionWhoWhantItems.some(collec => collec._id === collection._id)){
             dispatch(update_collectionWhoWhantItems({type:"push", collection}))
         }
-        if(collectionWhoWhantItems.includes(collection)){
+        if(collectionWhoWhantItems.some(collec => collec._id === collection._id)){
             dispatch(update_collectionWhoWhantItems({type:"delete", collection}))
         }
     }
