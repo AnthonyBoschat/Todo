@@ -8,6 +8,7 @@ export default function useItem_One(item){
     const {fetchRequest} = useFetchRequest()
     const dispatch = useDispatch()
     const collectionWhoWhantItems = useSelector(store => store.collection.collectionWhoWhantItems)
+    const userCollectionsList = useSelector(store => store.user.datas.userCollectionsList)
     const [propertiesVisible, setPropertiesVisible] = useState(false)
     const [canBeManaged, setCanBeManaged] = useState(false)
     const [canBeAdd, setCanBeAdd] = useState(false)
@@ -28,7 +29,7 @@ export default function useItem_One(item){
     const addItem = () => {
         const itemToAdd = {
             itemID:item._id,
-            collectionID:collectionWhoWhantItems[0]._id,
+            collectionsID:collectionWhoWhantItems,
         }
         fetchRequest("POST", "collection/addItem", itemToAdd)
     }
@@ -39,7 +40,15 @@ export default function useItem_One(item){
         }else{
             setCanBeManaged(false)
         }
-        collectionWhoWhantItems.forEach(collection => {
+        const collectionList = []
+        collectionWhoWhantItems.map(collectionID => {
+            userCollectionsList.forEach(collection => {
+                if(collection._id === collectionID){
+                    collectionList.push(collection)
+                }
+            })
+        })
+        collectionList.forEach(collection => {
             if(!collection.items){
                 setCanBeAdd(true)
             }
@@ -53,7 +62,7 @@ export default function useItem_One(item){
                 }
             }
         })
-    }, [collectionWhoWhantItems])
+    }, [collectionWhoWhantItems, userCollectionsList])
     
     return{
         ItemNameRef,

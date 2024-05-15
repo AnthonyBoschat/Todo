@@ -86,26 +86,28 @@ const UserSlice = createSlice({
             })
         },
         update_addItemToCollection:(state,action) => {
-            const {itemID, collectionID, itemContent, itemPosition} = action.payload
-            const collectionIndex = state.datas.userCollectionsList.findIndex(collection => collection._id === collectionID)
-            const itemsList = state.datas.userCollectionsList[collectionIndex].items
-            if(itemsList){
-                Object.entries(itemsList).map(([key,item]) => {
-                    if(item.position >= itemPosition){
-                        itemsList[key].position = itemsList[key].position + 1
+            const {itemID, collectionsID, itemContent, itemPosition} = action.payload
+            collectionsID.forEach(collectionID => {
+                const collectionIndex = state.datas.userCollectionsList.findIndex(collection => collection._id === collectionID)
+                const itemsList = state.datas.userCollectionsList[collectionIndex].items
+                if(itemsList){
+                    Object.entries(itemsList).map(([key,item]) => {
+                        if(item.position >= itemPosition){
+                            itemsList[key].position = itemsList[key].position + 1
+                        }
+                    })
+                    itemsList[itemID] = {
+                        name:itemContent,
+                        position:itemPosition
                     }
-                })
-                itemsList[itemID] = {
-                    name:itemContent,
-                    position:itemPosition
+                }else{
+                    state.datas.userCollectionsList[collectionIndex].items = {}
+                    state.datas.userCollectionsList[collectionIndex].items[itemID] = {
+                        name:itemContent,
+                        position:itemPosition
+                    }
                 }
-            }else{
-                state.datas.userCollectionsList[collectionIndex].items = {}
-                state.datas.userCollectionsList[collectionIndex].items[itemID] = {
-                    name:itemContent,
-                    position:itemPosition
-                }
-            }
+            })
         },
 
         update_deleteItemToCollection:(state,action) => {

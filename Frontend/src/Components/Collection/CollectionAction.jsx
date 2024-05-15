@@ -32,12 +32,10 @@ export default function useCollection_Action(){
 
         addItem:(data) => {
             dispatch(update_addItemToCollection(data))
-            dispatch(update_AddItemsToCollectionWhoWhantItems(data))
         },
 
         deleteItem:(data) => {
             dispatch(update_deleteItemToCollection(data))
-            dispatch(update_deleteItemsToCollectionWhoWhantItems(data))
         }
     }
 

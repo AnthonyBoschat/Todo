@@ -61,77 +61,52 @@ router.post("/sort", authenticationMiddleware, async(request, response) => {
 router.post("/addItem", authenticationMiddleware, async(request, response) => {
     try{
         const {userID} = request.token
-        const {itemID, collectionID} = request.body
-        // Find the item in Item collection
+        const {itemID, collectionsID} = request.body
+        // On trouve l'item correspondant à cet ID
         const thisItem = await Item.findById(itemID)
-        // La liste concerner
-        const thisCollection = await Collection.findById(collectionID);
 
+        let finalPosition = 0
+        // Pour chaque collection dans laquell l'item doit etre ajouter
+        await collectionsID.forEach(async(collectionID) => {
+            const thisCollection = await Collection.findById(collectionID) // On trouve la collection en cours de traitement
 
-
-        let finalPosition // Position final de l'item à ajouter
-        let itemsToUpdatePosition = {} // Initialisation d'un objet qui sert à récupérer les possibles nouvelles positions des éléments
-
-
-        // Si l'item existe déjà dans la liste
-        if(thisCollection.items[itemID]){
-            response.status(400).json({
-                messageUserPopup:"This object is already saved in this list"
-            })
-            return
-        }
-        // Si l'item n'existe pas encore, on peut l'enregistrer
-        else{
-
-            // On verifie la taille de cette liste, si 0, pas besoin de mettre à jours des positions, on initialise la position à 0
-            if(Object.entries(thisCollection.items).length === 0){
-                finalPosition = 0
+            if(thisCollection.items[itemID]){ // Si l'item est déjà présent dans cette collection on sort de la fonction
+                // response.status(400).json({
+                //     messageUserPopup:"This object is already saved in this list"
+                // })
+                return
             }
-            else{
-                finalPosition = Object.entries(thisCollection.items).length
-            }
-            // Si la liste contient déjà des items, la position du nouvel objet est bien sa position de drop
+            
+            // Enfin, on peut enregistrer l'item dans cette collection
+            const itemKey = `items.${itemID}`
+            await Collection.findByIdAndUpdate(
+                {_id:collectionID},
+                {$set:{[itemKey]:{
+                    name:thisItem.content,
+                    position:finalPosition
+                }}},
+                {new:true}
+            )
+            
+        })
 
-            // else{ 
-            //     finalPosition = itemPosition
-
-            //     // On rempli itemsToUpdatePosition des nouvelles position des élément suivent dans la liste au augmentant de 1 leurs positions
-            //     Object.entries(thisCollection.items).forEach(([key, item]) => {
-            //         if (item.position >= itemPosition) {
-            //             itemsToUpdatePosition[`items.${key}.position`] = item.position + 1
-            //         }
-            //     });
-
-            //     // Mise à jour des nouvelles positions dans la base de données pour les items qui était déjà présent
-            //     await Collection.updateOne({ _id: collectionID }, { $set: itemsToUpdatePosition });
-            // }
-        }
-        // Enfin, on peut enregistrer le nouveau item, avec la finalPosition défini plus haut
-        const itemKey = `items.${itemID}`
-        const listUpdated = await Collection.findByIdAndUpdate(
-            {_id:collectionID},
-            {$set:{[itemKey]:{
-                name:thisItem.content,
-                position:finalPosition
-            }}},
-            {new:true}
-        )
-
-        
         response.status(200).json({
-            messageDebugConsole:`Ajout de l'item dans la liste réussi \n\n Liste: ${JSON.stringify(listUpdated, null, 2)} \n\n Item: ${JSON.stringify(thisItem, null, 2)}`,
+            messageDebugConsole:`Ajout de l'item dans la liste réussi \n\n Item: ${JSON.stringify(thisItem, null, 2)}`,
             messageDebugPopup:"Ajout de l'item dans la liste réussi",
             payload:{
                 itemID:thisItem._id,
-                collectionID:listUpdated._id,
+                collectionsID:collectionsID,
                 itemContent:thisItem.content,
                 itemPosition:finalPosition
             }
         })
 
+        
+        
+
     }catch(error){
         response.status(400).json({
-            messageDebugConsole:`Echec lors de la l'ajout de l'item dans la liste`,
+            messageDebugConsole:`Echec lors de l'ajout de l'item dans la liste`,
             payload:error.message
         })
     }

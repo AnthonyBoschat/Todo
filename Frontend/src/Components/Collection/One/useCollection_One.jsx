@@ -29,11 +29,12 @@ export default function useList_One(){
     }
 
     const addItem = (collection) => {
-        if(!collectionWhoWhantItems.some(collec => collec._id === collection._id)){
-            dispatch(update_collectionWhoWhantItems({type:"push", collection}))
+        const thisCollectionID = collection._id
+        if(!collectionWhoWhantItems.some(collectionID => collectionID === thisCollectionID)){
+            dispatch(update_collectionWhoWhantItems({type:"push", thisCollectionID}))
         }
-        if(collectionWhoWhantItems.some(collec => collec._id === collection._id)){
-            dispatch(update_collectionWhoWhantItems({type:"delete", collection}))
+        if(collectionWhoWhantItems.some(collectionID => collectionID === thisCollectionID)){
+            dispatch(update_collectionWhoWhantItems({type:"delete", thisCollectionID}))
         }
     }
 
