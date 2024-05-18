@@ -50,10 +50,11 @@ export default function Item_One({item, index}){
                             <span ref={ItemNameRef}  className="ItemName">{item.content}</span>
                             
                             {canBeManaged && (
-                                <>
-                                    <button disabled={!canBeAdd} onClick={addItem}>Add</button>
-                                    <button disabled={!canBeDelete} onClick={deleteItem}>Delete</button>
-                                </>
+                                <div className="button">
+                                    <button className="addItem" disabled={!canBeAdd} onClick={addItem}><i class="fa-solid fa-plus"></i></button>
+                                    <button className="deleteItem" disabled={!canBeDelete} onClick={deleteItem}><i class="fa-solid fa-minus"></i></button>
+                                    
+                                </div>
                             )}
                             
                         </div>

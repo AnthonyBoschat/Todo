@@ -23,8 +23,14 @@ $ItemOutline:rgb(176, 176, 176);
 $ItemOutlineHover:rgb(214, 255, 254);
 $ItemConfirmItem:rgba(175, 255, 250, 0.749);
 $ItemOptionBackground:rgb(44, 44, 44);
-$ItemOptionColorDone:rgb(0, 255, 251);
-$ItemOptionColorDelete:rgb(255, 148, 148);
+
+$ItemOptionAddItem:rgb(190, 255, 254);
+$ItemOptionAddItemHover:rgb(160, 255, 253);
+$ItemOptionAddItemDisabled:rgb(167, 167, 167);
+
+$ItemOptionDeleteItem:rgb(255, 199, 175);
+$ItemOptionDeleteItemHover:rgb(255, 175, 140);
+$ItemOptionDeleteItemDisabled:rgb(167, 167, 167);
 
 $propertyBackground:rgba(244, 244, 244, 0.893);
 $propertyBackgroundValue:rgb(255, 255, 255);

@@ -70,6 +70,60 @@ div.Item_Display{
                     outline: none;
                 }
             }
+
+            div.button{
+                // background-color: red; //
+                position: absolute;
+                // top: 0;
+                right: 0.5rem;
+                display: flex;
+                gap: 0.4rem;
+                // transform: translateY(-50%);
+                button{
+                    &:hover{
+                        cursor: pointer;
+                        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.677);
+                    }
+                    &:disabled{
+                        &:hover{
+                            cursor: default;
+                            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.245);
+                        }
+                    }
+                    // border-radius: 100%;
+                    width: 2.5rem;
+                    height: 1.8rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 1px solid black;
+                    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.245);
+                    transition: all 0.15s linear;
+                    &.addItem{
+                        background-color: v.$ItemOptionAddItem;
+                        &:hover{
+                            background-color: v.$ItemOptionAddItemHover;
+                        }
+                        &:disabled{
+                            background-color: v.$ItemOptionAddItemDisabled;
+                        }
+                    }
+                    &.deleteItem{
+                        background-color: v.$ItemOptionDeleteItem;
+                        &:hover{
+                            background-color: v.$ItemOptionDeleteItemHover;
+                        }
+                        &:disabled{
+                            background-color: v.$ItemOptionDeleteItemDisabled;
+                        }
+                    }
+                    i{
+                        font-size: 1rem;
+                        pointer-events: none;
+                    }
+                }
+
+            }
         }
     }
 }
