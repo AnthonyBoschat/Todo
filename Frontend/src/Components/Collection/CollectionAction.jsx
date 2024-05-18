@@ -1,7 +1,7 @@
 import React, {} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_AddItemsToCollectionWhoWhantItems, update_collectionOnCreation, update_deleteItemsToCollectionWhoWhantItems } from "./CollectionSlice";
-import { update_addData, update_addItemToCollection, update_dataList, update_deleteItemToCollection } from "../User/UserSlice";
+import { update_addData, update_addItemToCollection, update_dataList, update_deleteItemToCollection, update_deleteMultipleItemToCollection } from "../User/UserSlice";
 
 export default function useCollection_Action(){
 
@@ -36,6 +36,9 @@ export default function useCollection_Action(){
 
         deleteItem:(data) => {
             dispatch(update_deleteItemToCollection(data))
+        },
+        deleteItemGlobal:(data) => {
+            dispatch(update_deleteMultipleItemToCollection(data))
         }
     }
 

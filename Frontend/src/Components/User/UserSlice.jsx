@@ -119,6 +119,18 @@ const UserSlice = createSlice({
             }else{
                 console.error("Une erreur a été lever dans le slice User : update_deleteItemToCollection")
             }
+        },
+        update_deleteMultipleItemToCollection:(state,action) => {
+            const {itemID, collectionsID} = action.payload
+            collectionsID.forEach(collectionID => {
+                const collectionIndex = state.datas.userCollectionsList.findIndex(collection => collection._id === collectionID)
+                const itemsList = state.datas.userCollectionsList[collectionIndex].items
+                if(itemsList){
+                    delete itemsList[itemID]
+                }else{
+                    console.error("Une erreur a été lever dans le slice User : update_deleteMultipleItemToCollection")
+                }
+            })
         }
     },
 })
@@ -139,5 +151,6 @@ export const {
     update_deletePropertyItem,
 
     update_addItemToCollection,
-    update_deleteItemToCollection
+    update_deleteItemToCollection,
+    update_deleteMultipleItemToCollection
 } = UserSlice.actions

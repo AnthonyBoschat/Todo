@@ -14,7 +14,8 @@ export default function Item_One({item, index}){
         canBeManaged,
         canBeAdd,
         canBeDelete,
-        addItem
+        addItem,
+        deleteItem
     } = useItem_One(item)
 
 
@@ -51,7 +52,7 @@ export default function Item_One({item, index}){
                             {canBeManaged && (
                                 <>
                                     <button disabled={!canBeAdd} onClick={addItem}>Add</button>
-                                    <button disabled={!canBeDelete}>Delete</button>
+                                    <button disabled={!canBeDelete} onClick={deleteItem}>Delete</button>
                                 </>
                             )}
                             

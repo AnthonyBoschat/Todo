@@ -34,6 +34,14 @@ export default function useItem_One(item){
         fetchRequest("POST", "collection/addItem", itemToAdd)
     }
 
+    const deleteItem = () => {
+        const itemToDelete = {
+            itemID:item._id,
+            collectionsID:collectionWhoWhantItems
+        }
+        fetchRequest("DELETE", `collection/deleteItemGlobal/${item._id}/${collectionWhoWhantItems}`)
+    }
+
     useEffect(() => {
         if(collectionWhoWhantItems.length > 0){
             setCanBeManaged(true)
@@ -76,6 +84,7 @@ export default function useItem_One(item){
         canBeAdd,
         canBeDelete,
 
-        addItem
+        addItem,
+        deleteItem
     }
 }

@@ -85,7 +85,6 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
                     name:thisItem.content,
                     position:finalPosition
                 }}},
-                {new:true}
             )
             
         })
@@ -140,6 +139,33 @@ router.delete("/deleteItem/:collectionID/:itemID", authenticationMiddleware, asy
     }catch(error){
         response.status(400).json({
             messageDebugConsole:error.messageDebugConsole || "Une erreur est survenue dans la route collection/deleteItem",
+            payload:error.message
+        })
+    }
+})
+
+router.delete("/deleteItemGlobal/:itemID/:collectionsID", authenticationMiddleware, async(request, response) => {
+    try{
+        const {itemID, collectionsID} = request.params
+        const collectionsIDArray = collectionsID.split(",")
+        await collectionsIDArray.forEach( async(collectionID) => {
+            // const thisCollection = await Collection.findById(collectionID)
+            const itemKey = `items.${itemID}`
+            await Collection.findByIdAndUpdate(
+                {_id:collectionID},
+                {$unset: {[itemKey]: ""}}
+            )
+        })
+        response.status(200).json({
+            messageDebugConsole:"Suppression des items en mode Global réussi",
+            payload:{
+                itemID:itemID,
+                collectionsID:collectionsIDArray
+            }
+        })
+    }catch(error){
+        response.status(400).json({
+            messageDebugConsole:error.messageDebugConsole || "Une erreur est survenue dans la route collection/deleteItemGlobal",
             payload:error.message
         })
     }
