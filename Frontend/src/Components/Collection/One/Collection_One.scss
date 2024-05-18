@@ -13,6 +13,10 @@ div.collectionOne_Display{
             box-shadow: 3px 3px 4px 2px black;
             background-color: v.$collectionBackgroundHover;
         }
+        &.focus{
+            background-color: v.$collection_BackgroundMultipleSelection_Active;
+            // background-color: red;
+        }
         // background-color: red !important; //
         width: 100%;
         margin-top: 15px;
@@ -42,18 +46,29 @@ div.collectionOne_Display{
             display: flex;
             align-items: center;
 
-            i{
+            button{
                 &.focus{
                     color: black;
+                    background-color: v.$collection_ButtonMultipleSelectionBackground_Active;
                 }
-                position: relative;
-                color: rgba(125, 125, 125, 0.56);
-                transition: color 0.1s linear;
                 &:hover{
                     cursor:pointer;
-                    color: black;
+                    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.764);
+                    background-color: v.$collection_ButtonMultipleSelectionBackground_Active;
                 }
+                position: relative;
+                color: black;
+                padding: 0.2rem;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                font-size: 1rem;
+                transition: color 0.1s linear;
                 margin-left: 10px;
+                background-color: v.$collection_ButtonMultipleSelectionBackground_Inactive;
+                border: 1px solid black;
+                box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.259);
+                transition: all 0.15s linear;
+                border-radius: 5px;
             }
         }
     }

@@ -23,7 +23,7 @@ export default function useList_One(){
     const [collectionState, dispatchCollectionState] = useReducer(initialStateReducer, initialState)
 
     const handleClick = (e) => {
-        if(e.target.localName !== "i"){
+        if(e.target.localName !== "button"){
             dispatchCollectionState({type:"collectionVisible", payload:!collectionState.collectionVisible})
         }
     }

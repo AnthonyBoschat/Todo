@@ -17,10 +17,10 @@ export default function List_One({collection, index}){
             {(provided) => (
                 <>
                     <div  ref={provided.innerRef} {...provided.draggableProps} className="collectionOne_Display">
-                        <div onClick={handleClick} {...provided.dragHandleProps}  className="collectionOne_Box">
+                        <div onClick={handleClick} {...provided.dragHandleProps}  className={`collectionOne_Box ${collectionWhoWhantItems.some(collectionID => collectionID === collection._id) ? "focus" : ""}`}>
                             {collection.name}
                             <div className="collectionAction_Box">
-                                <i onClick={() => addItem(collection)} className={`fa-solid fa-square-plus ${collectionWhoWhantItems.some(collectionID => collectionID === collection._id) ? "focus" : ""}`}></i>
+                                <button onClick={() => addItem(collection)} className={collectionWhoWhantItems.some(collectionID => collectionID === collection._id) ? "focus" : ""}>Multiple selection</button>
                             </div>
                         </div>
 
