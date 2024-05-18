@@ -140,7 +140,6 @@ router.get("/disconnect", async(request, response) => {
 //////////////////////////////////////////////////////////////////////////////////////
 // Reconnecte un utilisateur
 router.get("/reconnect", authenticationMiddleware, async(request,response) => {
-    console.log(request.token)
     const {userID} = request.token
     try{
         const user = await User.findOne({_id:userID})

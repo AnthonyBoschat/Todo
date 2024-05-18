@@ -27,6 +27,7 @@ export default function useItem_One(item){
     }
 
     const addItem = () => {
+        // setCanBeAdd(false)
         const itemToAdd = {
             itemID:item._id,
             collectionsID:collectionWhoWhantItems,
@@ -35,6 +36,7 @@ export default function useItem_One(item){
     }
 
     const deleteItem = () => {
+        // setCanBeDelete(false)
         const itemToDelete = {
             itemID:item._id,
             collectionsID:collectionWhoWhantItems
@@ -43,6 +45,7 @@ export default function useItem_One(item){
     }
 
     useEffect(() => {
+        console.log("0")
         if(collectionWhoWhantItems.length > 0){
             setCanBeManaged(true)
         }else{
@@ -56,20 +59,36 @@ export default function useItem_One(item){
                 }
             })
         })
+        const manager = {
+            totalLength:collectionList.length,
+            haveThisItem:0,
+            notHaveThisItem:0,
+        }
         collectionList.forEach(collection => {
             if(!collection.items){
-                setCanBeAdd(true)
-            }
-            if(collection.items){
+                manager.notHaveThisItem += 1
+            }else{
                 if(collection.items[item._id]){
-                    setCanBeDelete(true)
-                    setCanBeAdd(false)
+                    manager.haveThisItem += 1
                 }else{
-                    setCanBeAdd(true)
-                    setCanBeDelete(false)
+                    manager.notHaveThisItem += 1
                 }
             }
         })
+
+        if(manager.haveThisItem === manager.totalLength){
+            setCanBeDelete(true)
+            setCanBeAdd(false)
+            return
+        }
+        if(manager.notHaveThisItem === manager.totalLength){
+            setCanBeAdd(true)
+            setCanBeDelete(false)
+            return
+        }
+        
+        if(manager.haveThisItem>0){setCanBeDelete(true)}
+        if(manager.notHaveThisItem>0){setCanBeAdd(true)}
     }, [collectionWhoWhantItems, userCollectionsList])
     
     return{
