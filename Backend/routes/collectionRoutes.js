@@ -18,13 +18,38 @@ router.post("/create", authenticationMiddleware, async(request, response) => {
         response.status(200).json({
             messageDebugConsole:`Liste correctement sauvegarder \n\n ${JSON.stringify(savedList, null, 2)}`,
             messageDebugPopup:"Erreur enregistrement liste",
-            messageUserPopup:"List saved",
+            messageUserPopup:"Collection created",
             payload:savedList
         })
     }catch(error){
         response.status(400).json({
             messageDebugConsole:"Erreur dans l'enregistrement de la liste",
             messageDebugPopup:"Erreur enregistrement liste",
+        })
+    }
+})
+
+router.delete("/delete/:collectionID", authenticationMiddleware, async(request,response) => {
+    try{
+        const {userID} = request.token
+        const {collectionID} = request.params
+
+        // On trouve la collection
+        const thisCollection = await Collection.findById(collectionID)
+        const deletedCollection = await Collection.findOneAndDelete({_id:collectionID, userID:userID})
+        if(deletedCollection){
+            response.status(200).json({
+                messageDebugConsole:"Collection correctement supprimer dans la base de donnée",
+                messageUserPopup:"Collection deleted",
+                payload:collectionID,
+            })
+        }else{
+            throw new Error()
+        }
+    }catch(error){
+        response.status(400).json({
+            messageDebugConsole:"Erreur lors de la suppression de la collection",
+            message:error.message
         })
     }
 })

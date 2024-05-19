@@ -47,7 +47,26 @@ div.itemCollectionList_Display{
         align-items: flex-start;
         padding-bottom: 2rem;
         margin-left: 1rem;
-        padding-top: 2rem;
+        padding-top: 1rem;
+
+        div.collectionActions{
+            // background-color: red; //
+            width: 100%;
+            height: 3rem;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+
+            i{
+                &:hover{
+                    opacity: 1;
+                     cursor: pointer;
+                }
+                font-size: 1.6rem;
+                color: white;
+                opacity: 0.8;
+            }
+        }
     }
 }
 
