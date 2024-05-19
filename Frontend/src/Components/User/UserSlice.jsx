@@ -86,25 +86,32 @@ const UserSlice = createSlice({
             })
         },
         update_addItemToCollection:(state,action) => {
-            const {itemID, collectionsID, itemContent, itemPosition} = action.payload
-            collectionsID.forEach(collectionID => {
+            const {itemID, itemContent, itemPosition} = action.payload
+
+            itemPosition.forEach(object => {
+                const {collectionID, position} = object
+                // On trouve l'index de la collection
                 const collectionIndex = state.datas.userCollectionsList.findIndex(collection => collection._id === collectionID)
+                // On récupère sa liste d'item
                 const itemsList = state.datas.userCollectionsList[collectionIndex].items
+                // S'il a une liste d'item
                 if(itemsList){
                     Object.entries(itemsList).map(([key,item]) => {
-                        if(item.position >= itemPosition){
+                        if(item.position >= position){
                             itemsList[key].position = itemsList[key].position + 1
                         }
                     })
                     itemsList[itemID] = {
                         name:itemContent,
-                        position:itemPosition
+                        position:position
                     }
-                }else{
+                }
+                // S'il n'a pas encore d'item
+                else{
                     state.datas.userCollectionsList[collectionIndex].items = {}
                     state.datas.userCollectionsList[collectionIndex].items[itemID] = {
                         name:itemContent,
-                        position:itemPosition
+                        position:position
                     }
                 }
             })

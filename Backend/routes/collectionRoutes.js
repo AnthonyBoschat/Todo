@@ -85,23 +85,27 @@ router.post("/sort", authenticationMiddleware, async(request, response) => {
 // Ajoute un item à la liste
 router.post("/addItem", authenticationMiddleware, async(request, response) => {
     try{
-        const {userID} = request.token
         const {itemID, collectionsID} = request.body
         // On trouve l'item correspondant à cet ID
         const thisItem = await Item.findById(itemID)
 
-        let finalPosition = 0
+        const allFinalPosition = []
         // Pour chaque collection dans laquell l'item doit etre ajouter
-        await collectionsID.forEach(async(collectionID) => {
+        for(const collectionID of collectionsID) {
             const thisCollection = await Collection.findById(collectionID) // On trouve la collection en cours de traitement
+            const itemsArray = Object.values(thisCollection.items)
+            const maxPosition = itemsArray.reduce((max, item) => {
+                return item.position > max ? item.position : max
+            }, 0)
 
-            if(thisCollection.items[itemID]){ // Si l'item est déjà présent dans cette collection on sort de la fonction
-                // response.status(400).json({
-                //     messageUserPopup:"This object is already saved in this list"
-                // })
-                return
-            }
+            // const thisCollectionLength = Object.keys(thisCollection.items).length
+            const finalPosition = maxPosition + 1
+            allFinalPosition.push({position:finalPosition, collectionID:collectionID})
+
             
+            if(thisCollection.items[itemID]){ // Si l'item est déjà présent dans cette collection on sort de la fonction
+                continue
+            }
             // Enfin, on peut enregistrer l'item dans cette collection
             const itemKey = `items.${itemID}`
             await Collection.findByIdAndUpdate(
@@ -111,17 +115,14 @@ router.post("/addItem", authenticationMiddleware, async(request, response) => {
                     position:finalPosition
                 }}},
             )
-            
-        })
-
+        }
         response.status(200).json({
             messageDebugConsole:`Ajout de l'item dans la liste réussi \n\n Item: ${JSON.stringify(thisItem, null, 2)}`,
             messageDebugPopup:"Ajout de l'item dans la liste réussi",
             payload:{
                 itemID:thisItem._id,
-                collectionsID:collectionsID,
                 itemContent:thisItem.content,
-                itemPosition:finalPosition
+                itemPosition:allFinalPosition
             }
         })
 

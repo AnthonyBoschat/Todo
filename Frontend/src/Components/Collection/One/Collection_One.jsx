@@ -20,7 +20,7 @@ export default function List_One({collection, index}){
                         <div onClick={handleClick} {...provided.dragHandleProps}  className={`collectionOne_Box ${collectionWhoWhantItems.some(collectionID => collectionID === collection._id) ? "focus" : ""}`}>
                             {collection.name}
                             <div className="collectionAction_Box">
-                                <button onClick={() => addItem(collection)} className={collectionWhoWhantItems.some(collectionID => collectionID === collection._id) ? "focus" : ""}>Multiple selection</button>
+                                <button onClick={() => addItem(collection)} className={collectionWhoWhantItems.some(collectionID => collectionID === collection._id) ? "focus" : ""}>Manage</button>
                             </div>
                         </div>
 
