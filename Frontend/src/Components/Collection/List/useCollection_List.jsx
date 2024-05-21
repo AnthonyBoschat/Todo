@@ -22,8 +22,6 @@ export default function useCollection_List(){
 
     const dragEndCollections = async(result) => {
         const {source, destination} = result
-        console.log("source", source)
-        console.log("destination",destination)
         if(!destination) return
         if(destination.droppableId === source.droppableId && destination.index === source.index)return
         if(destination.droppableId === "Collections" && source.droppableId === "Collections"){

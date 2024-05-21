@@ -22,10 +22,6 @@ export default function ItemCollection_List({collection, collectionState}){
         }
     }
 
-    useEffect(() => {
-        console.log("DEBUG")
-        console.log(itemToTheCollectionSort)
-    }, [itemToTheCollectionSort])
 
     const handleDragEnd = (result) => {
         const {source,destination} = result
@@ -56,7 +52,7 @@ export default function ItemCollection_List({collection, collectionState}){
                                     {itemToTheCollectionSort.length !== 0 && (
                                         itemToTheCollectionSort.map((item, index) => (
                                                 <ItemCollection_One
-                                                    key={index}
+                                                    key={item[0]}
                                                     item={item}
                                                     index={index}
                                                     collectionID={collection._id}

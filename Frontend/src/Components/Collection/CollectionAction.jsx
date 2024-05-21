@@ -54,7 +54,7 @@ export default function useCollection_Action(){
         },
         deleteItemGlobal:(data) => {
             dispatch(update_deleteMultipleItemToCollection(data))
-        }
+        },
     }
 
     return{
