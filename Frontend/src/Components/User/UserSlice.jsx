@@ -138,6 +138,14 @@ const UserSlice = createSlice({
                     console.error("Une erreur a été lever dans le slice User : update_deleteMultipleItemToCollection")
                 }
             })
+        },
+        update_reorderItemsToCollection:(state,action) => {
+            const {collectionID, itemsCollections} = action.payload
+            const collectionIndex = state.datas.userCollectionsList.findIndex(collection => collection._id === collectionID)
+            for(let i = 0; i<itemsCollections.length; i++){
+                const itemID = itemsCollections[i][0]
+                state.datas.userCollectionsList[collectionIndex].items[itemID].position = i
+            }
         }
     },
 })
@@ -159,5 +167,8 @@ export const {
 
     update_addItemToCollection,
     update_deleteItemToCollection,
-    update_deleteMultipleItemToCollection
+    update_deleteMultipleItemToCollection,
+
+
+    update_reorderItemsToCollection
 } = UserSlice.actions

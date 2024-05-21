@@ -12,6 +12,7 @@ div.itemCollectionList_Display{
     border-bottom-left-radius: 5px;
     overflow-y: scroll;
     overflow-x: hidden;
+    max-height: 30rem;
 
     &::-webkit-scrollbar{
         background-color: rgba(168, 168, 168, 0);
@@ -27,14 +28,14 @@ div.itemCollectionList_Display{
         }
     }
 
-    &.visible{
-        opacity: 1;
-        max-height: 30rem;
-    }
-    &.hidden{
-        opacity: 0;
-        max-height: 0rem;
-    }
+    // &.visible{
+    //     opacity: 1;
+    //     max-height: 30rem;
+    // }
+    // &.hidden{
+    //     opacity: 0;
+    //     max-height: 0rem;
+    // }
 
     div.itemCollectionList_Box{
         // background-color: rgba(255, 0, 0, 0.242); //

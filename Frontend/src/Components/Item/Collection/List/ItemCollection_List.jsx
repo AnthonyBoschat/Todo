@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import ItemCollection_One from "../One/ItemCollection_One";
 import useFetchRequest from "../../../../Utils/useFetchRequest";
+import { useDispatch } from "react-redux";
+import { update_reorderItemsToCollection } from "../../../User/UserSlice";
 
 export default function ItemCollection_List({collection, collectionState}){
 
     const  {collectionVisible} = collectionState
     const [itemToTheCollectionSort, setItemToTheCollectionSort] = useState([])
     const {fetchRequest} = useFetchRequest()
+    const dispatch = useDispatch()
+
     useEffect(() => {
         if(collection.items){
             const newItemToTheCollectionSort = Object.entries(collection.items).sort((a, b) => a[1].position - b[1].position)
@@ -31,7 +35,9 @@ export default function ItemCollection_List({collection, collectionState}){
         const itemsCollections = Array.from(itemToTheCollectionSort)
         const [reorderedCollection] = itemsCollections.splice(result.source.index, 1)
         itemsCollections.splice(destination.index, 0, reorderedCollection)
-        // setItemToTheCollectionSort(itemsCollections)
+        setItemToTheCollectionSort(itemsCollections)
+
+        // dispatch(update_reorderItemsToCollection({collectionID:collection._id, itemsCollections:itemsCollections}))
         fetchRequest("POST", `collection/sortItems`, {newSortOfItems:itemsCollections, collectionID:collection._id})
     }
 
