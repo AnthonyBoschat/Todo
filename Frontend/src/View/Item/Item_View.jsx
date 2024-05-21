@@ -1,6 +1,6 @@
 import React from "react";
 import Item_List from "../../Components/Item/Global/List/Item_List";
-import ItemManager from "../../Components/Item/Global/ItemGlobal_Manager";
+import ItemGlobal_Manager from "../../Components/Item/Global/ItemGlobal_Manager";
 import Item_Onglet from "../../Components/Item/Global/Onglet/Item_Onglet";
 import Item_Add from "../../Components/Item/Global/Add/Item_Add";
 import Property_Global_List from "../../Components/Property/Global/List/Property_Global_List";
@@ -12,7 +12,7 @@ export default function Item_View({cloneID, cloneStyle}){
 
     const {
         tabSelected
-    } = ItemManager()
+    } = ItemGlobal_Manager()
 
     const {
         propertyToShow

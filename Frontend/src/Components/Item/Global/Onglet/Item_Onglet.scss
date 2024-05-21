@@ -7,14 +7,15 @@ button.itemOnglet{
     border-bottom: none;
     display: flex;
     justify-content: center;
-    justify-content: center;
     align-items: center;
     font-size: 1.4rem;
     color: white;
     text-shadow: 1px 1px 1px black;
     margin-bottom: -2px;
     width: fit-content;
-
+    &:hover{
+        cursor: pointer;
+    }
     &.active{
         margin-left: -2px;
         border-left: 2px solid rgb(199, 255, 254);;
@@ -23,9 +24,6 @@ button.itemOnglet{
         border-radius: 5px 5px 0 0;
         // border: 2px solid rgb(199, 255, 254); //
         // border-bottom: 2px solid rgba(0, 0, 0, 0.68);
-        &:hover{
-            cursor: pointer;
-        }
     }
 
     &.inactive{
@@ -37,7 +35,6 @@ button.itemOnglet{
         background: rgba(0, 0, 0, 0.200);
         border-bottom: 2px solid rgb(199, 255, 254); //
         &:hover{
-            cursor: pointer;
             background: rgba(0, 0, 0, 0.262);
         }
     }

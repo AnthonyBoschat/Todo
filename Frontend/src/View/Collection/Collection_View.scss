@@ -1,16 +1,71 @@
-div.Lists_Display{
+div.collections_Display{
     
     // background-color: rgba(0, 102, 128, 0.313); //
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 70%;
     height: 100%;
     z-index: 1;
+
+    div.collectionsOnglet_Box{
+        width: 90%;
+        height: 5%;
+        // background-color: green; //
+        display: flex;
+        margin-bottom: 2px;
+
+        button.onglet{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+            font-size: 1.4rem;
+            color: white;
+            background: rgba(0, 0, 0, 0.131);
+            text-shadow: 1px 1px 1px black;
+            margin-bottom: -2px;
+            border-bottom: none;
+            border: none;
+            
+            // background-color: blue; //
+            &:hover{cursor: pointer;}
+
+            &.active{
+                margin-left: -2px;
+                border-left: 2px solid rgb(199, 255, 254);;
+                border-top: 2px solid rgb(199, 255, 254);;
+                border-right: 2px solid rgb(199, 255, 254);;
+                border-radius: 5px 5px 0 0;
+                // border: 2px solid rgb(199, 255, 254); //
+                // border-bottom: 2px solid rgba(0, 0, 0, 0.68);
+            }
+
+            &.inactive{
+                border-radius: 5px 5px 0 0;
+                margin-top: 2px;
+                position: relative;
+                z-index: 0;
+                margin-left: -2px;
+                background: rgba(0, 0, 0, 0.200);
+                border-bottom: 2px solid rgb(199, 255, 254); //
+                &:hover{
+                    background: rgba(0, 0, 0, 0.262);
+                }
+            }
+        }
+    }
     
-    .Lists_Box{
-        outline: 2px solid rgb(199, 255, 254); //
-        border-radius: 20px;
+    .collections_Box{
+        // background-color: red !important; //
+        border-left: 2px solid rgb(199, 255, 254);;
+        border-right: 2px solid rgb(199, 255, 254);;
+        border-bottom: 2px solid rgb(199, 255, 254);;
+        border-top: none;
+        // outline: 2px solid rgb(199, 255, 254); //
+        border-radius: 0 0 20px 20px;
         background: rgba(0, 0, 0, 0.131);
         width: 90%;
         height: 90%;
