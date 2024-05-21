@@ -81,6 +81,33 @@ router.post("/sort", authenticationMiddleware, async(request, response) => {
     }
 })
 
+router.post("/sortItems", authenticationMiddleware, async(request, response) => {
+    try{    
+        const {userID} = request.token
+        const {newSortOfItems, collectionID} = request.body
+        for(let i = 0; i<newSortOfItems.length; i++){
+
+            const itemID = newSortOfItems[i][0]
+            const newPosition = i
+            const itemKey = `items.${itemID}.position`
+            await Collection.findByIdAndUpdate(
+                {_id:collectionID},
+                {$set: { [itemKey]: newPosition }},
+            )
+        }
+        const collectionListUpdated = await Collection.findById(collectionID)
+        response.status(200).json({
+            messageDebugConsole:`Réorganisation de l'ordre des items de la collection ${collectionID} réussi`,
+            payload:collectionListUpdated
+        })
+    }catch(error){
+        response.status(400).json({
+            message:"Echec lors de la réorganisation de l'ordre des items d'une collection",
+            payload:error.message
+        })
+    }
+})
+
 //////////////////////////////////////////////////////////////////////////////////////
 // Ajoute un item à la liste
 router.post("/addItem", authenticationMiddleware, async(request, response) => {

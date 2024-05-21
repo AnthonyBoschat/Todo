@@ -45,7 +45,6 @@ export default function useItem_One(item){
     }
 
     useEffect(() => {
-        console.log("0")
         if(collectionWhoWhantItems.length > 0){
             setCanBeManaged(true)
         }else{

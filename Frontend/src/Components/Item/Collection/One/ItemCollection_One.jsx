@@ -12,7 +12,7 @@ export default function ItemCollection_One({item, index, collectionID}){
         fetchRequest("DELETE", `collection/deleteItem/${collectionID}/${itemID}`)
     }
     return(
-        <Draggable draggableId={`itemCollection_${itemID}`} index={index}>
+        <Draggable draggableId={`${itemID}`} index={index}>
             {(provided) => (
                 <div className="itemCollection_One" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                     {itemName}

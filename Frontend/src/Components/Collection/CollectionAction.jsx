@@ -1,7 +1,7 @@
 import React, {} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update_AddItemsToCollectionWhoWhantItems, update_collectionOnCreation, update_collectionWhoWhantItems, update_deleteItemsToCollectionWhoWhantItems } from "./CollectionSlice";
-import { update_addData, update_addItemToCollection, update_dataList, update_deleteData, update_deleteItemToCollection, update_deleteMultipleItemToCollection } from "../User/UserSlice";
+import { update_addData, update_addItemToCollection, update_changeData, update_dataList, update_deleteData, update_deleteItemToCollection, update_deleteMultipleItemToCollection } from "../User/UserSlice";
 
 export default function useCollection_Action(){
 
@@ -23,6 +23,8 @@ export default function useCollection_Action(){
         },
 
         sort:(data) => {
+            console.log(`data`, data)
+
             const objectsDatas = data.reduce((acc, list) => {
                 acc[list._id] = list.position
                 return acc
@@ -35,6 +37,12 @@ export default function useCollection_Action(){
             })
             dispatch(update_dataList({listName:"userCollectionsList", newList:updatedUserCollectionList}))
             console.log("Requette de réorganisation des listes effectuer")
+        },
+
+        sortItems:(data) => {
+            const collectionID = data._id
+            const collectionIndex = userCollectionsList.findIndex(collection => collection._id === collectionID)
+            dispatch(update_changeData({listName:"userCollectionsList", dataIndex:collectionIndex, newData:data}))
         },
 
         addItem:(data) => {
