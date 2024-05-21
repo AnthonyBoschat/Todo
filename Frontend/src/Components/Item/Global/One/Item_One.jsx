@@ -38,10 +38,11 @@ export default function Item_One({item, index}){
     return(
         <Draggable draggableId={item._id} index={index}>
             {(provided, snapshot) => (
-                <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`Item_Display`}>
+                <div ref={provided.innerRef} {...provided.draggableProps}  className={`Item_Display`}>
 
                     {/* Item */}
                     <div
+                    {...provided.dragHandleProps}
                         onClick={handleClick} 
                         className={`Item_Box ${snapshot.isDragging ? "dragging" : ""}`}
                         style={getItemStyle(snapshot)}
