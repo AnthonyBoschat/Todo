@@ -2,22 +2,30 @@ import React from "react";
 import Collection_Add from "../../Components/Collection/Add/Collection_Add"
 import Collection_List from "../../Components/Collection/List/Collection_List";
 import { useDispatch, useSelector } from "react-redux";
+import Onglet from "../../Components/Onglet/Onglet";
 import { update_tabSelectedCollection } from "../../Components/Collection/CollectionSlice";
 
 export default function Collection_View(){
 
-    const {tabsList, tabSelected} = useSelector(store => store.collection.tabs)
+    const {tabSelected, tabsList} = useSelector(store => store.collection.tabs)
     const dispatch = useDispatch()
 
     return(
         <div className="collections_Display">
+
+
+            {/* Onglets */}
             <div className="collectionsOnglet_Box">
-                {tabsList.map((tab, index) => (
-                    <button onClick={() => dispatch(update_tabSelectedCollection(tab))} className={`itemOnglet ${tab === tabSelected ? "active" : "inactive"}`} key={index}>{tab}</button>
-                ))}
-                <div className="remp"></div>
+                <Onglet
+                    tabsList={tabsList}
+                    tabSelected={tabSelected}
+                    handleClick={(tab) => dispatch(update_tabSelectedCollection(tab)) }
+                />
             </div>
+
+            {/* Contenu principal */}
             <div className="collections_Box">
+                
                 {tabSelected === "Collections" && (
                     <>
                         <Collection_Add/>

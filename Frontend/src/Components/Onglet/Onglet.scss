@@ -1,21 +1,20 @@
-button.itemOnglet{
-    border: none;
-    background: rgba(0, 0, 0, 0.131);
-    padding-right: 1.5rem;
-    padding-left: 1.5rem;
-    // border: 2px solid rgb(199, 255, 254); //
-    border-bottom: none;
+button.onglet{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
     font-size: 1.4rem;
     color: white;
+    background: rgba(0, 0, 0, 0.131);
     text-shadow: 1px 1px 1px black;
     margin-bottom: -2px;
-    width: fit-content;
-    &:hover{
-        cursor: pointer;
-    }
+    border-bottom: none;
+    border: none;
+    
+    // background-color: blue; //
+    &:hover{cursor: pointer;}
+
     &.active{
         margin-left: -2px;
         border-left: 2px solid rgb(199, 255, 254);;
@@ -38,9 +37,6 @@ button.itemOnglet{
             background: rgba(0, 0, 0, 0.262);
         }
     }
-
-    
-    
 }
 
 div.remp{

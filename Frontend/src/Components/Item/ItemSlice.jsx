@@ -24,7 +24,7 @@ const ItemSlice = createSlice({
         update_addItemToShow:(state,action) => {
             state.global.itemToShow.push(action.payload)
         },
-        update_tabSelected:(state,action) => {
+        update_tabSelectedItem:(state,action) => {
             state.global.tabs.tabSelected = action.payload
         }
     },
@@ -36,5 +36,5 @@ export const {
     update_itemToShow,
     update_addItemToShow,
     update_itemSelectedID,
-    update_tabSelected
+    update_tabSelectedItem
 } = ItemSlice.actions
