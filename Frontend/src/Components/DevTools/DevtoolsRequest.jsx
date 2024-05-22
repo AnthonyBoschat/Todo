@@ -12,10 +12,7 @@ export default function useDevtoolsRequest(){
 
     const devtoolAction = {
         DELETE_ALL_ITEMS:(data) => {
-            console.log("data => ", data)
             const {newItemsList, newPropertyList} = data
-            console.log("newItems => ", newItemsList)
-            console.log("newProperty => ", newPropertyList)
             dispatch(update_dataList({listName:"userItemsList", newList:newItemsList}))
             dispatch(update_dataList({listName:"userPropertyList", newList:newPropertyList}))
             dispatch(update_itemToShow([]))

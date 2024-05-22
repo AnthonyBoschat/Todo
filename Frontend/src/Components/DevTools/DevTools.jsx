@@ -15,25 +15,12 @@ export default function DevTools(){
     const connected = useSelector(store => store.connection.connected)
     const userID = useSelector(store => store.connection.connectedUser._id)
     const {fetchRequest} = useFetchRequest()
-    
-    const {
-        devtoolsRequest_DELETE_ALL_ItemS,
-        devtoolsRequest_DELETE_ALL_FOLDERS,
-        devtoolsRequest_DELETE_ALL_USERS,
-        devtoolsRequest_DELETE_THIS_USER
-    } = useDevtoolsRequest()
-
-    const {
-        userRequest_Connect,
-        userRequest_Disconnect,
-    } = useUser_Action()
-
-    const {
-        ItemAction_Create
-    } = useItem_Action()
 
     const [ItemForceNumber, setItemForceNumber] = useState(1)
-
+    const [devtoolsButtonVisible, setDevtoolsButtonVisible] = useState(false)
+    const [deleteActionVisible, setDeleteActionVisible] = useState(false)
+    const [debugActionVisible, setDebugActionVisible] = useState(false)
+    const [addActionVisible, setAddActionVisible] = useState(false)
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,15 +93,46 @@ export default function DevTools(){
     }
 
     return(
-        <div className="devtools_Box">
-            <button onClick={deleteFolders}>Delete All Folder</button>
-            <button onClick={deleteItem}>Delete all Item</button>
-            <button onClick={deleteAllUsers}>Delete All Users</button>
-            <button onClick={deleteThisUser}>Delete This Users</button>
-            <button onClick={addForceItem}>Force une Item</button>
-            <button onClick={toggleConsoleMessage} style={debugConsole ? {backgroundColor:"white"} : null}>Debug console</button>
-            <button onClick={togglePopupMessage} style={debugPopup ? {backgroundColor:"white"} : null}>Debug Popup</button>
-            <button onClick={toggleConnected} style={connected ? {backgroundColor:"white"} : null}>Admin Connected</button>
-        </div>
+        <>
+            <div className="devtools_Box">
+                {devtoolsButtonVisible && (
+                    <>
+                        <div>
+                            <button onClick={() => setDebugActionVisible(!debugActionVisible)} style={debugActionVisible ? {backgroundColor:"white"} : null}>Debug</button>
+                            {debugActionVisible && (
+                                <>
+                                    <button onClick={toggleConsoleMessage} style={debugConsole ? {backgroundColor:"white"} : null}>Debug console</button>
+                                    <button onClick={togglePopupMessage} style={debugPopup ? {backgroundColor:"white"} : null}>Debug Popup</button>
+                                </>
+                            )}
+                        </div>
+                        <div>
+                            <button onClick={() => setAddActionVisible(!addActionVisible)} style={addActionVisible ? {backgroundColor:"white"} : null}>Add</button>
+                            {addActionVisible && (
+                                <>
+                                    <button onClick={addForceItem}>Item</button>
+                                </>
+                            )}
+                        </div>
+                        <div>
+                            <button style={deleteActionVisible ? {backgroundColor:"white"} : null} onClick={() => setDeleteActionVisible(!deleteActionVisible)}>Delete</button>
+                            {deleteActionVisible && (
+                                <>
+                                    <button onClick={deleteFolders}>Delete All Folder</button>
+                                    <button onClick={deleteItem}>Delete all Item</button>
+                                    <button onClick={deleteAllUsers}>Delete All Users</button>
+                                    <button onClick={deleteThisUser}>Delete This Users</button>
+                                </>
+                            )}
+                        </div>
+                        <div>
+                            <button onClick={toggleConnected} style={connected ? {backgroundColor:"white"} : null}>Admin Connected</button>
+
+                        </div>
+                    </>
+                )}
+                <button onClick={ () => setDevtoolsButtonVisible(!devtoolsButtonVisible)} style={devtoolsButtonVisible ? {backgroundColor:"white"} : null}>Devtools</button>
+            </div>
+        </>
     )
 }

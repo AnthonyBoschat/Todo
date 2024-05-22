@@ -6,6 +6,7 @@ import Onglet from "../../Components/Onglet/Onglet";
 import { update_tabSelectedCollection } from "../../Components/Collection/CollectionSlice";
 import Collection_Caroussel from "../../Components/Collection/Caroussel/Collection_Caroussel";
 import CollectionManager from "./CollectionManager";
+import Collection_Settings from "../../Components/Collection/Settings/Collection_Settings";
 
 export default function Collection_View(){
 
@@ -39,6 +40,7 @@ export default function Collection_View(){
                 {tabSelected === "Automations" && (
                     <>
                         <Collection_Caroussel/>
+                        <Collection_Settings/>
                     </>
                 )}
                 

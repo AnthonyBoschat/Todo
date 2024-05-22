@@ -1,0 +1,14 @@
+.collectionSettings_Display{
+    width: 100%;
+    height: 100%;
+    // background-color: green; //
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .collectionSettings_Box{
+        width: 95%;
+        height: 95%;
+        background-color: white;
+    }
+}
