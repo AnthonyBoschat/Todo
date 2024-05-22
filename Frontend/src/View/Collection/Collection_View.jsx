@@ -4,8 +4,12 @@ import Collection_List from "../../Components/Collection/List/Collection_List";
 import { useDispatch, useSelector } from "react-redux";
 import Onglet from "../../Components/Onglet/Onglet";
 import { update_tabSelectedCollection } from "../../Components/Collection/CollectionSlice";
+import Collection_Caroussel from "../../Components/Collection/Caroussel/Collection_Caroussel";
+import CollectionManager from "./CollectionManager";
 
 export default function Collection_View(){
+
+    CollectionManager()
 
     const {tabSelected, tabsList} = useSelector(store => store.collection.tabs)
     const dispatch = useDispatch()
@@ -34,7 +38,7 @@ export default function Collection_View(){
                 )}
                 {tabSelected === "Automations" && (
                     <>
-                        <h1>Automation tab</h1>
+                        <Collection_Caroussel/>
                     </>
                 )}
                 

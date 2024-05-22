@@ -1,0 +1,49 @@
+@use "../../../Sass/Variable.scss" as v;
+
+.collectionCaroussel_Display{
+    height: 10rem;
+    width: 100%;
+    // background-color: red; //
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    .collectionCaroussel_Box{
+        background-color: rgba(0, 0, 0, 0.195);
+        // background-color: blue; //
+        width: 95%;
+        height: 90%;
+        outline: 2px solid black;
+        display: flex;
+        align-items: center;
+        position: relative;
+        box-shadow: 0px 0px 5px black inset;
+
+        div.collection{
+            outline: 1px solid black;
+            box-shadow: 2px 2px 1px black;
+            margin-left: 1.5rem;
+            height: 7rem;
+            min-width: 7rem;
+            max-width: 14rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+
+            background-color: v.$ItemBackground; //
+            transition: all 0.10s linear;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            font-size: 1.2rem;
+            text-shadow: 0px 0px 1px rgb(131, 131, 131);
+            &:hover{
+                cursor: pointer;
+                box-shadow: 3px 3px 6px black;
+                transform: scale(1.05);
+                background-color: v.$ItemBackgroundHover;
+            }
+        }
+    }
+
+}

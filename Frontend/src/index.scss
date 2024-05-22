@@ -34,7 +34,6 @@
 @use "Components/Item/Global/List/Item_List.scss";
 @use "Components/Item/Global/Creation/Item_Creation.scss";
 @use "Components/Item/Global/One/Item_One.scss";
-// @use "Components/Item/Global/Onglet/Item_Onglet.scss";
 @use "Components/Item/Global/Detail/Item_Detail.scss";
 
 @use "Components/Item/Collection/List/ItemCollection_List.scss";
@@ -50,7 +49,7 @@
 @use "Components/Collection/List/Collection_List.scss";
 @use "Components/Collection/Creation/Collection_Creation.scss";
 @use "Components/Collection/One/Collection_One.scss";
-// @use "Components/Collection/Onglet/Collection_Onglet.scss";
+@use "Components/Collection/Caroussel/Collection_Caroussel.scss";
 
 
 @use "Components/Onglet/Onglet.scss";
