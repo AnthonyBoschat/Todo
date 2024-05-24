@@ -9,6 +9,51 @@
     .collectionSettings_Box{
         width: 95%;
         height: 95%;
-        background-color: rgba(255, 255, 255, 0.405); //
+        // background-color: rgba(255, 255, 255, 0.405); //
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: min-content 1fr;
+
+        div.settingsAction_Box{
+            width: fit-content;
+            height: fit-content;
+            padding: 0.5rem;
+            // background-color: red; //
+            i{
+                font-size: 1.5rem;
+            }
+        }
+
+        form.settingsAutomation_Box{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 85, 255, 0.393); //
+            gap: 1rem;
+
+
+
+            div.settings_Box{
+                width: 100%;
+                height: fit-content;
+                background-color: rgba(123, 255, 0, 0.541); //
+                display: grid;
+                grid-template-columns: 30% 70%;
+                grid-template-rows: min-content;
+                
+                div.question{
+                    display: flex;
+                    justify-content: center;
+                    // align-items: center;
+                }
+
+                div.settings{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.3rem;
+                }
+            }
+        }
     }
 }
