@@ -25,7 +25,7 @@ export default function Collection_Caroussel(){
                     <div 
                         onClick={() => handleClick(collection)} 
                         key={index} 
-                        className={`collection ${collection._id === settingsCollectionSelected ? "selected" : null}`}>{collection.name}</div>
+                        className={`collection ${collection._id === settingsCollectionSelected?._id ? "selected" : null}`}>{collection.name}</div>
                 ))}
             </div>
         </div>

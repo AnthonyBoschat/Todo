@@ -8,6 +8,13 @@ export default function Collection_Settings(){
     const {fetchRequest} = useFetchRequest()
     const formRef = useRef()
 
+    const [current, setCurrent] = useState(null)
+
+    useEffect(() => {
+        if(collectionSelected){setCurrent(collectionSelected._id)}
+        else{setCurrent(null)}
+    }, [collectionSelected])
+
 
     const settings = [
         {question:"When", propositions:[
@@ -49,7 +56,6 @@ export default function Collection_Settings(){
 
     const determineDefaultCheckValue = (question) => {
         const normalizeQuestion = question.toLowerCase()
-        // console.log(collectionSelected.settings[normalizeQuestion])
         if(!collectionSelected.settings){
             return false
         }else{
@@ -60,7 +66,7 @@ export default function Collection_Settings(){
     return(
         <div className={`collectionSettings_Display`}>
             <div className="collectionSettings_Box">
-                {collectionSelected && (
+                {(collectionSelected && current) && (
                     <>
                         <div className="settingsAction_Box">
                             <i onClick={handleClick} className="fa-solid fa-floppy-disk"></i>
@@ -74,7 +80,7 @@ export default function Collection_Settings(){
                                     <div className="settings">
                                         {setting.propositions.map((proposition, index) => (
                                             <div key={index} className="setting">
-                                                <input defaultChecked={determineDefaultCheckValue(setting.question)} onClick={() => modifySettings(proposition.id, setting.question)} required id={proposition.id} name={setting.question} type="radio"/>
+                                                <input checked={determineDefaultCheckValue(setting.question)} onClick={() => modifySettings(proposition.id, setting.question)} required id={proposition.id} name={setting.question} type="radio"/>
                                                 <label htmlFor={proposition.id}>{proposition.text}</label>
                                             </div>
                                         ))}
