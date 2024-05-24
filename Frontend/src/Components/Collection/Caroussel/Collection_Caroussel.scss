@@ -20,6 +20,10 @@
         box-shadow: 0px 0px 5px black inset;
 
         div.collection{
+            &.selected{
+                background-color: v.$collection_settingsCollectionSelected;
+                &:hover{background-color:  v.$collection_settingsCollectionSelected;}
+            }
             outline: 1px solid black;
             box-shadow: 2px 2px 1px black;
             margin-left: 1.5rem;
@@ -30,7 +34,7 @@
             padding-right: 0.5rem;
 
             background-color: v.$ItemBackground; //
-            transition: all 0.10s linear;
+            transition: transform 0.10s linear;
             display: flex;
             justify-content: center;
             text-align: center;

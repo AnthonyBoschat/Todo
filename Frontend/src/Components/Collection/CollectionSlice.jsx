@@ -9,6 +9,9 @@ const CollectionSlice = createSlice({
         tabs:{
             tabsList:["Collections", "Automations"],
             tabSelected:"Collections"
+        },
+        settings:{
+            collectionSelected:null
         }
     },
     reducers:{
@@ -35,6 +38,9 @@ const CollectionSlice = createSlice({
         },
         update_tabSelectedCollection:(state,action) => {
             state.tabs.tabSelected = action.payload
+        },
+        update_settingsCollectionSelected:(state,action) => {
+            state.settings.collectionSelected = action.payload
         }
     },
 })
@@ -44,5 +50,6 @@ export const {
     update_collectionOnCreation,
     update_collectionToShow,
     update_collectionWhoWhantItems,
-    update_tabSelectedCollection
+    update_tabSelectedCollection,
+    update_settingsCollectionSelected
 } = CollectionSlice.actions

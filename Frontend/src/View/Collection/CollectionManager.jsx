@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { update_collectionToShow } from "../../Components/Collection/CollectionSlice";
+import { update_collectionToShow, update_settingsCollectionSelected } from "../../Components/Collection/CollectionSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function CollectionManager(){
@@ -13,6 +13,7 @@ export default function CollectionManager(){
             const collectionToShow = userCollectionsList.filter(list => list.folderID === folderSelectedID)
             const collectionToShowSort = collectionToShow.sort((a,b) => a.position - b.position)
             dispatch(update_collectionToShow(collectionToShowSort))
+            dispatch(update_settingsCollectionSelected(null))
         }
     }, [folderSelectedID, userCollectionsList])
 
