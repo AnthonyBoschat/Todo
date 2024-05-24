@@ -8,12 +8,14 @@ export default function Collection_Caroussel(){
     const settingsCollectionSelected = useSelector(store => store.collection.settings.collectionSelected)
     const dispatch = useDispatch()
 
-    const handleClick = (collectionID) => {
-        if(settingsCollectionSelected === collectionID){
-            dispatch(update_settingsCollectionSelected(null))
-        }else{
-            dispatch(update_settingsCollectionSelected(collectionID))
+    const handleClick = (collection) => {
+        if(settingsCollectionSelected){
+            if(settingsCollectionSelected._id === collection._id){
+                dispatch(update_settingsCollectionSelected(null))
+                return
+            }
         }
+        dispatch(update_settingsCollectionSelected(collection))
     }
 
     return(
@@ -21,7 +23,7 @@ export default function Collection_Caroussel(){
             <div className="collectionCaroussel_Box">
                 {collectionToShow.map((collection, index) => (
                     <div 
-                        onClick={() => handleClick(collection._id)} 
+                        onClick={() => handleClick(collection)} 
                         key={index} 
                         className={`collection ${collection._id === settingsCollectionSelected ? "selected" : null}`}>{collection.name}</div>
                 ))}

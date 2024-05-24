@@ -5,7 +5,8 @@ const collectionSchema = new mongoose.Schema({
   folderID: { type: String, required: true },
   userID: {type:String, required: true},
   position:{type:Number, required:true},
-  items:{type: Object, default: {}}
+  items:{type: Object, default: {}},
+  settings:{type: Object, default: {}}
 });
 
 const Collection = mongoose.model('Collection', collectionSchema);
