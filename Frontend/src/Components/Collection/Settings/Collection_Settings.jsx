@@ -8,12 +8,6 @@ export default function Collection_Settings(){
     const {fetchRequest} = useFetchRequest()
     const formRef = useRef()
 
-    const [current, setCurrent] = useState(null)
-
-    useEffect(() => {
-        if(collectionSelected){setCurrent(collectionSelected._id)}
-        else{setCurrent(null)}
-    }, [collectionSelected])
 
 
     const settings = [
@@ -36,6 +30,16 @@ export default function Collection_Settings(){
         what:null,
         in:null
     }
+
+    useEffect(() => {
+        if(collectionSelected){
+            if(collectionSelected.settings){
+                for(const key in collectionSelected.settings){
+                    collectionSettings[key] = collectionSelected.settings[key]
+                }
+            }
+        }
+    }, [collectionSelected])
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -66,7 +70,7 @@ export default function Collection_Settings(){
     return(
         <div className={`collectionSettings_Display`}>
             <div className="collectionSettings_Box">
-                {(collectionSelected && current) && (
+                {collectionSelected && (
                     <>
                         <div className="settingsAction_Box">
                             <i onClick={handleClick} className="fa-solid fa-floppy-disk"></i>
@@ -80,7 +84,7 @@ export default function Collection_Settings(){
                                     <div className="settings">
                                         {setting.propositions.map((proposition, index) => (
                                             <div key={index} className="setting">
-                                                <input checked={determineDefaultCheckValue(setting.question)} onClick={() => modifySettings(proposition.id, setting.question)} required id={proposition.id} name={setting.question} type="radio"/>
+                                                <input defaultChecked={determineDefaultCheckValue(setting.question)} onClick={() => modifySettings(proposition.id, setting.question)} required id={proposition.id} name={setting.question} type="radio"/>
                                                 <label htmlFor={proposition.id}>{proposition.text}</label>
                                             </div>
                                         ))}
